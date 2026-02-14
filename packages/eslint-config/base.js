@@ -14,6 +14,19 @@ export const config = [
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
   {
+    rules: {
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+          allowTaggedTemplates: true,
+        },
+      ],
+    },
+  },
+  {
     plugins: {
       turbo: turboPlugin,
     },
