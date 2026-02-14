@@ -7,21 +7,21 @@
     "dev": "vite --clearScreen false",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.ts\""
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
-    "eslint": "^8.57.0",
-    "typescript": "5.5.4",
-    "vite": "^5.1.4"
+    "eslint": "^10.0.0",
+    "typescript": "5.9.3",
+    "vite": "^7.3.1"
   }
 }
