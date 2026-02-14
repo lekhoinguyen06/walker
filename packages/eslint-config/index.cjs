@@ -11,10 +11,10 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   parserOptions: {
     sourceType: "module",
-    ecmaVersion: 2020,
+    ecmaVersion: 2025,
   },
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
-    
+    "@typescript-eslint/no-unused-expressions": "off",
   },
 };

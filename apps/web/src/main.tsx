@@ -1,7 +1,7 @@
-import { createRoot } from "react-dom/client";
-import "./style.css";
-import typescriptLogo from "/typescript.svg";
-import { Header, Counter } from "@repo/ui";
+import { createRoot } from 'react-dom/client';
+import './style.css';
+import typescriptLogo from '/typescript.svg';
+import { Header, Counter } from '@repo/ui';
 
 const App = () => (
   <div>
@@ -22,4 +22,4 @@ const App = () => (
   </div>
 );
 
-createRoot(document.getElementById("app")!).render(<App />);
+createRoot(document.getElementById('app')!).render(<App />);
