@@ -24,11 +24,12 @@ import {
 } from '@remixicon/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useScreenSize } from '@/hooks/useScreenSize';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 
 export function LandingPage() {
   const { isSmall } = useScreenSize();
   return (
-    <div className="w-screen h-screen p-0 m-0 flex flex-col items-center">
+    <div className="w-screen h-screen p-0 m-0 flex flex-col items-center overflow-x-hidden">
       {/* Header */}
       <div className="fixed top-0 left-auto right-auto z-50 w-full max-w-300 h-20">
         <div className="flex justify-between items-center bg-white/50 backdrop-blur-lg border-2 border-gray-50 rounded-2xl shadow-sm">
@@ -37,9 +38,35 @@ export function LandingPage() {
             <TH1>Walker</TH1>
           </div>
           {isSmall ? (
-            <div className="p-5">
-              <RiMenu3Line className="size-5" />
-            </div>
+            <Drawer>
+              <DrawerTrigger>
+                <Button variant='ghost'><RiMenu3Line className="size-5" /></Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                 <div className="flex flex-col gap-2 py-5 px-10 items-start">
+                  <Button variant="ghost" className='w-full flex justify-start p-4'>
+                    <TLarge>Docs</TLarge>
+                  </Button>
+                  <Button variant="ghost" className='w-full flex justify-start p-4'>
+                    <TLarge>Demo</TLarge>
+                  </Button>
+                  <Button variant="ghost" className='w-full flex justify-start p-4'>
+                    <TLarge>Github</TLarge>
+                    <RiGithubFill />
+                  </Button>
+                  <Button variant="ghost" className='w-full flex justify-start p-4'>
+                    <TLarge>Pricing</TLarge>
+                  </Button>
+                  <Button variant="ghost" className='w-full flex justify-start p-4'>
+                    <TLarge>About</TLarge>
+                  </Button>
+                  <Button className='p-4'>
+                    <TLarge>Try</TLarge>
+                    <TLarge className="text-red-500">Concierge</TLarge>
+                  </Button>
+                </div>
+              </DrawerContent>
+            </Drawer>
           ) : (
             <div className="flex gap-2 py-5 px-10">
               <Button variant="ghost">
@@ -79,7 +106,7 @@ export function LandingPage() {
         </div>
         <div className="w-full h-200 p-10 flex flex-col gap-20">
           <TH4>Trusted by top teams</TH4>
-          <div className="w-full flex justify-evenly">
+          <div className="w-full flex justify-evenly overflow-x-scroll">
             <div className="p-5">
               <RiNotionFill size={60} />
             </div>
@@ -106,7 +133,7 @@ export function LandingPage() {
             </div>
           </div>
           <TH4>Bought to you by</TH4>
-          <div className="w-full flex justify-evenly">
+          <div className="w-full flex justify-evenly overflow-x-scroll">
             <div className="p-5">
               <TH1 className="size-15 text-red-500 flex items-center">
                 vstaffs
@@ -154,7 +181,7 @@ export function LandingPage() {
         {/* <div className='w-full h-200'>
                     <ShowcaseCarousel />
                 </div> */}
-        <div className="w-full h-200 p-10 flex flex-col gap-20">
+        <div className="w-full sm:h-200 p-10 flex flex-col gap-20">
           <div>
             <TH4>Pricing</TH4>
             <TPara className="mt-2!">
@@ -162,7 +189,7 @@ export function LandingPage() {
               @walker/client
             </TPara>
           </div>
-          <div className="w-full flex gap-10 justify-center">
+          <div className="w-full flex flex-col sm:flex-row gap-10 justify-center">
             <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
               <div className="w-full flex justify-between items-center">
                 <TLarge>Free</TLarge>
