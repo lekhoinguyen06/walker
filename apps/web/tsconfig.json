@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/nestjs.json",
+  "extends": "@repo/typescript-config/vite.json",
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",

@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@tailwindcss/vite": "^4.2.0",
+    "@repo/tailwind-config": "workspace:*",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
