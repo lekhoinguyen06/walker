@@ -34,7 +34,7 @@ function Card({ title, price, url }: CardProp) {
     <div className="flex flex-col gap-4 min-w-60 min-h-60 p-4 border-2 border-gray-50 shadow-sm rounded-2xl my-4 justify-between">
       <img className="w-full aspect-square" src={url}></img>
       <div className="flex justify-between items-center gap-4">
-        <TSmall className='text-wrap'>{title}</TSmall>
+        <TSmall className="text-wrap">{title}</TSmall>
         <Button>${price}</Button>
       </div>
     </div>
