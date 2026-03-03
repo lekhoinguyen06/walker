@@ -43,9 +43,8 @@ export function Header() {
                 <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
                   <TLarge>About</TLarge>
                 </Button>
-                <Button className="p-4">
-                  <TLarge>Try</TLarge>
-                  <TLarge className="text-red-500">Concierge</TLarge>
+                <Button className="p-4 hover:bg-red-500">
+                  <TLarge>Try Concierge</TLarge>
                 </Button>
               </div>
             </DrawerContent>
@@ -70,9 +69,8 @@ export function Header() {
             <Button variant="ghost">
               <TLarge>About</TLarge>
             </Button>
-            <Button>
-              <TLarge>Try</TLarge>
-              <TLarge className="text-red-500">Concierge</TLarge>
+            <Button className="hover:bg-red-500">
+              <TLarge>Try Concierge</TLarge>
             </Button>
           </div>
         )}

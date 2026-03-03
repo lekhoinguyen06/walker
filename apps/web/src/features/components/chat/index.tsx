@@ -27,9 +27,9 @@ function SenderMessage({ text }: { text: string }) {
 }
 
 type ChatProp = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-}
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 export function Chat({ open, setOpen }: ChatProp) {
   const [messages, setMessages] = useState<MessageProp[]>(mockMessage);
@@ -54,25 +54,29 @@ export function Chat({ open, setOpen }: ChatProp) {
             <RiCloseLine className="text-black" />
           </Button>
         </div>
-        <div ref={scrollRef} className="flex-1 overflow-y-scroll justify-end p-8">
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-scroll justify-end p-8"
+        >
           {messages.map((m) => {
             if (m.sender == 'ai') return <IncomingMessage text={m.content} />;
             if (m.sender == 'human') return <SenderMessage text={m.content} />;
             return;
           })}
         </div>
-        <form className="flex gap-2 bg-white rounded-full border border-slate-100 m-8 p-2 shadow-sm"
+        <form
+          className="flex gap-2 bg-white rounded-full border border-slate-100 m-8 p-2 shadow-sm"
           onSubmit={(e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+            e.preventDefault();
+            if (!input.trim()) return;
 
-    setMessages(prev => [
-      ...prev,
-      { content: input, sender: "human" },
-    ]);
+            setMessages((prev) => [
+              ...prev,
+              { content: input, sender: 'human' },
+            ]);
 
-    setInput("");
-  }}
+            setInput('');
+          }}
         >
           <div className="w-full overflow-y-scroll">
             <Input
@@ -82,17 +86,21 @@ export function Chat({ open, setOpen }: ChatProp) {
               onChange={(e) => setInput(e.target.value)}
             />
           </div>
-          <Button className="bg-black aspect-square rounded-full" size="icon" type='submit' onClick={() => {
-            setMessages(prev => [
-              ...prev,
-              {
-                content: input,
-                sender: "human"
-              }
-            ])
-            setInput('')
-          }
-          }>
+          <Button
+            className="bg-black aspect-square rounded-full"
+            size="icon"
+            type="submit"
+            onClick={() => {
+              setMessages((prev) => [
+                ...prev,
+                {
+                  content: input,
+                  sender: 'human',
+                },
+              ]);
+              setInput('');
+            }}
+          >
             <RiSendInsLine className="text-white" />
           </Button>
         </form>

@@ -27,7 +27,7 @@ export function Pricing() {
               <TMuted>forever</TMuted>
             </span>
           </div>
-          <TPara className="mt-0!">Start walking</TPara>
+
           <div className="w-full h-full overflow-x-scroll">
             <TList
               list={[
@@ -53,7 +53,7 @@ export function Pricing() {
               <TMuted>per credit</TMuted>
             </span>
           </div>
-          <TPara className="mt-0!">Walk the web</TPara>
+
           <div className="w-full h-full overflow-x-scroll">
             <TList
               list={[
@@ -74,12 +74,11 @@ export function Pricing() {
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
             <TLarge>Enterprise</TLarge>
-            <Button>
-              <TSmall>Try</TSmall>
-              <TSmall className="text-red-500">Concierge</TSmall>
+            <Button className="hover:bg-red-500">
+              <TSmall>Try Concierge</TSmall>
             </Button>
           </div>
-          <TPara className="mt-0!">Walk the Earth</TPara>
+
           <div className="w-full h-full overflow-x-scroll">
             <TList
               list={[

@@ -1,4 +1,4 @@
-import { TH1, TH4, TMuted } from '@/components/ui/typo';
+import { TH1, TH4, TMuted, TPara } from '@/components/ui/typo';
 import {
   RiAlibabaCloudFill,
   RiAlipayFill,
@@ -19,14 +19,20 @@ import { Pricing } from '../components/pricing';
 import { Chat } from '@/features/components/chat';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useScreenSize } from '@/hooks/useScreenSize';
 
 export function LandingPage() {
   const [open, setOpen] = useState(false);
+  const { isSmall } = useScreenSize();
   return (
     <div className="w-screen h-screen p-0 m-0 flex flex-col items-center overflow-x-hidden">
       <Header />
-      <Button className='fixed bottom-0 right-0 mr-8 mb-8 bg-white shadow-sm p-4 size-16 aspect-square rounded-full group' size='icon' onClick={() => setOpen(true)}>
-        <RiChatAi3Line className='text-black group-hover:text-white'/>
+      <Button
+        className="fixed bottom-0 right-0 mr-8 mb-8 bg-white shadow-sm p-4 size-16 aspect-square rounded-full group"
+        size="icon"
+        onClick={() => setOpen(true)}
+      >
+        <RiChatAi3Line className="text-black group-hover:text-white" />
       </Button>
       <Chat open={open} setOpen={setOpen} />
       <div className="w-full max-w-300 flex flex-col gap-20">
@@ -39,6 +45,25 @@ export function LandingPage() {
             <TH1 className="text-white">Walk the earth...</TH1>
           </div>
         </div>
+        {isSmall ? (
+          <TPara className="px-2">
+            The idea is simple. How can we help agents to see what the user see?
+            The world works on DOM elements, so we send it to the agents. The
+            Walker library helps you send what you want, be reactive, and allow
+            agent to walk our website. Guiding users, read from live website, or
+            any other applications we can imagine. Build with us, and walk the
+            earth!
+          </TPara>
+        ) : (
+          <TH4>
+            The idea is simple. How can we help agents to see what the user see?
+            The world works on DOM elements, so we send it to the agents. The
+            Walker library helps you send what you want, be reactive, and allow
+            agent to walk our website. Guiding users, read from live website, or
+            any other applications we can imagine. Build with us, and walk the
+            earth!
+          </TH4>
+        )}
         <div className="w-full h-200 p-10 flex flex-col gap-20">
           <TH4>Trusted by top teams</TH4>
           <div className="w-full flex justify-evenly overflow-x-scroll">
