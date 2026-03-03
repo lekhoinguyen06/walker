@@ -1,8 +1,4 @@
-import {
-  TH1,
-  TH4,
-  TMuted,
-} from '@/components/ui/typo';
+import { TH1, TH4, TMuted } from '@/components/ui/typo';
 import {
   RiAlibabaCloudFill,
   RiAlipayFill,
