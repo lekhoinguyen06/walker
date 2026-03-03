@@ -15,11 +15,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Header } from '@/features/components/header';
 import { Footer } from '@/features/components/footer';
 import { Pricing } from '../components/pricing';
+import { Chat } from '@/features/components/chat';
 
 export function LandingPage() {
   return (
     <div className="w-screen h-screen p-0 m-0 flex flex-col items-center overflow-x-hidden">
       <Header />
+      <Chat open={true} />
       <div className="w-full max-w-300 flex flex-col gap-20">
         <div className="relative w-full h-110 bg-amber-200 mt-10">
           <div className="absolute bottom-0 right-0 flex flex-col items-end">
