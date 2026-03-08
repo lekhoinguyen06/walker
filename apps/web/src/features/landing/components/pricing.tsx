@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 export function Pricing() {
   return (
     <div className="w-full sm:h-200 p-10 flex flex-col gap-20">
-      <div className='flex flex-col gap-4'>
+      <div className="flex flex-col gap-4">
         <span className="text-title-h5">Pricing</span>
         <span className="block text-paragraph-lg">
           You can also host Walker yourself using the community client at
@@ -20,8 +20,7 @@ export function Pricing() {
             </span>
           </div>
 
-          <div className="w-full h-full overflow-x-scroll">
-          </div>
+          <div className="w-full h-full overflow-x-scroll"></div>
         </div>
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
@@ -32,8 +31,7 @@ export function Pricing() {
             </span>
           </div>
 
-          <div className="w-full h-full overflow-x-scroll">
-          </div>
+          <div className="w-full h-full overflow-x-scroll"></div>
         </div>
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
@@ -43,8 +41,7 @@ export function Pricing() {
             </Button>
           </div>
 
-          <div className="w-full h-full overflow-x-scroll">
-          </div>
+          <div className="w-full h-full overflow-x-scroll"></div>
         </div>
       </div>
     </div>
