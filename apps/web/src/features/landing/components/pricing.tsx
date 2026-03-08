@@ -1,99 +1,49 @@
 import { Button } from '@/components/ui/button';
-import {
-  TH4,
-  TLarge,
-  TList,
-  TMuted,
-  TPara,
-  TSmall,
-} from '@/components/ui/typo';
 
 export function Pricing() {
   return (
     <div className="w-full sm:h-200 p-10 flex flex-col gap-20">
-      <div>
-        <TH4>Pricing</TH4>
-        <TPara className="mt-2!">
+      <div className='flex flex-col gap-4'>
+        <span className="text-title-h5">Pricing</span>
+        <span className="block text-paragraph-lg">
           You can also host Walker yourself using the community client at
           @walker/client
-        </TPara>
+        </span>
       </div>
       <div className="w-full flex flex-col sm:flex-row gap-10 justify-center">
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
-            <TLarge>Free</TLarge>
+            <span className="text-label-lg">Free</span>
             <span className="flex items-baseline">
-              <TLarge className="mr-2">$0</TLarge>
-              <TMuted>forever</TMuted>
+              <span className="text-paragraph-lg mr-2">$0</span>
+              <span className="text-paragraph-sm">forever</span>
             </span>
           </div>
 
           <div className="w-full h-full overflow-x-scroll">
-            <TList
-              list={[
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-              ]}
-            />
           </div>
         </div>
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
-            <TLarge>Paid</TLarge>
+            <span className="text-label-lg">Paid</span>
             <span className="flex items-baseline">
-              <TLarge className="mr-2">$1</TLarge>
-              <TMuted>per credit</TMuted>
+              <span className="text-paragraph-lg mr-2">$1</span>
+              <span className="text-paragraph-sm">per credit</span>
             </span>
           </div>
 
           <div className="w-full h-full overflow-x-scroll">
-            <TList
-              list={[
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-              ]}
-            />
           </div>
         </div>
         <div className="h-120 min-w-80 rounded-2xl border-2 border-gray-50 shadow-sm flex flex-col gap-10 p-10 bg-white">
           <div className="w-full flex justify-between items-center">
-            <TLarge>Enterprise</TLarge>
+            <span className="text-label-lg">Enterprise</span>
             <Button className="hover:bg-red-500">
-              <TSmall>Try Concierge</TSmall>
+              <span className="text-paragraph-sm">Try Concierge</span>
             </Button>
           </div>
 
           <div className="w-full h-full overflow-x-scroll">
-            <TList
-              list={[
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-                'Feature 1',
-              ]}
-            />
           </div>
         </div>
       </div>

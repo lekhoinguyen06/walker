@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { TH4, TSmall } from '@/components/ui/typo';
 import { Header } from '@/features/components/header';
 import React, { useMemo } from 'react';
 import {
@@ -7,6 +6,7 @@ import {
   generateMockCommerce,
   generateMockVehicle,
 } from '../components/mock';
+import { RiShoppingBag3Line } from '@remixicon/react';
 
 function Row({
   children,
@@ -17,7 +17,7 @@ function Row({
 }) {
   return (
     <div className="w-full flex flex-col gap-8 mb-16">
-      <TH4>{header}</TH4>
+      <span className='text-title-h5'>{header}</span>
       <div className="flex gap-10 w-full overflow-x-scroll">{children}</div>
     </div>
   );
@@ -26,16 +26,16 @@ function Row({
 export type CardProp = {
   title: string;
   price: string;
-  url: string;
 };
 
-function Card({ title, price, url }: CardProp) {
+function Card({ title, price }: CardProp) {
   return (
     <div className="flex flex-col gap-4 min-w-60 min-h-60 p-4 border-2 border-gray-50 shadow-sm rounded-2xl my-4 justify-between">
-      <img className="w-full aspect-square" src={url}></img>
-      <div className="flex justify-between items-center gap-4">
-        <TSmall className="text-wrap">{title}</TSmall>
-        <Button>${price}</Button>
+      <div className='w-full aspect-square bg-slate-50'></div>
+      <span className="text-label-md">{title}</span>
+      <div className='flex justify-between items-center gap-4'>
+        <span className="text-label-sm">${price}</span>
+        <Button><RiShoppingBag3Line /></Button>
       </div>
     </div>
   );
