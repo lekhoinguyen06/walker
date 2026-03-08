@@ -3,6 +3,7 @@ import { LandingPage } from '@/features/landing/page';
 import { DemoPage } from '@/features/demo/page';
 import LoginPage from '@/features/login/page';
 import SignupPage from '@/features/signup/page';
+import GoogleOAuth from '@/features/oauth';
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ export const router = createBrowserRouter([
     element: <SignupPage />,
   },
   {
+    path: '/oauth/google',
+    element: <GoogleOAuth />,
+  },
+  {
     path: '*',
     element: <Navigate to="/" />,
-  }
+  },
 ]);
