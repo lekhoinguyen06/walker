@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { TPara } from '@/components/ui/typo';
 import { RiCloseLine, RiSendInsLine } from '@remixicon/react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { mockMessage } from './mock';
@@ -12,17 +11,17 @@ export type MessageProp = {
 
 function IncomingMessage({ text }: { text: string }) {
   return (
-    <TPara className="w-fit mr-16 bg-white/20 px-4 py-1 rounded-2xl rounded-bl-sm shadow-sm">
+    <div className="text-paragraph-lg w-fit mr-16 bg-white/20 px-4 py-1 rounded-2xl rounded-bl-sm shadow-sm">
       {text}
-    </TPara>
+    </div>
   );
 }
 
 function SenderMessage({ text }: { text: string }) {
   return (
-    <TPara className="w-fit ml-auto bg-black text-white px-4 py-1 rounded-2xl rounded-br-sm shadow-sm">
+    <div className="text-paragraph-lg w-fit ml-auto bg-black text-white px-4 py-1 rounded-2xl rounded-br-sm shadow-sm">
       {text}
-    </TPara>
+    </div>
   );
 }
 
