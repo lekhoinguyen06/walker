@@ -19,15 +19,9 @@ export default function GoogleOAuth() {
     } else {
       const errorMessage = searchParams.get('errorMessage');
 
-      setError(
-        errorMessage ?? 'Something went wrong with authentication'
-      );
+      setError(errorMessage ?? 'Something went wrong with authentication');
     }
   }, [location]);
 
-  return (
-    <div>
-      {error && <div className="error">{error}</div>}
-    </div>
-  );
-};
+  return <div>{error && <div className="error">{error}</div>}</div>;
+}

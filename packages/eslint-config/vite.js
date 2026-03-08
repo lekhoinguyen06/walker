@@ -1,5 +1,6 @@
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
+import globals from 'globals';
 import js from '@eslint/js';
 
 /**
@@ -18,12 +19,9 @@ export const viteConfig = [
         sourceType: 'module',
       },
       globals: {
-        console: 'readonly',
-        process: 'readonly',
-        document: 'readonly',
-        window: 'readonly',
-        navigator: 'readonly',
-        HTMLElement: 'readonly',
+        ...globals.browser,
+        ...globals.es2025,
+        ...globals.node,
       },
     },
     plugins: {
