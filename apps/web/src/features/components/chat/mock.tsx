@@ -1,52 +1,34 @@
-import { MessageProp } from '.';
-
-export const mockMessage: MessageProp[] = [
-  { content: 'Hello, how can I help you today?', sender: 'ai' },
-  { content: 'Can you explain useMemo vs useEffect?', sender: 'human' },
+export const messages = [
   {
+    id: 1,
+    role: "user",
+    content: "Hello! Can you help me with a coding question?",
+  },
+  {
+    id: 2,
+    role: "assistant",
     content:
-      'Of course. useMemo memoizes values, useEffect handles side effects. Of course. useMemo memoizes values, useEffect handles side effects',
-    sender: 'ai',
+      "Of course! I'd be happy to help with your coding question. What would you like to know?",
   },
   {
+    id: 3,
+    role: "user",
+    content: "How do I create a responsive layout with CSS Grid?",
+  },
+  {
+    id: 4,
+    role: "assistant",
     content:
-      'Of course. useMemo memoizes values, useEffect handles side effects.',
-    sender: 'ai',
+      "Creating a responsive layout with CSS Grid is straightforward. Here's a basic example:\n\n```css\n.container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 1rem;\n}\n```\n\nThis creates a grid where:\n- Columns automatically fit as many as possible\n- Each column is at least 250px wide\n- Columns expand to fill available space\n- There's a 1rem gap between items\n\nWould you like me to explain more about how this works?",
   },
   {
-    content:
-      'Of course. useMemo memoizes values, useEffect handles side effects.',
-    sender: 'ai',
-  },
-  { content: "So mock data shouldn't use useEffect?", sender: 'human' },
-  {
-    content: "Correct. Only useEffect if you're simulating async behavior.",
-    sender: 'ai',
-  },
-  { content: 'That makes sense.', sender: 'human' },
-  { content: "Anything else you'd like to improve?", sender: 'ai' },
-  { content: 'Hello, how can I help you today?', sender: 'ai' },
-  { content: 'Can you explain useMemo vs useEffect?', sender: 'human' },
-  {
-    content:
-      'Of course. useMemo memoizes values, useEffect handles side effects.',
-    sender: 'ai',
+    id: 5,
+    role: "user",
+    content: "What is the capital of France?",
   },
   {
-    content:
-      'Of course. useMemo memoizes values, useEffect handles side effects.',
-    sender: 'ai',
+    id: 6,
+    role: "assistant",
+    content: "The capital of France is Paris.",
   },
-  {
-    content:
-      'Of course. useMemo memoizes values, useEffect handles side effects.',
-    sender: 'ai',
-  },
-  { content: "So mock data shouldn't use useEffect?", sender: 'human' },
-  {
-    content: "Correct. Only useEffect if you're simulating async behavior.",
-    sender: 'ai',
-  },
-  { content: 'That makes sense.', sender: 'human' },
-  { content: "Anything else you'd like to improve?", sender: 'ai' },
-];
+]
