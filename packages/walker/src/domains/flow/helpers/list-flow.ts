@@ -1,5 +1,5 @@
-import { flowManager } from "@/walker/core";
-import type { Flow } from "@/walker/src/types/flow.types";
+import { flowManager } from '@core';
+import type { Flow } from '@src/types/flow.types';
 
 /**
  * Query flows
@@ -7,5 +7,5 @@ import type { Flow } from "@/walker/src/types/flow.types";
  * @returns Flow[]
  */
 export function listFlows(currentRoute?: string): Flow[] {
-	return flowManager.list(currentRoute);
+  return flowManager.list(currentRoute);
 }

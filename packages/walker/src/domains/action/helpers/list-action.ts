@@ -1,8 +1,8 @@
-import { actionManager } from "@/walker/core";
+import { actionManager } from '@core';
 
 type listActionObservers = {
-	viewQueue: () => void;
-	viewHistory: () => void;
+  viewQueue: () => void;
+  viewHistory: () => void;
 };
 
 /**
@@ -10,7 +10,7 @@ type listActionObservers = {
  * @returns ({ viewQueue, viewHistory })
  */
 export function listActions(): listActionObservers {
-	const viewQueue = actionManager.listActionQueue;
-	const viewHistory = actionManager.listActionHistory;
-	return { viewQueue, viewHistory };
+  const viewQueue = actionManager.listActionQueue;
+  const viewHistory = actionManager.listActionHistory;
+  return { viewQueue, viewHistory };
 }

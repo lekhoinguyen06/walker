@@ -1,0 +1,20 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "incremental": false,
+    "outDir": "dist",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@core": ["core/index.ts"],
+      "@core/*": ["core/*"]
+    },
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["react-lib", "core"],
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}

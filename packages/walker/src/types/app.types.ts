@@ -1,4 +1,4 @@
 export type App = {
-	isPaused: boolean;
-	isPolling: boolean;
+  isPaused: boolean;
+  isPolling: boolean;
 };

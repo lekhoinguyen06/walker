@@ -5,8 +5,8 @@ Official docs: https://www.notion.so/White-paper-2a0610871b58809cbf3ffe993a5a45a
 
 Example commands:
 Single
-||click?:query=:[data-walker-key="go-shopping"] > *&:message=:hello||
-||input?:query=:[data-walker-key="input-delivery-notes"] > *&:data=:Please call in advance||
+||click?:query=:[data-walker-key="go-shopping"] > _&:message=:hello||
+||input?:query=:[data-walker-key="input-delivery-notes"] > _&:data=:Please call in advance||
 
 Chained
-||click?:query=:[data-walker-key="go-shopping"] > *&:message=:Let's go shopping||||click?:query=:[data-walker-key="nav-cart"] > *&:message=:Going to your shopping cart||
+||click?:query=:[data-walker-key="go-shopping"] > _&:message=:Let's go shopping||||click?:query=:[data-walker-key="nav-cart"] > _&:message=:Going to your shopping cart||
