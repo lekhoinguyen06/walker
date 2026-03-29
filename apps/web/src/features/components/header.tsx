@@ -32,7 +32,7 @@ export function Header() {
                   </Button>
                 </Link>
                 <Link to={'/demo'}>
-                <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
                     <span className="text-title-h6">Demo</span>
                   </Button>
                 </Link>
