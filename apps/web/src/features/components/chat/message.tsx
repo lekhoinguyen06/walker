@@ -8,9 +8,19 @@ import {
   MessageContent,
 } from '@/components/ui/message';
 import { cn } from '@/lib/utils';
-import { messages } from './mock';
+import { useChatStore } from '@/store/chat';
+import { useEffect } from 'react';
+import { messages as mock } from './mock';
+
 
 export function Messages() {
+  const { messages, setMessages } = useChatStore();
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages(mock);
+    }
+  }, [setMessages]);
   return (
     <ChatContainerRoot>
       <ChatContainerContent className="space-y-12 px-1 py-12 md:px-4">
@@ -60,6 +70,7 @@ export function Messages() {
             </Message>
           );
         })}
+        <div className='w-full h-20'></div>
       </ChatContainerContent>
     </ChatContainerRoot>
   );

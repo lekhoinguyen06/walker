@@ -7,10 +7,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArrowUp, Globe, Mic, MoreHorizontal, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { useChatStore } from '@/store/chat';
 
 export function Input() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { addMessage } = useChatStore();
 
   const handleSubmit = () => {
     if (!prompt.trim()) return;
@@ -19,6 +21,11 @@ export function Input() {
 
     // Simulate API call
     console.log('Processing:', prompt);
+    addMessage({
+      id: Date.now(),
+      role: 'user',
+      content: prompt,
+    });
     setTimeout(() => {
       setPrompt('');
       setIsLoading(false);
