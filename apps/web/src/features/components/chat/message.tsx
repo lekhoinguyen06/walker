@@ -1,34 +1,34 @@
 import {
   ChatContainerContent,
   ChatContainerRoot,
-} from "@/components/ui/chat-container"
+} from '@/components/ui/chat-container';
 import {
   Message,
   MessageAvatar,
   MessageContent,
-} from "@/components/ui/message"
-import { cn } from "@/lib/utils"
-import { messages } from "./mock"
+} from '@/components/ui/message';
+import { cn } from '@/lib/utils';
+import { messages } from './mock';
 
 export function Messages() {
   return (
     <ChatContainerRoot>
       <ChatContainerContent className="space-y-12 px-1 py-12 md:px-4">
         {messages.map((message) => {
-          const isAssistant = message.role === "assistant"
+          const isAssistant = message.role === 'assistant';
 
           return (
             <Message
               key={message.id}
               className={cn(
-                "mx-auto flex w-full max-w-3xl flex-col gap-2 px-0 md:px-6",
-                isAssistant ? "items-start" : "items-end"
+                'mx-auto flex w-full max-w-3xl flex-col gap-2 px-0 md:px-6',
+                isAssistant ? 'items-start' : 'items-end',
               )}
             >
               <div
                 className={cn(
-                  "flex w-full items-end gap-3",
-                  isAssistant ? "flex-row" : "flex-row-reverse"
+                  'flex w-full items-end gap-3',
+                  isAssistant ? 'flex-row' : 'flex-row-reverse',
                 )}
               >
                 {isAssistant ? (
@@ -58,9 +58,9 @@ export function Messages() {
                 )}
               </div>
             </Message>
-          )
+          );
         })}
       </ChatContainerContent>
     </ChatContainerRoot>
-  )
+  );
 }
