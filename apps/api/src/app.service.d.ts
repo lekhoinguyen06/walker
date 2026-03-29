@@ -1,4 +1,4 @@
 export declare class AppService {
-    getHello(): string;
+  getHello(): string;
 }
 //# sourceMappingURL=app.service.d.ts.map

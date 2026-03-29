@@ -1,3 +1,2 @@
-export declare class LinksModule {
-}
+export declare class LinksModule {}
 //# sourceMappingURL=links.module.d.ts.map
