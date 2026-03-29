@@ -12,7 +12,6 @@ import { useChatStore } from '@/store/chat';
 import { useEffect } from 'react';
 import { messages as mock } from './mock';
 
-
 export function Messages() {
   const { messages, setMessages } = useChatStore();
 
@@ -70,7 +69,7 @@ export function Messages() {
             </Message>
           );
         })}
-        <div className='w-full h-20'></div>
+        <div className="w-full h-20"></div>
       </ChatContainerContent>
     </ChatContainerRoot>
   );

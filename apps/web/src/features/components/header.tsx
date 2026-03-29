@@ -26,24 +26,32 @@ export function Header() {
             </DrawerTrigger>
             <DrawerContent>
               <div className="flex flex-col gap-4 py-5 px-10 items-start">
+                <Link to={'https://vstaffs.mintlify.app/'}>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                    <span className="text-title-h6">Docs</span>
+                  </Button>
+                </Link>
+                <Link to={'/demo'}>
                 <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                  <span className="text-title-h6">Docs</span>
-                </Button>
-                <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                  <Link to={'/demo'}>
                     <span className="text-title-h6">Demo</span>
-                  </Link>
-                </Button>
-                <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                  <span className="text-title-h6">Github</span>
-                  <RiGithubFill />
-                </Button>
-                <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                  <span className="text-title-h6">Pricing</span>
-                </Button>
-                <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                  <span className="text-title-h6">About</span>
-                </Button>
+                  </Button>
+                </Link>
+                <Link to={'https://github.com/lekhoinguyen06/walker'}>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                    <span className="text-title-h6">Github</span>
+                    <RiGithubFill />
+                  </Button>
+                </Link>
+                <Link to={'/pricing'}>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                    <span className="text-title-h6">Pricing</span>
+                  </Button>
+                </Link>
+                <Link to={'/about'}>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                    <span className="text-title-h6">About</span>
+                  </Button>
+                </Link>
                 <Button className="p-4 hover:bg-red-500">
                   <span className="text-title-h6">Try Concierge</span>
                 </Button>
@@ -52,21 +60,27 @@ export function Header() {
           </Drawer>
         ) : (
           <div className="flex gap-4 py-5 px-10">
-            <Button variant="ghost">
-              <span className="text-title-h6">Docs</span>
-            </Button>
-            <Button variant="ghost">
-              <Link to={'/demo'}>
+            <Link to={'https://vstaffs.mintlify.app/'}>
+              <Button variant="ghost">
+                <span className="text-title-h6">Docs</span>
+              </Button>
+            </Link>
+            <Link to={'/demo'}>
+              <Button variant="ghost">
                 <span className="text-title-h6">Demo</span>
-              </Link>
-            </Button>
-            <Button variant="ghost">
-              <span className="text-title-h6">Github</span>
-              <RiGithubFill />
-            </Button>
-            <Button variant="ghost">
-              <span className="text-title-h6">Pricing</span>
-            </Button>
+              </Button>
+            </Link>
+            <Link to={'https://github.com/lekhoinguyen06/walker'}>
+              <Button variant="ghost">
+                <span className="text-title-h6">Github</span>
+                <RiGithubFill />
+              </Button>
+            </Link>
+            <Link to={'/pricing'}>
+              <Button variant="ghost">
+                <span className="text-title-h6">Pricing</span>
+              </Button>
+            </Link>
             <Button variant="ghost">
               <span className="text-title-h6">About</span>
             </Button>
