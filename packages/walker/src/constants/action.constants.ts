@@ -1,0 +1,1 @@
+export const ACTION_HISTORY_MAXIMUM_LENGTH = 50;
