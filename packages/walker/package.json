@@ -1,11 +1,20 @@
 {
-  "name": "walker",
+  "name": "@repo/walker",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./core/index.ts",
+  "types": "./core/index.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./core/index.ts",
+      "import": "./core/index.ts",
+      "default": "./core/index.ts"
+    },
+    "./react": {
+      "types": "./react-lib/index.ts",
+      "import": "./react-lib/index.ts",
+      "default": "./react-lib/index.ts"
+    }
   },
   "scripts": {
     "lint": "eslint \"**/*.{ts,tsx}\"",

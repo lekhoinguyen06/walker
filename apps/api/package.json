@@ -25,6 +25,7 @@
     "@nestjs/core": "^11.1.13",
     "@nestjs/platform-express": "^11.1.13",
     "@repo/api": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "escape-html": "^1.0.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"

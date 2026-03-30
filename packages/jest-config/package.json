@@ -6,28 +6,28 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/entry.js",
-  "types": "./dist/entry.d.ts",
+  "main": "./src/entry.ts",
+  "types": "./src/entry.ts",
   "exports": {
     ".": {
-      "import": "./dist/entry.js",
-      "require": "./dist/entry.js",
-      "types": "./dist/entry.d.ts"
+      "import": "./src/entry.ts",
+      "require": "./src/entry.ts",
+      "types": "./src/entry.ts"
     },
     "./base": {
-      "import": "./dist/base.js",
-      "require": "./dist/base.js",
-      "types": "./dist/base.d.ts"
+      "import": "./src/base.ts",
+      "require": "./src/base.ts",
+      "types": "./src/base.ts"
     },
     "./nest": {
-      "import": "./dist/nest.js",
-      "require": "./dist/nest.js",
-      "types": "./dist/nest.d.ts"
+      "import": "./src/nest.ts",
+      "require": "./src/nest.ts",
+      "types": "./src/nest.ts"
     },
     "./next": {
-      "import": "./dist/next.js",
-      "require": "./dist/next.js",
-      "types": "./dist/next.d.ts"
+      "import": "./src/next.ts",
+      "require": "./src/next.ts",
+      "types": "./src/next.ts"
     }
   },
   "devDependencies": {
