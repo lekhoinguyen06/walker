@@ -31,7 +31,7 @@ export type CardProp = {
 
 function Card({ title, price }: CardProp) {
   return (
-    <BaseItem itemKey='hello'>
+    <BaseItem itemKey="hello">
       <div className="flex flex-col gap-4 min-w-60 min-h-60 p-4 border-2 border-gray-50 shadow-sm rounded-2xl my-4 justify-between">
         <div className="w-full aspect-square bg-slate-50"></div>
         <span className="text-label-md">{title}</span>
