@@ -10,7 +10,6 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@repo/walker": "workspace:*",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.8",
@@ -19,6 +18,7 @@
     "@remixicon/react": "^4.9.0",
     "@repo/tailwind-config": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@repo/walker": "workspace:*",
     "@tailwindcss/vite": "^4.2.0",
     "axios": "^1.13.6",
     "class-variance-authority": "^0.7.1",
@@ -51,6 +51,7 @@
     "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^10.0.0",
     "typescript": "5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }

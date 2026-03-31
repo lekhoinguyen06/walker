@@ -7,6 +7,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@src/*": [
+        "../../packages/walker/src/*"
       ]
     }
   }
