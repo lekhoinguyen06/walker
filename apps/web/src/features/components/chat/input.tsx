@@ -5,14 +5,14 @@ import {
   PromptInputTextarea,
 } from '@/components/ui/prompt-input';
 import { Button } from '@/components/ui/button';
-import { ArrowUp, Globe, Mic, MoreHorizontal, Plus } from 'lucide-react';
+import { ArrowUp, Code, Globe, MessageCircle, Mic, MoreHorizontal, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useChatStore } from '@/store/chat';
 
 export function Input() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { addMessage } = useChatStore();
+  const { addMessage, mode, setMode } = useChatStore();
 
   const handleSubmit = () => {
     if (!prompt.trim()) return;
@@ -65,6 +65,21 @@ export function Input() {
                   Search
                 </Button>
               </PromptInputAction>
+
+              {mode === 'chat' ? (
+                <PromptInputAction tooltip="Devtools">
+                  <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('dev')}>
+                    <Code size={18} />
+                  </Button>
+                </PromptInputAction>
+              ) : (
+                <PromptInputAction tooltip="Devtools">
+                  <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('chat')}>
+                    <MessageCircle size={18} />
+                  </Button>
+                </PromptInputAction>
+              )}
+
 
               <PromptInputAction tooltip="More actions">
                 <Button

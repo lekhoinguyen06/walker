@@ -3,3 +3,5 @@ export type Message = {
   role: 'user' | 'assistant';
   content: string;
 };
+
+export type ChatMode = 'dev' | 'chat';
