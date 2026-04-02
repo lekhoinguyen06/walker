@@ -1,10 +1,21 @@
 import { consola } from 'consola/browser';
 import type { LogItem } from '../types/log.types';
 import { useLogStore } from '../store/log/useLogStore';
+import { mapManager } from '@core'
 export class LogManager {
   peak() {
     const logItems = useLogStore.getState().items;
     consola.info(logItems);
+  }
+
+  map() {
+    const map = mapManager.map();
+    consola.info(map);
+  }
+
+  clear() {
+    useLogStore.getState().clearItems();
+    consola.info('Logs cleared');
   }
 
   log() {

@@ -5,9 +5,26 @@ import {
   PromptInputTextarea,
 } from '@/components/ui/prompt-input';
 import { Button } from '@/components/ui/button';
-import { ArrowUp, Code, Globe, MessageCircle, Mic, MoreHorizontal, Plus } from 'lucide-react';
+import { ArrowUp, Code, Eye, Globe, Hammer, Map, MessageCircle, Mic, MoreHorizontal, Pause, Play, Plus, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useChatStore } from '@/store/chat';
+import { logger } from '@repo/walker';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { DropdownMenuItemIndicator } from '@radix-ui/react-dropdown-menu';
 
 export function Input() {
   const [prompt, setPrompt] = useState('');
@@ -73,11 +90,34 @@ export function Input() {
                   </Button>
                 </PromptInputAction>
               ) : (
-                <PromptInputAction tooltip="Devtools">
-                  <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('chat')}>
-                    <MessageCircle size={18} />
-                  </Button>
-                </PromptInputAction>
+                <>
+                  <PromptInputAction tooltip="Chat">
+                    <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('chat')}>
+                      <MessageCircle size={18} />
+                    </Button>
+                  </PromptInputAction>
+
+                  <PromptInputAction tooltip="Commands">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className='size-9 rounded-full'><Hammer size={18} /></Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuGroup>
+                          <DropdownMenuLabel>Log</DropdownMenuLabel>
+                          <DropdownMenuItem onClick={() => logger.map()}> <Map size={12} /> Map</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => logger.peak()}> <Eye size={12} /> Peak</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => logger.clear()}> <Trash size={12} /> Clear</DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Process</DropdownMenuLabel>
+                        <DropdownMenuItem disabled><Play size={12} /> Play</DropdownMenuItem>
+                        <DropdownMenuItem disabled><Pause size={12} /> Pause</DropdownMenuItem>
+                        <DropdownMenuItem disabled><Trash size={12} /> Clear</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </PromptInputAction>
+                </>
               )}
 
 
