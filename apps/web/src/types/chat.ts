@@ -4,4 +4,9 @@ export type Message = {
   content: string;
 };
 
+export type Log = {
+  id: number;
+  
+}
+
 export type ChatMode = 'dev' | 'chat';

@@ -6,14 +6,14 @@
   "types": "./dist/core/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/core/index.d.mts",
-      "import": "./dist/core/index.mjs",
-      "default": "./dist/core/index.mjs"
+      "main": "./dist/core/index.js",
+      "module": "./dist/core/index.mjs",
+      "types": "./dist/core/index.d.ts"
     },
     "./react": {
-      "types": "./dist/react-lib/index.d.mts",
-      "import": "./dist/react-lib/index.mjs",
-      "default": "./dist/react-lib/index.mjs"
+      "main": "./dist/react-lib/index.js",
+      "module": "./dist/react-lib/index.mjs",
+      "types": "./dist/react-lib/index.d.ts"
     }
   },
   "scripts": {
