@@ -1,0 +1,12 @@
+{
+  "extends": "../../packages/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+    },
+    "jsx": "react-jsx"
+  },
+  "include": [ "src" ],
+  "exclude": [ "node_modules", "dist" ]
+}

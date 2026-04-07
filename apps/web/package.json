@@ -10,7 +10,8 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@repo/walker": "workspace:*",
+    "@repo/core": "workspace:*",
+    "@repo/react": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",

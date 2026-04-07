@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowUp, Code, Eye, Globe, Hammer, Map, MessageCircle, Mic, MoreHorizontal, Pause, Play, Plus, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useChatStore } from '@/store/chat';
-import { logger } from '@repo/walker';
+import { logger } from '@repo/core';
 
 import {
   DropdownMenu,

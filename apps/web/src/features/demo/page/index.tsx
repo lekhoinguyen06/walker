@@ -7,7 +7,7 @@ import {
   generateMockVehicle,
 } from '../components/mock';
 import { RiShoppingBag3Line } from '@remixicon/react';
-import { BaseItem } from '@repo/walker/react';
+import { BaseItem } from '@repo/react';
 import slugify from 'slugify';
 
 function Row({

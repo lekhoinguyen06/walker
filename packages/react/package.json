@@ -1,0 +1,29 @@
+{
+  "name": "@repo/react",
+  "version": "0.0.0",
+  "description": "Walker library adapter for React framework",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@repo/core": "workspace:*",
+    "react": "^19.2.4",
+    "tsup": "^8.5.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14"
+  }
+}
