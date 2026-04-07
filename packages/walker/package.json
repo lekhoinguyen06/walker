@@ -6,19 +6,19 @@
   "types": "./dist/core/index.d.ts",
   "exports": {
     ".": {
-      "main": "./dist/core/index.js",
-      "module": "./dist/core/index.mjs",
-      "types": "./dist/core/index.d.ts"
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.mjs",
+      "require": "./dist/core/index.cjs"
     },
     "./react": {
-      "main": "./dist/react-lib/index.js",
-      "module": "./dist/react-lib/index.mjs",
-      "types": "./dist/react-lib/index.d.ts"
+      "types": "./dist/react-lib/index.d.ts",
+      "import": "./dist/react-lib/index.mjs",
+      "require": "./dist/react-lib/index.cjs"
     }
   },
   "scripts": {
     "lint": "eslint \"**/*.{ts,tsx}\"",
-    "build": "tsc",
+    "build": "tsup",
     "dev": "tsc -w"
   },
   "dependencies": {
