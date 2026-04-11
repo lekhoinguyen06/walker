@@ -90,10 +90,12 @@ function initFlow() {
     description: 'Click any queried element from any route',
     route: '*',
     handler: async ({ action, gap }) => {
+      console.log('DEBUG: Click handler called with action:', action, 'and gap:', gap);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.query) {
+        console.log('DEBUG: Attempting to click element with query:', action.query);
         document.querySelector(action.query)?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
