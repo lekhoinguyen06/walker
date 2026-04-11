@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowUp, Code, Eye, Globe, Hammer, Map, MessageCircle, Mic, MoreHorizontal, Pause, Play, Plus, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useChatStore } from '@/store/chat';
-import { logger } from '@repo/core';
+import { logger, walk } from '@repo/core';
 
 import {
   DropdownMenu,
@@ -32,6 +32,7 @@ export function Input() {
 
     // Simulate API call
     console.log('Processing:', prompt);
+    if (mode === 'dev') walk(prompt);
     addMessage({
       id: Date.now(),
       role: 'user',
@@ -54,7 +55,7 @@ export function Input() {
       >
         <div className="flex flex-col">
           <PromptInputTextarea
-            placeholder="Ask anything"
+            placeholder={mode === 'chat' ? "Type your message here..." : "Type your command here..."}
             className="min-h-11 pt-3 pl-4 text-base leading-[1.3] sm:text-base md:text-base"
           />
 
