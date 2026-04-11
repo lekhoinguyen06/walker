@@ -20,10 +20,12 @@ function Row({
   header: string;
 }) {
   return (
-    <div className="w-full flex flex-col gap-8 mb-16">
-      <span className="text-title-h5">{header}</span>
-      <div className="flex gap-10 w-full overflow-x-scroll">{children}</div>
-    </div>
+    <BaseItem itemKey={`row-${slugify(header)}`}>
+      <div className="w-full flex flex-col gap-8 mb-16">
+        <span className="text-title-h5">{header}</span>
+        <div className="flex gap-10 w-full overflow-x-scroll">{children}</div>
+      </div>
+    </BaseItem>
   );
 }
 
@@ -74,7 +76,7 @@ export function DemoPage() {
         <Header />
         <Chat open={open} setOpen={setOpen} />
         <Trigger setOpen={setOpen} />
-        <div className="w-full flex flex-col p-30 overflow-y-scroll">
+        <div className="w-full flex flex-col p-30">
           <Row header="Walkers' favorite">
             {commerce1.map((item) => (
               <Card {...item} />

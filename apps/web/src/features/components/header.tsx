@@ -11,13 +11,16 @@ export function Header() {
   const { isSmall } = useScreenSize();
   return (
     <div className="fixed top-0 left-auto right-auto z-50 w-full max-w-300 h-20">
+      <BaseItem itemKey='navigation-header'>
       <div className="flex justify-between items-center bg-white/50 backdrop-blur-lg border-2 border-gray-50 rounded-2xl shadow-sm">
+        <BaseItem itemKey='link-to-home-page'>
         <Link to={'/'}>
           <div className="flex items-center gap-2 h-20">
             <div className="size-10 bg-black"></div>
             <span className="text-title-h3">Walker</span>
           </div>
         </Link>
+        </BaseItem>
         {isSmall ? (
           <Drawer>
             <DrawerTrigger>
@@ -117,6 +120,7 @@ export function Header() {
           </div>
         )}
       </div>
+    </BaseItem> 
     </div>
   );
 }
