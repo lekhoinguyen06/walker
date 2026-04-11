@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Header } from '@/features/components/header';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   generateMockBook,
   generateMockCommerce,
@@ -9,6 +9,8 @@ import {
 import { RiShoppingBag3Line } from '@remixicon/react';
 import { BaseItem } from '@repo/react';
 import slugify from 'slugify';
+import { Chat } from '@/features/components/chat';
+import Trigger from '@/features/components/chat/trigger';
 
 function Row({
   children,
@@ -49,6 +51,7 @@ function Card({ title, price }: CardProp) {
 }
 
 export function DemoPage() {
+  const [open, setOpen] = useState(false);
   const commerce1 = useMemo(() => {
     return generateMockCommerce();
   }, []);
@@ -69,6 +72,8 @@ export function DemoPage() {
     <BaseItem itemKey="demo-page">
       <div className="w-screen h-screen p-0 m-0 flex flex-col items-center">
         <Header />
+        <Chat open={open} setOpen={setOpen} />
+        <Trigger setOpen={setOpen} />
         <div className="w-full flex flex-col p-30 overflow-y-scroll">
           <Row header="Walkers' favorite">
             {commerce1.map((item) => (

@@ -1,7 +1,6 @@
 import {
   RiAlibabaCloudFill,
   RiAlipayFill,
-  RiChatAi3Line,
   RiGitlabFill,
   RiLinkedinBoxFill,
   RiMetaFill,
@@ -17,8 +16,8 @@ import { Footer } from '@/features/components/footer';
 import { Pricing } from '../components/pricing';
 import { Chat } from '@/features/components/chat';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { useScreenSize } from '@/hooks/useScreenSize';
+import Trigger from '@/features/components/chat/trigger';
 
 export function LandingPage() {
   const [open, setOpen] = useState(false);
@@ -26,13 +25,7 @@ export function LandingPage() {
   return (
     <div className="w-screen h-screen p-0 m-0 flex flex-col items-center overflow-x-hidden">
       <Header />
-      <Button
-        className="fixed bottom-0 right-0 mr-8 mb-8 bg-white shadow-sm p-4 size-16 aspect-square rounded-full group"
-        size="icon"
-        onClick={() => setOpen(true)}
-      >
-        <RiChatAi3Line className="text-black group-hover:text-white" />
-      </Button>
+      <Trigger setOpen={setOpen} />
       <Chat open={open} setOpen={setOpen} />
       <div className="w-full max-w-300 flex flex-col gap-20">
         <div className="relative w-full h-110 bg-amber-200 mt-10">
