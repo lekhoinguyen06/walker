@@ -19,6 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Editor from '@monaco-editor/react';
 
 export function Input() {
   const [prompt, setPrompt] = useState('');
@@ -30,14 +31,22 @@ export function Input() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    console.log('Processing:', prompt);
-    if (mode === 'dev') walk(prompt);
+    if (mode === 'dev') {
+      try {
+        JSON.stringify(prompt);
+        console.log('Valid JSON:', prompt);
+        walk(prompt);
+      } catch (error) {
+        console.error('Invalid JSON:', error);
+      }
+    }
+
     addMessage({
       id: Date.now(),
       role: 'user',
       content: prompt,
     });
+    
     setTimeout(() => {
       setPrompt('');
       setIsLoading(false);
@@ -54,10 +63,18 @@ export function Input() {
         className="border-input bg-popover relative z-10 w-full rounded-3xl border p-0 pt-1 shadow-xs"
       >
         <div className="flex flex-col">
-          <PromptInputTextarea
-            placeholder={mode === 'chat' ? "Type your message here..." : "Type your command here..."}
-            className="min-h-11 pt-3 pl-4 text-base leading-[1.3] sm:text-base md:text-base"
-          />
+          {mode === 'chat' ? (
+            <PromptInputTextarea
+              placeholder="Type your message here..."
+              className="min-h-11 pt-3 pl-4 text-base leading-[1.3] sm:text-base md:text-base"
+            />
+          ) : (
+            <>
+              <div className='h-40 p-2'>
+                <Editor defaultLanguage="json" value={prompt} onChange={(e) => e && setPrompt(e)} className='border rounded-2xl p-4 pl-0' />
+              </div>
+            </>
+          )}
 
           <PromptInputActions className="mt-5 flex w-full items-center justify-between gap-2 px-3 pb-3">
             <div className="flex items-center gap-2">

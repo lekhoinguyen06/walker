@@ -11,9 +11,7 @@ import { ActionManager } from '@src/domains/action/action-manager';
 import { FlowManager } from '@src/domains/flow/flow-manager';
 import { listActions } from '@src/domains/action/helpers/list-action';
 import { listFlows } from '@src/domains/flow/helpers/list-flow';
-import type { Action } from '@src/types/action.types';
-import { flowsParser } from '@src/domains/action/helpers/flows-parser';
-// import { createMouse, moveMouseTo } from '@react/ui/Mouse';
+import { ActionInputSchema, type Action } from '@src/types/action.types';
 import { MapManager } from '@src/domains/map/mapManager';
 import { LogManager } from '@src/utils/logger';
 import { AppManager } from '@src/utils/app';
@@ -146,7 +144,12 @@ function initFlow() {
  * @param string
  */
 async function walk(input?: string) {
-  const actions: Action[] = flowsParser(input);
+  console.log('DEBUG: Received input ', input);
+  const parsedInput = ActionInputSchema.safeParse(JSON.parse(input ?? '[]'));
+  const actions: Action[] = parsedInput.success ? parsedInput.data : [];
+
+  console.log('DEBUG: Parsed result ', parsedInput);
+  console.log('DEBUG: Parsed actions ', actions);
 
   // Send new flows to Action Manager to queue up
   if (actions.length > 0) {
