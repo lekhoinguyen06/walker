@@ -3,6 +3,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { RiGithubFill, RiMenu3Line } from '@remixicon/react';
 import { Link } from 'react-router';
+import { BaseItem } from '@repo/react';
 
 const MOBILE_NAV_CLASSNAME = 'w-full flex justify-start p-4';
 
@@ -26,67 +27,93 @@ export function Header() {
             </DrawerTrigger>
             <DrawerContent>
               <div className="flex flex-col gap-4 py-5 px-10 items-start">
-                <Link to={'https://vstaffs.mintlify.app/'}>
-                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                    <span className="text-title-h6">Docs</span>
+                <BaseItem itemKey='link-to-document-page'>
+                  <Link to={'https://vstaffs.mintlify.app/'}>
+                    <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">Docs</span>
+                    </Button>
+                  </Link>
+                </BaseItem>
+                <BaseItem itemKey='link-to-demo-page'>
+                  <Link to={'/demo'}>
+                    <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">Demo</span>
+                    </Button>
+                  </Link>
+                </BaseItem>
+                <BaseItem itemKey='link-to-github-page'>
+                  <Link to={'https://github.com/lekhoinguyen06/walker'}>
+                    <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">Github</span>
+                      <RiGithubFill />
+                    </Button>
+                  </Link>
+                </BaseItem>
+                <BaseItem itemKey='link-to-pricing-page'>
+                  <Link to={'/pricing'}>
+                    <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">Pricing</span>
+                    </Button>
+                  </Link>
+                </BaseItem>
+                <BaseItem itemKey='link-to-about-page'>
+                  <Link to={'/about'}>
+                    <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">About</span>
+                    </Button>
+                  </Link>
+                </BaseItem>
+                <BaseItem itemKey='link-to-try-concierge'>
+                  <Button className="p-4 hover:bg-red-500">
+                    <span className="text-title-h6">Try Concierge</span>
                   </Button>
-                </Link>
-                <Link to={'/demo'}>
-                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                    <span className="text-title-h6">Demo</span>
-                  </Button>
-                </Link>
-                <Link to={'https://github.com/lekhoinguyen06/walker'}>
-                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                    <span className="text-title-h6">Github</span>
-                    <RiGithubFill />
-                  </Button>
-                </Link>
-                <Link to={'/pricing'}>
-                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                    <span className="text-title-h6">Pricing</span>
-                  </Button>
-                </Link>
-                <Link to={'/about'}>
-                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
-                    <span className="text-title-h6">About</span>
-                  </Button>
-                </Link>
-                <Button className="p-4 hover:bg-red-500">
-                  <span className="text-title-h6">Try Concierge</span>
-                </Button>
+                </BaseItem>
               </div>
             </DrawerContent>
           </Drawer>
         ) : (
           <div className="flex gap-4 py-5 px-10">
-            <Link to={'https://vstaffs.mintlify.app/'}>
-              <Button variant="ghost">
-                <span className="text-title-h6">Docs</span>
+            <BaseItem itemKey='link-to-docs-page'>
+              <Link to={'https://vstaffs.mintlify.app/'}>
+                <Button variant="ghost">
+                  <span className="text-title-h6">Docs</span>
+                </Button>
+              </Link>
+            </BaseItem>
+            <BaseItem itemKey='link-to-demo-page'>
+              <Link to={'/demo'}>
+                <Button variant="ghost">
+                  <span className="text-title-h6">Demo</span>
+                </Button>
+              </Link>
+            </BaseItem>
+            <BaseItem itemKey='link-to-github-page'>
+              <Link to={'https://github.com/lekhoinguyen06/walker'}>
+                <Button variant="ghost">
+                  <span className="text-title-h6">Github</span>
+                  <RiGithubFill />
+                </Button>
+              </Link>
+            </BaseItem>
+            <BaseItem itemKey='link-to-pricing-page'>
+              <Link to={'/pricing'}>
+                <Button variant="ghost">
+                  <span className="text-title-h6">Pricing</span>
+                </Button>
+              </Link>
+            </BaseItem>
+            <BaseItem itemKey='link-to-about-page'>
+              <Link to={'/about'}>
+                <Button variant="ghost">
+                  <span className="text-title-h6">About</span>
+                </Button>
+              </Link>
+            </BaseItem>
+            <BaseItem itemKey='link-to-try-concierge'>
+              <Button className="hover:bg-red-500">
+                <span className="text-title-h6">Try Concierge</span>
               </Button>
-            </Link>
-            <Link to={'/demo'}>
-              <Button variant="ghost">
-                <span className="text-title-h6">Demo</span>
-              </Button>
-            </Link>
-            <Link to={'https://github.com/lekhoinguyen06/walker'}>
-              <Button variant="ghost">
-                <span className="text-title-h6">Github</span>
-                <RiGithubFill />
-              </Button>
-            </Link>
-            <Link to={'/pricing'}>
-              <Button variant="ghost">
-                <span className="text-title-h6">Pricing</span>
-              </Button>
-            </Link>
-            <Button variant="ghost">
-              <span className="text-title-h6">About</span>
-            </Button>
-            <Button className="hover:bg-red-500">
-              <span className="text-title-h6">Try Concierge</span>
-            </Button>
+            </BaseItem>
           </div>
         )}
       </div>
