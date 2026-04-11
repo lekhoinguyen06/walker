@@ -46,7 +46,7 @@ export function Input() {
       role: 'user',
       content: prompt,
     });
-    
+
     setTimeout(() => {
       setPrompt('');
       setIsLoading(false);
@@ -54,7 +54,7 @@ export function Input() {
   };
 
   return (
-    <div className="absolute inset-x-0 bottom-0 mx-auto max-w-3xl px-3 pb-3 md:px-5 md:pb-5">
+    <div className=" mx-auto max-w-3xl px-3 pb-3 md:px-5 md:pb-5">
       <PromptInput
         isLoading={isLoading}
         value={prompt}

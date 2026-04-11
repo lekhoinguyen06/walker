@@ -69,7 +69,6 @@ export function Messages() {
             </Message>
           );
         })}
-        <div className="w-full h-20"></div>
       </ChatContainerContent>
     </ChatContainerRoot>
   );
