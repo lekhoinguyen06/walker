@@ -3,10 +3,10 @@ import hash from 'object-hash';
 import {
   BaseItemDataSchema,
   BaseItemOptionsSchema,
-  DEFAULT_BASE_ITEM_OPTIONS,
   type BaseItemOptionsType,
-} from '@repo/react';
+} from '@src/types/item.types';
 import z from 'zod';
+import { DEFAULT_BASE_ITEM_OPTIONS } from '@src/constants/item.constants';
 
 interface WalkerMap {
   hash: string;

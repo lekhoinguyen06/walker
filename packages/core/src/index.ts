@@ -23,6 +23,10 @@ export type * from '@src/types/action.types';
 export type * from '@src/types/app.types';
 export type * from '@src/types/flow.types';
 export type * from '@src/types/log.types';
+export type * from '@src/types/item.types';
+
+// Constants re-export
+export * from '@src/constants/item.constants';
 
 // These are singletons (In JavaScript ES modules, top-level code executes once per module instantiation. The module is then cached, so any subsequent imports reference the same module record.)
 export const flowManager = new FlowManager();
@@ -90,12 +94,10 @@ function initFlow() {
     description: 'Click any queried element from any route',
     route: '*',
     handler: async ({ action, gap }) => {
-      console.log('DEBUG: Click handler called with action:', action, 'and gap:', gap);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.query) {
-        console.log('DEBUG: Attempting to click element with query:', action.query);
         document.querySelector(action.query)?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',

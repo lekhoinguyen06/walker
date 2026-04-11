@@ -1,5 +1,4 @@
-import { DEFAULT_BASE_ITEM_OPTIONS } from '@src/constants/item.constants';
-import { BaseItemOptionsType, BaseItemProps } from '@src/types/item.types';
+import { BaseItemOptionsType, BaseItemProps, DEFAULT_BASE_ITEM_OPTIONS } from '@repo/core';
 
 function optionsMapper(options: BaseItemOptionsType): string {
   // let optionString = "";

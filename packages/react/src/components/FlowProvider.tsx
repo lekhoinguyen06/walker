@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import { initFlow } from "@repo/core";
 
-console.log('Initializing flows inside file...');
+type FlowProviderProps = {
+	initializer: () => void;
+	children: React.ReactNode;
+};
 
-export function FlowProvider({ children }: { children: React.ReactNode }) {
-	console.log('Initializing flows inside FlowProvider...');
-
+export function FlowProvider({ initializer, children }: FlowProviderProps) {
 	useEffect(() => {
-		console.log('Initializing flows inside useEffect...');
-		initFlow();
-	}, []);
+		initializer();
+	}, [initializer]);
 
 	return <>{children}</>;
 }
