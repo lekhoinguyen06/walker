@@ -16,7 +16,7 @@ export function Chat({ open, setOpen }: ChatProps) {
         <Button
           onClick={() => setOpen(false)}
           variant="ghost"
-          className="rounded-full m-4"
+          className="rounded-none size-8 hover:bg-black hover:text-white m-4"
         >
           <RiCloseLine size={24} />
         </Button>

@@ -9,7 +9,7 @@ export default function Trigger({ setOpen }: TriggerProps) {
     
   return (
     <Button
-        className="fixed bottom-0 right-0 mr-8 mb-8 bg-white shadow-sm p-4 size-16 aspect-square rounded-full group"
+        className="fixed bottom-0 right-0 mr-8 mb-8 bg-white shadow-sm size-12 aspect-square rounded-none group"
         size="icon"
         onClick={() => setOpen(true)}
     >

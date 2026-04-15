@@ -24,7 +24,7 @@ export function Header() {
         {isSmall ? (
           <Drawer>
             <DrawerTrigger>
-              <Button variant="ghost">
+              <Button variant="ghost" className='hover:bg-white rounded-none'>
                 <RiMenu3Line className="size-5" />
               </Button>
             </DrawerTrigger>
@@ -78,21 +78,21 @@ export function Header() {
           <div className="flex gap-4 py-5 px-10">
             <BaseItem itemKey='link-to-docs-page'>
               <Link to={'https://vstaffs.mintlify.app/'}>
-                <Button variant="ghost">
+                <Button variant="ghost" className='hover:bg-white rounded-none'>
                   <span className="text-title-h6">Docs</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-demo-page'>
               <Link to={'/demo'}>
-                <Button variant="ghost">
+                <Button variant="ghost" className='hover:bg-white rounded-none'>
                   <span className="text-title-h6">Demo</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-github-page'>
               <Link to={'https://github.com/lekhoinguyen06/walker'}>
-                <Button variant="ghost">
+                <Button variant="ghost" className='hover:bg-white rounded-none'>
                   <span className="text-title-h6">Github</span>
                   <RiGithubFill />
                 </Button>
@@ -100,20 +100,20 @@ export function Header() {
             </BaseItem>
             <BaseItem itemKey='link-to-pricing-page'>
               <Link to={'/pricing'}>
-                <Button variant="ghost">
+                <Button variant="ghost" className='hover:bg-white rounded-none'>
                   <span className="text-title-h6">Pricing</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-about-page'>
               <Link to={'/about'}>
-                <Button variant="ghost">
+                <Button variant="ghost" className='hover:bg-white rounded-none'>
                   <span className="text-title-h6">About</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-try-concierge'>
-              <Button className="hover:bg-red-500">
+              <Button className="hover:bg-red-500 rounded-none">
                 <span className="text-title-h6">Try Concierge</span>
               </Button>
             </BaseItem>
