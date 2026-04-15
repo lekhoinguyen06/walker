@@ -1,23 +1,19 @@
-import {
-  RiAlibabaCloudFill,
-  RiAlipayFill,
-  RiGitlabFill,
-  RiLinkedinBoxFill,
-  RiMetaFill,
-  RiNetflixFill,
-  RiNodejsFill,
-  RiNotionFill,
-  RiOpenaiFill,
-  RiVercelFill,
-} from '@remixicon/react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Header } from '@/features/components/header';
 import { Footer } from '@/features/components/footer';
-import { Pricing } from '../components/pricing';
 import { Chat } from '@/features/components/chat';
 import { useState } from 'react';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import Trigger from '@/features/components/chat/trigger';
+import { TechStack } from '../components/tech-stack';
+import { InstallationTerminal } from '../components/terminal';
+
+const message = `
+The idea is simple. How can we help backend agents to see what the user see?
+The world works on DOM elements, so we send it to our agents. 
+The Walker library helps your agents be interactive, deliver user the experience tailored to your imagination. 
+Guiding users, state aware, trained to use your web, and any other thing we can imagine. 
+Build with us, and walk the earth!
+`
 
 export function LandingPage() {
   const [open, setOpen] = useState(false);
@@ -38,25 +34,27 @@ export function LandingPage() {
           </div>
         </div>
         {isSmall ? (
-          <span className="text-paragraph-sm px-2">
-            The idea is simple. How can we help agents to see what the user see?
-            The world works on DOM elements, so we send it to the agents. The
-            Walker library helps you send what you want, be reactive, and allow
-            agent to walk our website. Guiding users, read from live website, or
-            any other applications we can imagine. Build with us, and walk the
-            earth!
+          <>
+          <span className="text-paragraph-sm px-2 text-justify">
+            {message}
           </span>
+          <div className="w-full p-10 flex flex-col gap-20">
+            <InstallationTerminal />
+            <TechStack />
+          </div>
+          </>
         ) : (
-          <span className="text-title-h5">
-            The idea is simple. How can we help agents to see what the user see?
-            The world works on DOM elements, so we send it to the agents. The
-            Walker library helps you send what you want, be reactive, and allow
-            agent to walk our website. Guiding users, read from live website, or
-            any other applications we can imagine. Build with us, and walk the
-            earth!
+          <>
+          <span className="text-title-h5 text-justify">
+            {message}
           </span>
+          <div className="w-full p-10 flex gap-20">
+            <InstallationTerminal />
+            <TechStack />
+          </div>
+          </>
         )}
-        <div className="w-full h-200 p-10 flex flex-col gap-20">
+        {/* <div className="w-full h-200 p-10 flex flex-col gap-20">
           <span className="text-title-h5">Trusted by top teams</span>
           <div className="w-full flex justify-evenly overflow-x-scroll">
             <div className="p-5">
@@ -103,17 +101,17 @@ export function LandingPage() {
             <div className="flex -space-x-2">
               <Avatar>
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
+                  src="https://github.com/lekhoinguyen06.png"
+                  alt="@lekhoinguyen06"
                 />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>L</AvatarFallback>
               </Avatar>
               <Avatar>
                 <AvatarImage
                   src="https://github.com/maxleiter.png"
                   alt="@maxleiter"
                 />
-                <AvatarFallback>LR</AvatarFallback>
+                <AvatarFallback>ML</AvatarFallback>
               </Avatar>
               <Avatar>
                 <AvatarImage
@@ -129,8 +127,8 @@ export function LandingPage() {
               </Avatar>
             </div>
           </div>
-        </div>
-        <Pricing />
+        </div> */}
+        {/* <Pricing /> */}
         <Footer />
       </div>
     </div>

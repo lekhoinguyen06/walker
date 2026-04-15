@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "radix-nova",
   "rsc": false,
   "tsx": true,
   "tailwind": {
@@ -12,6 +12,8 @@
   },
   "iconLibrary": "lucide",
   "rtl": false,
+  "menuColor": "default",
+  "menuAccent": "subtle",
   "aliases": {
     "components": "@/components",
     "utils": "@/lib/utils",
@@ -20,6 +22,7 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@prompt-kit": "https://www.prompt-kit.com/c/{name}.json"
+    "@prompt-kit": "https://www.prompt-kit.com/c/{name}.json",
+    "@magicui": "https://magicui.design/r/{name}"
   }
 }
