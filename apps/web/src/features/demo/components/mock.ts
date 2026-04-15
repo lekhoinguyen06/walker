@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { CardProp } from '../page';
+import { CardProp } from '@/types/card';
 
 const DATA_PER_ROW = 20;
 

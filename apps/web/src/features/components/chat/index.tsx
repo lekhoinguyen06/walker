@@ -11,7 +11,7 @@ type ChatProps = {
 export function Chat({ open, setOpen }: ChatProps) {
   if (!open) return null;
   return (
-    <div className="fixed top-0 right-0 h-full w-full min-w-80 max-w-120 flex flex-col bg-white/50 backdrop-blur-2xl z-50">
+    <div className="fixed top-0 right-0 h-full w-full min-w-80 max-w-120 flex flex-col bg-white/50 backdrop-blur-2xl z-51">
       <div className="flex justify-end">
         <Button
           onClick={() => setOpen(false)}

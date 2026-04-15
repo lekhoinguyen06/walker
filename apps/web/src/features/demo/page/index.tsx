@@ -1,59 +1,22 @@
-import { Button } from '@/components/ui/button';
 import { Header } from '@/features/components/header';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   generateMockBook,
   generateMockCommerce,
   generateMockVehicle,
 } from '../components/mock';
-import { RiShoppingBag3Line } from '@remixicon/react';
 import { BaseItem } from '@repo/react';
-import slugify from 'slugify';
 import { Chat } from '@/features/components/chat';
 import Trigger from '@/features/components/chat/trigger';
-
-function Row({
-  children,
-  header,
-}: {
-  children: React.ReactNode;
-  header: string;
-}) {
-  return (
-    <BaseItem itemKey={`row-${slugify(header)}`}>
-      <div className="w-full flex flex-col gap-8 mb-16">
-        <span className="text-title-h5">{header}</span>
-        <div className="flex gap-10 w-full overflow-x-scroll">{children}</div>
-      </div>
-    </BaseItem>
-  );
-}
-
-export type CardProp = {
-  title: string;
-  price: string;
-};
-
-function Card({ title, price }: CardProp) {
-  const key = `shopping-item-${slugify(title)}`;
-  return (
-    <BaseItem itemKey={key}>
-      <div className="flex flex-col gap-4 min-w-60 min-h-60 p-4 border-2 border-gray-50 shadow-sm rounded-2xl my-4 justify-between">
-        <div className="w-full aspect-square bg-slate-50"></div>
-        <span className="text-label-md">{title}</span>
-        <div className="flex justify-between items-center gap-4">
-          <span className="text-label-sm">${price}</span>
-          <Button>
-            <RiShoppingBag3Line />
-          </Button>
-        </div>
-      </div>
-    </BaseItem>
-  );
-}
+import { Row } from '../components/row';
+import { Card } from '../components/card';
+import { Cart } from '../components/cart';
+import { Button } from '@/components/ui/button';
+import { RiShoppingBasket2Line } from '@remixicon/react';
 
 export function DemoPage() {
   const [open, setOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const commerce1 = useMemo(() => {
     return generateMockCommerce();
   }, []);
@@ -76,6 +39,11 @@ export function DemoPage() {
         <Header />
         <Chat open={open} setOpen={setOpen} />
         <Trigger setOpen={setOpen} />
+        <Cart open={cartOpen} setOpen={setCartOpen}>
+          <Button variant="outline" className='z-50 fixed bottom-0 right-0 mr-24 mb-8 bg-black shadow-sm size-12 ring-2 ring-white aspect-square rounded-none group hover:bg-white hover:ring-black'>
+            <RiShoppingBasket2Line className='text-white group-hover:text-black' />
+          </Button>
+        </Cart>
         <div className="w-full flex flex-col p-30">
           <Row header="Walkers' favorite">
             {commerce1.map((item) => (
