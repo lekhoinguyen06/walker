@@ -1,7 +1,7 @@
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
-import { RiGithubFill, RiMenu3Line } from '@remixicon/react';
+import { RiMenu3Line } from '@remixicon/react';
 import { Link } from 'react-router';
 import { BaseItem } from '@repo/react';
 
@@ -24,7 +24,7 @@ export function Header() {
         {isSmall ? (
           <Drawer>
             <DrawerTrigger>
-              <Button variant="ghost" className='hover:bg-white rounded-none'>
+              <Button variant="ghost" className='size-10 hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                 <RiMenu3Line className="size-5" />
               </Button>
             </DrawerTrigger>
@@ -48,7 +48,6 @@ export function Header() {
                   <Link to={'https://github.com/lekhoinguyen06/walker'}>
                     <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
                       <span className="text-title-h6">Github</span>
-                      <RiGithubFill />
                     </Button>
                   </Link>
                 </BaseItem>
@@ -67,9 +66,9 @@ export function Header() {
                   </Link>
                 </BaseItem>
                 <BaseItem itemKey='link-to-try-concierge'>
-                  <Button className="p-4 hover:bg-red-500">
-                    <span className="text-title-h6">Try Concierge</span>
-                  </Button>
+                  <Button variant="ghost" className={MOBILE_NAV_CLASSNAME}>
+                      <span className="text-title-h6">Concierge</span>
+                    </Button>
                 </BaseItem>
               </div>
             </DrawerContent>
@@ -78,42 +77,41 @@ export function Header() {
           <div className="flex gap-4 py-5 px-10">
             <BaseItem itemKey='link-to-docs-page'>
               <Link to={'https://vstaffs.mintlify.app/'}>
-                <Button variant="ghost" className='hover:bg-white rounded-none'>
+                <Button variant="ghost" className='hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                   <span className="text-title-h6">Docs</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-demo-page'>
               <Link to={'/demo'}>
-                <Button variant="ghost" className='hover:bg-white rounded-none'>
+                <Button variant="ghost" className='hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                   <span className="text-title-h6">Demo</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-github-page'>
               <Link to={'https://github.com/lekhoinguyen06/walker'}>
-                <Button variant="ghost" className='hover:bg-white rounded-none'>
+                <Button variant="ghost" className='hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                   <span className="text-title-h6">Github</span>
-                  <RiGithubFill />
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-pricing-page'>
               <Link to={'/pricing'}>
-                <Button variant="ghost" className='hover:bg-white rounded-none'>
+                <Button variant="ghost" className='hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                   <span className="text-title-h6">Pricing</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-about-page'>
               <Link to={'/about'}>
-                <Button variant="ghost" className='hover:bg-white rounded-none'>
+                <Button variant="ghost" className='hover:bg-white rounded-none hover:ring-2 hover:ring-black'>
                   <span className="text-title-h6">About</span>
                 </Button>
               </Link>
             </BaseItem>
             <BaseItem itemKey='link-to-try-concierge'>
-              <Button className="hover:bg-red-500 rounded-none">
+              <Button className="hover:bg-red-500 rounded-none hover:ring-2 hover:ring-black">
                 <span className="text-title-h6">Try Concierge</span>
               </Button>
             </BaseItem>
