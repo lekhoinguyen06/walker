@@ -5,6 +5,9 @@
   "description": "Encore + Drizzle Typescript Example",
   "license": "MPL-2.0",
   "type": "module",
+  "scripts": {
+    "dev": "encore daemon && encore run"
+  },
   "devDependencies": {
     "@types/node": "^20.5.7",
     "@types/pg": "^8.20.0",
