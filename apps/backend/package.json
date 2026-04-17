@@ -7,13 +7,14 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^20.5.7",
+    "@types/pg": "^8.20.0",
     "drizzle-kit": "^0.27.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "drizzle-orm": "^0.36.0",
     "encore.dev": "^1.56.6",
-    "pg": "^8.13.1"
+    "pg": "^8.20.0"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.13.0"

@@ -2,17 +2,17 @@ import { api, APIError } from "encore.dev/api";
 import {
   CreateUserDto,
   UpdateUserDto,
-  Response,
   UserResponse,
 } from "./user.interface";
 import UserService from "./user.service";
+import { ResponseDto } from "../shared/interface";
 
 /**
  * Counts and returns the number of existing users
  */
 export const count = api(
   { expose: true, method: "GET", path: "/count/users" },
-  async (): Promise<Response> => {
+  async (): Promise<ResponseDto<number>> => {
     try {
       const result = await UserService.count();
       return { success: true, result };
@@ -104,7 +104,7 @@ export const update = api(
  */
 export const destroy = api(
   { expose: true, method: "DELETE", path: "/users/:id" },
-  async ({ id }: { id: number }): Promise<Response> => {
+  async ({ id }: { id: number }): Promise<ResponseDto<string>> => {
     try {
       const result = await UserService.delete(id);
       return result;
