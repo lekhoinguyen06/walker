@@ -1,5 +1,5 @@
 import { CreateApiKeyDto, UpdateApiKeyDto } from "./auth.interface";
-import { generateApiKey, hashApiKey } from "./utils";
+import { calculateExpireAt, generateApiKey, hashApiKey } from "./utils";
 import { db } from "./database";
 import { apiKeys } from "./schema";
 import { eq } from "drizzle-orm";
@@ -12,6 +12,8 @@ const AuthService = {
         await db.insert(apiKeys).values({
             name: data.name,
             key: hashedKey,
+            createdById: data.createdById,
+            expireAt: calculateExpireAt(data.duration),
         });
         return {
             success: true,
@@ -26,6 +28,7 @@ const AuthService = {
             .set({
                 name: data.name,
                 key: hashedKey,
+                expireAt: data.duration ? calculateExpireAt(data.duration) : undefined,
             })
             .where(eq(apiKeys.id, data.id));
         return {
