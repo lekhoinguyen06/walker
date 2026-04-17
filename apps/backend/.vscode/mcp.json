@@ -4,7 +4,7 @@
             "args": [
                 "mcp",
                 "run",
-                "--app=dx5qo"
+                "--app=backend-gzr2"
             ],
             "command": "encore"
         }
