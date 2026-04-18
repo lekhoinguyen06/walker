@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 // Create SQLDatabase instance with migrations configuration
 const DB = new SQLDatabase("auth", {
   migrations: {
-    path: "migrations",
+    path: "./migrations",
     source: "drizzle",
   },
 });
