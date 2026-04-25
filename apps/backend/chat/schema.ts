@@ -3,8 +3,8 @@ import * as p from "drizzle-orm/pg-core";
 
 // Schemas
 export const sessions = p.pgTable("sessions", {
-  id: p.serial().primaryKey(),
-  userId: p.integer().notNull(),
+  id: p.uuid().defaultRandom().primaryKey(),
+  userId: p.uuid().notNull(),
   title: p.text().notNull(),
 
   // Metadata
@@ -20,8 +20,8 @@ export const sessions = p.pgTable("sessions", {
 export const rolesEnum = p.pgEnum("role",["user", "assistant", "system"]);
 
 export const messages = p.pgTable("messages", {
-  id: p.serial().primaryKey(),
-  sessionId: p.integer().notNull(),
+  id: p.uuid().defaultRandom().primaryKey(),
+  sessionId: p.uuid().notNull(),
   role: rolesEnum(),
   content: p.json().notNull(),
 
@@ -35,8 +35,8 @@ export const messages = p.pgTable("messages", {
 });
 
 export const toolCalls = p.pgTable("tool_calls", {
-  id: p.serial().primaryKey(),
-  messageId: p.integer().notNull(),
+  id: p.uuid().defaultRandom().primaryKey(),
+  messageId: p.uuid().notNull(),
   tool: p.text().notNull(),
   input: p.json().notNull(),
   output: p.json(),
@@ -46,8 +46,8 @@ export const toolCalls = p.pgTable("tool_calls", {
 });
 
 export const attachments = p.pgTable("attachments", {
-  id: p.serial().primaryKey(),
-  messageId: p.integer().notNull(),
+  id: p.uuid().defaultRandom().primaryKey(),
+  messageId: p.uuid().notNull(),
   filename: p.text().notNull(),
   url: p.text().notNull(),
 

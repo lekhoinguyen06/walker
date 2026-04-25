@@ -1,7 +1,7 @@
 CREATE TYPE "public"."role" AS ENUM('user', 'assistant', 'system');--> statement-breakpoint
 CREATE TABLE "attachments" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"messageId" integer NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"messageId" uuid NOT NULL,
 	"filename" text NOT NULL,
 	"url" text NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
@@ -10,8 +10,8 @@ CREATE TABLE "attachments" (
 );
 --> statement-breakpoint
 CREATE TABLE "messages" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"sessionId" integer NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"sessionId" uuid NOT NULL,
 	"role" "role",
 	"content" json NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE "messages" (
 );
 --> statement-breakpoint
 CREATE TABLE "sessions" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"userId" integer NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"userId" uuid NOT NULL,
 	"title" text NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"retention" integer DEFAULT 30 NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE "sessions" (
 );
 --> statement-breakpoint
 CREATE TABLE "tool_calls" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"messageId" integer NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"messageId" uuid NOT NULL,
 	"tool" text NOT NULL,
 	"input" json NOT NULL,
 	"output" json,

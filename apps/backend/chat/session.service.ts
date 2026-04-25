@@ -50,7 +50,7 @@ const SessionService = {
     return {
       success: true,
       result: null,
-      message: "Session deleted successfully",
+      message: `Session ${sessionId} deleted successfully`,
     };
   },
 };
