@@ -7,6 +7,8 @@ import { getAuthData } from "~encore/auth";
 import { AuthDto } from "../shared/shared-auth.interface";
 import { randomUUID } from "node:crypto";
 import { Message } from "../shared/shared-chat.interface";
+import { Session } from "node:inspector/promises";
+import SessionService from "./session.service";
 
 const connectedStreams: Map<
   string,
@@ -49,19 +51,7 @@ export const create = api(
   async (_: EmptyDto): Promise<CreateSessionResponseDto> => {
     const auth = getAuthData() as AuthDto;
 
-    return {
-      success: true,
-      result: {
-        id: randomUUID(),
-        userId: auth.userID,
-        title: "New Session",
-        deleted: false,
-        retention: 30,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      message: "Session created successfully",
-    };
+    return SessionService.createSession({ userId: auth.userID });
   }
 );
 
@@ -70,30 +60,7 @@ export const query = api(
   async ({ sessionId }: { sessionId: string }): Promise<QuerySessionResponseDto> => {
     const auth = getAuthData() as AuthDto;
 
-    return {
-      success: true,
-      result: {
-        id: sessionId,
-        userId: auth.userID,
-        title: "New Session",
-        deleted: false,
-        retention: 30,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        messages: [
-          {
-            id: randomUUID(),
-            sessionId,
-            role: "system",
-            content: "Hello, how are you?",
-            deleted: false,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
-        ]
-      },
-      message: "Session retrieved successfully",
-    };
+    return SessionService.querySession({ userId: auth.userID, sessionId });
   }
 );
 
@@ -102,9 +69,6 @@ export const deleteSession = api(
   async ({ sessionId }: { sessionId: string }): Promise<ResponseDto<null>> => {
     const auth = getAuthData() as AuthDto;
     
-    return {
-      success: true,
-      message: `Session ${sessionId} deleted successfully`,
-    };
+    return SessionService.deleteSession({ userId: auth.userID, sessionId });
   }
 );
