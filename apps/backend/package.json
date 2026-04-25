@@ -23,7 +23,8 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.45.2",
     "encore.dev": "^1.56.6",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "zod": "^4.3.6"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.13.0"

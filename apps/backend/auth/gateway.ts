@@ -1,7 +1,7 @@
 import { APIError, Gateway, Header } from "encore.dev/api";
 import { authHandler } from "encore.dev/auth";
 import { auth } from "./auth";
-import { AuthDto } from "../shared/shared-auth.interface";
+import { AuthDto } from "../shared/dto/shared-auth.dto";
 
 interface AuthParams {
   authorization?: Header<"Authorization">;

@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import * as p from "drizzle-orm/pg-core";
+import { MessageRole } from "./message/message.const";
 
 // Schemas
 export const sessions = p.pgTable("sessions", {
@@ -18,7 +19,7 @@ export const sessions = p.pgTable("sessions", {
   expireAt: p.timestamp()
 });
 
-export const rolesEnum = p.pgEnum("role",["user", "assistant", "system"]);
+export const rolesEnum = p.pgEnum("role",[MessageRole.User, MessageRole.Assistant, MessageRole.System]);
 
 export const messages = p.pgTable("messages", {
   id: p.uuid().defaultRandom().primaryKey(),

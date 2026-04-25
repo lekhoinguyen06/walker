@@ -1,4 +1,4 @@
-import { PaginatedDto, ResponseDto } from "../shared/interface";
+import { PaginatedResDto, ResponseDto } from "../shared/dto/response.dto";
 
 export interface UserDto {
   /** ID of the user */
@@ -25,5 +25,5 @@ export interface UpdateUserDto {
 
 export interface UserResponse extends ResponseDto<UserDto | UserDto[]> {
   /** Pagination data */
-  pagination?: PaginatedDto;
+  pagination?: PaginatedResDto;
 }

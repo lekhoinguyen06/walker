@@ -1,5 +1,5 @@
-import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseDto, UpdateSessionBodyDto, UpdateSessionResponseDto } from "./session.interface";
-import { ResponseDto } from "../shared/interface";
+import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseDto, UpdateSessionBodyDto, UpdateSessionResponseDto } from "./session.dto";
+import { ResponseDto } from "../../shared/dto/response.dto";
 import SessionRepository from "./session.repo";
 import { SessionNotFoundError } from "./session.error";
 import { startOfDay, addDays } from "date-fns";

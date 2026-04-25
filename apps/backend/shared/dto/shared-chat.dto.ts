@@ -1,4 +1,4 @@
-export interface Session {
+export interface SessionDto {
   id: string;
   userId: string;
   title: string;
@@ -14,7 +14,7 @@ export interface Session {
   expireAt?: Date | null;
 }
 
-export interface Message {
+export interface MessageDto {
   id: string;
   sessionId: string;
   role: "user" | "assistant" | "system" | null;
@@ -29,6 +29,6 @@ export interface Message {
   deletedAt?: Date | null;
 }
 
-export interface SessionWithMessages extends Session {
-  messages: Message[];
+export interface SessionWithMessagesDto extends SessionDto {
+  messages: MessageDto[];
 }

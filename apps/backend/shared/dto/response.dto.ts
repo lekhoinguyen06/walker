@@ -1,5 +1,3 @@
-export interface EmptyDto {}
-
 export interface ResponseDto<T> {
   /** Indicates if the request was successful */
   success: boolean;
@@ -9,7 +7,7 @@ export interface ResponseDto<T> {
   result?: T;
 }
 
-export interface PaginatedDto {
+export interface PaginatedResDto {
   /** Total number of results */
   count: number;
   /** Number of results per page */

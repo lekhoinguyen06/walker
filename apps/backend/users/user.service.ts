@@ -3,7 +3,7 @@ import { users } from "./schema";
 import { db } from "./database";
 import { eq, asc } from 'drizzle-orm';
 import { getOffset, paginatedData } from "./utils";
-import { ResponseDto } from "../shared/interface";
+import { ResponseDto } from "../shared/dto/response.dto";
 
 const UserService = {
   count: async (): Promise<number> => {

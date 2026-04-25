@@ -1,47 +1,82 @@
 import { api, StreamInOut } from "encore.dev/api";
 import log from "encore.dev/log";
-import claude from "./claude";
-import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseDto, UpdateSessionBodyDto, UpdateSessionResponseDto } from "./session.interface";
-import { EmptyDto, ResponseDto } from "../shared/interface";
+import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseDto, UpdateSessionBodyDto, UpdateSessionResponseDto } from "./session/session.dto";
+import { ResponseDto } from "../shared/dto/response.dto";
 import { getAuthData } from "~encore/auth";
-import { AuthDto } from "../shared/shared-auth.interface";
-import { randomUUID } from "node:crypto";
-import { Message } from "../shared/shared-chat.interface";
-import { Session } from "node:inspector/promises";
-import SessionService from "./session.service";
+import { AuthDto } from "../shared/dto/shared-auth.dto";
+import { MessageDto } from "../shared/dto/shared-chat.dto";
+import SessionService from "./session/session.service";
+import { EmptyDto } from "../shared/dto/shared.dto";
+import { CreateMsgBodyDto, InputMsgDto } from "./message/message.dto";
+import { MessageRole } from "./message/message.const";
+import MessageService from "./message/message.service";
+import { graph } from "./llm";
 
 const connectedStreams: Map<
   string,
-  StreamInOut<Message, Message>
+  StreamInOut<InputMsgDto, MessageDto>
 > = new Map();
 
 interface HandshakeRequest {
-  id: string;
+  sessionId: string;
 }
 
-export const chat = api.streamInOut<HandshakeRequest, Message, Message>(
+export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
   { expose: true, auth: false, path: "/chat" },
   async (handshake, stream) => {
-    connectedStreams.set(handshake.id, stream);
+    connectedStreams.set(handshake.sessionId, stream);
 
-    log.info("Stream connected:", stream);
+    log.debug("Stream connected:", stream);
     try {
       // The stream object is an AsyncIterator that yields incoming messages.
       // The loop will continue as long as the client keeps the connection open.
       for await (const chatMessage of stream) {
         for (const [key, val] of connectedStreams) {
           try {
-            const res = await claude.invoke(chatMessage.content);
-            await val.send({ ...chatMessage, role: "assistant", content: res.content.toString(), createdAt: new Date() });
+            log.debug("Received message:", chatMessage);
+
+            // Store user message
+            const addUserMsg: CreateMsgBodyDto = {
+              sessionId: handshake.sessionId,
+              role: MessageRole.User,
+              content: chatMessage.content,
+            }
+            const addedUserMsg = await MessageService.addMsg(addUserMsg);
+
+            // Get history
+            const sessionMsgs = await MessageService.getMsgs(handshake.sessionId);
+            const history = sessionMsgs.map((msg) => {
+              return {
+                role: msg.role ?? MessageRole.User,
+                content: msg.content,
+              }
+            });
+
+            // Invoke
+            const config = { configurable: { thread_id: handshake.sessionId } };
+            const result = await graph.invoke({
+              history: history,
+            }, config)
+
+            // Store agent message
+            const agentMsg: CreateMsgBodyDto = {
+              sessionId: handshake.sessionId,
+              role: MessageRole.Assistant,
+              content: result.response,
+            }
+            const addedAgentMsg = await MessageService.addMsg(agentMsg);
+
+            // Return
+            await val.send(addedAgentMsg);
           } catch (err) {
             connectedStreams.delete(key);
           }
         }
       }
     } catch (err) {
-      connectedStreams.delete(handshake.id);
+      connectedStreams.delete(handshake.sessionId);
     }
-    connectedStreams.delete(handshake.id);
+    connectedStreams.delete(handshake.sessionId);
   },
 );
 

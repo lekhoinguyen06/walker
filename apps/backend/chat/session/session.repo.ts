@@ -1,7 +1,7 @@
 import { eq, and } from "drizzle-orm";
-import { db } from "./database";
-import { messages, sessions } from "./schema";
-import { UpdateSessionBodyDto } from "./session.interface";
+import { db } from "../database";
+import { messages, sessions } from "../schema";
+import { UpdateSessionBodyDto } from "./session.dto";
 import { addDays, startOfDay } from "date-fns";
 
 const SessionRepository = {

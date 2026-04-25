@@ -5,7 +5,7 @@ import {
   UserResponse,
 } from "./user.interface";
 import UserService from "./user.service";
-import { ResponseDto } from "../shared/interface";
+import { ResponseDto } from "../shared/dto/response.dto";
 
 /**
  * Counts and returns the number of existing users
