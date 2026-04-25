@@ -1,3 +1,5 @@
+export interface EmptyDto {}
+
 export interface ResponseDto<T> {
   /** Indicates if the request was successful */
   success: boolean;

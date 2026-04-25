@@ -1,19 +1,14 @@
 import { APIError, Gateway, Header } from "encore.dev/api";
 import { authHandler } from "encore.dev/auth";
 import { auth } from "./auth";
+import { AuthDto } from "../shared/shared-auth.interface";
 
 interface AuthParams {
   authorization: Header<"Authorization">;
   cookie: Header<"Cookie">;
 }
 
-interface AuthData {
-  userID: string;
-  email: string;
-  name: string;
-}
-
-const handler = authHandler(async (params: AuthParams): Promise<AuthData> => {
+const handler = authHandler(async (params: AuthParams): Promise<AuthDto> => {
   const headers = new Headers();
   if (params.authorization) {
     headers.set("Authorization", params.authorization);

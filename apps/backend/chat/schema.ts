@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import * as p from "drizzle-orm/pg-core";
 
-// Schema
+// Schemas
 export const sessions = p.pgTable("sessions", {
   id: p.serial().primaryKey(),
   userId: p.integer().notNull(),

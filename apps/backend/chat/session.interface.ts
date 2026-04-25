@@ -1,26 +1,12 @@
-// export const sessions = p.pgTable("sessions", {
-//   id: p.serial().primaryKey(),
-//   userId: p.integer().notNull(),
-//   sessionData: p.jsonb().notNull(),
-// });
-
 import { Min } from "encore.dev/validate";
+import { ResponseDto } from "../shared/interface";
+import { Session, SessionWithMessages } from "../shared/shared-chat.interface";
 
-export interface Session {
-  id: number & (Min<0>);
-  userId: number & (Min<0>);
-  sessionData: string; 
-}
+export interface QuerySessionResponseDto extends ResponseDto<SessionWithMessages> {}
 
-export interface CreateSessionBodyDto {
-  userId: number & (Min<0>);
-}
+export interface GetSessionsResponseDto extends ResponseDto<Session[]> {}
 
-export interface CreateSessionResponseDto {
-  id: number;
-  userId: number;
-  sessionData: string;
-}
+export interface CreateSessionResponseDto extends ResponseDto<Session> {}
 
 export interface UpdateSessionBodyDto extends Omit<CreateSessionResponseDto, "userId"> {} 
 
