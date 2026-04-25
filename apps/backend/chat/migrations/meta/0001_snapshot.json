@@ -1,6 +1,6 @@
 {
-  "id": "74a52a6a-ddbc-4d6a-a61e-f48c43cf2c99",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "27115c3d-0ea1-4226-b13c-f13463f95bd6",
+  "prevId": "74a52a6a-ddbc-4d6a-a61e-f48c43cf2c99",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -181,6 +181,12 @@
         },
         "deletedAt": {
           "name": "deletedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expireAt": {
+          "name": "expireAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false

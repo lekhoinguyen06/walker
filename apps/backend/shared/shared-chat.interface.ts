@@ -11,6 +11,7 @@ export interface Session {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date | null;
+  expireAt?: Date | null;
 }
 
 export interface Message {

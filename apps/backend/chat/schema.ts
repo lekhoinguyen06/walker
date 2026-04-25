@@ -1,10 +1,10 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import * as p from "drizzle-orm/pg-core";
 
 // Schemas
 export const sessions = p.pgTable("sessions", {
   id: p.uuid().defaultRandom().primaryKey(),
-  userId: p.uuid().notNull(),
+  userId: p.text().notNull(),
   title: p.text().notNull(),
 
   // Metadata
@@ -15,6 +15,7 @@ export const sessions = p.pgTable("sessions", {
   createdAt: p.timestamp().defaultNow().notNull(),
   updatedAt: p.timestamp().defaultNow().notNull(),
   deletedAt: p.timestamp(),
+  expireAt: p.timestamp()
 });
 
 export const rolesEnum = p.pgEnum("role",["user", "assistant", "system"]);

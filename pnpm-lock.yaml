@@ -156,6 +156,9 @@ importers:
       better-auth:
         specifier: ^1.6.5
         version: 1.6.5(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.2)(pg@8.20.0)
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@opentelemetry/api@1.9.1)(@types/pg@8.20.0)(kysely@0.28.16)(pg@8.20.0)
@@ -7451,6 +7454,10 @@ packages:
       call-bound: 1.0.4
       es-errors: 1.3.0
       is-data-view: 1.0.2
+    dev: false
+
+  /date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
     dev: false
 
   /debug@4.4.3:

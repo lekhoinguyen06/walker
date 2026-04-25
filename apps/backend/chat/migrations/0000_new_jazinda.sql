@@ -22,7 +22,7 @@ CREATE TABLE "messages" (
 --> statement-breakpoint
 CREATE TABLE "sessions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"userId" uuid NOT NULL,
+	"userId" text NOT NULL,
 	"title" text NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"retention" integer DEFAULT 30 NOT NULL,

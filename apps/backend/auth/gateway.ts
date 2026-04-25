@@ -4,8 +4,8 @@ import { auth } from "./auth";
 import { AuthDto } from "../shared/shared-auth.interface";
 
 interface AuthParams {
-  authorization: Header<"Authorization">;
-  cookie: Header<"Cookie">;
+  authorization?: Header<"Authorization">;
+  cookie?: Header<"Cookie">;
 }
 
 const handler = authHandler(async (params: AuthParams): Promise<AuthDto> => {
