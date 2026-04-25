@@ -1,5 +1,6 @@
 import { SQLDatabase } from "encore.dev/storage/sqldb";
 import { drizzle } from "drizzle-orm/node-postgres"
+import * as schema from "./schema";
 
 // Define a database named 'encore_drizzle_test', using the database migrations
 // in the "./migrations" folder. Encore automatically provisions,
@@ -11,6 +12,6 @@ const DB = new SQLDatabase('chats', {
   },
 });
 
-const db = drizzle(DB.connectionString);
+const db = drizzle(DB.connectionString, { schema });
 
 export { db };

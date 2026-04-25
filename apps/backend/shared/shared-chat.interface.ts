@@ -10,13 +10,13 @@ export interface Session {
   // Timestamps
   createdAt: Date;
   updatedAt: Date;
-  deletedAt?: Date;
+  deletedAt?: Date | null;
 }
 
 export interface Message {
   id: string;
   sessionId: string;
-  role: "user" | "assistant" | "system";
+  role: "user" | "assistant" | "system" | null;
   content: any;
 
   // Metadata
@@ -25,7 +25,7 @@ export interface Message {
   // Timestamps
   createdAt: Date;
   updatedAt: Date;
-  deletedAt?: Date;
+  deletedAt?: Date | null;
 }
 
 export interface SessionWithMessages extends Session {
