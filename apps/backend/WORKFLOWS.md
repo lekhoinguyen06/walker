@@ -24,12 +24,20 @@ npx drizzle-kit generate
 #### Migration 
 If Encore and Drizzle can auto migrate
 1. Change schema
+Currently, changes in schema.ts will not trigger auto migration from Encore, you will have to, from the service folder:
+```bash
+npx drizzle-kit migrate
+```
+
 If now modify or add new features to better-auth, from service folder run:
 ```bash
 npx auth generate
 ```
 
 2. Run app and encore will migrate db for you
+```bash
+encore run
+```
 
 
 #### Migration 
