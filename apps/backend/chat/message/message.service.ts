@@ -1,4 +1,4 @@
-import { MessageDto } from "../../shared/dto/shared-chat.dto";
+import { MessageDto } from "./message.model";
 import { CreateMsgBodyDto } from "./message.dto";
 import MessageRepository from "./message.repo";
 

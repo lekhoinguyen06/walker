@@ -153,6 +153,9 @@ importers:
       '@langchain/langgraph':
         specifier: ^1.2.9
         version: 1.2.9(@langchain/core@1.1.40)(zod@4.3.6)
+      arktype:
+        specifier: ^2.2.0
+        version: 2.2.0
       better-auth:
         specifier: ^1.6.5
         version: 1.6.5(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.2)(pg@8.20.0)
@@ -665,6 +668,16 @@ packages:
     dependencies:
       json-schema-to-ts: 3.1.1
       zod: 4.3.6
+    dev: false
+
+  /@ark/schema@0.56.0:
+    resolution: {integrity: sha512-ECg3hox/6Z/nLajxXqNhgPtNdHWC9zNsDyskwO28WinoFEnWow4IsERNz9AnXRhTZJnYIlAJ4uGn3nlLk65vZA==}
+    dependencies:
+      '@ark/util': 0.56.0
+    dev: false
+
+  /@ark/util@0.56.0:
+    resolution: {integrity: sha512-BghfRC8b9pNs3vBoDJhcta0/c1J1rsoS1+HgVUreMFPdhz/CRAKReAu57YEllNaSy98rWAdY1gE+gFup7OXpgA==}
     dev: false
 
   /@babel/code-frame@7.29.0:
@@ -6603,6 +6616,20 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       tslib: 2.8.1
+    dev: false
+
+  /arkregex@0.0.5:
+    resolution: {integrity: sha512-ncYjBdLlh5/QnVsAA8De16Tc9EqmYM7y/WU9j+236KcyYNUXogpz3sC4ATIZYzzLxwI+0sEOaQLEmLmRleaEXw==}
+    dependencies:
+      '@ark/util': 0.56.0
+    dev: false
+
+  /arktype@2.2.0:
+    resolution: {integrity: sha512-t54MZ7ti5BhOEvzEkgKnWvqj+UbDfWig+DHr5I34xatymPusKLS0lQpNJd8M6DzmIto2QGszHfNKoFIT8tMCZQ==}
+    dependencies:
+      '@ark/schema': 0.56.0
+      '@ark/util': 0.56.0
+      arkregex: 0.0.5
     dev: false
 
   /array-buffer-byte-length@1.0.2:

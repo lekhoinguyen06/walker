@@ -6,5 +6,5 @@ export const SessionRetention = {
     Year: 365,
 } as const;
 
-export type SessionRetention = typeof SessionRetention[keyof typeof SessionRetention];
-
+// Type exports
+export type SessionRetentionType = typeof SessionRetention[keyof typeof SessionRetention];

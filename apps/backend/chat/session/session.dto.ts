@@ -1,6 +1,7 @@
 import { Min } from "encore.dev/validate";
 import { ResponseDto } from "../../shared/dto/response.dto";
-import { SessionDto, SessionWithMessagesDto } from "../../shared/dto/shared-chat.dto";
+import { SessionDto } from "./session.model";
+import { SessionWithMessagesDto } from "../shared/dto";
 
 export interface QuerySessionResponseDto extends ResponseDto<SessionWithMessagesDto> {}
 

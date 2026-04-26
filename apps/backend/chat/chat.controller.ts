@@ -4,13 +4,13 @@ import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseD
 import { ResponseDto } from "../shared/dto/response.dto";
 import { getAuthData } from "~encore/auth";
 import { AuthDto } from "../shared/dto/shared-auth.dto";
-import { MessageDto } from "../shared/dto/shared-chat.dto";
+import { MessageDto } from "./message/message.model";
 import SessionService from "./session/session.service";
 import { EmptyDto } from "../shared/dto/shared.dto";
 import { CreateMsgBodyDto, InputMsgDto } from "./message/message.dto";
-import { MessageRole } from "./message/message.const";
 import MessageService from "./message/message.service";
 import { graph } from "./llm";
+import { MessageRole, MessageType } from "./message/message.const";
 
 const connectedStreams: Map<
   string,
@@ -38,6 +38,7 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
             // Store user message
             const addUserMsg: CreateMsgBodyDto = {
               sessionId: handshake.sessionId,
+              type: MessageType.Question,
               role: MessageRole.User,
               content: chatMessage.content,
             }
@@ -62,7 +63,8 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
             const agentMsg: CreateMsgBodyDto = {
               sessionId: handshake.sessionId,
               role: MessageRole.Assistant,
-              content: result.response,
+              type: MessageType.Answer,
+              content: result.response ?? "",
             }
             const addedAgentMsg = await MessageService.addMsg(agentMsg);
 
