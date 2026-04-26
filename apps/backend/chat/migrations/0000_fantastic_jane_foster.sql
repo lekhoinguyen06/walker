@@ -1,5 +1,5 @@
 CREATE TYPE "public"."attachment_type" AS ENUM('file', 'image', 'code', 'table', 'other');--> statement-breakpoint
-CREATE TYPE "public"."msg_type" AS ENUM('command', 'question', 'explain', 'other');--> statement-breakpoint
+CREATE TYPE "public"."msg_type" AS ENUM('question', 'answer', 'command', 'explain', 'other');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('user', 'assistant', 'system');--> statement-breakpoint
 CREATE TABLE "attachments" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,

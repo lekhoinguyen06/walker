@@ -23,12 +23,14 @@ export const MessageType = {
 
 export const MessageLimits = {
     // Usage
-    MaxTokens: 1000,
+    Concise: 250,
+    Detail: 500,
     // Lengths
     SummaryThreshold: 10,
     MaxSummary: 3,
-    MaxTopic: 20,
-    MaxTotal: 30,
+    MaxPaginationLimit: 5,
+    MaxTopic: 10,
+    MaxTotal: 15,
 } as const;
 
 export const AttachmentType = {

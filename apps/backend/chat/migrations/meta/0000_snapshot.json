@@ -1,5 +1,5 @@
 {
-  "id": "0ac279a7-f697-420d-bbe9-ed0b2daa693c",
+  "id": "e122a975-57ae-4bc8-a13d-f0cec5f2f7bf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -410,8 +410,9 @@
       "name": "msg_type",
       "schema": "public",
       "values": [
-        "command",
         "question",
+        "answer",
+        "command",
         "explain",
         "other"
       ]

@@ -45,7 +45,7 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
             const addedUserMsg = await MessageService.addMsg(addUserMsg);
 
             // Get history
-            const sessionMsgs = await MessageService.getMsgs(handshake.sessionId);
+            const sessionMsgs = await MessageService.getMsgs({ sessionId: handshake.sessionId });
             const history = sessionMsgs.map((msg) => {
               return {
                 role: msg.role ?? MessageRole.User,
@@ -59,18 +59,33 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
               history: history,
             }, config)
 
+            log.debug("LLM response:", result);
+
             // Store agent message
             const agentMsg: CreateMsgBodyDto = {
               sessionId: handshake.sessionId,
               role: MessageRole.Assistant,
               type: MessageType.Answer,
-              content: result.response ?? "",
+              content: result.response ?? "No response",
             }
             const addedAgentMsg = await MessageService.addMsg(agentMsg);
 
+            log.debug("Added agent message:", addedAgentMsg);
+
             // Return
-            await val.send(addedAgentMsg);
+            await val.send({
+              id: addedAgentMsg.id,
+              sessionId: handshake.sessionId,
+              role: MessageRole.Assistant,
+              type: MessageType.Answer,
+              content: result.response ?? "No response",
+              createdAt: addedAgentMsg.createdAt,
+              updatedAt: addedAgentMsg.updatedAt,
+              deletedAt: addedAgentMsg.deletedAt,
+              deleted: addedAgentMsg.deleted,
+            });
           } catch (err) {
+            log.error("Error processing message:", err);
             connectedStreams.delete(key);
           }
         }

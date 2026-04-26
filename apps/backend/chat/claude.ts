@@ -8,7 +8,7 @@ const claude = new ChatAnthropic({
     anthropicApiKey: apiKey(),
     model: "claude-haiku-4-5",
     temperature: 0,
-    maxTokens: MessageLimits.MaxTokens,
+    maxTokens: MessageLimits.Concise,
     maxRetries: 2,
 });
 

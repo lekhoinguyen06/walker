@@ -3,7 +3,7 @@ import * as p from "drizzle-orm/pg-core";
 import { AttachmentType, MessageRole, MessageType } from "./message/message.const";
 import { SessionRetention } from "./session/session.const";
 // Enums
-export const msgTypesEnum = p.pgEnum("msg_type", [MessageType.Command, MessageType.Question, MessageType.Explain, MessageType.Other]);
+export const msgTypesEnum = p.pgEnum("msg_type", [MessageType.Question, MessageType.Answer, MessageType.Command, MessageType.Explain, MessageType.Other]);
 export const attachmentTypesEnum = p.pgEnum("attachment_type", [AttachmentType.File, AttachmentType.Image, AttachmentType.Code, AttachmentType.Table, AttachmentType.Other]);
 export const rolesEnum = p.pgEnum("role",[MessageRole.User, MessageRole.Assistant, MessageRole.System]);
 
