@@ -1,5 +1,4 @@
 import { eq } from "drizzle-orm";
-import { MessageDto } from "../../shared/dto/shared-chat.dto";
 import { db } from "../database";
 import { messages } from "../schema";
 import { CreateMsgBodyDto } from "./message.dto";

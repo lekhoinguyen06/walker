@@ -1,6 +1,12 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import * as p from "drizzle-orm/pg-core";
-import { MessageRole } from "./message/message.const";
+import { AttachmentTypes, MessageRole, MessageType } from "./message/message.const";
+import { SessionRetention } from "./session/session.const";
+
+// Enums
+export const msgTypesEnum = p.pgEnum("msg_type", [MessageType.Command, MessageType.Question, MessageType.Explain, MessageType.Other]);
+export const attachmentTypesEnum = p.pgEnum("attachment_type", [AttachmentTypes.File, AttachmentTypes.Image, AttachmentTypes.Code, AttachmentTypes.Table, AttachmentTypes.Other]);
+export const rolesEnum = p.pgEnum("role",[MessageRole.User, MessageRole.Assistant, MessageRole.System]);
 
 // Schemas
 export const sessions = p.pgTable("sessions", {
@@ -10,7 +16,7 @@ export const sessions = p.pgTable("sessions", {
 
   // Metadata
   deleted: p.boolean().default(false).notNull(),
-  retention: p.integer().default(30).notNull(),
+  retention: p.integer().default(SessionRetention.Month).notNull(),
 
   // Timestamps
   createdAt: p.timestamp().defaultNow().notNull(),
@@ -19,13 +25,16 @@ export const sessions = p.pgTable("sessions", {
   expireAt: p.timestamp()
 });
 
-export const rolesEnum = p.pgEnum("role",[MessageRole.User, MessageRole.Assistant, MessageRole.System]);
-
 export const messages = p.pgTable("messages", {
   id: p.uuid().defaultRandom().primaryKey(),
   sessionId: p.uuid().notNull(),
-  role: rolesEnum(),
-  content: p.json().notNull(),
+  role: rolesEnum().notNull(),
+  type: msgTypesEnum().notNull(),
+  
+  // Data
+  content: p.text().notNull(),
+  contentJson: p.json(),
+  usage: p.jsonb(),
 
   // Metadata
   deleted: p.boolean().default(false).notNull(),
@@ -34,6 +43,36 @@ export const messages = p.pgTable("messages", {
   createdAt: p.timestamp().defaultNow().notNull(),
   updatedAt: p.timestamp().defaultNow().notNull(),
   deletedAt: p.timestamp()
+});
+
+export const topics = p.pgTable("topics", {
+  id: p.uuid().defaultRandom().primaryKey(),
+  sessionId: p.uuid().notNull(),
+
+  // Data
+  content: p.text().notNull(),
+
+  // Timestamps
+  createdAt: p.timestamp().defaultNow().notNull(),
+  updatedAt: p.timestamp().defaultNow().notNull(),
+});
+
+export const summaries = p.pgTable("summaries", {
+  id: p.uuid().defaultRandom().primaryKey(),
+  sessionId: p.uuid().notNull(),
+
+  // Range
+  fromMsgId: p.uuid().notNull(),
+  toMsgId: p.uuid().notNull(),
+
+  // Data
+  content: p.text().notNull(),
+  contentJson: p.json(),
+  usage: p.jsonb(),
+
+  // Timestamps
+  createdAt: p.timestamp().defaultNow().notNull(),
+  updatedAt: p.timestamp().defaultNow().notNull(),
 });
 
 export const toolCalls = p.pgTable("tool_calls", {
@@ -51,6 +90,9 @@ export const attachments = p.pgTable("attachments", {
   id: p.uuid().defaultRandom().primaryKey(),
   messageId: p.uuid().notNull(),
   filename: p.text().notNull(),
+  type: attachmentTypesEnum().notNull(),
+
+  // Data
   url: p.text().notNull(),
 
   // Timestamps
@@ -62,6 +104,8 @@ export const attachments = p.pgTable("attachments", {
 // Relations
 export const sessionsRelations = relations(sessions, ({ many }) => ({
   messages: many(messages),
+  summaries: many(summaries),
+  topics: many(topics),
 }))
 
 export const messagesRelations = relations(messages, ({ one }) => ({
@@ -69,6 +113,25 @@ export const messagesRelations = relations(messages, ({ one }) => ({
     fields: [messages.sessionId],
     references: [sessions.id],
   }),
+  topics: one(topics, {
+    fields: [messages.sessionId],
+    references: [topics.sessionId],
+  }),
+}))
+
+export const summariesRelations = relations(summaries, ({ one }) => ({
+  session: one(sessions, {
+    fields: [summaries.sessionId],
+    references: [sessions.id],
+  }),
+}))
+
+export const topicsRelations = relations(topics, ({ one, many }) => ({
+  session: one(sessions, {
+    fields: [topics.sessionId],
+    references: [sessions.id],
+  }),
+  messages: many(messages),
 }))
 
 export const toolCallsRelations = relations(toolCalls, ({ one }) => ({

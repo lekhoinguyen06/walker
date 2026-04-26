@@ -17,7 +17,7 @@ export interface SessionDto {
 export interface MessageDto {
   id: string;
   sessionId: string;
-  role: "user" | "assistant" | "system" | null;
+  role: "user" | "assistant" | "system";
   content: any;
 
   // Metadata
