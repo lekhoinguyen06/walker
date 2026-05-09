@@ -1,7 +1,7 @@
 import { CommandStatusType, TypeOfCommandPayload } from "./constant";
 import { CommandPayload } from "./type";
 
-export interface CommandDto<T = unknown | CommandPayload> {
+export interface CommandDto<T = string | CommandPayload> {
     id: string;
     executionId: string;
     payloadType: TypeOfCommandPayload;

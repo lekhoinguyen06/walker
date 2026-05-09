@@ -1,4 +1,4 @@
-export interface ResponseDto<T> {
+export interface ResponseDto<T = any> {
   /** Indicates if the request was successful */
   success: boolean;
   /** Error message if the request was not successful */
