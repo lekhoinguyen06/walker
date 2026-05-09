@@ -6,56 +6,62 @@ import { CommandDto } from './command';
 
 const WalkRepository = {
     // Command
-    push<T>(executionId: string, data: CommandDto<T>) {
+    pushCommand<T>(executionId: string, data: CommandDto<T>) {
         return db.insert(command).values({ ...data, executionId })
-    },
-
-    modifyByExecutionId<T>(executionId: string, commandId: string, data: Partial<CommandDto<T>>) {
-        return db.update(command).set(data).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
     },
 
     findCommandsByExecutionId<T>(executionId: string) {
         return db.select().from(command).where(eq(command.executionId, executionId))
     },
 
-    softDeleteByExecutionId(executionId: string, commandId: string) {
+    softDeleteCommandByExecutionId(executionId: string, commandId: string) {
         return db.update(command).set({ deleted: true, deletedAt: new Date() }).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
     },
 
-    restoreByExecutionId(executionId: string, commandId: string) {
+    restoreCommandByExecutionId(executionId: string, commandId: string) {
         return db.update(command).set({ deleted: false, deletedAt: null }).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
     },
 
-    deleteByExecutionId(executionId: string, commandId: string) {
+    deleteCommandByExecutionId(executionId: string, commandId: string) {
         return db.delete(command).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
     },
 
     // Execution
-    create(data: ExecutionDto) {
+    createExecution(data: ExecutionDto) {
         return db.insert(execution).values(data)
     },
 
-    update(id: string, data: Partial<ExecutionDto>) {
+    updateExecution(id: string, data: Partial<ExecutionDto>) {
         return db.update(execution).set(data).where(eq(execution.id, id))
     },
 
-    findById(id: string) {
-        return db.select().from(execution).where(eq(execution.id, id))
+    findExecutionById(id: string) {
+        return db.query.execution.findFirst({
+            where: eq(execution.id, id),
+            with: {
+                commands: true,
+            },
+        })
     },
 
-    findBySessionId(sessionId: string) {
-        return db.select().from(execution).where(eq(execution.sessionId, sessionId))
+    findExecutionsBySessionId(sessionId: string) {
+        return db.query.execution.findMany({
+            where: eq(execution.sessionId, sessionId),
+            with: {
+                commands: true,
+            },
+        })
     },
 
-    softDelete(id: string) {
+    softDeleteExecution(id: string) {
         return db.update(execution).set({ deleted: true, deletedAt: new Date() }).where(eq(execution.id, id))
     },
 
-    restore(id: string) {
+    restoreExecution(id: string) {
         return db.update(execution).set({ deleted: false, deletedAt: null }).where(eq(execution.id, id))
     },
 
-    delete(id: string) {
+    deleteExecution(id: string) {
         return db.delete(execution).where(eq(execution.id, id))
     },
 }
