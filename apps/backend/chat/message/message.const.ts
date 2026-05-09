@@ -22,10 +22,6 @@ export const MessageType = {
 } as const;
 
 export const MessageLimits = {
-    // Usage
-    Concise: 250,
-    Detail: 500,
-    // Lengths
     SummaryThreshold: 10,
     MaxSummary: 3,
     MaxPaginationLimit: 5,
