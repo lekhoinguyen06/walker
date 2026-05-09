@@ -5,7 +5,7 @@ import * as schema from "./schema";
 // Define a database named 'walks', using the database migrations
 // in the "./migrations" folder. Encore automatically provisions,
 // migrates, and connects to the database.
-const DB = new SQLDatabase('walks', {
+const DB = new SQLDatabase('walk', {
   migrations: {
     path: "./migrations",
     source: "drizzle",

@@ -6,6 +6,7 @@
 
 import { CommandDto } from "../command";
 import type { Action } from "@repo/core";
+import { ExecutionStatusType } from "./constant";
 
 //     createdAt: p.timestamp().defaultNow().notNull(),
 //     updatedAt: p.timestamp().defaultNow().notNull(),
@@ -18,7 +19,7 @@ export interface ExecutionDto<T = unknown | Action> {
     id: string;
     sessionId: string;
     purpose: string;
-    status: string;
+    status: ExecutionStatusType;
     commands: CommandDto<T>[];
 
     createdAt: Date;
