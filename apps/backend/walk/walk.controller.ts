@@ -1,0 +1,2 @@
+// REST /walk/execution: CRUD operations for a walk execution (creating a new execution returns the execution ID)
+// Websocket /walk/execution/:executionId: can use the execution ID to subscribe/publish to the channel of that execution
