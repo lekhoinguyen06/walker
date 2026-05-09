@@ -3,11 +3,13 @@ import { db } from './database';
 import { ExecutionDto } from './execution';
 import { execution, command } from './schema';
 import { CommandDto } from './command';
+import { CreateExecutionDto, UpdateExecutionDto } from './execution/dto';
 
 const WalkRepository = {
     // Command
-    pushCommand<T>(executionId: string, data: CommandDto<T>) {
-        return db.insert(command).values({ ...data, executionId })
+    async pushCommand<T>(executionId: string, data: CommandDto<T>): Promise<CommandDto<unknown>> {
+        const result = await db.insert(command).values({ ...data, executionId }).returning();
+        return result[0];
     },
 
     findCommandsByExecutionId<T>(executionId: string) {
@@ -27,11 +29,12 @@ const WalkRepository = {
     },
 
     // Execution
-    createExecution(data: ExecutionDto) {
-        return db.insert(execution).values(data)
+    async createExecution(data: CreateExecutionDto): Promise<ExecutionDto> {
+        const result = await db.insert(execution).values(data).returning();
+        return { ...result[0], commands: [] };
     },
 
-    updateExecution(id: string, data: Partial<ExecutionDto>) {
+    updateExecution(id: string, data: UpdateExecutionDto) {
         return db.update(execution).set(data).where(eq(execution.id, id))
     },
 

@@ -5,6 +5,8 @@ export interface ResponseDto<T> {
   message?: string;
   /** The result of the request */
   result?: T;
+  /** The error object if the request was not successful */
+  error?: any;
 }
 
 export interface PaginatedResDto {

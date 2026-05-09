@@ -1,0 +1,1 @@
+// Websocket /walk/execution/:executionId: can use the execution ID to subscribe/publish to the channel of that execution
