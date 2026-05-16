@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#000000",
+    "light": "#FFFF00",
+    "dark": "#000000"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -16,33 +16,49 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "guides/vision",
+              "guides/libraries",
+              "guides/setup"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Concepts",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "guides/fundamentals"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Server",
+        "groups": [
           {
-            "group": "Writing content",
+            "group": "Typescript",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "languages/server/typescript/getting-started"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Client",
+        "groups": [
           {
-            "group": "AI tools",
+            "group": "React",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "languages/client/react/getting-started"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Frameworks",
+        "groups": [
+          {
+            "group": "Typescript",
+            "pages": [
+              "frameworks/nestjs/index",
+              "frameworks/encore/index"
             ]
           }
         ]
