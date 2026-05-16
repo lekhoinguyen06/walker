@@ -3,15 +3,31 @@ title: 'Fundamentals'
 description: 'These are the fundamental elements that make up the walker framework.'
 ---
 
-## Action
+## Components
 
-Action represents JSON objects that command sent from the server to the client to interact with the user application.
+### Server
 
-## Flow
+The server is responsible for handling incoming requests and MAP from clients, processing them, and sending back ACTION. 
+
+### Client
+
+The client is responsible for sending MAP to the server, receiving ACTION from the server, and executing those actions to interact with the user application.
+
+## Components
+
+### Action
+
+Action, a JSON object, is a command sent from the server to the client to interact with the user application.
+
+### Flow
 
 Flow represents what command the client accepts and executes. It allows developers to declare what their application can do.
 
-## Item
+### Item
 
 Item represents the individual elements that can be interacted with.
+
+### Map
+
+Map, a JSON object, is a command sent from the client to the server to describe the current landscape of the user application. For websites, this includes the DOM structure, element attributes, and other relevant information.
 
