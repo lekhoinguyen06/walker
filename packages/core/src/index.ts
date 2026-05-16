@@ -1,30 +1,30 @@
-import { FLOW_GAP_DEFAULT_TIME } from '@src/constants/flow.constants';
+import { FLOW_GAP_DEFAULT_TIME } from '@src/constants/flow.constants.js';
 // import { useFlowStore } from "@src/store/flow/useFlowStore";
 import {
   notifyNextAction,
   observer,
-} from '@src/domains/action/event/observer';
-import { dynamicNavigator } from '@src/utils/navigate';
-import { wait } from '@src/utils/wait';
-import { dynamicFlowSwitch } from '@src/domains/flow/helpers/dynamic-flow-switch';
-import { ActionManager } from '@src/domains/action/action-manager';
-import { FlowManager } from '@src/domains/flow/flow-manager';
-import { listActions } from '@src/domains/action/helpers/list-action';
-import { listFlows } from '@src/domains/flow/helpers/list-flow';
-import { ActionInputSchema, type Action } from '@src/types/action.types';
-import { MapManager } from '@src/domains/map/mapManager';
-import { LogManager } from '@src/utils/logger';
-import { AppManager } from '@src/utils/app';
+} from '@src/domains/action/event/observer.js';
+import { dynamicNavigator } from '@src/utils/navigate.js';
+import { wait } from '@src/utils/wait.js';
+import { dynamicFlowSwitch } from '@src/domains/flow/helpers/dynamic-flow-switch.js';
+import { ActionManager } from '@src/domains/action/action-manager.js';
+import { FlowManager } from '@src/domains/flow/flow-manager.js';
+import { listActions } from '@src/domains/action/helpers/list-action.js';
+import { listFlows } from '@src/domains/flow/helpers/list-flow.js';
+import { ActionInputSchema, type Action } from '@src/types/action.types.js';
+import { MapManager } from '@src/domains/map/mapManager.js';
+import { LogManager } from '@src/utils/logger.js';
+import { AppManager } from '@src/utils/app.js';
 
-// Type re-export
-export type * from '@src/types/action.types';
-export type * from '@src/types/app.types';
-export type * from '@src/types/flow.types';
-export type * from '@src/types/log.types';
-export type * from '@src/types/item.types';
+// Type & schema re-export
+export * from '@src/types/action.types.js';
+export * from '@src/types/app.types.js';
+export * from '@src/types/flow.types.js';
+export * from '@src/types/log.types.js';
+export * from '@src/types/item.types.js';
 
 // Constants re-export
-export * from '@src/constants/item.constants';
+export * from '@src/constants/item.constants.js';
 
 // These are singletons (In JavaScript ES modules, top-level code executes once per module instantiation. The module is then cached, so any subsequent imports reference the same module record.)
 export const flowManager = new FlowManager();
@@ -48,7 +48,7 @@ function initFlow() {
     action: 'navigate',
     description: 'Navigate from any route using URL',
     route: '*',
-    handler: async ({ action, gap }) => {
+    handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
@@ -59,7 +59,7 @@ function initFlow() {
     action: 'route',
     description: 'Route from any route by clicking an element',
     route: '*',
-    handler: async ({ action, gap }) => {
+    handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
@@ -75,7 +75,7 @@ function initFlow() {
     action: 'hover',
     description: 'Hover to any queried element from any route',
     route: '*',
-    handler: async ({ action, gap }) => {
+    handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
@@ -91,7 +91,7 @@ function initFlow() {
     action: 'click',
     description: 'Click any queried element from any route',
     route: '*',
-    handler: async ({ action, gap }) => {
+    handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
@@ -113,7 +113,7 @@ function initFlow() {
     action: 'input',
     description: 'Input any queried element from any route',
     route: '*',
-    handler: async ({ action, gap }) => {
+    handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);

@@ -1,4 +1,4 @@
-import type { Flow } from '@src/types/flow.types';
+import type { Flow } from '@src/types/flow.types.js';
 import { logger } from '@src';
 
 /**

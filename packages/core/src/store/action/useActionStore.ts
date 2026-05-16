@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Action } from '@src/types/action.types';
-import { ACTION_HISTORY_MAXIMUM_LENGTH } from '@src/constants/action.constants';
+import type { Action } from '@src/types/action.types.js';
+import { ACTION_HISTORY_MAXIMUM_LENGTH } from '@src/constants/action.constants.js';
 
 interface ActionStoreState {
   actions: Action[];

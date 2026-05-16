@@ -1,6 +1,6 @@
 import { logger, walk } from '@src';
-import { useAppStore } from '../store/app/useAppStore';
-import type { App } from '../types/app.types';
+import { useAppStore } from '../store/app/useAppStore.js';
+import type { App } from '../types/app.types.js';
 export class AppManager {
   togglePause(): App {
     const prevSetting = useAppStore.getState().getSettings();

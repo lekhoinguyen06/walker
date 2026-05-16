@@ -1,5 +1,5 @@
-import type { Flow } from '@src/types/flow.types';
-import type { Action } from '@src/types/action.types';
+import type { Flow } from '@src/types/flow.types.js';
+import type { Action } from '@src/types/action.types.js';
 import { logger } from '@src';
 import { initFlow } from '@src';
 

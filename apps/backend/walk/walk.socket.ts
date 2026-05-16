@@ -15,8 +15,8 @@ interface HandshakeRequest {
   sessionId: string;
 }
 
-export const chat = api.streamInOut<HandshakeRequest, CommandDto<string>, ResponseDto<CommandDto | any>>(
-  { expose: true, auth: false, path: "/chat" },
+export const walk = api.streamInOut<HandshakeRequest, CommandDto<string>, ResponseDto<CommandDto | any>>(
+  { expose: true, auth: false, path: "/ws/walk" },
   async (handshake, stream) => {
     connectedStreams.set(handshake.sessionId, stream);
 

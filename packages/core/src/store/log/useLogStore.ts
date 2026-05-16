@@ -1,6 +1,6 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { LogItem } from '../../types/log.types';
+import type { LogItem } from '@src/types/log.types.js';
 
 interface LogStoreState {
   items: LogItem[];

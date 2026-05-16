@@ -1,7 +1,7 @@
-import type { Action } from '@src/types/action.types';
-import { useActionStore } from '@src/store/action/useActionStore';
+import type { Action } from '@src/types/action.types.js';
+import { useActionStore } from '@src/store/action/useActionStore.js';
 import { logger } from '@src';
-import { useAppStore } from '../../store/app/useAppStore';
+import { useAppStore } from '../../store/app/useAppStore.js';
 
 /**
  * Store and manage Actions

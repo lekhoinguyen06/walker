@@ -1,5 +1,5 @@
-import { FLOW_PARSE_DELIMETERS } from '@src/constants/flow.constants';
-import { ActionSchema, type Action } from '@src/types/action.types';
+import { FLOW_PARSE_DELIMETERS } from '@src/constants/flow.constants.js';
+import { ActionSchema, type Action } from '@src/types/action.types.js';
 import { logger } from '@src';
 
 /**

@@ -4,9 +4,9 @@ import {
   BaseItemDataSchema,
   BaseItemOptionsSchema,
   type BaseItemOptionsType,
-} from '@src/types/item.types';
+} from '@src/types/item.types.js';
 import z from 'zod';
-import { DEFAULT_BASE_ITEM_OPTIONS } from '@src/constants/item.constants';
+import { DEFAULT_BASE_ITEM_OPTIONS } from '@src/constants/item.constants.js';
 
 interface WalkerMap {
   hash: string;

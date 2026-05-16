@@ -1,6 +1,6 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { App } from '../../types/app.types';
+import type { App } from '@src/types/app.types.js';
 
 interface AppStoreState {
   settings: App;

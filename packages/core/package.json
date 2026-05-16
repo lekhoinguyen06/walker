@@ -2,12 +2,14 @@
   "name": "@repo/core",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
@@ -45,15 +47,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "module": "ESNext",
-    "target": "ES2020",
-    "moduleResolution": "Node",
-    "strict": true,
-    "esModuleInterop": true
-  },
   "include": [
     "src"
   ]

@@ -34,7 +34,7 @@ export const update = api(
 );
 
 export const list = api(
-  { expose: true, auth: true, method: "GET", path: "/chat/list" },
+  { expose: true, auth: true, method: "GET", path: "/chat" },
   async (_: EmptyDto): Promise<GetSessionsResponseDto> => {
     const auth = getAuthData() as AuthDto;
     return SessionService.listSessions({ userId: auth.userID });

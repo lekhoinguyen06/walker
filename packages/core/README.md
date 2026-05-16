@@ -20,3 +20,16 @@ Example commands:
   }
 ]
 ```
+
+Todos:
+
+- Refactor codebase for simplicity
+
+```text
+src/
+├── action.ts
+├── item.ts
+├── store.ts
+├── utils.ts
+└── ...
+```

@@ -1,5 +1,5 @@
 import { flowManager } from '@src';
-import type { Flow } from '@src/types/flow.types';
+import type { Flow } from '@src/types/flow.types.js';
 
 /**
  * Query flows

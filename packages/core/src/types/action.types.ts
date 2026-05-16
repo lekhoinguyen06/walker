@@ -10,10 +10,25 @@ export const ActionSchema = z.object({
   data: z.string().default(''),
 
   currentRoute: z.string().default(''),
-  currentURL: z.string().url().default(''),
+  currentURL: z.url().default(''),
 });
 
 export const ActionInputSchema = ActionSchema.array();
 
-export type Action = z.infer<typeof ActionSchema>;
-export type ActionInput = z.infer<typeof ActionInputSchema>;
+// export type Action = z.infer<typeof ActionSchema>;
+// export type ActionInput = z.infer<typeof ActionInputSchema>;
+
+export type Action = {
+  id: string;
+  
+  action: string;
+  query: string;
+
+  message: string;
+  data: string;
+
+  currentRoute: string;
+  currentURL: string;
+}
+
+export type ActionInput = Action[];

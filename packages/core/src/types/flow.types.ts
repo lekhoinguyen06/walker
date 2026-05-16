@@ -1,4 +1,4 @@
-import type { Action } from './action.types';
+import type { Action } from './action.types.js';
 
 export type handlerParam = {
   action: Action;

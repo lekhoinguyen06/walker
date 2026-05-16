@@ -15,7 +15,7 @@ import { ExecutionStatusType } from "./constant";
 //     deleted: p.boolean().default(false).notNull(),
 // });
 
-export interface ExecutionDto<T = unknown | Action> {
+export interface ExecutionDto<T = unknown> {
     id: string;
     sessionId: string;
     purpose: string;

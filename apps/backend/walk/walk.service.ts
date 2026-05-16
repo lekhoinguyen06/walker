@@ -42,7 +42,7 @@ const WalkService = {
         }
     },
 
-    softDeleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<void>> => {
+    softDeleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.softDeleteCommandByExecutionId(executionId, commandId);
             return {
@@ -58,7 +58,7 @@ const WalkService = {
         }
     },
 
-    restoreCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<void>> => {
+    restoreCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.restoreCommandByExecutionId(executionId, commandId);
             return {
@@ -74,7 +74,7 @@ const WalkService = {
         }
     },
 
-    deleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<void>> => {
+    deleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.deleteCommandByExecutionId(executionId, commandId);
             return {
@@ -108,7 +108,7 @@ const WalkService = {
         }
     },
 
-    updateExecution: async (id: string, data: UpdateExecutionDto): Promise<ResponseDto<void>> => {
+    updateExecution: async (id: string, data: UpdateExecutionDto): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.updateExecution(id, data);
             return {
@@ -158,7 +158,7 @@ const WalkService = {
         }
     },
 
-    softDeleteExecution: async (id: string): Promise<ResponseDto<void>> => {
+    softDeleteExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.softDeleteExecution(id);
             return {
@@ -174,7 +174,7 @@ const WalkService = {
         }
     },
 
-    restoreExecution: async (id: string): Promise<ResponseDto<void>> => {
+    restoreExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.restoreExecution(id);
             return {
@@ -190,7 +190,7 @@ const WalkService = {
         }
     },
 
-    deleteExecution: async (id: string): Promise<ResponseDto<void>> => {
+    deleteExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.deleteExecution(id);
             return {

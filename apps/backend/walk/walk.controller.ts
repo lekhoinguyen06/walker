@@ -15,7 +15,7 @@ export const create = api(
 
 export const update = api(
   { expose: true, auth: true, method: "PUT", path: "/walk/execution/:id" },
-  async ({id, body} : { id: string, body: UpdateExecutionDto }): Promise<ResponseDto<void>> => {
+  async ({id, body} : { id: string, body: UpdateExecutionDto }): Promise<ResponseDto<null>> => {
     return await WalkService.updateExecution(id, body);
   }
 );
@@ -34,23 +34,16 @@ export const findBySessionId = api(
   }
 );
 
-export const softDeleteById = api(
-  { expose: true, auth: true, method: "DELETE", path: "/walk/execution/:id/soft" },
-  async ({id} : { id: string }): Promise<ResponseDto<void>> => {
-    return await WalkService.softDeleteExecution(id);
-  }
-);
-
 export const restoreById = api(
   { expose: true, auth: true, method: "POST", path: "/walk/execution/:id/restore" },
-  async ({id} : { id: string }): Promise<ResponseDto<void>> => {
+  async ({id} : { id: string }): Promise<ResponseDto<null>> => {
     return await WalkService.restoreExecution(id);
   }
 );
 
 export const deleteById = api(
   { expose: true, auth: true, method: "DELETE", path: "/walk/execution/:id" },
-  async ({id} : { id: string }): Promise<ResponseDto<void>> => {
-    return await WalkService.deleteExecution(id);
+  async ({id} : { id: string }): Promise<ResponseDto<null>> => {
+    return await WalkService.softDeleteExecution(id);
   }
 );
