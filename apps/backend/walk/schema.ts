@@ -38,3 +38,10 @@ export const command = p.pgTable("command", {
 export const executionRelations = relations(execution, ({ many }) => ({
   commands: many(command),
 }));
+
+export const commandRelations = relations(command, ({ one }) => ({
+  execution: one(execution, {
+    fields: [command.executionId],
+    references: [execution.id],
+  }),
+}));

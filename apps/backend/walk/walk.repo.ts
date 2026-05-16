@@ -40,7 +40,7 @@ const WalkRepository = {
 
     findExecutionById(id: string) {
         return db.query.execution.findFirst({
-            where: eq(execution.id, id),
+            where: and(eq(execution.id, id), eq(execution.deleted, false)),
             with: {
                 commands: true,
             },
@@ -49,7 +49,7 @@ const WalkRepository = {
 
     findExecutionsBySessionId(sessionId: string) {
         return db.query.execution.findMany({
-            where: eq(execution.sessionId, sessionId),
+            where: and(eq(execution.sessionId, sessionId), eq(execution.deleted, false)),
             with: {
                 commands: true,
             },

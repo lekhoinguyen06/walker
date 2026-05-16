@@ -4,6 +4,7 @@ import { ExecutionDto } from "./execution";
 import { CreateExecutionDto, UpdateExecutionDto } from "./execution/dto";
 import { ExecutionWithCommandsDto } from "./walk.dto";
 import WalkRepository from "./walk.repo";
+import logger from "encore.dev/log"
 
 
 const WalkService = {
