@@ -16,8 +16,7 @@ export function Header() {
         <BaseItem itemKey='link-to-home-page'>
         <Link to={'/'}>
           <div className="flex items-center gap-2 h-20">
-            <div className="size-10 bg-black"></div>
-            <span className="text-title-h3">Walker</span>
+            <img src="/light.svg" alt="Logo" className="h-10 object-cover" />
           </div>
         </Link>
         </BaseItem>
