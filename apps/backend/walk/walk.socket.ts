@@ -2,16 +2,17 @@
 
 import log from "encore.dev/log";
 import { api, StreamInOut } from "encore.dev/api";
-import { CommandDto } from "./command";
 import { ResponseDto } from "../shared/dto/response.dto";
 import { graph } from "./walk.graph";
-import WalkService from "./walk.service";
 import { Action, ActionSchema } from "@repo/core";
+import WalkService from "./walk.service";
+import { CommandStatus } from "./command";
 
 type Input = {
   purpose: string;
   ask: string;
   map: string;
+  hash: string;
 }
 
 const connectedStreams: Map<
@@ -45,6 +46,20 @@ export const walk = api.streamInOut<HandshakeRequest, Input, ResponseDto<Action>
               REQUIREMENT: You are given a MAP and must decide on the next ACTION to take depend on what was asked from ASK.
               ASK: ${payload.ask}
               MAP: ${JSON.stringify(map)}
+              STRUCTURE: The MAP object has ITEMS
+              STRUCTURE: An ITEM has a uniqueKey, which is DOM-queryable, to select this item, the ACTION response should "query" field to the item "uniqueKey".
+              "itemKey": {
+                  "children": {
+                    "itemKey": {
+                      "children": {},
+                      "content": {}
+                      "data": {}
+                      "options": {}
+                  }
+                  "content": {}
+                  "data": {}
+                  "options": {}
+              }
               FORMAT: Output is an Action and must match the required schema exactly.
             `;
             const result = await graph.invoke({
@@ -52,8 +67,17 @@ export const walk = api.streamInOut<HandshakeRequest, Input, ResponseDto<Action>
               history: [],
             }, config)
 
+            // Validate response (type predicate)
             const action = ActionSchema.parse(result.response);
 
+            // Save to database
+            await WalkService.pushCommand({
+              executionId: handshake.executionId,
+              payload: action,
+              status: CommandStatus.DRAFTING,
+            })
+
+            // Respond back to client
             await val.send({
               success: true,
               message: "Command received and processed successfully",

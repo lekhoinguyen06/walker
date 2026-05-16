@@ -1,10 +1,9 @@
 import { CommandStatusType } from "./constant";
-import type { Action } from "@repo/core";
 
 export interface CommandDto {
     id: string;
     executionId: string;
-    payload: Action;
+    payload: unknown;
     status: CommandStatusType;
 
     createdAt: Date;
@@ -13,3 +12,5 @@ export interface CommandDto {
     deletedAt: Date | null;
     deleted: boolean;
 }
+
+export interface CreateCommandDto extends Pick<CommandDto, "executionId" | "payload" | "status"> {};

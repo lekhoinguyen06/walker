@@ -2,30 +2,30 @@ import { eq, and } from 'drizzle-orm';
 import { db } from './database';
 import { ExecutionDto } from './execution';
 import { execution, command } from './schema';
-import { CommandDto, CommandInputDto } from './command';
+import { CommandDto, CreateCommandDto } from './command';
 import { CreateExecutionDto, UpdateExecutionDto } from './execution/dto';
 
 const WalkRepository = {
     // Command
-    async pushCommand<T>(executionId: string, data: CommandInputDto<T>): Promise<CommandDto<unknown>> {
-        const result = await db.insert(command).values({ ...data, executionId }).returning();
+    async pushCommand(data: CreateCommandDto): Promise<CommandDto> {
+        const result = await db.insert(command).values(data).returning();
         return result[0];
     },
 
-    findCommandsByExecutionId<T>(executionId: string) {
+    findCommandsByExecutionId(executionId: string) {
         return db.select().from(command).where(eq(command.executionId, executionId))
     },
 
-    softDeleteCommandByExecutionId(executionId: string, commandId: string) {
-        return db.update(command).set({ deleted: true, deletedAt: new Date() }).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
+    softDeleteCommandsByExecutionId(executionId: string) {
+        return db.update(command).set({ deleted: true, deletedAt: new Date() }).where(eq(command.executionId, executionId))
     },
 
-    restoreCommandByExecutionId(executionId: string, commandId: string) {
-        return db.update(command).set({ deleted: false, deletedAt: null }).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
+    restoreCommandsByExecutionId(executionId: string) {
+        return db.update(command).set({ deleted: false, deletedAt: null }).where(eq(command.executionId, executionId))
     },
 
-    deleteCommandByExecutionId(executionId: string, commandId: string) {
-        return db.delete(command).where(and(eq(command.executionId, executionId), eq(command.id, commandId)))
+    deleteCommandsByExecutionId(executionId: string) {
+        return db.delete(command).where(eq(command.executionId, executionId))
     },
 
     // Execution

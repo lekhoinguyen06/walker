@@ -1,5 +1,5 @@
 import { ResponseDto } from "../shared/dto/response.dto";
-import { CommandDto, CommandInputDto } from "./command";
+import { CommandDto, CreateCommandDto } from "./command";
 import { ExecutionDto } from "./execution";
 import { CreateExecutionDto, UpdateExecutionDto } from "./execution/dto";
 import { ExecutionWithCommandsDto } from "./walk.dto";
@@ -8,85 +8,16 @@ import WalkRepository from "./walk.repo";
 
 const WalkService = {
     // Command
-    pushCommand: async (executionId: string, data: CommandInputDto<unknown>): Promise<ResponseDto<CommandDto<unknown>>> => {
+    pushCommand: async (data: CreateCommandDto): Promise<ResponseDto<CommandDto>> => {
         try {
-            const result = await WalkRepository.pushCommand(executionId, data);
+            const result = await WalkRepository.pushCommand(data);
             return {
                 success: true,
                 message: "Command pushed successfully",
                 result: result,
             };
         } catch (error) {
-            return {
-                success: false,
-                message: "Failed to push command",
-                error: error
-            };
-        }
-    },
-
-    findCommandsByExecutionId: async (executionId: string): Promise<ResponseDto<CommandDto<unknown>[]>> => {
-        try {
-            const result = await WalkRepository.findCommandsByExecutionId(executionId);
-            return {
-                success: true,
-                message: "Commands found successfully",
-                result: result,
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: "Failed to find commands",
-                error: error
-            };
-        }
-    },
-
-    softDeleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
-        try {
-            await WalkRepository.softDeleteCommandByExecutionId(executionId, commandId);
-            return {
-                success: true,
-                message: "Command deleted successfully",
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: "Failed to delete command",
-                error: error
-            };
-        }
-    },
-
-    restoreCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
-        try {
-            await WalkRepository.restoreCommandByExecutionId(executionId, commandId);
-            return {
-                success: true,
-                message: "Command restored successfully",
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: "Failed to restore command",
-                error: error
-            };
-        }
-    },
-
-    deleteCommandsByExecutionId: async (executionId: string, commandId: string): Promise<ResponseDto<null>> => {
-        try {
-            await WalkRepository.deleteCommandByExecutionId(executionId, commandId);
-            return {
-                success: true,
-                message: "Command deleted successfully",
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: "Failed to delete command",
-                error: error
-            };
+            throw error;
         }
     },
 
@@ -124,7 +55,7 @@ const WalkService = {
         }
     },
 
-    findExecutionById: async (id: string): Promise<ResponseDto<ExecutionWithCommandsDto<unknown> | undefined>> => {
+    findExecutionById: async (id: string): Promise<ResponseDto<ExecutionWithCommandsDto | undefined>> => {
         try {
             const result = await WalkRepository.findExecutionById(id);
             return {
@@ -141,7 +72,7 @@ const WalkService = {
         }
     },
 
-    findExecutionsBySessionId: async (sessionId: string): Promise<ResponseDto<ExecutionWithCommandsDto<unknown>[]>> => {
+    findExecutionsBySessionId: async (sessionId: string): Promise<ResponseDto<ExecutionWithCommandsDto[]>> => {
         try {
             const result = await WalkRepository.findExecutionsBySessionId(sessionId);
             return {
@@ -161,6 +92,7 @@ const WalkService = {
     softDeleteExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.softDeleteExecution(id);
+            await WalkRepository.softDeleteCommandsByExecutionId(id);
             return {
                 success: true,
                 message: "Execution deleted successfully",
@@ -177,6 +109,7 @@ const WalkService = {
     restoreExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.restoreExecution(id);
+            await WalkRepository.restoreCommandsByExecutionId(id);
             return {
                 success: true,
                 message: "Execution restored successfully",
@@ -193,6 +126,7 @@ const WalkService = {
     deleteExecution: async (id: string): Promise<ResponseDto<null>> => {
         try {
             await WalkRepository.deleteExecution(id);
+            await WalkRepository.deleteCommandsByExecutionId(id);
             return {
                 success: true,
                 message: "Execution permanently deleted successfully",
