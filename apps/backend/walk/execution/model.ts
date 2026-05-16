@@ -1,26 +1,12 @@
-// export const execution = p.pgTable("execution", {
-//   id: p.uuid().defaultRandom().primaryKey(),
-//   sessionId: p.uuid().notNull(),
-//   purpose: p.text().notNull(),
-//   status: executionStatusEnum().notNull().default("pending"),
-
 import { CommandDto } from "../command";
-import type { Action } from "@repo/core";
 import { ExecutionStatusType } from "./constant";
-
-//     createdAt: p.timestamp().defaultNow().notNull(),
-//     updatedAt: p.timestamp().defaultNow().notNull(),
-//     completedAt: p.timestamp(),
-//     deletedAt: p.timestamp(),
-//     deleted: p.boolean().default(false).notNull(),
-// });
 
 export interface ExecutionDto<T = unknown> {
     id: string;
     sessionId: string;
     purpose: string;
     status: ExecutionStatusType;
-    commands: CommandDto<T>[];
+    commands: CommandDto[];
 
     createdAt: Date;
     updatedAt: Date;

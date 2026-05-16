@@ -3,6 +3,8 @@ import { CreateMsgBodyDto } from "./message.dto";
 import MessageRepository from "./message.repo";
 import { MessageLimits } from "./message.const";
 import log from "encore.dev/log";
+import { isValidUUID } from "../../shared/utils";
+import { APIError } from "encore.dev/api";
 
 const MessageService = {
     async addMsg(msg: CreateMsgBodyDto): Promise<MessageDto> {
@@ -12,6 +14,11 @@ const MessageService = {
     },
 
     async getMsgs({sessionId, page = 1, limit = MessageLimits.MaxTopic}: {sessionId: string; page?: number; limit?: number}): Promise<MessageDto[]> {
+        if (!isValidUUID(sessionId)) {
+            log.error("Invalid session UUID", { sessionId });
+            throw APIError.invalidArgument("Invalid session UUID");
+        }
+        
         const msgs = await MessageRepository.getMsgs({ sessionId, page, limit });
         const length = msgs.length;
         if (length >= MessageLimits.MaxTopic) {
@@ -25,6 +32,10 @@ const MessageService = {
     },
     
     async deleteMsg(msgId: string): Promise<void> {
+        if (!isValidUUID(msgId)) {
+            log.error("Invalid message UUID", { msgId });
+            throw APIError.invalidArgument("Invalid message UUID");
+        }
         await MessageRepository.deleteMsg({ msgId });
     }
 }

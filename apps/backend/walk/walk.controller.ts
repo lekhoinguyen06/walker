@@ -1,3 +1,5 @@
+// REST ENDPOINTS /walk/execution: CRUD operations for a walk execution (creating a new execution returns the execution ID)
+
 import { api } from "encore.dev/api";
 import WalkService from "./walk.service";
 import { CreateExecutionDto, UpdateExecutionDto } from "./execution/dto";
@@ -5,7 +7,7 @@ import { ExecutionDto } from "./execution";
 import { ResponseDto } from "../shared/dto/response.dto";
 import { ExecutionWithCommandsDto } from "./walk.dto";
 
-// REST /walk/execution: CRUD operations for a walk execution (creating a new execution returns the execution ID)
+
 export const create = api(
   { expose: true, auth: true, method: "POST", path: "/walk/execution" },
   async (body: CreateExecutionDto): Promise<ResponseDto<ExecutionDto>> => {
@@ -22,14 +24,14 @@ export const update = api(
 
 export const findById = api(
   { expose: true, auth: true, method: "GET", path: "/walk/execution/:id" },
-  async ({id} : { id: string }): Promise<ResponseDto<ExecutionWithCommandsDto<unknown> | undefined>> => {
+  async ({id} : { id: string }): Promise<ResponseDto<ExecutionWithCommandsDto | undefined>> => {
     return await WalkService.findExecutionById(id);
   }
 );
 
 export const findBySessionId = api(
   { expose: true, auth: true, method: "GET", path: "/walk/execution/session/:sessionId" },
-  async ({sessionId} : { sessionId: string }): Promise<ResponseDto<ExecutionWithCommandsDto<unknown>[]>> => {
+  async ({sessionId} : { sessionId: string }): Promise<ResponseDto<ExecutionWithCommandsDto[]>> => {
     return await WalkService.findExecutionsBySessionId(sessionId);
   }
 );

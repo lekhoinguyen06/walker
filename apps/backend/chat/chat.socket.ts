@@ -2,7 +2,7 @@ import log from "encore.dev/log";
 import { MessageDto } from "./message/message.model";
 import { CreateMsgBodyDto, InputMsgDto } from "./message/message.dto";
 import MessageService from "./message/message.service";
-import { graph } from "./llm";
+import { graph } from "./chat.graph";
 import { MessageRole, MessageType } from "./message/message.const";
 import { api, StreamInOut } from "encore.dev/api";
 

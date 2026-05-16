@@ -6,12 +6,8 @@ import { CreateExecutionDto, UpdateExecutionDto } from "./execution/dto";
 import { ExecutionWithCommandsDto } from "./walk.dto";
 import WalkRepository from "./walk.repo";
 import log from "encore.dev/log";
-import z from "zod";
-
-const isValidUUID = (id: string): boolean => {
-    return z.uuid().safeParse(id).success;
-}
-
+import { validateUUID } from "../shared/utils";
+import { ExecutionNotFoundError } from "./walk.error";
 
 const WalkService = {
     // Command
@@ -20,6 +16,17 @@ const WalkService = {
         return {
             success: true,
             message: "Command pushed successfully",
+            result: result,
+        };
+    },
+
+    findCommandsByExecutionId: async (executionId: string, limit: number): Promise<ResponseDto<CommandDto[]>> => {
+        validateUUID(executionId);
+
+        const result = await WalkRepository.findCommandsByExecutionId(executionId, limit);
+        return {
+            success: true,
+            message: "Commands found successfully",
             result: result,
         };
     },
@@ -35,10 +42,7 @@ const WalkService = {
     },
 
     updateExecution: async (id: string, data: UpdateExecutionDto): Promise<ResponseDto<null>> => {
-        if (!isValidUUID(id)) {
-            log.error("Invalid execution ID", { id });
-            throw APIError.invalidArgument("Invalid execution ID");
-        }
+        validateUUID(id);
 
         await WalkRepository.updateExecution(id, data).then((result) => {
             if (result.rowCount === 0) {
@@ -54,16 +58,15 @@ const WalkService = {
     },
 
     findExecutionById: async (id: string): Promise<ResponseDto<ExecutionWithCommandsDto | undefined>> => {
-        if (!isValidUUID(id)) {
-            log.error("Invalid execution ID", { id });
-            throw APIError.invalidArgument("Invalid execution ID");
-        }
-        const result = await WalkRepository.findExecutionById(id);
+        validateUUID(id);
 
-        if (!result) {
-            log.error("Execution not found", { id });
-            throw APIError.notFound("Execution not found");
-        }
+        const result = await WalkRepository.findExecutionById(id).then((result) => {
+            if (!result) {
+                throw ExecutionNotFoundError;
+            } else {
+                return result;
+            }
+        });
 
         return {
             success: true,
@@ -73,12 +76,10 @@ const WalkService = {
     },
 
     findExecutionsBySessionId: async (sessionId: string): Promise<ResponseDto<ExecutionWithCommandsDto[]>> => {
-        if (!isValidUUID(sessionId)) {
-            log.error("Invalid session ID", { sessionId });
-            throw APIError.invalidArgument("Invalid session ID");
-        }
+        validateUUID(sessionId);
         
         const result = await WalkRepository.findExecutionsBySessionId(sessionId);
+        
         return {
             success: true,
             message: "Executions found successfully",
@@ -87,15 +88,12 @@ const WalkService = {
     },
 
     softDeleteExecution: async (id: string): Promise<ResponseDto<null>> => {
-        if (!isValidUUID(id)) {
-            log.error("Invalid execution ID", { id });
-            throw APIError.invalidArgument("Invalid execution ID");
-        }
+        validateUUID(id);
         
         await WalkRepository.softDeleteExecution(id).then((result) => {
             if (result.rowCount === 0) {
                 log.error("Execution not found for soft delete", { id });
-                throw APIError.notFound("Execution not found");
+                throw ExecutionNotFoundError;
             }
         });
 
@@ -108,15 +106,12 @@ const WalkService = {
     },
 
     restoreExecution: async (id: string): Promise<ResponseDto<null>> => {
-        if (!isValidUUID(id)) {
-            log.error("Invalid execution ID", { id });
-            throw APIError.invalidArgument("Invalid execution ID");
-        }
+        validateUUID(id);
         
         await WalkRepository.restoreExecution(id).then((result) => {
             if (result.rowCount === 0) {
                 log.error("Execution not found for restore", { id });
-                throw APIError.notFound("Execution not found");
+                throw ExecutionNotFoundError;
             }
         });
 
@@ -128,10 +123,7 @@ const WalkService = {
     },
 
     deleteExecution: async (id: string): Promise<ResponseDto<null>> => {
-        if (!isValidUUID(id)) {
-            log.error("Invalid execution ID", { id });
-            throw APIError.invalidArgument("Invalid execution ID");
-        }
+        validateUUID(id);
 
         await WalkRepository.deleteExecution(id).then((result) => {
             if (result.rowCount === 0) {

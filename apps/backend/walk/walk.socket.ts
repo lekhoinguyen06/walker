@@ -41,6 +41,7 @@ export const walk = api.streamInOut<HandshakeRequest, Input, ResponseDto<Action>
 
             // Invoke
             const config = { configurable: { thread_id: handshake.executionId } };
+            const commands = await WalkService.findCommandsByExecutionId(handshake.executionId, 5);
             const prompt = `
               DESCRIPTION: You are an assistant helping user walk the web. 
               REQUIREMENT: You are given a MAP and must decide on the next ACTION to take depend on what was asked from ASK.
@@ -61,10 +62,10 @@ export const walk = api.streamInOut<HandshakeRequest, Input, ResponseDto<Action>
                   "options": {}
               }
               FORMAT: Output is an Action and must match the required schema exactly.
+              HISTORY: ${JSON.stringify(commands.result)}
             `;
             const result = await graph.invoke({
-              purpose: prompt,
-              history: [],
+              prompt: prompt,
             }, config)
 
             // Validate response (type predicate)

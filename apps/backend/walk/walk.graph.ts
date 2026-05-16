@@ -4,8 +4,7 @@ import { ActionSchema } from "@repo/core";
 import z from "zod";
 
 const State = new StateSchema({
-    purpose: z.string(),
-    history: z.array(z.string()),
+    prompt: z.string(),
     response: ActionSchema.optional(),
 });
 
@@ -14,7 +13,7 @@ const workflow = new StateGraph(State)
         return state;
     })
     .addNode("process", async (state) => {
-        const response = await claude.invoke(state.purpose);
+        const response = await claude.invoke(state.prompt);
         return { ...state, response};
     })
     .addNode("end", async (state) => {

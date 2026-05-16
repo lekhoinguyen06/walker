@@ -12,8 +12,8 @@ const WalkRepository = {
         return result[0];
     },
 
-    findCommandsByExecutionId(executionId: string) {
-        return db.select().from(command).where(eq(command.executionId, executionId))
+    findCommandsByExecutionId(executionId: string, take: number = 5): Promise<CommandDto[]> {
+        return db.select().from(command).where(eq(command.executionId, executionId)).limit(take);
     },
 
     softDeleteCommandsByExecutionId(executionId: string) {
