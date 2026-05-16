@@ -2,12 +2,12 @@ import { eq, and } from 'drizzle-orm';
 import { db } from './database';
 import { ExecutionDto } from './execution';
 import { execution, command } from './schema';
-import { CommandDto } from './command';
+import { CommandDto, CommandInputDto } from './command';
 import { CreateExecutionDto, UpdateExecutionDto } from './execution/dto';
 
 const WalkRepository = {
     // Command
-    async pushCommand<T>(executionId: string, data: CommandDto<T>): Promise<CommandDto<unknown>> {
+    async pushCommand<T>(executionId: string, data: CommandInputDto<T>): Promise<CommandDto<unknown>> {
         const result = await db.insert(command).values({ ...data, executionId }).returning();
         return result[0];
     },

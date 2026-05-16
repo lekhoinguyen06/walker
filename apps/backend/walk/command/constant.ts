@@ -16,13 +16,7 @@ export const CommandBaseAction = {
     POLL: "poll",
 } as const;
 
-export const CommandPayloadType = {
-    ACTION: "action",
-    MAP: "map",
-} as const;
-
 // Type exports
 export type CommandStatusType = typeof CommandStatus[keyof typeof CommandStatus];
 export type CommandBaseActionType = typeof CommandBaseAction[keyof typeof CommandBaseAction];
-export type TypeOfCommandPayload = typeof CommandPayloadType[keyof typeof CommandPayloadType];
 

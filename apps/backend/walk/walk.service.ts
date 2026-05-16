@@ -1,15 +1,14 @@
 import { ResponseDto } from "../shared/dto/response.dto";
-import { CommandDto } from "./command";
+import { CommandDto, CommandInputDto } from "./command";
 import { ExecutionDto } from "./execution";
 import { CreateExecutionDto, UpdateExecutionDto } from "./execution/dto";
 import { ExecutionWithCommandsDto } from "./walk.dto";
 import WalkRepository from "./walk.repo";
-import logger from "encore.dev/log"
 
 
 const WalkService = {
     // Command
-    pushCommand: async (executionId: string, data: CommandDto<unknown>): Promise<ResponseDto<CommandDto<unknown>>> => {
+    pushCommand: async (executionId: string, data: CommandInputDto<unknown>): Promise<ResponseDto<CommandDto<unknown>>> => {
         try {
             const result = await WalkRepository.pushCommand(executionId, data);
             return {

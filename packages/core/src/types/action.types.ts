@@ -10,7 +10,7 @@ export const ActionSchema = z.object({
   data: z.string().default(''),
 
   currentRoute: z.string().default(''),
-  currentURL: z.url().default(''),
+  currentURL: z.string().default(''),
 });
 
 export const ActionInputSchema = ActionSchema.array();

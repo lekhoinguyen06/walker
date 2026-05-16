@@ -1,10 +1,8 @@
-CREATE TYPE "public"."command_payload_type" AS ENUM('action', 'map');--> statement-breakpoint
 CREATE TYPE "public"."command_status" AS ENUM('drafting', 'executing', 'completed', 'cancelled', 'failed');--> statement-breakpoint
 CREATE TYPE "public"."execution_status" AS ENUM('pending', 'running', 'completed', 'cancelled', 'failed');--> statement-breakpoint
 CREATE TABLE "command" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"executionId" uuid NOT NULL,
-	"payloadType" "command_payload_type" NOT NULL,
 	"payload" jsonb NOT NULL,
 	"status" "command_status" DEFAULT 'drafting' NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,

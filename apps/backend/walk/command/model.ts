@@ -1,11 +1,10 @@
-import { CommandStatusType, TypeOfCommandPayload } from "./constant";
-import { CommandPayload } from "./type";
+import { CommandStatusType } from "./constant";
+import type { Action } from "@repo/core";
 
-export interface CommandDto<T = string | CommandPayload> {
+export interface CommandDto {
     id: string;
     executionId: string;
-    payloadType: TypeOfCommandPayload;
-    payload: T;
+    payload: Action;
     status: CommandStatusType;
 
     createdAt: Date;

@@ -1,5 +1,5 @@
 {
-  "id": "72eb9db4-9971-4617-b0b3-1ffc25ba813b",
+  "id": "39a797f4-1dfd-4883-8677-4cc466f8959b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -18,13 +18,6 @@
         "executionId": {
           "name": "executionId",
           "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "payloadType": {
-          "name": "payloadType",
-          "type": "command_payload_type",
-          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
@@ -159,14 +152,6 @@
     }
   },
   "enums": {
-    "public.command_payload_type": {
-      "name": "command_payload_type",
-      "schema": "public",
-      "values": [
-        "action",
-        "map"
-      ]
-    },
     "public.command_status": {
       "name": "command_status",
       "schema": "public",

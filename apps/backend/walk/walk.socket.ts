@@ -2,88 +2,77 @@
 
 import log from "encore.dev/log";
 import { api, StreamInOut } from "encore.dev/api";
-import { CommandDto, CommandPayloadType } from "./command";
+import { CommandDto } from "./command";
 import { ResponseDto } from "../shared/dto/response.dto";
-import { ActionSchema } from "@repo/core";
+import { graph } from "./walk.graph";
+import WalkService from "./walk.service";
+import { Action, ActionSchema } from "@repo/core";
+
+type Input = {
+  purpose: string;
+  ask: string;
+  map: string;
+}
 
 const connectedStreams: Map<
   string,
-  StreamInOut<CommandDto<string>, ResponseDto<CommandDto | any>>
+  StreamInOut<Input, ResponseDto<Action>>
 > = new Map();
 
 interface HandshakeRequest {
-  sessionId: string;
+  executionId: string;
 }
 
-export const walk = api.streamInOut<HandshakeRequest, CommandDto<string>, ResponseDto<CommandDto | any>>(
+export const walk = api.streamInOut<HandshakeRequest, Input, ResponseDto<Action>>(
   { expose: true, auth: false, path: "/ws/walk" },
   async (handshake, stream) => {
-    connectedStreams.set(handshake.sessionId, stream);
+    connectedStreams.set(handshake.executionId, stream);
 
     log.debug("Stream connected:", stream);
     try {
       // The stream object is an AsyncIterator that yields incoming messages.
       // The loop will continue as long as the client keeps the connection open.
-      for await (const command of stream) {
+      for await (const payload of stream) {
         for (const [key, val] of connectedStreams) {
           try {
-            // Route
-            switch (command.payloadType) {
-              case CommandPayloadType.ACTION: {
-                // Parse payload
-                const payload = JSON.parse(command.payload);
-                const parsed = ActionSchema.safeParse(payload);
+            // Parse map
+            const map: Record<string, unknown> = JSON.parse(payload.map);
 
-                if (parsed.success) {
-                    const action = parsed.data;
-                    await val.send({
-                      success: true,
-                      message: "Action command received and processed successfully",
-                      result: action,
-                    } as ResponseDto);
+            // Invoke
+            const config = { configurable: { thread_id: handshake.executionId } };
+            const prompt = `
+              DESCRIPTION: You are an assistant helping user walk the web. 
+              REQUIREMENT: You are given a MAP and must decide on the next ACTION to take depend on what was asked from ASK.
+              ASK: ${payload.ask}
+              MAP: ${JSON.stringify(map)}
+              FORMAT: Output is an Action and must match the required schema exactly.
+            `;
+            const result = await graph.invoke({
+              purpose: prompt,
+              history: [],
+            }, config)
 
-                    break;
-                } else {
-                    await val.send({
-                        success: false,
-                        message: "Invalid action command payload",
-                        error: parsed.error,
-                    } as ResponseDto);
+            const action = ActionSchema.parse(result.response);
 
-                    break;
-                }
-              }
-              case CommandPayloadType.MAP: {
-                // Parse payload (must be valid json)
-                const map = JSON.parse(command.payload);
-                
-                // Mock response
-                await val.send({
-                  success: true,
-                  message: "Map command received and processed successfully",
-                  result: map,
-                } as ResponseDto);
-
-                break;
-              }
-              default: {
-                await val.send({
-                    success: false,
-                    message: "Unknown command payload type",
-                    error: new Error("Unknown command payload type. Excepted payload types are: " + Object.values(CommandPayloadType).join(", ")),
-                } as ResponseDto)
-              }
-            }
-            // Respond
+            await val.send({
+              success: true,
+              message: "Command received and processed successfully",
+              result: action,
+            });
           } catch (err) {
             log.error("Error processing message:", err);
+            await val.send({
+              success: false,
+              message: "Error processing command",
+              error: err instanceof Error ? err.message : String(err),
+            });
             connectedStreams.delete(key);
           }
         }
       }
     } catch (err) {
-      connectedStreams.delete(handshake.sessionId);
+      connectedStreams.delete(handshake.executionId);
     }
-    connectedStreams.delete(handshake.sessionId);
+    connectedStreams.delete(handshake.executionId);
   },
 );
