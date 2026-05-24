@@ -36,7 +36,7 @@
           {
             "group": "Typescript",
             "pages": [
-              "languages/server/typescript/getting-started"
+              "languages/server/ts/getting-started"
             ]
           }
         ]
