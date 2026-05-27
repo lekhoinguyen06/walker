@@ -7,11 +7,11 @@ description: 'These are the fundamental elements that make up the walker framewo
 
 ### Server
 
-The server is responsible for handling incoming requests and MAP from clients, processing them, and sending back ACTION. 
+The server, also referred to as the Walker server, is responsible for handling incoming requests and MAP from clients, processing them, and sending back ACTION. 
 
 ### Client
 
-The client is responsible for sending MAP to the server, receiving ACTION from the server, and executing those actions to interact with the user application.
+The client, also referred to as the Walker client, is responsible for sending MAP to the server, receiving ACTION from the server, and executing those actions to interact with the user application.
 
 ## Elements
 
@@ -29,7 +29,7 @@ Item represents the individual elements that can be interacted with.
 
 ### Map
 
-Map, a JSON object, is a command sent from the client to the server to describe the current landscape of the user application. For websites, this includes the DOM structure, element attributes, and other relevant information.
+Map, a JSON object, is a collection of Items sent from the client to the server to describe the current landscape of the user application. For websites, this includes the DOM structure, element attributes, and other relevant information.
 
 
 ## Modes
@@ -38,10 +38,10 @@ Map, a JSON object, is a command sent from the client to the server to describe 
 
 This is to minimal config "no-code" solution to use Walker client in your web application. The library will handle crawling, caching, etc of your HTML elements efficiently to ensure minimal token usage without compromising walking experience.
 
-Recommended for hobbyist or team without dedicated Agent engineers.
+Recommended for hobbyist or team without dedicated Walker engineers.
 
 ### Engineered
 
 This is the option for developers to explicitly declared Items, Actions, and Flows for your Walker client applications.
 
-Recommended for project with member dedicated to engineering custom tailored walking experience.
+Recommended for project with members dedicated to engineering custom tailored walking experience.
