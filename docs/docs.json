@@ -26,7 +26,8 @@
             "group": "Concepts",
             "pages": [
               "guides/fundamentals",
-              "guides/contexts"
+              "guides/contexts",
+              "guides/features"
             ]
           }
         ]
