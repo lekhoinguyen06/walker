@@ -50,7 +50,17 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, MessageDto>(
             // Invoke
             const config = { configurable: { thread_id: handshake.sessionId } };
             const result = await graph.invoke({
-              history: history,
+              prompt: `
+                DESCRIPTION: You are an assistant helping user answer questions. 
+                REQUIREMENT: You must answer the question based on the conversation history. 
+                REQUIREMENT: If you don't know the answer, just say you don't know, don't try to make up an answer.
+                HISTORY: ${JSON.stringify(history)}
+              `,
+              guardrail: `
+                Guardrail: You must not answer questions that are not related to the conversation history.
+                Guardrail: You must not answer questions that are harmful, unethical, or illegal.
+                Message: ${chatMessage.content}
+              `
             }, config)
 
             log.debug("LLM response:", result);

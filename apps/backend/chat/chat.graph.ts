@@ -1,34 +1,44 @@
-import claude from "./chat.llm";
+import { claude, claudeBoolean } from "./chat.llm";
 import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
+import log from "encore.dev/log";
 import z from "zod";
-import { MessageRole } from "./message/message.const";
 
 const State = new StateSchema({
-    history: z.array(z.object({
-        role: z.enum([MessageRole.User, MessageRole.Assistant, MessageRole.System]),
-        content: z.string(),
-    })),
+    prompt: z.string(),
+    guardrail: z.string(),
+    continue: z.boolean().default(true),
+    walk: z.boolean().default(false),
     response: z.string().optional(),
 })
 
 const workflow = new StateGraph(State)
-    .addNode("start", async (state) => {
-        // This is the starting node of the workflow. It receives the initial input.
-        return state;
+    .addNode("guardrail", async (state) => {
+        // Guardrail
+        const passGuardrail = await claudeBoolean.invoke(state.guardrail);
+        return {...state, continue: passGuardrail };
     })
     .addNode("process", async (state) => {
         // This node processes the input and generates a response.
-        const response = await claude.invoke(state.history);
+        const response = await claude.invoke(state.prompt);
         return { ...state, response: String(response.content) };
     })
-    .addNode("end", async (state) => {
-        // This is the ending node of the workflow. It can perform any finalization if needed.
+    .addNode("decider", async (state) => {
+        const shouldWalk = await claudeBoolean.invoke(
+            `Based on the following response, should the user walk? 
+            DESCRIPTION: You are a decider that determines if the conversation indicates the user need helps guiding on the website.
+            ${state.response}`
+        );
+        return { ...state, walk: shouldWalk };
+    })
+    .addNode("observe", async (state) => {
+        log.info("Observing state:", state);
         return state;
     })
-    .addEdge(START, "start")
-    .addEdge("start", "process")
-    .addEdge("process", "end")
-    .addEdge("end", END);
+    .addEdge(START, "guardrail")
+    .addEdge("guardrail", "process")
+    .addEdge("process", "decider")
+    .addEdge("decider", "observe")
+    .addEdge("observe", END);
 
 const memory = new MemorySaver();
 
