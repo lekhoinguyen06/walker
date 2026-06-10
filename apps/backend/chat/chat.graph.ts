@@ -15,12 +15,12 @@ const workflow = new StateGraph(State)
     .addNode("guardrail", async (state) => {
         // Guardrail
         const passGuardrail = await llmBoolean.invoke(state.guardrailPrompt);
-        return {...state, continue: passGuardrail };
+        return { continue: passGuardrail };
     })
     .addNode("process", async (state) => {
         // This node processes the input and generates a response.
         const response = await llm.invoke(state.prompt);
-        return { ...state, response: String(response.content) };
+        return { response: String(response.content) };
     })
     .addNode("decider", async (state) => {
         const shouldWalk = await llmBoolean.invoke(
@@ -28,14 +28,15 @@ const workflow = new StateGraph(State)
             DESCRIPTION: You are a decider that determines if the conversation indicates the user need helps guiding on the website.
             ${state.response}`
         );
-        return { ...state, walk: shouldWalk };
+        return { walk: shouldWalk };
     })
     .addNode("observe", async (state) => {
-        log.info("Observing state:", state);
+        // log.info("Observing state:", state);
         return state;
     })
     .addEdge(START, "guardrail")
-    .addEdge("guardrail", "process")
+    .addEdge(START, "process")
+    .addEdge("guardrail", "decider")
     .addEdge("process", "decider")
     .addEdge("decider", "observe")
     .addEdge("observe", END);

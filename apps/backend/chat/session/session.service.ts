@@ -8,8 +8,6 @@ import { InvalidUUIDError } from "../../shared/error";
 
 const SessionService = {
   createSession: async ({ userId }: { userId: string }): Promise<CreateSessionResponseDto> => {
-    validateUUID(userId);
-    
     const session = await SessionRepository.createSession({ userId });
 
     return {
@@ -20,7 +18,6 @@ const SessionService = {
   },
 
   querySession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<QuerySessionResponseDto> => {
-    validateUUID(userId);
     validateUUID(sessionId);
 
     const result = await SessionRepository.querySession({ userId, sessionId });
@@ -35,7 +32,6 @@ const SessionService = {
   },
 
   listSessions: async ({ userId }: { userId: string }): Promise<GetSessionsResponseDto> => {
-    validateUUID(userId);
     const result = await SessionRepository.listSessions({ userId });
     return {
       success: true,
@@ -45,7 +41,6 @@ const SessionService = {
   },
 
   updateSession: async ({ userId, sessionId, title, retention }: UpdateSessionBodyDto & { userId: string; sessionId: string; }): Promise<UpdateSessionResponseDto> => {
-    validateUUID(userId);
     validateUUID(sessionId);
     
     const oldSession = (await SessionRepository.querySession({ userId, sessionId }))[0];
@@ -72,7 +67,6 @@ const SessionService = {
   },
 
   deleteSession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<ResponseDto<null>> => {
-    validateUUID(userId);
     validateUUID(sessionId);
 
     await SessionRepository.deleteSession({ userId, sessionId }).then((result) => {
@@ -86,7 +80,6 @@ const SessionService = {
   },
 
   deleteAllSessions: async ({ userId }: { userId: string }): Promise<ResponseDto<null>> => {
-    validateUUID(userId);
     await SessionRepository.deleteAllSessions({ userId });
     return {
       success: true,
@@ -96,7 +89,6 @@ const SessionService = {
   },
 
   restoreSession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<ResponseDto<null>> => {
-    validateUUID(userId);
     validateUUID(sessionId);
     await SessionRepository.restoreSession({ userId, sessionId }).then((result) => {
       if (result.rowCount === 0) throw SessionNotFoundError;
@@ -109,7 +101,6 @@ const SessionService = {
   },
 
   restoreAllSessions: async ({ userId }: { userId: string }): Promise<ResponseDto<null>> => {
-    validateUUID(userId);
     await SessionRepository.restoreAllSessions({ userId });
     return {
       success: true,

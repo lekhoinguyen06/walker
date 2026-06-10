@@ -18,7 +18,6 @@ export function buildPrompt(history: PromptChatHistory): string {
 export function buildGuardrailPrompt(message: string): string {
     return `
 <guardrail>
-    <li>You must not answer questions that are not related to the conversation history.</li>
     <li>You must not answer questions that are harmful, unethical, or illegal.</li>
 </guardrail>
 <message>
