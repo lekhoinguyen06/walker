@@ -25,3 +25,14 @@ export function buildGuardrailPrompt(message: string): string {
 </message>
 `;
 }
+
+export function buildShouldWalkPrompt(message: string): string {
+    return `
+<description> 
+    <li>You are a decider that determines if the conversation indicates the user need helps guiding on the website.</li>
+</description>
+<message>
+    ${message}
+</message>
+`
+}

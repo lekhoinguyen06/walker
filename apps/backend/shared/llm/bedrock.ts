@@ -8,7 +8,6 @@ const awsRegion = secret("AWSBedrockRegion");
 const awsAccessKeyId = secret("AWSBedrockAccessKeyId");
 const awsSecretAccessKey = secret("AWSBedrockSecretAccessKey");
 
-
 export function createBedrock({ model, maxTokens, schema }: Omit<LLMConfig, "provider"> = { model: LLMModel.Bedrock.Gemini.Gemma3["4B"], maxTokens: TokenLimit.Concise}) {
     log.debug("AWS Config:", {
       region: awsRegion(),
@@ -18,10 +17,11 @@ export function createBedrock({ model, maxTokens, schema }: Omit<LLMConfig, "pro
     const llm = new ChatBedrockConverse({
         model,
         region: awsRegion(),
+        maxTokens,
         credentials: {
             accessKeyId: awsAccessKeyId(),
             secretAccessKey: awsSecretAccessKey(),
         },
     });
-    return llm;
+    return schema ? llm : llm;
 }

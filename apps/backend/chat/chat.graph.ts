@@ -2,6 +2,7 @@ import { llm, llmBoolean } from "./chat.llm";
 import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
 import log from "encore.dev/log";
 import z from "zod";
+import { buildShouldWalkPrompt } from "./chat.prompt";
 
 const State = new StateSchema({
     prompt: z.string(),
@@ -23,11 +24,14 @@ const workflow = new StateGraph(State)
         return { response: String(response.content) };
     })
     .addNode("decider", async (state) => {
+        if (!state.response) {
+            return { walk: false };
+        }
+
         const shouldWalk = await llmBoolean.invoke(
-            `Based on the following response, should the user walk? 
-            DESCRIPTION: You are a decider that determines if the conversation indicates the user need helps guiding on the website.
-            ${state.response}`
+            buildShouldWalkPrompt(state.response)
         );
+        log.debug("Value of shouldWalk:", shouldWalk);
         return { walk: shouldWalk };
     })
     .addNode("observe", async (state) => {
