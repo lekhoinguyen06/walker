@@ -1,4 +1,4 @@
-import { claude, claudeBoolean } from "./chat.llm";
+import { llm, llmBoolean } from "./chat.llm";
 import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
 import log from "encore.dev/log";
 import z from "zod";
@@ -14,16 +14,16 @@ const State = new StateSchema({
 const workflow = new StateGraph(State)
     .addNode("guardrail", async (state) => {
         // Guardrail
-        const passGuardrail = await claudeBoolean.invoke(state.guardrailPrompt);
+        const passGuardrail = await llmBoolean.invoke(state.guardrailPrompt);
         return {...state, continue: passGuardrail };
     })
     .addNode("process", async (state) => {
         // This node processes the input and generates a response.
-        const response = await claude.invoke(state.prompt);
+        const response = await llm.invoke(state.prompt);
         return { ...state, response: String(response.content) };
     })
     .addNode("decider", async (state) => {
-        const shouldWalk = await claudeBoolean.invoke(
+        const shouldWalk = await llmBoolean.invoke(
             `Based on the following response, should the user walk? 
             DESCRIPTION: You are a decider that determines if the conversation indicates the user need helps guiding on the website.
             ${state.response}`

@@ -1,8 +1,8 @@
-import { createClaude, LLMModel, TokenLimit } from "../shared/llm";
+import { createClaude, createLLM, LLMModel, LLMProvider, TokenLimit } from "../shared/llm";
 import z from "zod";
 
-const claude = createClaude({ model: LLMModel.Claude.Haiku45, maxTokens: TokenLimit.Detail });
+const llm = createLLM({ provider: LLMProvider.Bedrock, model: LLMModel.Bedrock.Gemini.Gemma3["4B"], maxTokens: TokenLimit.Concise });
 
-const claudeBoolean = createClaude({ model: LLMModel.Claude.Haiku45, maxTokens: TokenLimit.Concise, schema: z.boolean() });
+const llmBoolean = createLLM({ provider: LLMProvider.Bedrock, model: LLMModel.Bedrock.Gemini.Gemma3["4B"], maxTokens: TokenLimit.Concise, schema: z.boolean() });
 
-export {claude, claudeBoolean};
+export { llm, llmBoolean };
