@@ -5,7 +5,7 @@ import z from "zod";
 
 const State = new StateSchema({
     prompt: z.string(),
-    guardrail: z.string(),
+    guardrailPrompt: z.string(),
     continue: z.boolean().default(true),
     walk: z.boolean().default(false),
     response: z.string().optional(),
@@ -14,7 +14,7 @@ const State = new StateSchema({
 const workflow = new StateGraph(State)
     .addNode("guardrail", async (state) => {
         // Guardrail
-        const passGuardrail = await claudeBoolean.invoke(state.guardrail);
+        const passGuardrail = await claudeBoolean.invoke(state.guardrailPrompt);
         return {...state, continue: passGuardrail };
     })
     .addNode("process", async (state) => {
