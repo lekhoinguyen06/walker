@@ -20,6 +20,13 @@ const workflow = new StateGraph(State)
         const { text } = await generateText({
             model: bedrock(LLMModel.Bedrock.Gemini.Gemma3["12B"]),
             prompt: state.prompt,
+            providerOptions: {
+                bedrock: {
+                    bedrock: {
+                        
+                    }
+                }
+            }
         });
 
         return { response: text };
