@@ -3,7 +3,7 @@ import z from "zod";
 import { bedrock } from "../shared/llm/bedrock.llm";
 import { generateText, Output } from 'ai';
 import { LLMModel } from "../shared/llm";
-import { buildShouldWalkPrompt } from "./chat.prompt";
+import { buildPrompt, buildShouldWalkPrompt } from "./chat.prompt";
 
 const ResponseSchema = z.object({
     response: z.string(),
@@ -25,7 +25,7 @@ const workflow = new StateGraph(State)
     .addNode("process", async (state) => {
         const { text } = await generateText({
             model: bedrock(LLMModel.Bedrock.Gemini.Gemma3["12B"]),
-            prompt: state.prompt,
+            prompt: buildPrompt({ history: state.history, prompt: state.prompt }),
             output: Output.object({
                 schema: ResponseSchema
             })

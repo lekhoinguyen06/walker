@@ -32,8 +32,17 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, CreateMsgBody
             content: chatMessage.content,
           };
 
+          const history: { role: string; content: string }[] = await MessageService.getMsgs({
+            sessionId,
+          }).then((msgs: MessageDto[]) =>
+            msgs.map((msg) => ({
+              role: msg.role,
+              content: msg.content,
+            }))
+          );
+
           const config = { configurable: { thread_id: sessionId } };
-          const result = await graph.invoke({ history: JSON.stringify({}), prompt: chatMessage.content }, config).then((res) => res.response);
+          const result = await graph.invoke({ history: JSON.stringify(history), prompt: chatMessage.content }, config).then((res) => res.response);
 
           if (!result) {
             log.warn("No response from graph", { sessionId, prompt: chatMessage.content });
@@ -47,12 +56,11 @@ export const chat = api.streamInOut<HandshakeRequest, InputMsgDto, CreateMsgBody
             content: result,
           };
 
+          await stream.send({ sessionId, role: MessageRole.Assistant, type: MessageType.Answer, content: result });
           await MessageService.addMsg(userMsg);
           await MessageService.addMsg(agentMsg);
-          await stream.send({ sessionId, role: MessageRole.Assistant, type: MessageType.Answer, content: result });
         } catch (err) {
-          log.error("Error processing message", { sessionId, err: String(err) });
-          // Don't rethrow — keep the stream alive for next message
+          log.error("Error processing message", { err: String(err) });
         }
       }
 

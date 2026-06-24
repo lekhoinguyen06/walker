@@ -23,7 +23,7 @@ const MessageService = {
         const length = msgs.length;
         if (length >= MessageLimits.MaxTopic) {
             // Delete previous messages using oldest message as reference
-            log.debug('Msgs before this msg will be deleted:', msgs[MessageLimits.MaxPaginationLimit - 1]);
+            // log.debug('Msgs before this msg will be deleted:', msgs[MessageLimits.MaxPaginationLimit - 1]);
             const oldestMsg = msgs[MessageLimits.MaxPaginationLimit - 1];
             await MessageRepository.hardDeleteMsgsBeforeMsgId({ sessionId, timestamp: oldestMsg.createdAt });
             return await MessageRepository.getMsgs({ sessionId, page, limit });
