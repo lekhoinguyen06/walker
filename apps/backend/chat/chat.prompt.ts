@@ -1,38 +1,38 @@
-export type PromptChatHistory = { role: string, content: string}[];
-
-export function buildPrompt(history: PromptChatHistory): string {
+export function buildPrompt({ history, prompt }: {history: string, prompt: string}): string {
     return `
 <description>
     <li>You are an assistant helping user answer questions.</li>
 </description>
-<requirement>
-    <li>You must answer the question based on the conversation history.</li>
-    <li>If you don't know the answer, just say you don't know, don't try to make up an answer.</li>
-</requirement>
 <history>
-    ${JSON.stringify(history)}
+    ${history}
 </history>
+<prompt>
+    ${prompt}
+</prompt>
 `;
 }
 
-export function buildGuardrailPrompt(message: string): string {
+export function buildGuardrailPrompt(prompt: string): string {
     return `
 <guardrail>
-    <li>You must not answer questions that are harmful, unethical, or illegal.</li>
+    <li>You must guardrails prompt that is harmful, unethical, or illegal.</li>
 </guardrail>
-<message>
-    ${message}
-</message>
+<prompt>
+    ${prompt}
+</prompt>
 `;
 }
 
-export function buildShouldWalkPrompt(message: string): string {
+export function buildShouldWalkPrompt({ history, prompt }: {history: string, prompt: string}): string {
     return `
 <description> 
     <li>You are a decider that determines if the conversation indicates the user need helps guiding on the website.</li>
 </description>
-<message>
-    ${message}
-</message>
+<history>
+    ${history}
+</history>
+<prompt>
+    ${prompt}
+</prompt>
 `
 }

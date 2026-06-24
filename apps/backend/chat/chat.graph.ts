@@ -1,12 +1,13 @@
-import { llm, llmBoolean } from "./chat.llm";
 import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
-import log from "encore.dev/log";
 import z from "zod";
-import { buildShouldWalkPrompt } from "./chat.prompt";
+import { bedrock } from "../shared/llm/bedrock.llm";
+import { generateText } from 'ai';
+import { LLMModel } from "../shared/llm";
+
 
 const State = new StateSchema({
+    history: z.string(),
     prompt: z.string(),
-    guardrailPrompt: z.string(),
     continue: z.boolean().default(true),
     walk: z.boolean().default(false),
     response: z.string().optional(),
@@ -14,28 +15,19 @@ const State = new StateSchema({
 
 const workflow = new StateGraph(State)
     .addNode("guardrail", async (state) => {
-        // Guardrail
-        const passGuardrail = await llmBoolean.invoke(state.guardrailPrompt);
-        return { continue: passGuardrail };
     })
     .addNode("process", async (state) => {
-        // This node processes the input and generates a response.
-        const response = await llm.invoke(state.prompt);
-        return { response: String(response.content) };
+        const { text } = await generateText({
+            model: bedrock(LLMModel.Bedrock.Gemini.Gemma3["12B"]),
+            prompt: state.prompt,
+        });
+
+        return { response: text };
     })
     .addNode("decider", async (state) => {
-        if (!state.response) {
-            return { walk: false };
-        }
-
-        const shouldWalk = await llmBoolean.invoke(
-            buildShouldWalkPrompt(state.response)
-        );
-        log.debug("Value of shouldWalk:", shouldWalk);
-        return { walk: shouldWalk };
     })
     .addNode("observe", async (state) => {
-        // log.info("Observing state:", state);
+        console.log("State: ", { state });
         return state;
     })
     .addEdge(START, "guardrail")
