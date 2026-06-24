@@ -1,3 +1,3 @@
-import { APIError } from "encore.dev/api";
+import { APIError } from 'encore.dev/api';
 
-export const InvalidUUIDError = APIError.invalidArgument("Error.InvalidUUID");
+export const InvalidUUIDError = APIError.invalidArgument('Error.InvalidUUID');

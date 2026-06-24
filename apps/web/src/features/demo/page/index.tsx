@@ -40,8 +40,11 @@ export function DemoPage() {
         <Chat open={open} setOpen={setOpen} />
         <Trigger setOpen={setOpen} />
         <Cart open={cartOpen} setOpen={setCartOpen}>
-          <Button variant="outline" className='z-50 fixed bottom-0 right-0 mr-24 mb-8 bg-black shadow-sm size-12 ring-2 ring-white aspect-square rounded-none group hover:bg-white hover:ring-black'>
-            <RiShoppingBasket2Line className='text-white group-hover:text-black' />
+          <Button
+            variant="outline"
+            className="z-50 fixed bottom-0 right-0 mr-24 mb-8 bg-black shadow-sm size-12 ring-2 ring-white aspect-square rounded-none group hover:bg-white hover:ring-black"
+          >
+            <RiShoppingBasket2Line className="text-white group-hover:text-black" />
           </Button>
         </Cart>
         <div className="w-full flex flex-col p-30">

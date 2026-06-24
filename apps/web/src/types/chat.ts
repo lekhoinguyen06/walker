@@ -6,7 +6,6 @@ export type Message = {
 
 export type Log = {
   id: number;
-  
-}
+};
 
 export type ChatMode = 'dev' | 'chat';

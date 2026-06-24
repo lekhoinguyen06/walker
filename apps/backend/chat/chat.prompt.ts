@@ -1,5 +1,11 @@
-export function buildPrompt({ history, prompt }: {history: string, prompt: string}): string {
-    return `
+export function buildPrompt({
+  history,
+  prompt,
+}: {
+  history: string;
+  prompt: string;
+}): string {
+  return `
 <description>
     <li>You are an assistant helping user answer questions.</li>
 </description>
@@ -13,7 +19,7 @@ export function buildPrompt({ history, prompt }: {history: string, prompt: strin
 }
 
 export function buildGuardrailPrompt(prompt: string): string {
-    return `
+  return `
 <guardrail>
     <li>You must guardrails prompt that is harmful, unethical, or illegal. Still, response according to the GuardrailSchema.</li>
 </guardrail>
@@ -23,8 +29,14 @@ export function buildGuardrailPrompt(prompt: string): string {
 `;
 }
 
-export function buildShouldWalkPrompt({ history, prompt }: {history: string, prompt: string}): string {
-    return `
+export function buildShouldWalkPrompt({
+  history,
+  prompt,
+}: {
+  history: string;
+  prompt: string;
+}): string {
+  return `
 <description> 
     <li>You are a decider that determines if the conversation indicates the user need helps guiding on the website.</li>
 </description>
@@ -34,5 +46,5 @@ export function buildShouldWalkPrompt({ history, prompt }: {history: string, pro
 <prompt>
     ${prompt}
 </prompt>
-`
+`;
 }

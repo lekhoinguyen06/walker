@@ -5,7 +5,21 @@ import {
   PromptInputTextarea,
 } from '@/components/ui/prompt-input';
 import { Button } from '@/components/ui/button';
-import { ArrowUp, Code, Eye, Globe, Hammer, Map, MessageCircle, Mic, MoreHorizontal, Pause, Play, Plus, Trash } from 'lucide-react';
+import {
+  ArrowUp,
+  Code,
+  Eye,
+  Globe,
+  Hammer,
+  Map,
+  MessageCircle,
+  Mic,
+  MoreHorizontal,
+  Pause,
+  Play,
+  Plus,
+  Trash,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useChatStore } from '@/store/chat';
 import { logger, walk } from '@repo/core';
@@ -18,7 +32,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 import Editor from '@monaco-editor/react';
 
 export function Input() {
@@ -70,8 +84,13 @@ export function Input() {
             />
           ) : (
             <>
-              <div className='h-40 p-2'>
-                <Editor defaultLanguage="json" value={prompt} onChange={(e) => e && setPrompt(e)} className='border rounded-2xl p-4 pl-0' />
+              <div className="h-40 p-2">
+                <Editor
+                  defaultLanguage="json"
+                  value={prompt}
+                  onChange={(e) => e && setPrompt(e)}
+                  className="border rounded-2xl p-4 pl-0"
+                />
               </div>
             </>
           )}
@@ -97,14 +116,22 @@ export function Input() {
 
               {mode === 'chat' ? (
                 <PromptInputAction tooltip="Devtools">
-                  <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('dev')}>
+                  <Button
+                    variant="outline"
+                    className="size-9 rounded-full"
+                    onClick={() => setMode('dev')}
+                  >
                     <Code size={18} />
                   </Button>
                 </PromptInputAction>
               ) : (
                 <>
                   <PromptInputAction tooltip="Chat">
-                    <Button variant="outline" className="size-9 rounded-full" onClick={() => setMode('chat')}>
+                    <Button
+                      variant="outline"
+                      className="size-9 rounded-full"
+                      onClick={() => setMode('chat')}
+                    >
                       <MessageCircle size={18} />
                     </Button>
                   </PromptInputAction>
@@ -112,26 +139,45 @@ export function Input() {
                   <PromptInputAction tooltip="Commands">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className='size-9 rounded-full'><Hammer size={18} /></Button>
+                        <Button
+                          variant="outline"
+                          className="size-9 rounded-full"
+                        >
+                          <Hammer size={18} />
+                        </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         <DropdownMenuGroup>
                           <DropdownMenuLabel>Log</DropdownMenuLabel>
-                          <DropdownMenuItem onClick={() => logger.map()}> <Map size={12} /> Map</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => logger.peak()}> <Eye size={12} /> Peak</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => logger.clear()}> <Trash size={12} /> Clear</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => logger.map()}>
+                            {' '}
+                            <Map size={12} /> Map
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => logger.peak()}>
+                            {' '}
+                            <Eye size={12} /> Peak
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => logger.clear()}>
+                            {' '}
+                            <Trash size={12} /> Clear
+                          </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuLabel>Process</DropdownMenuLabel>
-                        <DropdownMenuItem disabled><Play size={12} /> Play</DropdownMenuItem>
-                        <DropdownMenuItem disabled><Pause size={12} /> Pause</DropdownMenuItem>
-                        <DropdownMenuItem disabled><Trash size={12} /> Clear</DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                          <Play size={12} /> Play
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                          <Pause size={12} /> Pause
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                          <Trash size={12} /> Clear
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </PromptInputAction>
                 </>
               )}
-
 
               <PromptInputAction tooltip="More actions">
                 <Button

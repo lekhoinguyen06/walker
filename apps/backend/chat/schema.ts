@@ -1,14 +1,34 @@
-import { relations } from "drizzle-orm";
-import * as p from "drizzle-orm/pg-core";
-import { AttachmentType, MessageRole, MessageType } from "./message/message.const";
-import { SessionRetention } from "./session/session.const";
+import { relations } from 'drizzle-orm';
+import * as p from 'drizzle-orm/pg-core';
+import {
+  AttachmentType,
+  MessageRole,
+  MessageType,
+} from './message/message.const';
+import { SessionRetention } from './session/session.const';
 // Enums
-export const msgTypesEnum = p.pgEnum("msg_type", [MessageType.Question, MessageType.Answer, MessageType.Command, MessageType.Explain, MessageType.Other]);
-export const attachmentTypesEnum = p.pgEnum("attachment_type", [AttachmentType.File, AttachmentType.Image, AttachmentType.Code, AttachmentType.Table, AttachmentType.Other]);
-export const rolesEnum = p.pgEnum("role",[MessageRole.User, MessageRole.Assistant, MessageRole.System]);
+export const msgTypesEnum = p.pgEnum('msg_type', [
+  MessageType.Question,
+  MessageType.Answer,
+  MessageType.Command,
+  MessageType.Explain,
+  MessageType.Other,
+]);
+export const attachmentTypesEnum = p.pgEnum('attachment_type', [
+  AttachmentType.File,
+  AttachmentType.Image,
+  AttachmentType.Code,
+  AttachmentType.Table,
+  AttachmentType.Other,
+]);
+export const rolesEnum = p.pgEnum('role', [
+  MessageRole.User,
+  MessageRole.Assistant,
+  MessageRole.System,
+]);
 
 // Schemas
-export const sessions = p.pgTable("sessions", {
+export const sessions = p.pgTable('sessions', {
   id: p.uuid().defaultRandom().primaryKey(),
   userId: p.text().notNull(),
   title: p.text().notNull(),
@@ -21,15 +41,15 @@ export const sessions = p.pgTable("sessions", {
   createdAt: p.timestamp().defaultNow().notNull(),
   updatedAt: p.timestamp().defaultNow().notNull(),
   deletedAt: p.timestamp(),
-  expireAt: p.timestamp()
+  expireAt: p.timestamp(),
 });
 
-export const messages = p.pgTable("messages", {
+export const messages = p.pgTable('messages', {
   id: p.uuid().defaultRandom().primaryKey(),
   sessionId: p.uuid().notNull(),
   role: rolesEnum().notNull(),
   type: msgTypesEnum().notNull(),
-  
+
   // Data
   content: p.text().notNull(),
   contentJson: p.json(),
@@ -41,10 +61,10 @@ export const messages = p.pgTable("messages", {
   // Timestamps
   createdAt: p.timestamp().defaultNow().notNull(),
   updatedAt: p.timestamp().defaultNow().notNull(),
-  deletedAt: p.timestamp()
+  deletedAt: p.timestamp(),
 });
 
-export const topics = p.pgTable("topics", {
+export const topics = p.pgTable('topics', {
   id: p.uuid().defaultRandom().primaryKey(),
   sessionId: p.uuid().notNull(),
 
@@ -56,7 +76,7 @@ export const topics = p.pgTable("topics", {
   updatedAt: p.timestamp().defaultNow().notNull(),
 });
 
-export const summaries = p.pgTable("summaries", {
+export const summaries = p.pgTable('summaries', {
   id: p.uuid().defaultRandom().primaryKey(),
   sessionId: p.uuid().notNull(),
 
@@ -74,7 +94,7 @@ export const summaries = p.pgTable("summaries", {
   updatedAt: p.timestamp().defaultNow().notNull(),
 });
 
-export const toolCalls = p.pgTable("tool_calls", {
+export const toolCalls = p.pgTable('tool_calls', {
   id: p.uuid().defaultRandom().primaryKey(),
   messageId: p.uuid().notNull(),
   tool: p.text().notNull(),
@@ -85,7 +105,7 @@ export const toolCalls = p.pgTable("tool_calls", {
   createdAt: p.timestamp().defaultNow().notNull(),
 });
 
-export const attachments = p.pgTable("attachments", {
+export const attachments = p.pgTable('attachments', {
   id: p.uuid().defaultRandom().primaryKey(),
   messageId: p.uuid().notNull(),
   filename: p.text().notNull(),
@@ -105,7 +125,7 @@ export const sessionsRelations = relations(sessions, ({ many }) => ({
   messages: many(messages),
   summaries: many(summaries),
   topics: many(topics),
-}))
+}));
 
 export const messagesRelations = relations(messages, ({ one }) => ({
   session: one(sessions, {
@@ -116,14 +136,14 @@ export const messagesRelations = relations(messages, ({ one }) => ({
     fields: [messages.sessionId],
     references: [topics.sessionId],
   }),
-}))
+}));
 
 export const summariesRelations = relations(summaries, ({ one }) => ({
   session: one(sessions, {
     fields: [summaries.sessionId],
     references: [sessions.id],
   }),
-}))
+}));
 
 export const topicsRelations = relations(topics, ({ one, many }) => ({
   session: one(sessions, {
@@ -131,21 +151,18 @@ export const topicsRelations = relations(topics, ({ one, many }) => ({
     references: [sessions.id],
   }),
   messages: many(messages),
-}))
+}));
 
 export const toolCallsRelations = relations(toolCalls, ({ one }) => ({
   message: one(messages, {
     fields: [toolCalls.messageId],
     references: [messages.id],
   }),
-}))
+}));
 
 export const attachmentsRelations = relations(attachments, ({ one }) => ({
   message: one(messages, {
     fields: [attachments.messageId],
     references: [messages.id],
   }),
-}))
-
-
-
+}));

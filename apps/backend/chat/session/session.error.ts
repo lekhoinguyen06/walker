@@ -1,3 +1,3 @@
-import { APIError } from "encore.dev/api";
+import { APIError } from 'encore.dev/api';
 
-export const SessionNotFoundError = APIError.notFound("Error.SessionNotFound");
+export const SessionNotFoundError = APIError.notFound('Error.SessionNotFound');

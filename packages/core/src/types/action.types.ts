@@ -20,7 +20,7 @@ export const ActionInputSchema = ActionSchema.array();
 
 export type Action = {
   id: string;
-  
+
   action: string;
   query: string;
 
@@ -29,6 +29,6 @@ export type Action = {
 
   currentRoute: string;
   currentURL: string;
-}
+};
 
 export type ActionInput = Action[];

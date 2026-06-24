@@ -1,5 +1,10 @@
-import { ExecutionDto } from "./model";
+import { ExecutionDto } from './model';
 
-export interface CreateExecutionDto extends Pick<ExecutionDto, "sessionId" | "purpose"> {}
+export interface CreateExecutionDto extends Pick<
+  ExecutionDto,
+  'sessionId' | 'purpose'
+> {}
 
-export interface UpdateExecutionDto extends Partial<Pick<ExecutionDto, "sessionId" | "purpose" | "status" | "completedAt">> {}
+export interface UpdateExecutionDto extends Partial<
+  Pick<ExecutionDto, 'sessionId' | 'purpose' | 'status' | 'completedAt'>
+> {}

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import slugify from 'slugify';
-import { BaseItem } from "@repo/react";
+import { BaseItem } from '@repo/react';
 
 export function Row({
   children,

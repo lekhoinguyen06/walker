@@ -6,7 +6,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",
@@ -18,5 +19,13 @@
     "prettier": "^3.8.1",
     "turbo": "^2.8.8"
   },
-  "packageManager": "pnpm@8.15.6"
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write \"**/*.{ts,tsx,md}\""
+    ]
+  },
+  "packageManager": "pnpm@8.15.6",
+  "dependencies": {
+    "lint-staged": "^17.0.8"
+  }
 }

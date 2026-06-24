@@ -13,7 +13,7 @@ The world works on DOM elements, so we send it to our agents.
 The Walker library helps your agents be interactive, deliver user the experience tailored to your imagination. 
 Guiding users, state aware, trained to use your web, and any other thing we can imagine. 
 Build with us, and walk the earth!
-`
+`;
 
 export function LandingPage() {
   const [open, setOpen] = useState(false);
@@ -35,23 +35,21 @@ export function LandingPage() {
         </div>
         {isSmall ? (
           <>
-          <span className="text-paragraph-sm px-2 text-justify">
-            {message}
-          </span>
-          <div className="w-full p-10 flex flex-col gap-20">
-            <InstallationTerminal />
-            <TechStack />
-          </div>
+            <span className="text-paragraph-sm px-2 text-justify">
+              {message}
+            </span>
+            <div className="w-full p-10 flex flex-col gap-20">
+              <InstallationTerminal />
+              <TechStack />
+            </div>
           </>
         ) : (
           <>
-          <span className="text-title-h5 text-justify">
-            {message}
-          </span>
-          <div className="w-full p-10 flex gap-20">
-            <InstallationTerminal />
-            <TechStack />
-          </div>
+            <span className="text-title-h5 text-justify">{message}</span>
+            <div className="w-full p-10 flex gap-20">
+              <InstallationTerminal />
+              <TechStack />
+            </div>
           </>
         )}
         {/* <div className="w-full h-200 p-10 flex flex-col gap-20">

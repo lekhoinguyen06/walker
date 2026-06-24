@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 type FlowProviderProps = {
-	initializer: () => void;
-	children: React.ReactNode;
+  initializer: () => void;
+  children: React.ReactNode;
 };
 
 export function FlowProvider({ initializer, children }: FlowProviderProps) {
-	useEffect(() => {
-		initializer();
-	}, [initializer]);
+  useEffect(() => {
+    initializer();
+  }, [initializer]);
 
-	return <>{children}</>;
+  return <>{children}</>;
 }

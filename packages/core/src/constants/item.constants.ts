@@ -1,4 +1,4 @@
-import type { BaseItemOptionsType } from "@src/types/item.types.js";
+import type { BaseItemOptionsType } from '@src/types/item.types.js';
 
 export const DEFAULT_BASE_ITEM_OPTIONS: BaseItemOptionsType = {
   permission: false,

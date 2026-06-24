@@ -1,9 +1,9 @@
-import { RiShoppingBag3Line } from "@remixicon/react";
-import { BaseItem } from "@repo/react";
+import { RiShoppingBag3Line } from '@remixicon/react';
+import { BaseItem } from '@repo/react';
 import { Button } from '@/components/ui/button';
 import slugify from 'slugify';
-import { CardProp } from "@/types/card";
-import { PopoverAddToCart } from "./popover";
+import { CardProp } from '@/types/card';
+import { PopoverAddToCart } from './popover';
 
 export function Card({ title, price }: CardProp) {
   const key = `shopping-item-${slugify(title)}`;

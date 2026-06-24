@@ -1,11 +1,11 @@
-import { MessageRoleType, TypeOfMessageType } from "./message.const";
+import { MessageRoleType, TypeOfMessageType } from './message.const';
 
 // export const messages = p.pgTable("messages", {
 //   id: p.uuid().defaultRandom().primaryKey(),
 //   sessionId: p.uuid().notNull(),
 //   role: rolesEnum().notNull(),
 //   type: msgTypesEnum().notNull(),
-  
+
 //   // Data
 //   content: p.text().notNull(),
 //   contentJson: p.json(),

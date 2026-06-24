@@ -1,23 +1,39 @@
-import { CreateSessionResponseDto, GetSessionsResponseDto, QuerySessionResponseDto, UpdateSessionBodyDto, UpdateSessionResponseDto } from "./session.dto";
-import { ResponseDto } from "../../shared/dto/response.dto";
-import SessionRepository from "./session.repo";
-import { SessionNotFoundError } from "./session.error";
-import { startOfDay, addDays } from "date-fns";
-import { isValidUUID, validateUUID } from "../../shared/utils";
-import { InvalidUUIDError } from "../../shared/error";
+import {
+  CreateSessionResponseDto,
+  GetSessionsResponseDto,
+  QuerySessionResponseDto,
+  UpdateSessionBodyDto,
+  UpdateSessionResponseDto,
+} from './session.dto';
+import { ResponseDto } from '../../shared/dto/response.dto';
+import SessionRepository from './session.repo';
+import { SessionNotFoundError } from './session.error';
+import { startOfDay, addDays } from 'date-fns';
+import { isValidUUID, validateUUID } from '../../shared/utils';
+import { InvalidUUIDError } from '../../shared/error';
 
 const SessionService = {
-  createSession: async ({ userId }: { userId: string }): Promise<CreateSessionResponseDto> => {
+  createSession: async ({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<CreateSessionResponseDto> => {
     const session = await SessionRepository.createSession({ userId });
 
     return {
       success: true,
       result: session,
-      message: "Session created successfully",
+      message: 'Session created successfully',
     };
   },
 
-  querySession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<QuerySessionResponseDto> => {
+  querySession: async ({
+    userId,
+    sessionId,
+  }: {
+    userId: string;
+    sessionId: string;
+  }): Promise<QuerySessionResponseDto> => {
     validateUUID(sessionId);
 
     const result = await SessionRepository.querySession({ userId, sessionId });
@@ -27,33 +43,49 @@ const SessionService = {
     return {
       success: true,
       result: session,
-      message: "Session retrieved successfully",
+      message: 'Session retrieved successfully',
     };
   },
 
-  listSessions: async ({ userId }: { userId: string }): Promise<GetSessionsResponseDto> => {
+  listSessions: async ({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<GetSessionsResponseDto> => {
     const result = await SessionRepository.listSessions({ userId });
     return {
       success: true,
       result: result,
-      message: "Sessions retrieved successfully",
+      message: 'Sessions retrieved successfully',
     };
   },
 
-  updateSession: async ({ userId, sessionId, title, retention }: UpdateSessionBodyDto & { userId: string; sessionId: string; }): Promise<UpdateSessionResponseDto> => {
+  updateSession: async ({
+    userId,
+    sessionId,
+    title,
+    retention,
+  }: UpdateSessionBodyDto & {
+    userId: string;
+    sessionId: string;
+  }): Promise<UpdateSessionResponseDto> => {
     validateUUID(sessionId);
-    
-    const oldSession = (await SessionRepository.querySession({ userId, sessionId }))[0];
+
+    const oldSession = (
+      await SessionRepository.querySession({ userId, sessionId })
+    )[0];
     if (!oldSession) throw SessionNotFoundError;
-    const newSession = await SessionRepository.updateSession({ 
-      userId, 
-      sessionId, 
+    const newSession = await SessionRepository.updateSession({
+      userId,
+      sessionId,
       newSession: {
         ...oldSession,
         title: title ?? oldSession.title,
         retention: retention ?? oldSession.retention,
-        expireAt: retention ? addDays(startOfDay(new Date(oldSession.createdAt)), retention) : oldSession.expireAt,
-      }
+        expireAt: retention
+          ? addDays(startOfDay(new Date(oldSession.createdAt)), retention)
+          : oldSession.expireAt,
+      },
     }).then((result) => {
       if (!result) throw SessionNotFoundError;
       return result;
@@ -66,12 +98,20 @@ const SessionService = {
     };
   },
 
-  deleteSession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<ResponseDto<null>> => {
+  deleteSession: async ({
+    userId,
+    sessionId,
+  }: {
+    userId: string;
+    sessionId: string;
+  }): Promise<ResponseDto<null>> => {
     validateUUID(sessionId);
 
-    await SessionRepository.deleteSession({ userId, sessionId }).then((result) => {
-      if (result.rowCount === 0) throw SessionNotFoundError;
-    });
+    await SessionRepository.deleteSession({ userId, sessionId }).then(
+      (result) => {
+        if (result.rowCount === 0) throw SessionNotFoundError;
+      },
+    );
     return {
       success: true,
       result: null,
@@ -79,20 +119,32 @@ const SessionService = {
     };
   },
 
-  deleteAllSessions: async ({ userId }: { userId: string }): Promise<ResponseDto<null>> => {
+  deleteAllSessions: async ({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<ResponseDto<null>> => {
     await SessionRepository.deleteAllSessions({ userId });
     return {
       success: true,
       result: null,
-      message: "All sessions deleted successfully for user " + userId,
+      message: 'All sessions deleted successfully for user ' + userId,
     };
   },
 
-  restoreSession: async ({ userId, sessionId }: { userId: string; sessionId: string }): Promise<ResponseDto<null>> => {
+  restoreSession: async ({
+    userId,
+    sessionId,
+  }: {
+    userId: string;
+    sessionId: string;
+  }): Promise<ResponseDto<null>> => {
     validateUUID(sessionId);
-    await SessionRepository.restoreSession({ userId, sessionId }).then((result) => {
-      if (result.rowCount === 0) throw SessionNotFoundError;
-    });
+    await SessionRepository.restoreSession({ userId, sessionId }).then(
+      (result) => {
+        if (result.rowCount === 0) throw SessionNotFoundError;
+      },
+    );
     return {
       success: true,
       result: null,
@@ -100,12 +152,16 @@ const SessionService = {
     };
   },
 
-  restoreAllSessions: async ({ userId }: { userId: string }): Promise<ResponseDto<null>> => {
+  restoreAllSessions: async ({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<ResponseDto<null>> => {
     await SessionRepository.restoreAllSessions({ userId });
     return {
       success: true,
       result: null,
-      message: "All sessions restored successfully for user " + userId,
+      message: 'All sessions restored successfully for user ' + userId,
     };
   },
 };

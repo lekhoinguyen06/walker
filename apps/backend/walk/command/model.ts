@@ -1,16 +1,19 @@
-import { CommandStatusType } from "./constant";
+import { CommandStatusType } from './constant';
 
 export interface CommandDto {
-    id: string;
-    executionId: string;
-    payload: unknown;
-    status: CommandStatusType;
+  id: string;
+  executionId: string;
+  payload: unknown;
+  status: CommandStatusType;
 
-    createdAt: Date;
-    updatedAt: Date;
-    completedAt: Date | null;
-    deletedAt: Date | null;
-    deleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  completedAt: Date | null;
+  deletedAt: Date | null;
+  deleted: boolean;
 }
 
-export interface CreateCommandDto extends Pick<CommandDto, "executionId" | "payload" | "status"> {};
+export interface CreateCommandDto extends Pick<
+  CommandDto,
+  'executionId' | 'payload' | 'status'
+> {}

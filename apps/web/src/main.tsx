@@ -8,5 +8,5 @@ import { initFlow } from '@repo/core';
 createRoot(document.getElementById('app')!).render(
   <FlowProvider initializer={initFlow}>
     <RouterProvider router={router} />
-  </FlowProvider>
+  </FlowProvider>,
 );

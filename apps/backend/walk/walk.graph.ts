@@ -1,27 +1,30 @@
-import claude from "./walk.llm";
-import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
-import { ActionSchema } from "@repo/core";
-import z from "zod";
+import claude from './walk.llm';
+import {
+  END,
+  MemorySaver,
+  START,
+  StateGraph,
+  StateSchema,
+} from '@langchain/langgraph';
+import { ActionSchema } from '@repo/core';
+import z from 'zod';
 
 const State = new StateSchema({
-    prompt: z.string(),
-    response: ActionSchema.optional(),
+  prompt: z.string(),
+  response: ActionSchema.optional(),
 });
 
 const workflow = new StateGraph(State)
-    .addNode("start", async (state) => {
-    })
-    .addNode("process", async (state) => {
-    })
-    .addNode("end", async (state) => {
-    })
-    .addEdge(START, "start")
-    .addEdge("start", "process")
-    .addEdge("process", "end")
-    .addEdge("end", END);
+  .addNode('start', async (state) => {})
+  .addNode('process', async (state) => {})
+  .addNode('end', async (state) => {})
+  .addEdge(START, 'start')
+  .addEdge('start', 'process')
+  .addEdge('process', 'end')
+  .addEdge('end', END);
 
 const memory = new MemorySaver();
 
 export const graph = workflow.compile({
-    checkpointer: memory,
-})
+  checkpointer: memory,
+});
