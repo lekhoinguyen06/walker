@@ -19,11 +19,13 @@ const State = new StateSchema({
     prompt: z.string(),
     walk: z.boolean().optional().default(false),
     response: z.string().optional(),
+    inputTokens: z.number().default(0),
+    outputTokens: z.number().default(0),
 })
 
 const workflow = new StateGraph(State)
     .addNode("process", async (state) => {
-        const { text } = await generateText({
+        const { text, totalUsage } = await generateText({
             model: bedrock(LLMModel.Bedrock.Gemini.Gemma3["12B"]),
             prompt: buildPrompt({ history: state.history, prompt: state.prompt }),
             output: Output.object({
@@ -33,10 +35,14 @@ const workflow = new StateGraph(State)
 
         // const parsed = ResponseSchema.parse(JSON.parse(text));
 
-        return { response: text };
+        return { 
+            response: text, 
+            inputTokens: totalUsage.inputTokens ? state.inputTokens + totalUsage.inputTokens : state.inputTokens, 
+            outputTokens: totalUsage.outputTokens ? state.outputTokens + totalUsage.outputTokens : state.outputTokens 
+        };
     })
     .addNode("decider", async (state) => {
-        const { text } = await generateText({
+        const { text, totalUsage } = await generateText({
             model: bedrock(LLMModel.Bedrock.Gemini.Gemma3["12B"]),
             prompt: buildShouldWalkPrompt({ history: state.history, prompt: state.prompt }),
             output: Output.object({
@@ -46,7 +52,11 @@ const workflow = new StateGraph(State)
 
         const parsed = WalkSchema.parse(JSON.parse(text));
 
-        return { walk: parsed.shouldWalk };
+        return { 
+            walk: parsed.shouldWalk,
+            inputTokens: totalUsage.inputTokens ? state.inputTokens + totalUsage.inputTokens : state.inputTokens,
+            outputTokens: totalUsage.outputTokens ? state.outputTokens + totalUsage.outputTokens : state.outputTokens
+        };
     })
     .addNode("observe", async (state) => {
         console.log("State: ", { state });
