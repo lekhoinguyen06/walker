@@ -19,3 +19,8 @@ export const LLMModel = {
     },
   },
 } as const;
+
+export const LLMProvider = {
+  Anthropic: 'anthropic',
+  Bedrock: 'bedrock',
+} as const;

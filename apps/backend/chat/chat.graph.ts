@@ -6,9 +6,8 @@ import {
   StateSchema,
 } from '@langchain/langgraph';
 import z from 'zod';
-import { bedrock } from '../shared/llm';
 import { generateText, Output } from 'ai';
-import { LLMModel } from '../shared/llm';
+import { factoryLLM, LLMModel, LLMProvider } from '../shared/llm';
 import { buildPrompt, buildShouldWalkPrompt } from './chat.prompt';
 
 const ResponseSchema = z.object({
@@ -32,7 +31,7 @@ const State = new StateSchema({
 const workflow = new StateGraph(State)
   .addNode('process', async (state) => {
     const { text, totalUsage } = await generateText({
-      model: bedrock(LLMModel.Bedrock.Gemini.Gemma3['12B']),
+      model: factoryLLM(LLMProvider.Bedrock),
       prompt: buildPrompt({ history: state.history, prompt: state.prompt }),
       output: Output.object({
         schema: ResponseSchema,
@@ -53,7 +52,7 @@ const workflow = new StateGraph(State)
   })
   .addNode('decider', async (state) => {
     const { text, totalUsage } = await generateText({
-      model: bedrock(LLMModel.Bedrock.Gemini.Gemma3['12B']),
+      model: factoryLLM(LLMProvider.Bedrock),
       prompt: buildShouldWalkPrompt({
         history: state.history,
         prompt: state.prompt,

@@ -1,5 +1,4 @@
-import { ZodType } from 'zod';
-import { LLMModel, TokenLimit } from './const.llm';
+import { LLMModel, LLMProvider, TokenLimit } from './const.llm';
 
 // Recursively retrieve nested objects value if it is a string
 type DeepValue<T> = T extends string
@@ -9,4 +8,5 @@ type DeepValue<T> = T extends string
     : never;
 
 export type LLMModels = DeepValue<typeof LLMModel>;
+export type LLMProviders = (typeof LLMProvider)[keyof typeof LLMProvider];
 export type LLMTokenLimit = (typeof TokenLimit)[keyof typeof TokenLimit];
