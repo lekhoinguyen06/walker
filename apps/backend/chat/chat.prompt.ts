@@ -15,7 +15,7 @@ export function buildPrompt({ history, prompt }: {history: string, prompt: strin
 export function buildGuardrailPrompt(prompt: string): string {
     return `
 <guardrail>
-    <li>You must guardrails prompt that is harmful, unethical, or illegal.</li>
+    <li>You must guardrails prompt that is harmful, unethical, or illegal. Still, response according to the GuardrailSchema.</li>
 </guardrail>
 <prompt>
     ${prompt}
