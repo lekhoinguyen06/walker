@@ -10,14 +10,10 @@ const State = new StateSchema({
 
 const workflow = new StateGraph(State)
     .addNode("start", async (state) => {
-        return state;
     })
     .addNode("process", async (state) => {
-        const response = await claude.invoke(state.prompt);
-        return { ...state, response};
     })
     .addNode("end", async (state) => {
-        return state;
     })
     .addEdge(START, "start")
     .addEdge("start", "process")

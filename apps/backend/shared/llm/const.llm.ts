@@ -19,10 +19,3 @@ export const LLMModel = {
         }
     },
 } as const;
-
-export const LLMProvider = {
-    Anthropic: "anthropic",
-    Bedrock: "bedrock",
-    Google: "google",
-    OpenAI: "openai",
-} as const;

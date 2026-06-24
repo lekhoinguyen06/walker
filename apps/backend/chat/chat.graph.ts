@@ -1,6 +1,6 @@
 import { END, MemorySaver, START, StateGraph, StateSchema } from "@langchain/langgraph";
 import z from "zod";
-import { bedrock } from "../shared/llm/bedrock.llm";
+import { bedrock } from "../shared/llm";
 import { generateText, Output } from 'ai';
 import { LLMModel } from "../shared/llm";
 import { buildPrompt, buildShouldWalkPrompt } from "./chat.prompt";
