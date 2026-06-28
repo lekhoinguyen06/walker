@@ -39,7 +39,7 @@ export function MobileNav() {
               <img src="/concierge-inline.svg" alt="Concierge Inline Logo" />
             </Button>
           </a>
-          <a href="https://walker.vstaffs.com/docs">
+          <a href="https://docs.walker.vstaffs.com">
             <Button
               variant="ghost"
               size="lg"
