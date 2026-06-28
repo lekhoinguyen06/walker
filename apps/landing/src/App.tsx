@@ -10,9 +10,9 @@ function App() {
       <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl">
         <Header />
 
-        <div className="w-full flex flex-col gap-6">
+        <div className="w-full h-screen flex flex-col dark:gap-6">
           {/* Hero Section */}
-          <div className="relative size-full min-h-180 flex flex-col justify-end items-center mt-24">
+          <div className="relative flex-1 flex flex-col justify-end items-center mt-24">
             <img
               src="/yellow.png"
               alt="Yellow Background"
@@ -30,7 +30,7 @@ function App() {
           </div>
 
           {/* Sponsors */}
-          <div className="relative size-full lg:p-24 p-12 flex flex-col justify-center items-center px-6">
+          <div className="relative lg:p-24 p-12 flex flex-col justify-center items-center px-6">
             <img
               src="/yellow-light.png"
               alt="Yellow Background"
@@ -39,7 +39,7 @@ function App() {
             <img
               src="/vstaffs.svg"
               alt="Vstaffs Logo"
-              className="z-1 lg:h-8 md:h-6 h-4"
+              className="z-1 lg:h-8 h-6"
             />
           </div>
         </div>
