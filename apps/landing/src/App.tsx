@@ -7,16 +7,16 @@ import SpreadSheet from './components/SpreadSheet';
 function App() {
   return (
     <div className="w-full flex flex-col lg:gap-48 gap-12 items-center bg-background">
-      <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl px-6">
+      <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl">
         <Header />
 
-        <div className="w-full">
+        <div className="w-full flex flex-col gap-6">
           {/* Hero Section */}
           <div className="relative size-full min-h-180 flex flex-col justify-end items-center mt-24">
             <img
               src="/yellow.png"
               alt="Yellow Background"
-              className="absolute inset-0 size-full object-fill"
+              className="absolute inset-0 size-full object-fill dark:bg-yellow-100 dark:rounded-[24px]"
             />
             <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
               <div className="font-brand text-black">
@@ -30,11 +30,11 @@ function App() {
           </div>
 
           {/* Sponsors */}
-          <div className="relative size-full lg:p-24 p-12 flex flex-col justify-center items-center">
+          <div className="relative size-full lg:p-24 p-12 flex flex-col justify-center items-center px-6">
             <img
               src="/yellow-light.png"
               alt="Yellow Background"
-              className="absolute inset-0 size-full object-fill"
+              className="absolute inset-0 size-full object-fill dark:bg-yellow-50 dark:rounded-[24px]"
             />
             <img
               src="/vstaffs.svg"
@@ -45,7 +45,7 @@ function App() {
         </div>
 
         {/* Merchandise */}
-        <div className="flex flex-col gap-12 w-full ">
+        <div className="flex flex-col gap-12 w-full px-6">
           <div className="font-brand text-2xl">Merchandise</div>
           <div className="p-2 h-120 flex gap-6 overflow-x-scroll no-scrollbar">
             <Merchandise
@@ -92,14 +92,14 @@ function App() {
         </div>
 
         {/* Spreadsheet */}
-        <div className="flex flex-col gap-12 w-full">
+        <div className="flex flex-col gap-12 w-full px-6">
           <div className="font-brand text-2xl">Spreadsheet</div>
           <SpreadSheet />
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full min-h-180 flex flex-col justify-end items-center bg-black dark:border-t border-white/20">
-        <div className="font-brand text-white">MIT License 2026</div>
+      <div className="w-full flex flex-col justify-end items-center">
+        <div className="font-brand">MIT License 2026</div>
       </div>
     </div>
   );
