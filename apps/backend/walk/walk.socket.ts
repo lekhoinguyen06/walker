@@ -4,14 +4,13 @@ import log from 'encore.dev/log';
 import { api, StreamInOut } from 'encore.dev/api';
 import { ResponseDto } from '../shared/dto/response.dto';
 import { graph } from './walk.graph';
-import { Action, ActionSchema } from '@repo/core';
+import { type Action } from '@repo/core';
 import WalkService from './walk.service';
 import { CommandStatus } from './command';
-import { buildWalkPrompt } from './walk.prompt';
 
 type Input = {
   purpose: string;
-  ask: string;
+  prompt: string;
   map: string;
   hash: string;
 };
@@ -38,57 +37,54 @@ export const walk = api.streamInOut<
 
     try {
       for await (const payload of stream) {
-        for (const [key, val] of connectedStreams) {
-          try {
-            const map: Record<string, unknown> = JSON.parse(payload.map);
+        try {
+          const map: Record<string, unknown> = JSON.parse(payload.map);
 
-            const commands = await WalkService.findCommandsByExecutionId(
-              handshake.executionId,
-              5,
-            );
+          const commands = await WalkService.findCommandsByExecutionId(
+            handshake.executionId,
+            5,
+          );
 
-            const config = {
-              configurable: { thread_id: handshake.executionId },
-            };
-            const result = await graph.invoke(
-              {
-                prompt: payload.ask,
-                history: JSON.stringify(commands),
-              },
-              config,
-            );
-            if (!result || !result.action) {
-              log.warn('No response from graph', {
-                sessionId,
-                prompt: payload.ask,
-              });
-              continue;
-            }
-            await WalkService.pushCommand({
-              executionId: handshake.executionId,
-              payload: result.action,
-              status: CommandStatus.DRAFTING,
+          const config = {
+            configurable: { thread_id: handshake.executionId },
+          };
+          const result = await graph.invoke(
+            {
+              prompt: payload.prompt,
+              history: JSON.stringify(commands),
+            },
+            config,
+          );
+          if (!result || !result.action) {
+            log.warn('No response from graph', {
+              sessionId,
+              prompt: payload.prompt,
             });
-
-            await val.send({
-              success: true,
-              message: 'Command received and processed successfully',
-              result: result.action,
-            });
-          } catch (err) {
-            log.error('Error processing message:', err);
-            await val.send({
-              success: false,
-              message: 'Error processing command',
-              error: err instanceof Error ? err.message : String(err),
-            });
-            connectedStreams.delete(key);
+            continue;
           }
+          await WalkService.pushCommand({
+            executionId: handshake.executionId,
+            payload: result.action,
+            status: CommandStatus.DRAFTING,
+          });
+
+          await stream.send({
+            success: true,
+            message: 'Command received and processed successfully',
+            result: result.action,
+          });
+        } catch (err) {
+          log.error('Error processing message:', { err: String(err) });
+          connectedStreams.delete(handshake.executionId);
         }
       }
+
+      log.info('Stream closed by client', { sessionId });
     } catch (err) {
-      connectedStreams.delete(handshake.executionId);
+      log.error('Stream fatal error', { sessionId, err: String(err) });
+    } finally {
+      connectedStreams.delete(sessionId);
+      log.info('Stream cleaned up', { sessionId });
     }
-    connectedStreams.delete(handshake.executionId);
   },
 );
