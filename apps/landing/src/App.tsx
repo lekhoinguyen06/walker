@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import ReactLogo from './assets/react.svg?react';
 import TypescriptLogo from './assets/typescript.svg?react';
+import Merchandise from './components/Merchandise';
 
 function App() {
   return (
@@ -33,11 +34,55 @@ function App() {
         <img src="/vstaffs.svg" alt="Vstaffs Logo" className="h-6 z-1" />
       </div>
 
-      {/* Footer */}
-      <div className="w-full min-h-140 flex flex-col justify-between items-center px-24 bg-foreground">
-        <div className="w-full">
-          <img src="/walker-light.svg" alt="Walker Logo" className="h-6" />
+      {/* Merch */}
+      <div className="flex flex-col gap-6 w-full max-w-4xl ">
+        <div className="font-brand text-2xl">Merchandise</div>
+        <div className="p-2 h-120 flex gap-6 overflow-x-scroll no-scrollbar">
+          <Merchandise
+            title="T Shirt"
+            description="A comfortable cotton t-shirt with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Shorts"
+            description="A comfortable pair of shorts with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Cup"
+            description="A stylish cup with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Hoodie"
+            description="A cozy hoodie with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Sticker"
+            description="A fun sticker with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="NFT"
+            description="A unique digital collectible with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Hat"
+            description="A stylish hat with the Walker logo."
+            image="/image.png"
+          />
+          <Merchandise
+            title="Socks"
+            description="A comfortable pair of socks with the Walker logo."
+            image="/image.png"
+          />
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="w-full min-h-140 flex flex-col justify-end items-center bg-foreground">
         <div className="font-brand text-white">MIT License 2026</div>
       </div>
     </div>
