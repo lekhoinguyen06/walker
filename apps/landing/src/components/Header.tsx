@@ -12,7 +12,7 @@ export default function Header() {
       />
       <div className="flex items-center">
         <div className="hidden md:flex gap-3">
-          <a href="https://walker.vstaffs.com/docs">
+          <a href="https://docs.walker.vstaffs.com">
             <Button variant="ghost" size="lg" className="rounded-none">
               Docs
             </Button>
