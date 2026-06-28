@@ -1,41 +1,47 @@
 import Header from './components/Header';
-import ReactLogo from './assets/react.svg?react';
-import TypescriptLogo from './assets/typescript.svg?react';
+import ReactLogo from '../public/react.svg?react';
+import TypescriptLogo from '../public/typescript.svg?react';
 import Merchandise from './components/Merchandise';
 import SpreadSheet from './components/SpreadSheet';
-import YellowBackground from './assets/yellow.svg?react';
-import YellowLightBackground from './assets/yellow-light.svg?react';
 
 function App() {
   return (
-    <div className="w-full flex flex-col gap-48 items-center bg-background">
-      <div className=" w-full flex flex-col lg:gap-48 gap-24 items-center max-w-6xl px-6">
+    <div className="w-full flex flex-col lg:gap-48 gap-12 items-center bg-background">
+      <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl px-6">
         <Header />
 
-        {/* Hero Section */}
-        <div className="relative size-full min-h-180 flex flex-col justify-end items-center mt-24">
-          <YellowBackground
-            className="absolute inset-0 size-full object-fill"
-            preserveAspectRatio="none"
-          />
-          <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
-            <div className="font-brand text-black">
-              Walk the web, walk the earth.
-            </div>
-            <div className="flex gap-6 items-center">
-              <ReactLogo className="h-6 fill-[#61DAFB]" />
-              <TypescriptLogo className="h-6 fill-[#3178C6]" />
+        <div className="w-full">
+          {/* Hero Section */}
+          <div className="relative size-full min-h-180 flex flex-col justify-end items-center mt-24">
+            <img
+              src="/yellow.png"
+              alt="Yellow Background"
+              className="absolute inset-0 size-full object-fill"
+            />
+            <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
+              <div className="font-brand text-black">
+                Walk the web, walk the earth.
+              </div>
+              <div className="flex gap-6 items-center">
+                <ReactLogo className="h-6 fill-[#61DAFB]" />
+                <TypescriptLogo className="h-6 fill-[#3178C6]" />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Sponsors */}
-        <div className="relative size-full min-h-140 flex flex-col justify-center items-center">
-          <YellowLightBackground
-            className="absolute inset-0 size-full object-fill"
-            preserveAspectRatio="none"
-          />
-          <img src="/vstaffs.svg" alt="Vstaffs Logo" className="z-1" />
+          {/* Sponsors */}
+          <div className="relative size-full lg:p-24 p-12 flex flex-col justify-center items-center">
+            <img
+              src="/yellow-light.png"
+              alt="Yellow Background"
+              className="absolute inset-0 size-full object-fill"
+            />
+            <img
+              src="/vstaffs.svg"
+              alt="Vstaffs Logo"
+              className="z-1 lg:h-8 md:h-6 h-4"
+            />
+          </div>
         </div>
 
         {/* Merchandise */}
@@ -92,7 +98,7 @@ function App() {
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full min-h-60 lg:min-h-180 flex flex-col justify-end items-center bg-black dark:border-t border-white/20">
+      <div className="w-full min-h-180 flex flex-col justify-end items-center bg-black dark:border-t border-white/20">
         <div className="font-brand text-white">MIT License 2026</div>
       </div>
     </div>
