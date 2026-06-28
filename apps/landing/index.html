@@ -2,9 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/walker-icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>landing</title>
+    <title>Walker</title>
+    <script>
+      const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // Set on initial load
+      if (darkQuery.matches) {
+        document.documentElement.classList.add('dark');
+      }
+
+      // Listen for changes without reload
+      darkQuery.addEventListener('change', (e) => {
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -3,8 +3,13 @@ import { Button } from './ui/button';
 
 export default function Header() {
   return (
-    <header className="fixed z-50 top-0 right-auto left-auto flex w-full p-4 max-w-4xl rounded-[12px] justify-between items-center backdrop-blur-sm bg-white/50 border border-gray-100/50">
-      <img src="/walker.svg" alt="Walker Logo" className="h-6" />
+    <header className="fixed z-50 top-0 right-auto left-auto flex w-full p-3 mt-3 max-w-4xl rounded-[12px] justify-between items-center backdrop-blur-sm bg-white/20 border border-gray-100/50">
+      <img src="/walker.svg" alt="Walker Logo" className="h-6 dark:hidden" />
+      <img
+        src="/walker-light.svg"
+        alt="Walker Logo"
+        className="h-6 hidden dark:inline"
+      />
       <div className="flex items-center">
         <div className="hidden md:flex gap-3">
           <a href="https://walker.vstaffs.com/docs">

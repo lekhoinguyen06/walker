@@ -19,7 +19,9 @@ function App() {
             preserveAspectRatio="none"
           />
           <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
-            <div className="font-brand">Walk the web, walk the earth.</div>
+            <div className="font-brand text-black">
+              Walk the web, walk the earth.
+            </div>
             <div className="flex gap-6 items-center">
               <ReactLogo className="h-6 fill-[#61DAFB]" />
               <TypescriptLogo className="h-6 fill-[#3178C6]" />
@@ -33,7 +35,7 @@ function App() {
             className="absolute inset-0 size-full object-fill"
             preserveAspectRatio="none"
           />
-          <img src="/vstaffs.svg" alt="Vstaffs Logo" className="h-6 z-1" />
+          <img src="/vstaffs.svg" alt="Vstaffs Logo" className="z-1" />
         </div>
 
         {/* Merchandise */}
@@ -90,7 +92,7 @@ function App() {
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full min-h-60 lg:min-h-120 flex flex-col justify-end items-center bg-foreground">
+      <div className="w-full min-h-60 lg:min-h-180 flex flex-col justify-end items-center bg-black dark:border-t border-white/20">
         <div className="font-brand text-white">MIT License 2026</div>
       </div>
     </div>
