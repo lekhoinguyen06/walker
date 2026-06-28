@@ -2,6 +2,8 @@ import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { DataTable } from './DataTable';
 import { Checkbox } from './ui/checkbox';
 import { useState } from 'react';
+import { DatePicker } from './DatePicker';
+import { Button } from './ui/button';
 
 export interface Sheet {
   A: string | number;
@@ -149,7 +151,12 @@ const defaultData: Sheet[] = [
 export default function SpreadSheet() {
   const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
   return (
-    <div className="size-full p-2">
+    <div className="flex flex-col gap-6 size-full p-2">
+      <div className="flex justify-end items-center gap-3">
+        <DatePicker />
+        <DatePicker />
+        <Button variant="outline">Clear</Button>
+      </div>
       <DataTable
         columns={columns}
         data={defaultData}
