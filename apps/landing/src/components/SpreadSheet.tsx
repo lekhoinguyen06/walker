@@ -1,5 +1,7 @@
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { DataTable } from './DataTable';
+import { Checkbox } from './ui/checkbox';
+import { useState } from 'react';
 
 export interface Sheet {
   A: string | number;
@@ -31,6 +33,22 @@ export interface Sheet {
 }
 
 const columns: ColumnDef<Sheet>[] = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+      />
+    ),
+    size: 32,
+  },
   {
     accessorKey: 'A',
     header: 'A',
@@ -129,9 +147,15 @@ const defaultData: Sheet[] = [
 ];
 
 export default function SpreadSheet() {
+  const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
   return (
     <div className="size-full p-2">
-      <DataTable columns={columns} data={defaultData} />
+      <DataTable
+        columns={columns}
+        data={defaultData}
+        rowSelection={selectedRows}
+        onRowSelectionChange={setSelectedRows}
+      />
     </div>
   );
 }

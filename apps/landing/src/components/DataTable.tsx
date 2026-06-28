@@ -4,6 +4,8 @@ import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
+  type OnChangeFn,
+  type RowSelectionState,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -19,16 +21,25 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  rowSelection?: RowSelectionState;
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  rowSelection,
+  onRowSelectionChange,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      rowSelection: rowSelection ?? {},
+    },
+    onRowSelectionChange,
+    enableRowSelection: true,
   });
 
   return (
@@ -39,7 +50,11 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="font-brand">
+                  <TableHead
+                    key={header.id}
+                    className="font-brand"
+                    style={{ width: header.getSize() }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -60,7 +75,10 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="min-w-60">
+                  <TableCell
+                    key={cell.id}
+                    style={{ width: cell.column.getSize() }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
