@@ -2,10 +2,11 @@ import Header from './components/Header';
 import ReactLogo from './assets/react.svg?react';
 import TypescriptLogo from './assets/typescript.svg?react';
 import Merchandise from './components/Merchandise';
+import SpreadSheet from './components/SpreadSheet';
 
 function App() {
   return (
-    <div className="absolute w-full flex flex-col gap-24 items-center">
+    <div className="absolute w-full flex flex-col gap-48 items-center">
       <Header />
 
       {/* Hero Section */}
@@ -34,8 +35,8 @@ function App() {
         <img src="/vstaffs.svg" alt="Vstaffs Logo" className="h-6 z-1" />
       </div>
 
-      {/* Merch */}
-      <div className="flex flex-col gap-6 w-full max-w-4xl ">
+      {/* Merchandise */}
+      <div className="flex flex-col gap-12 w-full max-w-6xl ">
         <div className="font-brand text-2xl">Merchandise</div>
         <div className="p-2 h-120 flex gap-6 overflow-x-scroll no-scrollbar">
           <Merchandise
@@ -79,6 +80,12 @@ function App() {
             image="/image.png"
           />
         </div>
+      </div>
+
+      {/* Spreadsheet */}
+      <div className="flex flex-col gap-12 w-full max-w-6xl">
+        <div className="font-brand text-2xl">Spreadsheet</div>
+        <SpreadSheet />
       </div>
 
       {/* Footer */}
