@@ -3,6 +3,8 @@ import ReactLogo from './assets/react.svg?react';
 import TypescriptLogo from './assets/typescript.svg?react';
 import Merchandise from './components/Merchandise';
 import SpreadSheet from './components/SpreadSheet';
+import YellowBackground from './assets/yellow.svg?react';
+import YellowLightBackground from './assets/yellow-light.svg?react';
 
 function App() {
   return (
@@ -10,11 +12,10 @@ function App() {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative size-full min-h-180 flex flex-col justify-end items-center mt-24">
-        <img
-          src="/yellow.svg"
-          alt="Yellow Background"
-          className="absolute top-0 left-0 size-full"
+      <div className="relative size-full min-h-180 max-w-6xl flex flex-col justify-end items-center mt-24">
+        <YellowBackground
+          className="absolute inset-0 size-full object-fill"
+          preserveAspectRatio="none"
         />
         <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
           <div className="font-brand">Walk the web, walk the earth.</div>
@@ -26,11 +27,10 @@ function App() {
       </div>
 
       {/* Sponsors */}
-      <div className="relative size-full min-h-140 flex flex-col justify-center items-center">
-        <img
-          src="/yellow-light.svg"
-          alt="Yellow Light Background"
-          className="absolute top-0 left-0 size-full"
+      <div className="relative size-full min-h-140 max-w-6xl flex flex-col justify-center items-center">
+        <YellowLightBackground
+          className="absolute inset-0 size-full object-fill"
+          preserveAspectRatio="none"
         />
         <img src="/vstaffs.svg" alt="Vstaffs Logo" className="h-6 z-1" />
       </div>
