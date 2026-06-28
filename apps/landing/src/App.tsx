@@ -4,7 +4,7 @@ import TypescriptLogo from './assets/typescript.svg?react';
 
 function App() {
   return (
-    <div className="flex flex-col gap-12 items-center">
+    <div className="absolute w-full flex flex-col gap-12 items-center">
       <Header />
 
       <div className="relative size-full min-h-180 flex flex-col justify-end items-center">
