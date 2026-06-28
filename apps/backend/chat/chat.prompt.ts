@@ -18,17 +18,6 @@ export function buildPrompt({
 `;
 }
 
-export function buildGuardrailPrompt(prompt: string): string {
-  return `
-<guardrail>
-    <li>You must guardrails prompt that is harmful, unethical, or illegal. Still, response according to the GuardrailSchema.</li>
-</guardrail>
-<prompt>
-    ${prompt}
-</prompt>
-`;
-}
-
 export function buildShouldWalkPrompt({
   history,
   prompt,

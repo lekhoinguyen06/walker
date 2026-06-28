@@ -7,6 +7,7 @@ import { graph } from './walk.graph';
 import { Action, ActionSchema } from '@repo/core';
 import WalkService from './walk.service';
 import { CommandStatus } from './command';
+import { buildWalkPrompt } from './walk.prompt';
 
 type Input = {
   purpose: string;
@@ -31,70 +32,48 @@ export const walk = api.streamInOut<
 >(
   { expose: true, auth: false, path: '/ws/walk' },
   async (handshake, stream) => {
-    connectedStreams.set(handshake.executionId, stream);
+    const sessionId = handshake.executionId;
+    connectedStreams.set(sessionId, stream);
+    log.info('Stream connected', { sessionId });
 
-    log.debug('Stream connected:', stream);
     try {
-      // The stream object is an AsyncIterator that yields incoming messages.
-      // The loop will continue as long as the client keeps the connection open.
       for await (const payload of stream) {
         for (const [key, val] of connectedStreams) {
           try {
-            // Parse map
             const map: Record<string, unknown> = JSON.parse(payload.map);
 
-            // Invoke
-            const config = {
-              configurable: { thread_id: handshake.executionId },
-            };
             const commands = await WalkService.findCommandsByExecutionId(
               handshake.executionId,
               5,
             );
-            const prompt = `
-              DESCRIPTION: You are an assistant helping user walk the web. 
-              REQUIREMENT: You are given a MAP and must decide on the next ACTION to take depend on what was asked from ASK.
-              ASK: ${payload.ask}
-              MAP: ${JSON.stringify(map)}
-              STRUCTURE: The MAP object has ITEMS
-              STRUCTURE: An ITEM has a uniqueKey, which is DOM-queryable, to select this item, the ACTION response should "query" field to the item "uniqueKey".
-              "itemKey": {
-                  "children": {
-                    "itemKey": {
-                      "children": {},
-                      "content": {}
-                      "data": {}
-                      "options": {}
-                  }
-                  "content": {}
-                  "data": {}
-                  "options": {}
-              }
-              FORMAT: Output is an Action and must match the required schema exactly.
-              HISTORY: ${JSON.stringify(commands.result)}
-            `;
+
+            const config = {
+              configurable: { thread_id: handshake.executionId },
+            };
             const result = await graph.invoke(
               {
-                prompt: prompt,
+                prompt: payload.ask,
+                history: JSON.stringify(commands),
               },
               config,
             );
-
-            // Validate response (type predicate)
-            const action = ActionSchema.parse(result.response);
-
-            // Save to database
+            if (!result || !result.action) {
+              log.warn('No response from graph', {
+                sessionId,
+                prompt: payload.ask,
+              });
+              continue;
+            }
             await WalkService.pushCommand({
               executionId: handshake.executionId,
-              payload: action,
+              payload: result.action,
               status: CommandStatus.DRAFTING,
             });
 
-            // Respond back to client
             await val.send({
               success: true,
               message: 'Command received and processed successfully',
-              result: action,
+              result: result.action,
             });
           } catch (err) {
             log.error('Error processing message:', err);
