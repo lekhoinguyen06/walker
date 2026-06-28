@@ -14,7 +14,7 @@ import { PanelRight } from 'lucide-react';
 export function MobileNav() {
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button
           variant="ghost"
           size="icon-lg"
@@ -66,7 +66,7 @@ export function MobileNav() {
           </Button>
         </div>
         <SheetFooter>
-          <SheetClose asChild>
+          <SheetClose>
             <Button variant="ghost" className="w-full rounded-none py-12">
               Close
             </Button>
