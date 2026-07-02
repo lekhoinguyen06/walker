@@ -9,40 +9,43 @@ description: "These are the fundamental elements that make up the Walker framewo
 
 ### Server
 
-The server, also referred to as the Walker server, is responsible for handling incoming requests and Map from clients, processing them, and sending back Action.
+The Server, also referred to as the Walker Server, is responsible for handling incoming requests and Map from clients, processing them, and sending back an Action.
 
 ### Client
 
-The client, also referred to as the Walker client, is responsible for sending Map to the server, receiving Action from the server, and executing those actions to interact with the user application.
+The Client, also referred to as the Walker Client, is responsible for sending Maps to the server, receiving Actions from the server, and executing those Actions to interact with the user application.
 
 ## Elements
 
 ### Action
 
-Action, a JSON object, is a command sent from the server to the client to interact with the user application.
+Action, a JSON object, is a command sent from the Server to the Client to interact with the user's application.
 
 ### Flow
 
-Flow represents what command the client accepts and executes. It allows developers to declare what their application can do.
+Flow represents what Action the client accepts. It allows developers to declare what their application can do. Developers have to declare these Flows. Luckily, Walker provides built-in sets of Flows, check them out here.
 
 ### Item
 
-Item represents the individual elements that can be interacted with.
+Item represents the individual elements that can be interacted with. When your website run, an Item is an HTML elements in your DOM containing data the your agent needs.
 
 ### Map
 
-Map, a JSON object, is a collection of Items sent from the client to the server to describe the current landscape of the user application. For websites, this includes the DOM structure, element attributes, and other relevant information.
+Map, a JSON object, is a collection of Items sent from the Client to the Server to describe the current landscape of the user application.
 
 ## Modes
 
 ### HTML
 
-This is to minimal config "no-code" solution to use Walker client in your web application. The library will handle crawling, caching, etc of your HTML elements efficiently to ensure minimal token usage without compromising walking experience.
+This is to minimal config "no-code" solution to use Walker Client in your web application. The library will handle crawling, caching, etc of your HTML elements efficiently to ensure minimal token usage without compromising walking experience.
 
-Recommended for hobbyist or team without dedicated Walker engineers.
+Recommended for:
+
+- Developers without the need for tailord walking experiance.
+- Apps without sensitive information.
 
 ### Engineered
 
-This is the option for developers to explicitly declared Items, Actions, and Flows for your Walker client applications.
+This is the option for developers to explicitly declared Items, Actions, and Flows for your Walker Client application.
 
-Recommended for project with members dedicated to engineering custom tailored walking experience.
+Recommended for: apps and developers needing custom and tailored walking experience.
