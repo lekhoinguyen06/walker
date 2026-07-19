@@ -16,7 +16,6 @@ import { Bubble, BubbleContent } from './ui/bubble';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -50,15 +49,21 @@ const messages: { id: string; role: 'user' | 'assistant'; content: string }[] =
 export default function Chatbox() {
   return (
     <Sheet>
-      <SheetTrigger>
-        <img src="/walker-icon.svg" className="fixed z-50 bottom-12 right-12" />
+      <SheetTrigger className="hover:cursor-pointer">
+        <img
+          src="/walker-icon.svg"
+          className="fixed z-50 bottom-12 right-12 dark:hidden"
+        />
+        <img
+          src="/walker-icon-light.svg"
+          className="fixed z-50 bottom-12 right-12 hidden dark:block"
+        />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>
             <img src="/concierge-inline.svg" alt="Concierge" />
           </SheetTitle>
-          <SheetDescription>Test out Walker capabilities!</SheetDescription>
         </SheetHeader>
         <div className="flex-1 p-3">
           <MessageScrollerProvider autoScroll>
