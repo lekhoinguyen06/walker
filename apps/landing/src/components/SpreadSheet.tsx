@@ -10,7 +10,7 @@ const SpreadSheet = () => {
 
   return (
     <div className="w-full overflow-x-scroll">
-      <Spreadsheet data={data} onChange={setData} />
+      <Spreadsheet data={data} onChange={setData} className="font-brand" />
     </div>
   );
 };

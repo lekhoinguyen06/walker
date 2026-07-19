@@ -3,13 +3,14 @@ import ReactLogo from '../public/react.svg?react';
 import TypescriptLogo from '../public/typescript.svg?react';
 import Merchandise from './components/Merchandise';
 import SpreadSheet from './components/SpreadSheet';
+import Chatbox from './components/Chatbox';
 
 function App() {
   return (
-    <div className="w-full flex flex-col lg:gap-48 gap-12 items-center bg-background">
-      <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl">
-        <Header />
-
+    <div className="w-full flex flex-col items-center bg-background">
+      <Header />
+      <Chatbox />
+      <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl lg:mb-49 mb-12">
         <div className="w-full h-screen flex flex-col dark:gap-6">
           {/* Hero Section */}
           <div className="relative flex-1 flex flex-col justify-end items-center mt-24">
@@ -52,6 +53,12 @@ function App() {
               className="z-1 lg:h-8 h-6"
             />
           </div>
+        </div>
+
+        {/* Spreadsheet */}
+        <div className="flex flex-col gap-12 w-full px-6">
+          <div className="font-brand text-2xl">Spreadsheet</div>
+          <SpreadSheet />
         </div>
 
         {/* Merchandise */}
@@ -99,12 +106,6 @@ function App() {
               image="/image.png"
             />
           </div>
-        </div>
-
-        {/* Spreadsheet */}
-        <div className="flex flex-col gap-12 w-full px-6">
-          <div className="font-brand text-2xl">Spreadsheet</div>
-          <SpreadSheet />
         </div>
       </div>
       {/* Footer */}
