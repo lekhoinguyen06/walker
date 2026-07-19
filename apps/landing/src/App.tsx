@@ -16,7 +16,12 @@ function App() {
             <img
               src="/yellow.png"
               alt="Yellow Background"
-              className="absolute inset-0 size-full object-fill dark:bg-yellow-100 dark:rounded-[24px]"
+              className="hidden sm:block absolute inset-0 size-full object-fill dark:bg-yellow-100 dark:rounded-[24px]"
+            />
+            <img
+              src="/yellow-mobile.png"
+              alt="Yellow Background"
+              className="block sm:hidden absolute inset-0 size-full object-fill dark:bg-yellow-100 dark:rounded-[24px]"
             />
             <div className="flex flex-col gap-6 items-center justify-center mb-24 z-1">
               <div className="font-brand text-black">
@@ -34,7 +39,12 @@ function App() {
             <img
               src="/yellow-light.png"
               alt="Yellow Background"
-              className="absolute inset-0 size-full object-fill dark:bg-yellow-50 dark:rounded-[24px]"
+              className="hidden sm:block absolute inset-0 size-full object-fill dark:bg-yellow-50 dark:rounded-[24px]"
+            />
+            <img
+              src="/yellow-light-mobile.png"
+              alt="Yellow Background"
+              className="block sm:hidden absolute inset-0 size-full object-fill dark:bg-yellow-50 dark:rounded-[24px]"
             />
             <img
               src="/vstaffs.svg"
