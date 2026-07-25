@@ -1,6 +1,6 @@
-import Header from './components/Header';
-import ReactLogo from '../public/react.svg?react';
-import TypescriptLogo from '../public/typescript.svg?react';
+import Header from "./components/Header";
+import ReactLogo from "./assets/react.svg?react";
+import TypescriptLogo from "./assets/typescript.svg?react";
 
 function App() {
   return (

@@ -1,5 +1,4 @@
 {
-  "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
@@ -15,7 +14,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@src/*": ["./src/*"],
-      "@src": ["./src/index.ts"],
+      "@src": ["./src/index.ts"]
     },
     "types": ["node"],
     "incremental": true,
