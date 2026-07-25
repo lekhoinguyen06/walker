@@ -1,5 +1,5 @@
-import type { Flow } from '@src/types/flow.types.js';
-import { logger } from '@src';
+import type { Flow } from "@src/types/flow.types.js";
+import { logger } from "@src";
 
 /**
  * Actions AI can take on client browser
@@ -12,13 +12,13 @@ export class FlowManager {
   }
 
   list(currentRoute?: string) {
-    if (currentRoute && currentRoute != '*') {
+    if (currentRoute && currentRoute != "*") {
       const filtered = this.flows.filter(
-        (flow) => flow.route == currentRoute || flow.route == '*',
+        (flow) => flow.route == currentRoute || flow.route == "*",
       );
-      logger.add('1', {
+      logger.add("1", {
         identifier: 4,
-        domain: 'Flow Manager',
+        domain: "Flow Manager",
         title: `Listing flows for route: ${currentRoute}`,
         content: JSON.stringify(filtered),
       });

@@ -1,7 +1,7 @@
-import type { Flow } from '@src/types/flow.types.js';
-import type { Action } from '@src/types/action.types.js';
-import { logger } from '@src';
-import { initFlow } from '@src';
+import type { Flow } from "@src/types/flow.types.js";
+import type { Action } from "@src/types/action.types.js";
+import { logger } from "@src";
+import { initFlow } from "@src";
 
 type SwitchArgs = {
   flows: Flow[];
@@ -19,7 +19,7 @@ export async function dynamicFlowSwitch({ flows, action }: SwitchArgs) {
   let filteredFlow = flows;
   if (action.currentRoute) {
     filteredFlow = flows.filter(
-      (flow) => flow.route == action.currentRoute || flow.route == '*',
+      (flow) => flow.route == action.currentRoute || flow.route == "*",
     );
   }
   for (const flow of filteredFlow) {
@@ -27,23 +27,23 @@ export async function dynamicFlowSwitch({ flows, action }: SwitchArgs) {
     if (flow.action == action.action) {
       await flow.handler({ action });
 
-      logger.add('1', {
+      logger.add("1", {
         identifier: 1,
-        domain: 'Action',
-        title: 'Called flow',
-        source: 'dynamicSwitch',
+        domain: "Action",
+        title: "Called flow",
+        source: "dynamicSwitch",
         data: flow,
       });
       return;
     }
   }
   // Default case
-  logger.add('1', {
+  logger.add("1", {
     identifier: 1,
-    domain: 'Action',
-    title: 'Cannot call flow',
-    source: 'dynamicFlowSwitch',
-    content: 'No matching flow found.',
+    domain: "Action",
+    title: "Cannot call flow",
+    source: "dynamicFlowSwitch",
+    content: "No matching flow found.",
   });
 
   // Add Action error & status handling (if call successfully, failed, or haven't called) below

@@ -1,5 +1,5 @@
-import { MobileNav } from './MobileNav';
-import { Button } from './ui/button';
+import { MobileNav } from "./MobileNav";
+import { Button } from "./ui/button";
 
 export default function Header() {
   return (
@@ -36,7 +36,7 @@ export default function Header() {
               size="lg"
               className="rounded-none hover:bg-red-50"
             >
-              Try{' '}
+              Try{" "}
               <img src="/concierge-inline.svg" alt="Concierge Inline Logo" />
             </Button>
           </a>

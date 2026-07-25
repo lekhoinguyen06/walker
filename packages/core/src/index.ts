@@ -1,30 +1,30 @@
-import { FLOW_GAP_DEFAULT_TIME } from '@src/constants/flow.constants.js';
+import { FLOW_GAP_DEFAULT_TIME } from "@src/constants/flow.constants.js";
 // import { useFlowStore } from "@src/store/flow/useFlowStore";
 import {
   notifyNextAction,
   observer,
-} from '@src/domains/action/event/observer.js';
-import { dynamicNavigator } from '@src/utils/navigate.js';
-import { wait } from '@src/utils/wait.js';
-import { dynamicFlowSwitch } from '@src/domains/flow/helpers/dynamic-flow-switch.js';
-import { ActionManager } from '@src/domains/action/action-manager.js';
-import { FlowManager } from '@src/domains/flow/flow-manager.js';
-import { listActions } from '@src/domains/action/helpers/list-action.js';
-import { listFlows } from '@src/domains/flow/helpers/list-flow.js';
-import { ActionInputSchema, type Action } from '@src/types/action.types.js';
-import { MapManager } from '@src/domains/map/mapManager.js';
-import { LogManager } from '@src/utils/logger.js';
-import { AppManager } from '@src/utils/app.js';
+} from "@src/domains/action/event/observer.js";
+import { dynamicNavigator } from "@src/utils/navigate.js";
+import { wait } from "@src/utils/wait.js";
+import { dynamicFlowSwitch } from "@src/domains/flow/helpers/dynamic-flow-switch.js";
+import { ActionManager } from "@src/domains/action/action-manager.js";
+import { FlowManager } from "@src/domains/flow/flow-manager.js";
+import { listActions } from "@src/domains/action/helpers/list-action.js";
+import { listFlows } from "@src/domains/flow/helpers/list-flow.js";
+import { ActionInputSchema, type Action } from "@src/types/action.types.js";
+import { MapManager } from "@src/domains/map/mapManager.js";
+import { LogManager } from "@src/utils/logger.js";
+import { AppManager } from "@src/utils/app.js";
 
 // Type & schema re-export
-export * from '@src/types/action.types.js';
-export * from '@src/types/app.types.js';
-export * from '@src/types/flow.types.js';
-export * from '@src/types/log.types.js';
-export * from '@src/types/item.types.js';
+export * from "@src/types/action.types.js";
+export * from "@src/types/app.types.js";
+export * from "@src/types/flow.types.js";
+export * from "@src/types/log.types.js";
+export * from "@src/types/item.types.js";
 
 // Constants re-export
-export * from '@src/constants/item.constants.js';
+export * from "@src/constants/item.constants.js";
 
 // These are singletons (In JavaScript ES modules, top-level code executes once per module instantiation. The module is then cached, so any subsequent imports reference the same module record.)
 export const flowManager = new FlowManager();
@@ -45,9 +45,9 @@ function initFlow() {
   // createMouse();
   // Default flows helpers.
   flowManager.add({
-    action: 'navigate',
-    description: 'Navigate from any route using URL',
-    route: '*',
+    action: "navigate",
+    description: "Navigate from any route using URL",
+    route: "*",
     handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
@@ -56,9 +56,9 @@ function initFlow() {
     },
   });
   flowManager.add({
-    action: 'route',
-    description: 'Route from any route by clicking an element',
-    route: '*',
+    action: "route",
+    description: "Route from any route by clicking an element",
+    route: "*",
     handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
@@ -72,33 +72,33 @@ function initFlow() {
     },
   });
   flowManager.add({
-    action: 'hover',
-    description: 'Hover to any queried element from any route',
-    route: '*',
+    action: "hover",
+    description: "Hover to any queried element from any route",
+    route: "*",
     handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.query) {
         document.querySelector(action.query)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
+          behavior: "smooth",
+          block: "center",
         });
       }
     },
   });
   flowManager.add({
-    action: 'click',
-    description: 'Click any queried element from any route',
-    route: '*',
+    action: "click",
+    description: "Click any queried element from any route",
+    route: "*",
     handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.query) {
         document.querySelector(action.query)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
+          behavior: "smooth",
+          block: "center",
         });
         const element = document.querySelector(action.query) as HTMLElement;
         if (element) {
@@ -110,17 +110,17 @@ function initFlow() {
   });
 
   flowManager.add({
-    action: 'input',
-    description: 'Input any queried element from any route',
-    route: '*',
+    action: "input",
+    description: "Input any queried element from any route",
+    route: "*",
     handler: async ({ action, gap }: { action: Action; gap?: number }) => {
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.message) confirm(action.message);
       await wait(gap ?? FLOW_GAP_DEFAULT_TIME);
       if (action.query) {
         document.querySelector(action.query)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
+          behavior: "smooth",
+          block: "center",
         });
         const element = document.querySelector(
           action.query,
@@ -144,12 +144,12 @@ function initFlow() {
  * @param string
  */
 async function walk(input?: string) {
-  console.log('DEBUG: Received input ', input);
-  const parsedInput = ActionInputSchema.safeParse(JSON.parse(input ?? '[]'));
+  console.log("DEBUG: Received input ", input);
+  const parsedInput = ActionInputSchema.safeParse(JSON.parse(input ?? "[]"));
   const actions: Action[] = parsedInput.success ? parsedInput.data : [];
 
-  console.log('DEBUG: Parsed result ', parsedInput);
-  console.log('DEBUG: Parsed actions ', actions);
+  console.log("DEBUG: Parsed result ", parsedInput);
+  console.log("DEBUG: Parsed actions ", actions);
 
   // Send new flows to Action Manager to queue up
   if (actions.length > 0) {
@@ -160,10 +160,10 @@ async function walk(input?: string) {
 
   // Execute next action by calling dynamicSwitch
   if (flowManager && nextAction) {
-    logger.add('1', {
+    logger.add("1", {
       identifier: 1,
-      domain: 'Action',
-      title: 'Call next action',
+      domain: "Action",
+      title: "Call next action",
       data: nextAction,
     });
     await dynamicFlowSwitch({

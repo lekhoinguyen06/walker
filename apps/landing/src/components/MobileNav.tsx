@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -6,8 +6,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { PanelRight } from 'lucide-react';
+} from "@/components/ui/sheet";
+import { PanelRight } from "lucide-react";
 
 export function MobileNav() {
   return (
@@ -33,7 +33,7 @@ export function MobileNav() {
               size="lg"
               className="rounded-none w-full justify-start py-12 hover:bg-red-50"
             >
-              Try{' '}
+              Try{" "}
               <img src="/concierge-inline.svg" alt="Concierge Inline Logo" />
             </Button>
           </a>

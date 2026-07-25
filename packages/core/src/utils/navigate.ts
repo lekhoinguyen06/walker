@@ -15,28 +15,28 @@ export function dynamicNavigator(dest: string, options?: { replace: boolean }) {
       // Soft navigation
       if (sameOrigin) {
         const handler = () => {
-          window.removeEventListener('popstate', handler);
+          window.removeEventListener("popstate", handler);
           resolve();
         };
 
-        window.addEventListener('popstate', handler);
+        window.addEventListener("popstate", handler);
 
         if (options?.replace) {
           window.history.replaceState(
             {},
-            '',
+            "",
             url.pathname + url.search + url.hash,
           );
         } else {
           window.history.pushState(
             {},
-            '',
+            "",
             url.pathname + url.search + url.hash,
           );
         }
 
         window.dispatchEvent(
-          new PopStateEvent('popstate', { state: window.history.state }),
+          new PopStateEvent("popstate", { state: window.history.state }),
         );
       } else {
         // Hard navigation
@@ -48,7 +48,7 @@ export function dynamicNavigator(dest: string, options?: { replace: boolean }) {
         resolve();
       }
     } catch (error) {
-      console.log('Navigator error: ' + error);
+      console.log("Navigator error: " + error);
 
       // Navigate anyway
       if (options?.replace) {

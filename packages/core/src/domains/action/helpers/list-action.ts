@@ -1,4 +1,4 @@
-import { actionManager } from '@src';
+import { actionManager } from "@src";
 
 type listActionObservers = {
   viewQueue: () => void;

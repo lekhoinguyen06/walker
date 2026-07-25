@@ -1,6 +1,6 @@
-import { create, type StoreApi, type UseBoundStore } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { LogItem } from '@src/types/log.types.js';
+import { create, type StoreApi, type UseBoundStore } from "zustand";
+import { persist } from "zustand/middleware";
+import type { LogItem } from "@src/types/log.types.js";
 
 interface LogStoreState {
   items: LogItem[];
@@ -21,7 +21,7 @@ export const useLogStore = create<LogStoreState>()(
       clearItems: () => set({ items: [] }),
     }),
     {
-      name: 'log-store',
+      name: "log-store",
     },
   ),
 );

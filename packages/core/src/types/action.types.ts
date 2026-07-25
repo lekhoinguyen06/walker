@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const ActionSchema = z.object({
   id: z.uuid().default(() => crypto.randomUUID()),
@@ -6,11 +6,11 @@ export const ActionSchema = z.object({
   action: z.string().min(1),
   query: z.string().min(1),
 
-  message: z.string().default(''),
-  data: z.string().default(''),
+  message: z.string().default(""),
+  data: z.string().default(""),
 
-  currentRoute: z.string().default(''),
-  currentURL: z.string().default(''),
+  currentRoute: z.string().default(""),
+  currentURL: z.string().default(""),
 });
 
 export const ActionInputSchema = ActionSchema.array();

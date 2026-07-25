@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Action } from '@src/types/action.types.js';
-import { ACTION_HISTORY_MAXIMUM_LENGTH } from '@src/constants/action.constants.js';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { Action } from "@src/types/action.types.js";
+import { ACTION_HISTORY_MAXIMUM_LENGTH } from "@src/constants/action.constants.js";
 
 interface ActionStoreState {
   actions: Action[];
@@ -37,7 +37,7 @@ export const useActionStore = create<ActionStoreState>()(
       clearAction: () => set(() => ({ actions: [] })),
     }),
     {
-      name: 'action-store',
+      name: "action-store",
     },
   ),
 );

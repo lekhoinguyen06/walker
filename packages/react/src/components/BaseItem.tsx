@@ -2,7 +2,7 @@ import {
   BaseItemOptionsType,
   BaseItemProps,
   DEFAULT_BASE_ITEM_OPTIONS,
-} from '@repo/core';
+} from "@repo/core";
 
 function optionsMapper(options: BaseItemOptionsType): string {
   // let optionString = "";

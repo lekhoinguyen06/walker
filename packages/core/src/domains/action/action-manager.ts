@@ -1,7 +1,7 @@
-import type { Action } from '@src/types/action.types.js';
-import { useActionStore } from '@src/store/action/useActionStore.js';
-import { logger } from '@src';
-import { useAppStore } from '../../store/app/useAppStore.js';
+import type { Action } from "@src/types/action.types.js";
+import { useActionStore } from "@src/store/action/useActionStore.js";
+import { logger } from "@src";
+import { useAppStore } from "../../store/app/useAppStore.js";
 
 /**
  * Store and manage Actions
@@ -14,10 +14,10 @@ export class ActionManager {
   listActionQueue(): Action[] | undefined {
     const actions = useActionStore.getState().actions;
     if (actions.length > 0) {
-      logger.add('1', {
+      logger.add("1", {
         identifier: 2,
-        domain: 'Action Manager',
-        title: 'Action Queue',
+        domain: "Action Manager",
+        title: "Action Queue",
         data: actions,
       });
       logger.last();
@@ -29,10 +29,10 @@ export class ActionManager {
   listActionHistory(): Action[] | undefined {
     const history = useActionStore.getState().history;
     if (history.length > 0) {
-      logger.add('1', {
+      logger.add("1", {
         identifier: 3,
-        domain: 'Action Manager',
-        title: 'Action History',
+        domain: "Action Manager",
+        title: "Action History",
         content: JSON.stringify(history),
       });
       logger.last();

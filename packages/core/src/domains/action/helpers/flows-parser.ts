@@ -1,6 +1,6 @@
-import { FLOW_PARSE_DELIMETERS } from '@src/constants/flow.constants.js';
-import { ActionSchema, type Action } from '@src/types/action.types.js';
-import { logger } from '@src';
+import { FLOW_PARSE_DELIMETERS } from "@src/constants/flow.constants.js";
+import { ActionSchema, type Action } from "@src/types/action.types.js";
+import { logger } from "@src";
 
 /**
  * Compile flows
@@ -19,11 +19,11 @@ export function flowsParser(command?: string): Action[] {
     const action: Action = {
       id: crypto.randomUUID(),
       action: actionString.trim(),
-      message: '',
-      data: '',
-      query: '',
-      currentRoute: '',
-      currentURL: '',
+      message: "",
+      data: "",
+      query: "",
+      currentRoute: "",
+      currentURL: "",
     };
 
     if (restString) {
@@ -39,10 +39,10 @@ export function flowsParser(command?: string): Action[] {
       }
     }
 
-    logger.add('1', {
+    logger.add("1", {
       identifier: 1,
-      domain: 'Parser',
-      title: 'Action object',
+      domain: "Parser",
+      title: "Action object",
       content: JSON.stringify(action),
     });
 

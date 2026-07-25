@@ -1,12 +1,12 @@
-import { logger } from '@src';
-import hash from 'object-hash';
+import { logger } from "@src";
+import hash from "object-hash";
 import {
   BaseItemDataSchema,
   BaseItemOptionsSchema,
   type BaseItemOptionsType,
-} from '@src/types/item.types.js';
-import z from 'zod';
-import { DEFAULT_BASE_ITEM_OPTIONS } from '@src/constants/item.constants.js';
+} from "@src/types/item.types.js";
+import z from "zod";
+import { DEFAULT_BASE_ITEM_OPTIONS } from "@src/constants/item.constants.js";
 
 interface WalkerMap {
   hash: string;
@@ -26,16 +26,16 @@ export class MapManager {
   map(): WalkerMap {
     const registry: Record<string, NodeMap> = {};
     const tree: Record<string, NodeMap> = {};
-    let walkerMap: WalkerMap = { map: {}, hash: '' };
+    let walkerMap: WalkerMap = { map: {}, hash: "" };
     const all = document.querySelectorAll(
-      '[data-walker-key], [data-walker-options]',
+      "[data-walker-key], [data-walker-options]",
     );
 
     // Build flat map
     all.forEach((el) => {
-      const key = el.getAttribute('data-walker-key');
-      const data = el.getAttribute('data-walker-data');
-      const options = el.getAttribute('data-walker-options');
+      const key = el.getAttribute("data-walker-key");
+      const data = el.getAttribute("data-walker-data");
+      const options = el.getAttribute("data-walker-options");
 
       if (!key) return;
 
@@ -67,13 +67,13 @@ export class MapManager {
 
     // Attach children
     all.forEach((el) => {
-      const key = el.getAttribute('data-walker-key');
+      const key = el.getAttribute("data-walker-key");
       if (!key) return;
 
-      const parentEl = el.parentElement?.closest('[data-walker-key]');
+      const parentEl = el.parentElement?.closest("[data-walker-key]");
 
       if (parentEl) {
-        const parentKey = parentEl.getAttribute('data-walker-key');
+        const parentKey = parentEl.getAttribute("data-walker-key");
         if (parentKey && registry[parentKey]) {
           registry[parentKey].children[key] = registry[key];
         }
@@ -82,10 +82,10 @@ export class MapManager {
 
     // Return only root parent
     all.forEach((el) => {
-      const key = el.getAttribute('data-walker-key');
+      const key = el.getAttribute("data-walker-key");
       if (!key) return;
 
-      const parentEl = el.parentElement?.closest('[data-walker-key]');
+      const parentEl = el.parentElement?.closest("[data-walker-key]");
       if (!parentEl) {
         tree[key] = registry[key];
       }
@@ -97,10 +97,10 @@ export class MapManager {
       hash: hash(tree),
     };
 
-    logger.add('1', {
+    logger.add("1", {
       identifier: 5,
-      domain: 'Map Manager',
-      title: 'Send map',
+      domain: "Map Manager",
+      title: "Send map",
       data: walkerMap,
     });
 
