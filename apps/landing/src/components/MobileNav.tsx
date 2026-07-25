@@ -1,10 +1,8 @@
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -39,6 +37,15 @@ export function MobileNav() {
               <img src="/concierge-inline.svg" alt="Concierge Inline Logo" />
             </Button>
           </a>
+          <a href="https://react.walker.vstaffs.com">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="rounded-none w-full justify-start py-12"
+            >
+              Playground
+            </Button>
+          </a>
           <a href="https://docs.walker.vstaffs.com">
             <Button
               variant="ghost"
@@ -65,13 +72,6 @@ export function MobileNav() {
             Community
           </Button>
         </div>
-        <SheetFooter>
-          <SheetClose>
-            <Button variant="ghost" className="w-full rounded-none py-12">
-              Close
-            </Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
