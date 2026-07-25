@@ -49,7 +49,7 @@ function App() {
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full flex flex-col justify-end items-center bg-foreground text-white dark:text-white min-h-screen">
+      <div className="w-full flex flex-col justify-end items-center min-h-screen">
         <div className="font-brand">MIT License 2026</div>
       </div>
     </div>
