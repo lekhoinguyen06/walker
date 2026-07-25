@@ -8,7 +8,6 @@ function App() {
       <Header />
       <div className=" w-full flex flex-col lg:gap-48 gap-12 items-center max-w-6xl lg:mb-49 mb-12">
         <div className="w-full h-screen flex flex-col dark:gap-6">
-          {/* Hero Section */}
           <div className="relative flex-1 flex flex-col justify-end items-center mt-24">
             <img
               src="/yellow.png"
@@ -30,8 +29,6 @@ function App() {
               </div>
             </div>
           </div>
-
-          {/* Sponsors */}
           <div className="relative lg:p-24 p-12 flex flex-col justify-center items-center px-6">
             <img
               src="/yellow-light.png"
