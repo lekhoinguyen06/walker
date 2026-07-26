@@ -4,6 +4,7 @@ import "./index.css";
 import AppLayout from "./AppLayout";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { Components } from "./components/Components";
+import { InputPage } from "./features/input/page";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Components />,
+      },
+      {
+        path: "input",
+        element: <InputPage />,
       },
     ],
   },
