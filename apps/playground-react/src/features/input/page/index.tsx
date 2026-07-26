@@ -7,7 +7,7 @@ import { useCopyToClipboard } from "usehooks-ts";
 import { toast } from "@/components/ui/toast";
 
 function CodeBlock({ raw, code }: { raw: string; code: React.ReactNode }) {
-  const [copiedText, copy] = useCopyToClipboard();
+  const [_, copy] = useCopyToClipboard();
 
   const handleCopy = (text: string) => () => {
     copy(text)
