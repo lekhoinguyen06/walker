@@ -1,37 +1,15 @@
-Walker
-A React client library for prompt-driven UI/UX interaction to power the future bewteen human and AI.
+# .
 
-Example commands:
+To install dependencies:
 
-```json
-[
-  {
-    "action": "click",
-    "message": "hello",
-    "query": "[data-walker-key='link-to-demo-page'] > *"
-  },
-  {
-    "action": "click",
-    "message": "hello 2",
-    "query": "[data-walker-key='link-to-home-page'] > *"
-  },
-  {
-    "action": "click",
-    "message": "hello 3",
-    "query": "[data-walker-key='link-to-demo-page'] > *"
-  }
-]
+```bash
+bun install
 ```
 
-Todos:
+To run:
 
-- Refactor codebase for simplicity
-
-```text
-src/
-├── action.ts
-├── item.ts
-├── store.ts
-├── utils.ts
-└── ...
+```bash
+bun run index.ts
 ```
+
+This project was created using `bun init` in bun v1.3.5. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
