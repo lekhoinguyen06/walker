@@ -5,6 +5,9 @@ import {
   type FlowType,
   Runtime,
 } from "@repo/core";
+import { useActionStore } from "./useActionStore";
+import { useHistoryStore } from "./useHistoryStore";
+import { useFlowStore } from "./useFlowStore";
 
 type RuntimeProviderProps = {
   config?: Partial<ConfigType>;
@@ -45,25 +48,26 @@ export function RuntimeProvider({ children }: RuntimeProviderProps) {
     isPaused: false,
     verbose: false,
     actionStore: {
-      pushBack: (action) => {},
-      pushFront: (action) => {},
-      popBack: () => mockAction,
-      popFront: () => mockAction,
-      list: () => [],
-      clear: () => [],
+      pushBack: useActionStore((state) => state.pushBack),
+      pushFront: useActionStore((state) => state.pushFront),
+      popBack: useActionStore((state) => state.popBack),
+      popFront: useActionStore((state) => state.popFront),
+      list: useActionStore((state) => state.list),
+      clear: useActionStore((state) => state.clear),
     },
     historyStore: {
-      pushBack: (action) => {},
-      pushFront: (action) => {},
-      popBack: () => mockAction,
-      popFront: () => mockAction,
-      list: () => [],
-      clear: () => [],
+      pushBack: useHistoryStore((state) => state.pushBack),
+      pushFront: useHistoryStore((state) => state.pushFront),
+      popBack: useHistoryStore((state) => state.popBack),
+      popFront: useHistoryStore((state) => state.popFront),
+      list: useHistoryStore((state) => state.list),
+      clear: useHistoryStore((state) => state.clear),
     },
     flowStore: {
-      init: (flows) => {},
-      find: (query) => mockFlow,
-      list: () => [],
+      init: useFlowStore((state) => state.init),
+      find: useFlowStore((state) => state.find),
+      list: useFlowStore((state) => state.list),
+      clear: useFlowStore((state) => state.clear),
     },
     flows: [],
   };

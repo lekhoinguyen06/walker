@@ -11,7 +11,7 @@ export const ActionStorePushHandler = z.function({
 
 export const ActionStorePopHandler = z.function({
   input: [],
-  output: ActionSchema,
+  output: z.optional(ActionSchema),
 });
 
 export const ActionStoreReturnManyHandler = z.function({
@@ -34,20 +34,21 @@ export const FlowStoreInitHandler = z.function({
   output: z.void(),
 });
 
-export const FlowStoreListHandler = z.function({
+export const FlowStoreReturnManyHandler = z.function({
   input: [],
   output: z.array(FlowSchema),
 });
 
 export const FlowStoreFindHandler = z.function({
   input: [z.object({ command: z.string() })],
-  output: FlowSchema,
+  output: z.optional(FlowSchema),
 });
 
 export const FlowStoreSchema = z.object({
   init: FlowStoreInitHandler,
   find: FlowStoreFindHandler,
-  list: FlowStoreListHandler,
+  list: FlowStoreReturnManyHandler,
+  clear: FlowStoreReturnManyHandler,
 });
 
 export const ConfigSchema = z.object({

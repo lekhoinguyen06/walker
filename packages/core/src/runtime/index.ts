@@ -40,6 +40,11 @@ export class Runtime {
       const flow = this.flowStore.find({
         command: this.nextAction.command,
       });
+      if (!flow) {
+        const errorMessage = `No flow found for command: ${this.nextAction.command}`;
+        this.nextAction = undefined;
+        throw new Error(errorMessage);
+      }
       flow.handler(this.nextAction);
       this.nextAction = this.actionStore.popFront();
     }
