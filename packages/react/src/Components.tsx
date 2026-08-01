@@ -1,4 +1,4 @@
-import type { WalkerElement, WalkerElementProps } from "@repo/core";
+import type { WalkerElementProps } from "@repo/core";
 
 declare module "react" {
   namespace JSX {

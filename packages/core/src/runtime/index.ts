@@ -2,6 +2,7 @@ import { ActionSchema, type ActionType } from "../action/type";
 import type { MapType } from "../map/type";
 import { ConfigSchema, type ConfigType } from "./type";
 import z from "zod";
+import debug from "debug";
 
 export class Runtime {
   private readonly config: ConfigType;
@@ -13,6 +14,7 @@ export class Runtime {
   // private readonly currentMap: MapType;
 
   constructor(config: ConfigType) {
+    debug("Initializing Runtime with config: %O")(config);
     this.config = ConfigSchema.parse(config);
     this.actionStore = this.config.actionStore;
     this.historyStore = this.config.historyStore;
@@ -36,7 +38,10 @@ export class Runtime {
 
   next() {
     this.nextAction = this.actionStore.popFront();
+
     while (this.nextAction) {
+      debug("Executing Action: %O")(this.nextAction);
+
       const flow = this.flowStore.find({
         command: this.nextAction.command,
       });
@@ -71,6 +76,21 @@ export class Runtime {
   resume() {
     this.isPaused = false;
     this.next();
+  }
+
+  listHistory() {
+    debug("Listing history: %O")(this.historyStore.list());
+    return this.historyStore.list();
+  }
+
+  listFlows() {
+    debug("Listing flows: %O")(this.flowStore.list());
+    return this.flowStore.list();
+  }
+
+  listActions() {
+    debug("Listing actions: %O")(this.actionStore.list());
+    return this.actionStore.list();
   }
 
   cancel() {
