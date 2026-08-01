@@ -1,9 +1,13 @@
 {
-  "name": ".",
+  "name": "@repo/core",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.3.14",
+    "tsup": "^8.5.1"
   },
   "peerDependencies": {
     "typescript": "^5"
