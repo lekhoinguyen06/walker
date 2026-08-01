@@ -10,3 +10,6 @@ export * from "./flow/web";
 
 // Runtime exports
 export * from "./runtime/index";
+
+// Component exports
+export * from "./walk/walker";

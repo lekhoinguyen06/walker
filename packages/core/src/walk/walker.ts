@@ -1,5 +1,11 @@
-class Walker extends HTMLElement {
-  constructor() {
+export interface WalkerElementProps {
+  key: string;
+  type: string;
+  description: string;
+}
+
+export class WalkerElement extends HTMLElement {
+  constructor(props: WalkerElementProps) {
     super();
   }
 
@@ -21,7 +27,7 @@ class Walker extends HTMLElement {
     console.log("Custom element moved to new page.");
   }
 
-  attributeChangedCallback(key, type, description) {
+  attributeChangedCallback(key: string, type: string, description: string) {
     console.log({
       key,
       type,
@@ -30,4 +36,4 @@ class Walker extends HTMLElement {
   }
 }
 
-customElements.define("walker", Walker);
+customElements.define("walker", WalkerElement);
