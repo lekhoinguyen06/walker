@@ -43,7 +43,7 @@ export function CodeBlock({
         </div>
       )}
       <div
-        className={`sm:block hidden overflow-hidden transition-all duration-300 ${
+        className={`sm:block hidden overflow-scroll transition-all duration-300 border rounded-[12px] ${
           isExpanded ? "max-h-none" : "max-h-100"
         }`}
       >
@@ -61,7 +61,7 @@ export function CodeBlock({
           className="rounded-full hover:cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? "Show Less" : "Show More"}
+          {isExpanded ? "Show Less" : "Show Full"}
         </Button>
         <Button
           variant="outline"

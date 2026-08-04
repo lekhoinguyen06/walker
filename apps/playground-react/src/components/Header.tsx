@@ -41,7 +41,7 @@ export default function Header() {
           </a>
           <a href="https://angular.walker.vstaffs.com">
             <Button variant="ghost" size="lg" className="rounded-none">
-              <AngularLogo className="h-6 fill-[#0F0F11]" />
+              <AngularLogo className="h-6 fill-foreground" />
             </Button>
           </a>
         </div>
