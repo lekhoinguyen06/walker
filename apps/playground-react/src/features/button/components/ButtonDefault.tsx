@@ -3,7 +3,7 @@ import { Item } from "@repo/react";
 
 export function ButtonDefault() {
   return (
-    <Item>
+    <Item id="button" description="A button example. Click it!">
       <Button>Button</Button>
     </Item>
   );

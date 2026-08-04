@@ -17,7 +17,7 @@ export function Components() {
           <Button
             variant="ghost"
             size="lg"
-            className="rounded-none w-full justify-start"
+            className="rounded-none w-full justify-start text-foreground"
           >
             {component.label}
           </Button>
