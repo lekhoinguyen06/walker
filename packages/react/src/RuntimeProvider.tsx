@@ -3,12 +3,31 @@ import { type AdapterConfigType, type ConfigType, Runtime } from "@repo/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 
-// --------------------------------- Runtime Instance ---------------------------------
-export function generateReactClient({
-  config: userConfig,
-}: {
+// --------------------------------- Runtime Hook ---------------------------------
+export function useRuntime() {
+  const context = useContext(RuntimeContext);
+  if (!context) {
+    throw new Error("useRuntime must be used within a RuntimeProvider");
+  }
+  return context.runtime;
+}
+
+// --------------------------------- Runtime Provider ---------------------------------
+type RuntimeProviderProps = {
   config: Partial<ConfigType>;
-}): Runtime {
+  children: React.ReactNode;
+};
+
+type RuntimeContextType = {
+  runtime: Runtime;
+};
+
+const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
+
+export function RuntimeProvider({
+  config: userConfig,
+  children,
+}: RuntimeProviderProps) {
   const config: ConfigType = {
     ...userConfig,
     mode: "tailored",
@@ -40,31 +59,6 @@ export function generateReactClient({
 
   const runtime = new Runtime({ config, adapterConfig });
 
-  return runtime;
-}
-
-// --------------------------------- Runtime Hook ---------------------------------
-export function useRuntime() {
-  const context = useContext(RuntimeContext);
-  if (!context) {
-    throw new Error("useRuntime must be used within a RuntimeProvider");
-  }
-  return context.runtime;
-}
-
-// --------------------------------- Runtime Provider ---------------------------------
-type RuntimeProviderProps = {
-  runtime: Runtime;
-  children: React.ReactNode;
-};
-
-type RuntimeContextType = {
-  runtime: Runtime;
-};
-
-const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
-
-export function RuntimeProvider({ runtime, children }: RuntimeProviderProps) {
   return (
     <RuntimeContext.Provider value={{ runtime }}>
       {children}

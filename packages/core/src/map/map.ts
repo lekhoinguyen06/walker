@@ -12,13 +12,13 @@ export function map(): MapType {
 
   // Build flat map
   all.forEach((el) => {
-    const key = el.getAttribute("key");
-    if (!key) return;
+    const id = el.getAttribute("id");
+    if (!id) return;
     const description = el.getAttribute("description") || "";
     const content = el.innerHTML || "";
 
-    registry[key] = {
-      id: key,
+    registry[id] = {
+      id: id,
       description,
       content,
       children: {},
@@ -27,27 +27,29 @@ export function map(): MapType {
 
   // Attach children
   all.forEach((el) => {
-    const key = el.getAttribute("key");
-    if (!key) return;
+    const id = el.getAttribute("id");
 
-    const parentEl = el.parentElement?.closest("[key]");
+    if (!id) return;
+
+    const parentEl = el.parentElement?.closest(`walker-element`);
 
     if (parentEl) {
-      const parentKey = parentEl.getAttribute("key");
-      if (parentKey && registry[parentKey] && registry[key]) {
-        registry[parentKey].children[key] = registry[key];
+      const parentId = parentEl.getAttribute("id");
+      if (parentId && registry[parentId] && registry[id]) {
+        console.log(`Attaching child ${id} to parent ${parentId}`);
+        registry[parentId].children[id] = registry[id];
       }
     }
   });
 
   // Return only root parent
   all.forEach((el) => {
-    const key = el.getAttribute("key");
-    if (!key) return;
+    const id = el.getAttribute("id");
+    if (!id) return;
 
-    const parentEl = el.parentElement?.closest("[key]");
-    if (!parentEl && registry[key]) {
-      tree[key] = registry[key];
+    const parentEl = el.parentElement?.closest(`walker-element`);
+    if (!parentEl && registry[id]) {
+      tree[id] = registry[id];
     }
   });
 

@@ -1,4 +1,4 @@
-import { Braces, CodeXml, Layers, Pause, Play, X } from "lucide-react";
+import { Braces, CodeXml, Layers, Pause, Play, Trash, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -41,18 +41,25 @@ export function Controls({
     setIsDevboxOpen((prev) => !prev);
   });
 
-  useHotkeySequence(["Control+D", "M"], () => {
-    setIsDevboxOpen((prev) => !prev);
+  useHotkey("M", () => {
+    runtime.map();
   });
 
-  useHotkeySequence(["Control+D", "I"], () => {
-    setIsDevboxOpen((prev) => !prev);
+  useHotkey("I", () => {
+    runtime.listFlows();
+    runtime.listActions();
+    runtime.listHistory();
+  });
+
+  useHotkey("C", () => {
+    console.clear();
   });
 
   const isSpaceHeld = useKeyHold("Space");
   const isExitHeld = useKeyHold("Escape");
   const isMapHeld = useKeyHold("M");
   const isInspectHeld = useKeyHold("I");
+  const isClearHeld = useKeyHold("C");
 
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -161,7 +168,7 @@ export function Controls({
                   size="icon-lg"
                   className={cn("rounded-full", isMapHeld && "bg-accent")}
                   onClick={() => {
-                    // Map queues
+                    runtime.map();
                   }}
                 >
                   <Braces />
@@ -169,7 +176,7 @@ export function Controls({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Map <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd> then <Kbd>M</Kbd>
+                  Map <Kbd>M</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -190,8 +197,27 @@ export function Controls({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Inspect queues <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd> then{" "}
+                  Inspect queues
                   <Kbd>I</Kbd>
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  variant="ghost"
+                  size="icon-lg"
+                  className={cn("rounded-full", isClearHeld && "bg-accent")}
+                  onClick={() => {
+                    console.clear();
+                  }}
+                >
+                  <Trash />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  Clear logs <Kbd>C</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>

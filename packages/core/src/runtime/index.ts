@@ -8,7 +8,8 @@ import {
 } from "./type";
 import z from "zod";
 import debug from "debug";
-import type { FlowType } from "../../dist";
+import type { FlowType } from "../flow/type";
+import { map as mapper } from "../map/map";
 
 export type RuntimeType = typeof Runtime;
 
@@ -26,8 +27,7 @@ export class Runtime {
     config: ConfigType;
     adapterConfig: AdapterConfigType;
   }) {
-    debug("Initializing Runtime");
-
+    console.log("Initializing Runtime with config:", config);
     this.config = ConfigSchema.parse(config);
     this.flows = this.config.flows;
 
@@ -54,7 +54,7 @@ export class Runtime {
     this.nextAction = this.actionStore.popFront();
 
     while (this.nextAction) {
-      debug("Executing Action: %O")(this.nextAction);
+      console.log("Executing Action: %O", this.nextAction);
 
       const flow = this.flows.find(
         (f) => f.command === this.nextAction?.command,
@@ -85,32 +85,39 @@ export class Runtime {
   }
 
   pause() {
-    debug("Pausing Runtime");
+    console.log("Pausing Runtime");
     this.config.isPaused = true;
   }
 
   resume() {
-    debug("Resuming Runtime");
+    console.log("Resuming Runtime");
     this.config.isPaused = false;
     this.next();
   }
 
+  map() {
+    const map: MapType = mapper();
+    console.log("Generated map: ", map);
+    return map;
+  }
+
   listHistory() {
-    debug("Listing history: %O")(this.historyStore.list());
+    console.log("Listing History: %O", this.historyStore.list());
     return this.historyStore.list();
   }
 
   listFlows() {
-    debug("Listing flows: %O")(this.flows);
+    console.log("Listing Flows: %O", this.flows);
     return this.flows;
   }
 
   listActions() {
-    debug("Listing actions: %O")(this.actionStore.list());
+    console.log("Listing Actions: %O", this.actionStore.list());
     return this.actionStore.list();
   }
 
   cancel() {
+    console.log("Cancelling walk");
     this.actionStore.clear();
   }
 }
