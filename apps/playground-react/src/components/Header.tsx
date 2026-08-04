@@ -9,12 +9,14 @@ import AngularLogo from "../assets/angular.svg?react";
 export default function Header() {
   return (
     <header className="fixed z-50 top-0 right-auto left-auto flex w-full p-3 m-3 max-w-4xl rounded-[12px] justify-between items-center backdrop-blur-sm bg-white/20 dark:bg-black/20">
-      <img src="/walker.svg" alt="Walker Logo" className="h-6 dark:hidden" />
-      <img
-        src="/walker-light.svg"
-        alt="Walker Logo"
-        className="h-6 hidden dark:inline"
-      />
+      <a href="/">
+        <img src="/walker.svg" alt="Walker Logo" className="h-6 dark:hidden" />
+        <img
+          src="/walker-light.svg"
+          alt="Walker Logo"
+          className="h-6 hidden dark:inline"
+        />
+      </a>
       <div className="flex items-center">
         <div className="hidden md:flex gap-3">
           <a href="https://react.walker.vstaffs.com">

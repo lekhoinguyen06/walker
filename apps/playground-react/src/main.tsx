@@ -5,6 +5,8 @@ import AppLayout from "./AppLayout";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { Components } from "./components/Components";
 import { InputPage } from "./features/input/page";
+import { RuntimeProvider, App } from "@repo/react";
+import { ButtonPage } from "./features/button/page";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
         path: "input",
         element: <InputPage />,
       },
+      {
+        path: "button",
+        element: <ButtonPage />,
+      },
     ],
   },
   {
@@ -29,6 +35,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />,
+    <RuntimeProvider>
+      <App
+        id="playground-react"
+        description="The Walker library's playground for React"
+      >
+        <RouterProvider router={router} />
+      </App>
+    </RuntimeProvider>
   </StrictMode>,
 );

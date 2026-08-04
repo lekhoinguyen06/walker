@@ -8,7 +8,7 @@ export function map(): MapType {
   > = {};
   const tree: Record<string, ItemType> = {};
   let Map: MapType = { map: {}, hash: "" };
-  const all = document.querySelectorAll("walker");
+  const all = document.querySelectorAll("walker-element");
 
   // Build flat map
   all.forEach((el) => {

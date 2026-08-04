@@ -3,22 +3,10 @@ import { Button } from "./ui/button";
 const components: { label: string; href: string }[] = [
   { label: "Input", href: "/input" },
   { label: "Button", href: "/button" },
-  { label: "Checkbox", href: "/checkbox" },
-  { label: "Combobox", href: "/combobox" },
-  { label: "Dialog", href: "/dialog" },
-  { label: "Date Picker", href: "/date-picker" },
-  { label: "Drawer", href: "/drawer" },
-  { label: "Dropdown Menu", href: "/dropdown-menu" },
-  { label: "Input", href: "/input" },
-  { label: "Popover", href: "/popover" },
-  { label: "Scroll Area", href: "/scroll-area" },
   { label: "Select", href: "/select" },
-  { label: "Sheet", href: "/sheet" },
-  { label: "Slider", href: "/slider" },
-  { label: "Textarea", href: "/textarea" },
+  { label: "Dialog", href: "/dialog" },
+  { label: "Scroll Area", href: "/scroll-area" },
   { label: "Toast", href: "/toast" },
-  { label: "Tooltip", href: "/tooltip" },
-  { label: "Toggle", href: "/toggle" },
 ];
 
 export function Components() {

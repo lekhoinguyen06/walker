@@ -1,7 +1,8 @@
-export interface WalkerElementProps {
-  key: string;
+export interface WalkerElementProps<T = unknown> {
+  id: string;
   type: string;
   description: string;
+  children?: T;
 }
 
 export class WalkerElement extends HTMLElement {
@@ -9,7 +10,7 @@ export class WalkerElement extends HTMLElement {
     super();
   }
 
-  static observedAttributes = ["key", "type", "description"];
+  static observedAttributes = ["id", "type", "description"];
 
   connectedCallback() {
     console.log("Custom element added to page.");
@@ -27,13 +28,7 @@ export class WalkerElement extends HTMLElement {
     console.log("Custom element moved to new page.");
   }
 
-  attributeChangedCallback(key: string, type: string, description: string) {
-    console.log({
-      key,
-      type,
-      description,
-    });
-  }
+  attributeChangedCallback() {}
 }
 
-customElements.define("walker", WalkerElement);
+customElements.define("walker-element", WalkerElement);

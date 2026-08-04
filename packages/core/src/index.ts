@@ -12,4 +12,4 @@ export * from "./flow/web";
 export * from "./runtime/index";
 
 // Component exports
-export * from "./walk/walker";
+export * from "./walk/walker-element";

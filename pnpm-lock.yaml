@@ -141,10 +141,13 @@ importers:
     dependencies:
       '@base-ui/react':
         specifier: ^1.6.0
-        version: 1.6.0(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.7)(react@19.2.7)
+        version: 1.6.0(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8)
       '@fontsource-variable/geist':
         specifier: ^5.2.8
         version: 5.2.8
+      '@repo/react':
+        specifier: workspace:*
+        version: link:../../packages/react
       '@tailwindcss/vite':
         specifier: ^4.2.0
         version: 4.2.0(vite@8.1.5)
@@ -156,19 +159,19 @@ importers:
         version: 2.1.1
       lucide-react:
         specifier: ^0.575.0
-        version: 0.575.0(react@19.2.7)
+        version: 0.575.0(react@19.2.8)
       react:
-        specifier: ^19.2.7
-        version: 19.2.7
+        specifier: ^19.2.8
+        version: 19.2.8
       react-dom:
-        specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
       react-router:
         specifier: ^8.3.0
-        version: 8.3.0(react-dom@19.2.7)(react@19.2.7)
+        version: 8.3.0(react-dom@19.2.8)(react@19.2.8)
       react-shiki:
         specifier: ^0.11.0
-        version: 0.11.0(@types/react-dom@19.2.3)(@types/react@19.2.17)(react-dom@19.2.7)(react@19.2.7)
+        version: 0.11.0(@types/react-dom@19.2.3)(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8)
       shadcn:
         specifier: ^4.15.0
         version: 4.15.0(typescript@6.0.3)
@@ -183,7 +186,7 @@ importers:
         version: 1.4.0
       usehooks-ts:
         specifier: ^3.1.1
-        version: 3.1.1(react@19.2.7)
+        version: 3.1.1(react@19.2.8)
       vite-plugin-svgr:
         specifier: ^5.2.0
         version: 5.2.0(typescript@6.0.3)(vite@8.1.5)
@@ -208,7 +211,7 @@ importers:
         version: 1.75.0
       react-syntax-highlighter:
         specifier: ^16.1.1
-        version: 16.1.1(react@19.2.7)
+        version: 16.1.1(react@19.2.8)
       rollup-plugin-visualizer:
         specifier: ^7.0.1
         version: 7.0.1
@@ -258,11 +261,14 @@ importers:
       react:
         specifier: ^19.2.8
         version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
       zustand:
-        specifier: ^5.0.14
+        specifier: ^5.0.0
         version: 5.0.14(@types/react@19.2.18)(react@19.2.8)
     devDependencies:
       '@types/react':
@@ -766,6 +772,33 @@ packages:
       use-sync-external-store: 1.6.0(react@19.2.7)
     dev: false
 
+  /@base-ui/react@1.6.0(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8):
+    resolution: {integrity: sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@date-fns/tz': ^1.2.0
+      '@types/react': ^17 || ^18 || ^19
+      date-fns: ^4.0.0
+      react: ^17 || ^18 || ^19
+      react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@date-fns/tz':
+        optional: true
+      '@types/react':
+        optional: true
+      date-fns:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.29.2
+      '@base-ui/utils': 0.3.1(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8)
+      '@floating-ui/react-dom': 2.1.8(react-dom@19.2.8)(react@19.2.8)
+      '@floating-ui/utils': 0.2.11
+      '@types/react': 19.2.17
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      use-sync-external-store: 1.6.0(react@19.2.8)
+    dev: false
+
   /@base-ui/utils@0.3.1(@types/react@19.2.17)(react-dom@19.2.7)(react@19.2.7):
     resolution: {integrity: sha512-gFFiltORVmW/N6IILTGxizP3PBpVpysqML1ALY5Vk0mH+7faVkCknOU31goYHN5Aoek2dkjxva1XOD2Ce9WuIg==}
     peerDependencies:
@@ -783,6 +816,25 @@ packages:
       react-dom: 19.2.7(react@19.2.7)
       reselect: 5.2.0
       use-sync-external-store: 1.6.0(react@19.2.7)
+    dev: false
+
+  /@base-ui/utils@0.3.1(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8):
+    resolution: {integrity: sha512-gFFiltORVmW/N6IILTGxizP3PBpVpysqML1ALY5Vk0mH+7faVkCknOU31goYHN5Aoek2dkjxva1XOD2Ce9WuIg==}
+    peerDependencies:
+      '@types/react': ^17 || ^18 || ^19
+      react: ^17 || ^18 || ^19
+      react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.29.2
+      '@floating-ui/utils': 0.2.11
+      '@types/react': 19.2.17
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      reselect: 5.2.0
+      use-sync-external-store: 1.6.0(react@19.2.8)
     dev: false
 
   /@commitlint/cli@20.4.1(@types/node@25.2.3)(typescript@6.0.3):
@@ -1387,6 +1439,17 @@ packages:
       '@floating-ui/dom': 1.7.6
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
+    dev: false
+
+  /@floating-ui/react-dom@2.1.8(react-dom@19.2.8)(react@19.2.8):
+    resolution: {integrity: sha512-cC52bHwM/n/CxS87FH0yWdngEZrjdtLW/qVruo68qg+prK7ZQ4YGdut2GyDVpoGeAYe/h899rVeOVm6Oi40k2A==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 1.7.6
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
     dev: false
 
   /@floating-ui/utils@0.2.11:
@@ -5382,6 +5445,14 @@ packages:
       react: 19.2.7
     dev: false
 
+  /lucide-react@0.575.0(react@19.2.8):
+    resolution: {integrity: sha512-VuXgKZrk0uiDlWjGGXmKV6MSk9Yy4l10qgVvzGn2AWBx1Ylt0iBexKOAoA6I7JO3m+M9oeovJd3yYENfkUbOeg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    dependencies:
+      react: 19.2.8
+    dev: false
+
   /lucide@1.21.0:
     resolution: {integrity: sha512-m8g+tPjt1am9YBygKb36o2JOu5xOg7usbz0EORvPjn6MacIVy7desH1SNnV1ziMFHRGMGCcF5r1Jj80TxF2UTw==}
     dev: false
@@ -6219,7 +6290,16 @@ packages:
       scheduler: 0.27.0
     dev: false
 
-  /react-router@8.3.0(react-dom@19.2.7)(react@19.2.7):
+  /react-dom@19.2.8(react@19.2.8):
+    resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
+    peerDependencies:
+      react: ^19.2.8
+    dependencies:
+      react: 19.2.8
+      scheduler: 0.27.0
+    dev: false
+
+  /react-router@8.3.0(react-dom@19.2.8)(react@19.2.8):
     resolution: {integrity: sha512-qyPMvW83jGIct3yiieisxdk9M745anqhpIMKN5m1t6yBMfgVPpt77aHOqs5fUlEJRMCGffg9BaQLH9oPVOL7xQ==}
     engines: {node: '>=22.22.0'}
     peerDependencies:
@@ -6230,11 +6310,11 @@ packages:
         optional: true
     dependencies:
       cookie-es: 3.1.1
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
     dev: false
 
-  /react-shiki@0.11.0(@types/react-dom@19.2.3)(@types/react@19.2.17)(react-dom@19.2.7)(react@19.2.7):
+  /react-shiki@0.11.0(@types/react-dom@19.2.3)(@types/react@19.2.17)(react-dom@19.2.8)(react@19.2.8):
     resolution: {integrity: sha512-rqQtAvR8igCA9TVPfRhG6BSNeV+pLJZIkySms/K0/jYIoehG4/EsXD3cEhC94RXEpUVpmCrNkYhKR7RBO1YUGw==}
     peerDependencies:
       '@types/react': '>=16.14.0'
@@ -6252,15 +6332,15 @@ packages:
       clsx: 2.1.1
       dequal: 2.0.3
       hast-util-to-jsx-runtime: 2.3.6
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
       shiki: 4.3.1
       unist-util-visit: 5.1.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /react-syntax-highlighter@16.1.1(react@19.2.7):
+  /react-syntax-highlighter@16.1.1(react@19.2.8):
     resolution: {integrity: sha512-PjVawBGy80C6YbC5DDZJeUjBmC7skaoEUdvfFQediQHgCL7aKyVHe57SaJGfQsloGDac+gCpTfRdtxzWWKmCXA==}
     engines: {node: '>= 16.20.2'}
     peerDependencies:
@@ -6271,7 +6351,7 @@ packages:
       highlightjs-vue: 1.0.0
       lowlight: 1.20.0
       prismjs: 1.30.0
-      react: 19.2.7
+      react: 19.2.8
       refractor: 5.0.0
     dev: true
 
@@ -6283,11 +6363,11 @@ packages:
   /react@19.2.7:
     resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
     engines: {node: '>=0.10.0'}
+    dev: false
 
   /react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
@@ -7367,14 +7447,22 @@ packages:
       react: 19.2.7
     dev: false
 
-  /usehooks-ts@3.1.1(react@19.2.7):
+  /use-sync-external-store@1.6.0(react@19.2.8):
+    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    dependencies:
+      react: 19.2.8
+    dev: false
+
+  /usehooks-ts@3.1.1(react@19.2.8):
     resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
     engines: {node: '>=16.15.0'}
     peerDependencies:
       react: ^16.8.0  || ^17 || ^18 || ^19 || ^19.0.0-rc
     dependencies:
       lodash.debounce: 4.0.8
-      react: 19.2.7
+      react: 19.2.8
     dev: false
 
   /util-deprecate@1.0.2:
