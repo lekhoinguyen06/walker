@@ -1,27 +1,39 @@
 import { ActionSchema, type ActionType } from "../action/type";
 import type { MapType } from "../map/type";
-import { ConfigSchema, type ConfigType } from "./type";
+import {
+  AdapterConfigSchema,
+  ConfigSchema,
+  type AdapterConfigType,
+  type ConfigType,
+} from "./type";
 import z from "zod";
 import debug from "debug";
+import type { FlowType } from "../../dist";
 
 export type RuntimeType = typeof Runtime;
 
 export class Runtime {
   private readonly config: ConfigType;
-  private readonly actionStore: ConfigType["actionStore"];
-  private readonly historyStore: ConfigType["historyStore"];
-  private readonly flowStore: ConfigType["flowStore"];
-  private nextAction: ConfigType["nextAction"];
-  private isPaused: ConfigType["isPaused"];
-  // private readonly currentMap: MapType;
+  private readonly actionStore: AdapterConfigType["actionStore"];
+  private readonly historyStore: AdapterConfigType["historyStore"];
+  private nextAction?: ActionType;
+  private flows: FlowType[] = [];
 
-  constructor(config: ConfigType) {
-    debug("Initializing Runtime with config: %O")(config);
+  constructor({
+    config,
+    adapterConfig,
+  }: {
+    config: ConfigType;
+    adapterConfig: AdapterConfigType;
+  }) {
+    debug("Initializing Runtime");
+
     this.config = ConfigSchema.parse(config);
-    this.actionStore = this.config.actionStore;
-    this.historyStore = this.config.historyStore;
-    this.flowStore = this.config.flowStore;
-    this.isPaused = this.config.isPaused;
+    this.flows = this.config.flows;
+
+    const adapterConfigParsed = AdapterConfigSchema.parse(adapterConfig);
+    this.actionStore = adapterConfigParsed.actionStore;
+    this.historyStore = adapterConfigParsed.historyStore;
   }
 
   // async walk(prompt: string) {
@@ -44,9 +56,10 @@ export class Runtime {
     while (this.nextAction) {
       debug("Executing Action: %O")(this.nextAction);
 
-      const flow = this.flowStore.find({
-        command: this.nextAction.command,
-      });
+      const flow = this.flows.find(
+        (f) => f.command === this.nextAction?.command,
+      );
+
       if (!flow) {
         const errorMessage = `No flow found for command: ${this.nextAction.command}`;
         this.nextAction = undefined;
@@ -59,7 +72,7 @@ export class Runtime {
 
   manualWalk(inputActions: ActionType[]) {
     for (const action of inputActions) {
-      this.config.actionStore.pushBack(action);
+      this.actionStore.pushBack(action);
     }
 
     this.next();
@@ -72,11 +85,13 @@ export class Runtime {
   }
 
   pause() {
-    this.isPaused = true;
+    debug("Pausing Runtime");
+    this.config.isPaused = true;
   }
 
   resume() {
-    this.isPaused = false;
+    debug("Resuming Runtime");
+    this.config.isPaused = false;
     this.next();
   }
 
@@ -86,8 +101,8 @@ export class Runtime {
   }
 
   listFlows() {
-    debug("Listing flows: %O")(this.flowStore.list());
-    return this.flowStore.list();
+    debug("Listing flows: %O")(this.flows);
+    return this.flows;
   }
 
   listActions() {
@@ -96,6 +111,6 @@ export class Runtime {
   }
 
   cancel() {
-    this.config.actionStore.clear();
+    this.actionStore.clear();
   }
 }

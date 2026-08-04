@@ -9,12 +9,12 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import {
-  useHeldKeys,
   useHotkey,
   useHotkeySequence,
   useKeyHold,
 } from "@tanstack/react-hotkeys";
 import { Kbd } from "../ui/kbd";
+import { useRuntime } from "@repo/react";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
@@ -27,6 +27,8 @@ export function Controls({
 }: ControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDevboxOpen, setIsDevboxOpen] = useState(false);
+  const runtime = useRuntime();
+
   useHotkey("Space", () => {
     setIsPlaying((prev) => !prev);
   });
@@ -71,6 +73,7 @@ export function Controls({
                 className={cn("rounded-full", isSpaceHeld && "bg-accent")}
                 onClick={() => {
                   setIsPlaying(false);
+                  runtime.pause();
                 }}
               >
                 <Pause />
@@ -91,6 +94,13 @@ export function Controls({
                 className={cn("rounded-full", isSpaceHeld && "bg-accent")}
                 onClick={() => {
                   setIsPlaying(true);
+                  runtime.manualWalk([
+                    {
+                      command: "click",
+                      target: "dom",
+                      message: "Clicking on a button",
+                    },
+                  ]);
                 }}
               >
                 <Play />
@@ -109,6 +119,9 @@ export function Controls({
               variant="ghost"
               size="icon-lg"
               className={cn("rounded-full", isExitHeld && "bg-accent")}
+              onClick={() => {
+                runtime.cancel();
+              }}
             >
               <X />
             </Button>
@@ -147,6 +160,9 @@ export function Controls({
                   variant="ghost"
                   size="icon-lg"
                   className={cn("rounded-full", isMapHeld && "bg-accent")}
+                  onClick={() => {
+                    // Map queues
+                  }}
                 >
                   <Braces />
                 </Button>
@@ -163,6 +179,11 @@ export function Controls({
                   variant="ghost"
                   size="icon-lg"
                   className={cn("rounded-full", isInspectHeld && "bg-accent")}
+                  onClick={() => {
+                    runtime.listFlows();
+                    runtime.listActions();
+                    runtime.listHistory();
+                  }}
                 >
                   <Layers />
                 </Button>

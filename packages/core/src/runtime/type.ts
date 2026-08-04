@@ -57,11 +57,13 @@ export const ConfigSchema = z.object({
   gap: z.number().optional().default(1000),
   isPaused: z.boolean().optional().default(false),
   verbose: z.boolean().optional().default(false),
-  nextAction: ActionSchema.optional(),
-  actionStore: ActionStoreSchema,
-  historyStore: ActionStoreSchema,
-  flowStore: FlowStoreSchema,
   flows: z.array(FlowSchema).optional().default([]),
 });
 
+export const AdapterConfigSchema = z.object({
+  actionStore: ActionStoreSchema,
+  historyStore: ActionStoreSchema,
+});
+
 export type ConfigType = z.infer<typeof ConfigSchema>;
+export type AdapterConfigType = z.infer<typeof AdapterConfigSchema>;
