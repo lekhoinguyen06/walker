@@ -9,7 +9,7 @@ export function CodeBlock({
   code,
 }: {
   raw: string;
-  code: React.ReactNode;
+  code?: React.ReactNode;
 }) {
   const [_, copy] = useCopyToClipboard();
 
@@ -34,9 +34,11 @@ export function CodeBlock({
 
   return (
     <div className="w-full max-w-xl flex flex-col gap-6 p-6 rounded-[24px] border">
-      <div className="w-full flex items-center justify-center min-h-120">
-        {code}
-      </div>
+      {code && (
+        <div className="w-full flex items-center justify-center min-h-120">
+          {code}
+        </div>
+      )}
       <ShikiHighlighter language="jsx" theme="github-dark">
         {raw.trim() || ""}
       </ShikiHighlighter>

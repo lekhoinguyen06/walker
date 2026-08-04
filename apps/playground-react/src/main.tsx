@@ -8,6 +8,9 @@ import { InputPage } from "./features/input/page";
 import { RuntimeProvider, App } from "@repo/react";
 import { ButtonPage } from "./features/button/page";
 import { SelectPage } from "./features/select/page";
+import { DialogPage } from "./features/dialog/page";
+import { ScrollAreaPage } from "./features/scroll-area/page";
+import { ToastPage } from "./features/toast/page";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,18 @@ const router = createBrowserRouter([
       {
         path: "select",
         element: <SelectPage />,
+      },
+      {
+        path: "dialog",
+        element: <DialogPage />,
+      },
+      {
+        path: "scroll-area",
+        element: <ScrollAreaPage />,
+      },
+      {
+        path: "toast",
+        element: <ToastPage />,
       },
     ],
   },
