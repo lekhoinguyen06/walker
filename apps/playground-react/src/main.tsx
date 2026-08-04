@@ -7,6 +7,7 @@ import { Components } from "./components/Components";
 import { InputPage } from "./features/input/page";
 import { RuntimeProvider, App } from "@repo/react";
 import { ButtonPage } from "./features/button/page";
+import { SelectPage } from "./features/select/page";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "button",
         element: <ButtonPage />,
+      },
+      {
+        path: "select",
+        element: <SelectPage />,
       },
     ],
   },
