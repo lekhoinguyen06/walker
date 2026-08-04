@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
 import { Item } from "@repo/react";
+import { Controls } from "./components/concierge/Controls";
 
 function AppLayout() {
   return (
@@ -14,6 +15,7 @@ function AppLayout() {
       >
         <Toaster />
       </Item>
+      <Controls devMode={true} />
     </div>
   );
 }

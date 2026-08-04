@@ -4,6 +4,8 @@ import { ConfigSchema, type ConfigType } from "./type";
 import z from "zod";
 import debug from "debug";
 
+export type RuntimeType = typeof Runtime;
+
 export class Runtime {
   private readonly config: ConfigType;
   private readonly actionStore: ConfigType["actionStore"];

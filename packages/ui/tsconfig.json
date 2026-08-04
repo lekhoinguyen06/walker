@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "outDir": "dist",
-    "rootDir": "./src"
-  },
-  "include": ["src"],
-  "exclude": ["dist", "build", "node_modules"]
-}
