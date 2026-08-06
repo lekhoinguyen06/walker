@@ -1,39 +1,40 @@
 import { ActionSchema, type ActionType } from "../action/type";
 import type { MapType } from "../map/type";
 import {
-  AdapterConfigSchema,
+  AdapterSchema,
   ConfigSchema,
-  type AdapterConfigType,
+  type AdapterType,
   type ConfigType,
 } from "./type";
 import z from "zod";
-import debug from "debug";
-import type { FlowType } from "../flow/type";
+import { FlowsSchema, type FlowsType, type FlowType } from "../flow/type";
 import { mapper } from "../map/mapper";
+import { MiddlewaresSchema, type MiddlewaresType } from "../middleware/type";
 
 export type RuntimeType = typeof Runtime;
 
 export class Runtime {
   private readonly config: ConfigType;
-  private readonly actionStore: AdapterConfigType["actionStore"];
-  private readonly historyStore: AdapterConfigType["historyStore"];
-  private nextAction?: ActionType;
-  private flows: FlowType[] = [];
+  private readonly adapter: AdapterType;
+  private readonly flows: FlowsType = new Map();
+  private readonly middlewares: MiddlewaresType = new Map();
+  private nextAction: ActionType | undefined;
 
   constructor({
     config,
-    adapterConfig,
+    adapter,
+    flows,
+    middlewares,
   }: {
     config: ConfigType;
-    adapterConfig: AdapterConfigType;
+    adapter: AdapterType;
+    flows?: FlowsType;
+    middlewares?: MiddlewaresType;
   }) {
-    console.log("Initializing Runtime with config:", config);
     this.config = ConfigSchema.parse(config);
-    this.flows = this.config.flows;
-
-    const adapterConfigParsed = AdapterConfigSchema.parse(adapterConfig);
-    this.actionStore = adapterConfigParsed.actionStore;
-    this.historyStore = adapterConfigParsed.historyStore;
+    this.adapter = AdapterSchema.parse(adapter);
+    this.flows = FlowsSchema.parse(flows);
+    this.middlewares = MiddlewaresSchema.parse(middlewares);
   }
 
   // async walk(prompt: string) {
@@ -51,28 +52,32 @@ export class Runtime {
   // }
 
   async next() {
-    this.nextAction = this.actionStore.popFront();
+    this.nextAction = this.adapter.actionStore.popFront();
 
     while (this.nextAction) {
       console.log("Executing Action: %O", this.nextAction);
 
-      const flow = this.flows.find(
-        (f) => f.command === this.nextAction?.command,
-      );
+      const flow = this.flows.get(this.nextAction?.command);
 
       if (!flow) {
         const errorMessage = `No flow found for command: ${this.nextAction.command}`;
         this.nextAction = undefined;
         throw new Error(errorMessage);
       }
-      await flow.handler(this.nextAction);
-      this.nextAction = this.actionStore.popFront();
+      await flow.handler({
+        action: this.nextAction,
+        context: {
+          config: this.config,
+          middlewares: this.middlewares,
+        },
+      });
+      this.nextAction = this.adapter.actionStore.popFront();
     }
   }
 
   async manualWalk(inputActions: ActionType[]) {
     for (const action of inputActions) {
-      this.actionStore.pushBack(action);
+      this.adapter.actionStore.pushBack(action);
     }
 
     await this.next();
@@ -102,22 +107,22 @@ export class Runtime {
   }
 
   listHistory() {
-    console.log("Listing History: %O", this.historyStore.list());
-    return this.historyStore.list();
+    console.log("History: %O", this.adapter.historyStore.list());
+    return this.adapter.historyStore.list();
   }
 
   listFlows() {
-    console.log("Listing Flows: %O", this.flows);
+    console.log("Flows: %O", this.flows);
     return this.flows;
   }
 
   listActions() {
-    console.log("Listing Actions: %O", this.actionStore.list());
-    return this.actionStore.list();
+    console.log("Actions: %O", this.adapter.actionStore.list());
+    return this.adapter.actionStore.list();
   }
 
   cancel() {
     console.log("Cancelling walk");
-    this.actionStore.clear();
+    this.adapter.actionStore.clear();
   }
 }

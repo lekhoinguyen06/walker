@@ -1,5 +1,11 @@
 import React, { createContext, useContext } from "react";
-import { type AdapterConfigType, type ConfigType, Runtime } from "@repo/core";
+import {
+  type AdapterType,
+  type ConfigType,
+  Runtime,
+  webFlows,
+  webMiddlewares,
+} from "@repo/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 
@@ -34,11 +40,10 @@ export function RuntimeProvider({
     gap: 1000,
     isPaused: false,
     verbose: false,
-    flows: [],
     ...userConfig,
   };
 
-  const adapterConfig: AdapterConfigType = {
+  const adapter: AdapterType = {
     actionStore: {
       pushBack: useActionStore((state) => state.pushBack),
       pushFront: useActionStore((state) => state.pushFront),
@@ -57,7 +62,12 @@ export function RuntimeProvider({
     },
   };
 
-  const runtime = new Runtime({ config, adapterConfig });
+  const runtime = new Runtime({
+    config,
+    adapter,
+    flows: webFlows,
+    middlewares: webMiddlewares,
+  });
 
   return (
     <RuntimeContext.Provider value={{ runtime }}>

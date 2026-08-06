@@ -1,7 +1,5 @@
 import z from "zod";
 import { ActionSchema } from "../action/type";
-import { FlowSchema } from "../flow/type";
-import { webFlows } from "../flow/web";
 
 // --- Action Store ---
 export const ActionStorePushHandler = z.function({
@@ -28,42 +26,18 @@ export const ActionStoreSchema = z.object({
   clear: ActionStoreReturnManyHandler,
 });
 
-// --- Flow Store ---
-export const FlowStoreInitHandler = z.function({
-  input: [z.array(FlowSchema)],
-  output: z.void(),
-});
-
-export const FlowStoreReturnManyHandler = z.function({
-  input: [],
-  output: z.array(FlowSchema),
-});
-
-export const FlowStoreFindHandler = z.function({
-  input: [z.object({ command: z.string() })],
-  output: z.optional(FlowSchema),
-});
-
-export const FlowStoreSchema = z.object({
-  init: FlowStoreInitHandler,
-  find: FlowStoreFindHandler,
-  list: FlowStoreReturnManyHandler,
-  clear: FlowStoreReturnManyHandler,
-});
-
 export const ConfigSchema = z.object({
-  mode: z.enum(["tailored", "open"]),
-  url: z.url().optional(),
-  gap: z.number().optional().default(1000),
-  isPaused: z.boolean().optional().default(false),
-  verbose: z.boolean().optional().default(false),
-  flows: z.array(FlowSchema).optional().default([]),
+  mode: z.enum(["tailored", "open"]).catch("tailored"),
+  gap: z.number().catch(0),
+  isPaused: z.boolean().catch(false),
+  verbose: z.boolean().catch(false),
+  url: z.string().optional(),
 });
 
-export const AdapterConfigSchema = z.object({
+export const AdapterSchema = z.object({
   actionStore: ActionStoreSchema,
   historyStore: ActionStoreSchema,
 });
 
 export type ConfigType = z.infer<typeof ConfigSchema>;
-export type AdapterConfigType = z.infer<typeof AdapterConfigSchema>;
+export type AdapterType = z.infer<typeof AdapterSchema>;

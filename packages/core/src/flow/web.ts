@@ -1,24 +1,32 @@
 import { wait } from "../shared/utils/wait";
-import type { FlowType } from "./type";
+import type { FlowsType } from "./type";
 
-export const webFlows: FlowType[] = [
-  {
-    command: "click",
-    description: "Click on an element",
-    route: "*",
-    handler: async ({ message, target }) => {
-      const element = document.querySelector(`walker-element #${target} > *`);
+/**
+ * webFlows is a collection of flows that are specific to web applications provided by the core library.
+ * @type {FlowsType}
+ */
+export const webFlows: FlowsType = new Map([
+  [
+    "click",
+    {
+      command: "click",
+      description: "Click on an element",
+      route: "*",
+      handler: async (props) => {
+        const element = document.querySelector(
+          `walker-element #${props.action.target} > *`,
+        );
 
-      if (element instanceof HTMLElement) {
-        await wait(1000);
-        alert(message);
-        await wait(1000);
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-        await wait(1000);
-        element.click();
-      }
+        if (element instanceof HTMLElement) {
+          props.context.middlewares?.get("message")?.handler(props);
+          props.context.middlewares?.get("scroll")?.handler(props);
+          props.context.middlewares?.get("mouse")?.handler(props);
+          await wait(1000);
+          element.click();
+        }
+      },
     },
-  },
+  ],
   // {
   //   command: "navigate",
   //   description:
@@ -35,23 +43,27 @@ export const webFlows: FlowType[] = [
   //     }
   //   },
   // },
-  {
-    command: "input",
-    description: "Input text into an element.",
-    route: "*",
-    handler: async ({ message, target, body }) => {
-      const element = document.querySelector(`walker-element #${target} > *`);
+  [
+    "input",
+    {
+      command: "input",
+      description: "Input text into an element.",
+      route: "*",
+      handler: async (props) => {
+        const element = document.querySelector(
+          `walker-element #${props.action.target} > *`,
+        );
 
-      if (element instanceof HTMLInputElement) {
-        await wait(1000);
-        alert(message);
-        await wait(1000);
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-        await wait(1000);
-        if (body) {
-          element.value = body;
+        if (element instanceof HTMLInputElement) {
+          props.context.middlewares?.get("message")?.handler(props);
+          props.context.middlewares?.get("scroll")?.handler(props);
+          props.context.middlewares?.get("mouse")?.handler(props);
+          await wait(1000);
+          if (props.action.body) {
+            element.value = props.action.body;
+          }
         }
-      }
+      },
     },
-  },
-];
+  ],
+]);

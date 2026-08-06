@@ -5,8 +5,9 @@ export * from "./flow/type";
 export * from "./map/type";
 export * from "./walk/type";
 
-// Default flows exports
+// Default exports
 export * from "./flow/web";
+export * from "./middleware/web";
 
 // Runtime exports
 export * from "./runtime/index";
