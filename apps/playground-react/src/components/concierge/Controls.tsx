@@ -39,11 +39,18 @@ export function Controls({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDevboxOpen, setIsDevboxOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const runtime = useRuntime();
 
-  useHotkey("Space", () => {
-    setIsPlaying((prev) => !prev);
-  });
+  useHotkey(
+    "Space",
+    () => {
+      setIsPlaying((prev) => !prev);
+    },
+    {
+      enabled: !isInputOpen,
+    },
+  );
 
   useHotkey("Escape", () => {
     // Stop walk
@@ -53,26 +60,62 @@ export function Controls({
     setIsDevboxOpen((prev) => !prev);
   });
 
-  useHotkey("M", () => {
-    setIsMapOpen((prev) => !prev);
-    runtime.map();
-  });
+  useHotkey(
+    "Control+M",
+    () => {
+      setIsDevboxOpen(true);
+      setIsMapOpen((prev) => !prev);
+      runtime.map();
+    },
+    {
+      enabled: devMode,
+    },
+  );
 
-  useHotkey("I", () => {
-    runtime.listFlows();
-    runtime.listActions();
-    runtime.listHistory();
-  });
+  useHotkey(
+    "Control+I",
+    () => {
+      setIsDevboxOpen(true);
+      runtime.listFlows();
+      runtime.listActions();
+      runtime.listHistory();
+    },
+    {
+      enabled: devMode,
+    },
+  );
 
-  useHotkey("C", () => {
-    console.clear();
-  });
+  useHotkey(
+    "Control+C",
+    () => {
+      console.clear();
+    },
+    {
+      enabled: devMode,
+    },
+  );
+
+  useHotkey(
+    "Control+A",
+    () => {
+      setIsInputOpen((prev) => !prev);
+    },
+    {
+      enabled: devMode,
+    },
+  );
 
   const isSpaceHeld = useKeyHold("Space");
   const isExitHeld = useKeyHold("Escape");
-  const isMapHeld = useKeyHold("M");
-  const isInspectHeld = useKeyHold("I");
-  const isClearHeld = useKeyHold("C");
+  const isCtrlHeld = useKeyHold("Control");
+  const isMHeld = useKeyHold("M");
+  const isIHeld = useKeyHold("I");
+  const isCHeld = useKeyHold("C");
+  const isAHeld = useKeyHold("A");
+  const isMapHeld = isCtrlHeld && isMHeld;
+  const isInspectHeld = isCtrlHeld && isIHeld;
+  const isClearHeld = isCtrlHeld && isCHeld;
+  const isInputHeld = isCtrlHeld && isAHeld;
 
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -114,13 +157,7 @@ export function Controls({
                 className={cn("rounded-full", isSpaceHeld && "bg-accent")}
                 onClick={() => {
                   setIsPlaying(true);
-                  runtime.manualWalk([
-                    {
-                      command: "click",
-                      target: "dom",
-                      message: "Clicking on a button",
-                    },
-                  ]);
+                  runtime.next();
                 }}
               >
                 <Play />
@@ -166,8 +203,8 @@ export function Controls({
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                {isDevboxOpen ? "Close Devbox" : "Open Devbox"} <Kbd>Ctrl</Kbd>{" "}
-                + <Kbd>D</Kbd>
+                {isDevboxOpen ? "Close Devbox" : "Open Devbox"}
+                <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd>
               </p>
             </TooltipContent>
           </Tooltip>
@@ -196,7 +233,7 @@ export function Controls({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Map <Kbd>M</Kbd>
+                  Map <Kbd>Control</Kbd> + <Kbd>M</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -218,21 +255,20 @@ export function Controls({
               <TooltipContent>
                 <p>
                   Inspect queues
-                  <Kbd>I</Kbd>
+                  <Kbd>Control</Kbd> + <Kbd>I</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger>
                 <Input
+                  open={isInputOpen}
+                  setOpen={setIsInputOpen}
                   trigger={
                     <Button
                       variant="ghost"
                       size="icon-lg"
-                      className={cn(
-                        "rounded-full",
-                        isInspectHeld && "bg-accent",
-                      )}
+                      className={cn("rounded-full", isInputHeld && "bg-accent")}
                     >
                       <Brackets />
                     </Button>
@@ -242,7 +278,7 @@ export function Controls({
               <TooltipContent>
                 <p>
                   Input Actions
-                  <Kbd>A</Kbd>
+                  <Kbd>Control</Kbd> + <Kbd>A</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -261,7 +297,7 @@ export function Controls({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Clear logs <Kbd>C</Kbd>
+                  Clear logs <Kbd>Control</Kbd> + <Kbd>C</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>

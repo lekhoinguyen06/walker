@@ -50,7 +50,7 @@ export class Runtime {
   //   }
   // }
 
-  next() {
+  async next() {
     this.nextAction = this.actionStore.popFront();
 
     while (this.nextAction) {
@@ -65,23 +65,23 @@ export class Runtime {
         this.nextAction = undefined;
         throw new Error(errorMessage);
       }
-      flow.handler(this.nextAction);
+      await flow.handler(this.nextAction);
       this.nextAction = this.actionStore.popFront();
     }
   }
 
-  manualWalk(inputActions: ActionType[]) {
+  async manualWalk(inputActions: ActionType[]) {
     for (const action of inputActions) {
       this.actionStore.pushBack(action);
     }
 
-    this.next();
+    await this.next();
   }
 
-  rawWalk(inputActions: string) {
+  async rawWalk(inputActions: string) {
     const input = JSON.parse(inputActions);
     const parsedInput = z.array(ActionSchema).parse(input);
-    this.manualWalk(parsedInput);
+    await this.manualWalk(parsedInput);
   }
 
   pause() {
@@ -89,10 +89,10 @@ export class Runtime {
     this.config.isPaused = true;
   }
 
-  resume() {
+  async resume() {
     console.log("Resuming Runtime");
     this.config.isPaused = false;
-    this.next();
+    await this.next();
   }
 
   map() {

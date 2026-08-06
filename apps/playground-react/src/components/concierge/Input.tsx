@@ -1,14 +1,28 @@
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
+import { useRef, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { useRuntime } from "@repo/react";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
-export function Input({ trigger }: { trigger: React.ReactElement }) {
+const defaultValue = `
+[
+  {
+    "command": "click",
+    "target": "",
+    "message": ""
+  }
+]
+`;
+
+export function Input({
+  open,
+  setOpen,
+  trigger,
+}: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  trigger: React.ReactElement;
+}) {
   const runtime = useRuntime();
   const editorRef = useRef<any>(null);
 
@@ -17,19 +31,20 @@ export function Input({ trigger }: { trigger: React.ReactElement }) {
   }
 
   function showValue() {
+    setOpen(false);
     runtime.rawWalk(editorRef.current.getValue());
   }
 
   return (
-    <Popover>
-      <PopoverTrigger render={trigger} />
-      <PopoverContent className="w-80">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger render={trigger} />
+      <DialogContent className="w-80">
         <div>
           <Editor
             height="40vh"
             width="100%"
             defaultLanguage="json"
-            defaultValue="[]"
+            defaultValue={defaultValue}
             onMount={handleEditorDidMount}
             options={{
               scrollbar: {
@@ -58,10 +73,23 @@ export function Input({ trigger }: { trigger: React.ReactElement }) {
             }}
           />
         </div>
-        <Button variant="outline" className="rounded-full" onClick={showValue}>
-          Walk
-        </Button>
-      </PopoverContent>
-    </Popover>
+        <div className="flex gap-3 justify-end">
+          <Button
+            variant="outline"
+            className="rounded-full"
+            onClick={() => editorRef.current.setValue(defaultValue)}
+          >
+            Clear
+          </Button>
+          <Button
+            variant="outline"
+            className="rounded-full"
+            onClick={showValue}
+          >
+            Walk
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

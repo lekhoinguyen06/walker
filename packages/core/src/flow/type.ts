@@ -3,17 +3,14 @@ import { ActionSchema } from "../action/type";
 
 export const HandlerFactory = z.function({
   input: [ActionSchema],
-  output: z.void(),
+  output: z.promise(z.void()),
 });
 
 export const FlowSchema = z.object({
   command: z.string(),
   description: z.string(),
   route: z.string().or(z.literal("*")),
-  handler: z.function({
-    input: [ActionSchema],
-    output: z.void(),
-  }),
+  handler: HandlerFactory,
 });
 
 export type FlowType = z.infer<typeof FlowSchema>;

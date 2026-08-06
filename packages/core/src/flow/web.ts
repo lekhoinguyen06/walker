@@ -10,12 +10,12 @@ export const webFlows: FlowType[] = [
       const element = document.querySelector(`walker-element #${target} > *`);
 
       if (element instanceof HTMLElement) {
+        await wait(1000);
         alert(message);
         await wait(1000);
         element.scrollIntoView({ behavior: "smooth", block: "center" });
         await wait(1000);
         element.click();
-        await wait(1000);
       }
     },
   },
@@ -43,12 +43,14 @@ export const webFlows: FlowType[] = [
       const element = document.querySelector(`walker-element #${target} > *`);
 
       if (element instanceof HTMLInputElement) {
+        await wait(1000);
         alert(message);
         await wait(1000);
         element.scrollIntoView({ behavior: "smooth", block: "center" });
         await wait(1000);
-        if (body) element.value = body;
-        await wait(1000);
+        if (body) {
+          element.value = body;
+        }
       }
     },
   },
