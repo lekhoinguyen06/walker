@@ -2,12 +2,15 @@ import React, { createContext, useContext } from "react";
 import {
   type AdapterType,
   type ConfigType,
+  type FlowsType,
+  type MiddlewaresType,
   Runtime,
   webFlows,
   webMiddlewares,
 } from "@repo/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
+import { mouseMiddleware, MouseProvider } from "./MouseProvider";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -21,7 +24,10 @@ export function useRuntime() {
 // --------------------------------- Runtime Provider ---------------------------------
 type RuntimeProviderProps = {
   config: Partial<ConfigType>;
+  middlewares?: MiddlewaresType;
+  flows?: FlowsType;
   children: React.ReactNode;
+  mouse?: React.ReactNode;
 };
 
 type RuntimeContextType = {
@@ -32,6 +38,8 @@ const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
 
 export function RuntimeProvider({
   config: userConfig,
+  flows: userFlows,
+  middlewares: userMiddlewares,
   children,
 }: RuntimeProviderProps) {
   const config: ConfigType = {
@@ -65,13 +73,19 @@ export function RuntimeProvider({
   const runtime = new Runtime({
     config,
     adapter,
-    flows: webFlows,
-    middlewares: webMiddlewares,
+    flows: new Map([...webFlows, ...(userFlows || [])]),
+    middlewares: new Map([
+      ...webMiddlewares,
+      ["mouse", mouseMiddleware],
+      ...(userMiddlewares || []),
+    ]),
   });
 
   return (
-    <RuntimeContext.Provider value={{ runtime }}>
-      {children}
-    </RuntimeContext.Provider>
+    <MouseProvider>
+      <RuntimeContext.Provider value={{ runtime }}>
+        {children}
+      </RuntimeContext.Provider>
+    </MouseProvider>
   );
 }

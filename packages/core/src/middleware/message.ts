@@ -6,7 +6,7 @@ import type {
 } from "./type";
 
 async function message(props: MiddlewarePropsType): MiddlewareResponseType {
-  await wait(1000);
+  await wait(props.context.config.gap);
   console.log("Message Middleware: %O", props.action.message);
   alert(props.action.message);
 }

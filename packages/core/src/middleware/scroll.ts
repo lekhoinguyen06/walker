@@ -6,7 +6,7 @@ import type {
 } from "./type";
 
 async function scroll(props: MiddlewarePropsType): MiddlewareResponseType {
-  await wait(1000);
+  await wait(props.context.config.gap);
   const element = document.querySelector(
     `walker-element #${props.action.target} > *`,
   );

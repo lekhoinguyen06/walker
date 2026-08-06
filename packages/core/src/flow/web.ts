@@ -18,9 +18,9 @@ export const webFlows: FlowsType = new Map([
         );
 
         if (element instanceof HTMLElement) {
-          props.context.middlewares?.get("message")?.handler(props);
-          props.context.middlewares?.get("scroll")?.handler(props);
-          props.context.middlewares?.get("mouse")?.handler(props);
+          await props.context.middlewares?.get("message")?.handler(props);
+          await props.context.middlewares?.get("scroll")?.handler(props);
+          await props.context.middlewares?.get("mouse")?.handler(props);
           await wait(1000);
           element.click();
         }
@@ -55,9 +55,9 @@ export const webFlows: FlowsType = new Map([
         );
 
         if (element instanceof HTMLInputElement) {
-          props.context.middlewares?.get("message")?.handler(props);
-          props.context.middlewares?.get("scroll")?.handler(props);
-          props.context.middlewares?.get("mouse")?.handler(props);
+          await props.context.middlewares?.get("message")?.handler(props);
+          await props.context.middlewares?.get("scroll")?.handler(props);
+          await props.context.middlewares?.get("mouse")?.handler(props);
           await wait(1000);
           if (props.action.body) {
             element.value = props.action.body;

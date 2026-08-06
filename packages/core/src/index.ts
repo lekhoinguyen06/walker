@@ -4,6 +4,7 @@ export * from "./action/type";
 export * from "./flow/type";
 export * from "./map/type";
 export * from "./walk/type";
+export * from "./middleware/type";
 
 // Default exports
 export * from "./flow/web";
