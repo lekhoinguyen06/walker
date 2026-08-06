@@ -3,56 +3,32 @@ import type {
   MiddlewareResponseType,
   MiddlewareType,
 } from "@repo/core";
-import { createContext, useContext, useState } from "react";
+import { useMouseStore } from "./useMouseStore";
 
-const MouseContext = createContext<{
-  x: number;
-  y: number;
-  setX: (x: number) => void;
-  setY: (y: number) => void;
-}>({
-  x: 0,
-  y: 0,
-  setX: (x: number) => {},
-  setY: (y: number) => {},
-});
-
-export function useMouse() {
-  const context = useContext(MouseContext);
-  if (!context) {
-    throw new Error("useMouse must be used within a MouseProvider");
-  }
-  return context;
-}
-
-export function MouseProvider({ children }: { children: React.ReactNode }) {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-
-  return (
-    <MouseContext.Provider value={{ x, y, setX, setY }}>
-      {children}
-    </MouseContext.Provider>
-  );
+export function useMouseOffset() {
+  return useMouseStore();
 }
 
 export async function mouseMiddlewareHandler(
   props: MiddlewarePropsType,
 ): MiddlewareResponseType {
-  const { setX, setY } = useMouse();
+  const { setX, setY } = useMouseStore.getState();
 
-  const targetEl = document.querySelector(props.action.target);
+  const targetEl = document.querySelector(
+    `walker-element#${props.action.target} > *`,
+  );
+  console.log("targetEl:", targetEl);
 
   if (targetEl) {
-    const targetX =
-      targetEl.getBoundingClientRect().left +
-      targetEl.getBoundingClientRect().width / 2;
-    const targetY =
-      targetEl.getBoundingClientRect().top +
-      targetEl.getBoundingClientRect().height / 2;
+    const targetX = targetEl.getBoundingClientRect().x;
+    const targetWidth = targetEl.getBoundingClientRect().width;
+    const centerX = targetX + targetWidth / 2;
+    const targetY = targetEl.getBoundingClientRect().y;
+    const targetHeight = targetEl.getBoundingClientRect().height;
+    const centerY = targetY + targetHeight / 2;
 
-    setX(targetX);
-    setY(targetY);
+    setX(centerX);
+    setY(centerY);
   }
 
   return;

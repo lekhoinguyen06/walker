@@ -1,24 +1,40 @@
-import { useMouse } from "@repo/react";
+import { useMouseOffset } from "@repo/react";
 import * as motion from "motion/react-client";
+import { useMemo, useRef } from "react";
 
 export default function Mouse() {
-  const { x, y } = useMouse();
+  const { x: targetX, y: targetY } = useMouseOffset();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const offset = useMemo(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    }
+    return { x: 0, y: 0 };
+  }, [targetX, targetY]);
+
   return (
-    <motion.div
-      style={{ ...box, x, y }}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 1 }}
-    />
+    <div
+      ref={containerRef}
+      className="size-8 flex justify-center items-center z-[9999]"
+    >
+      <div>
+        <motion.div
+          animate={{
+            x: targetX - offset.x,
+            y: targetY - offset.y,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: "easeOut",
+            type: "spring",
+            stiffness: 200,
+            damping: 30,
+          }}
+          className="aspect-square size-4 bg-red-500"
+        />
+      </div>
+    </div>
   );
 }
-
-/**
- * ==============   Styles   ================
- */
-
-const box = {
-  width: 100,
-  height: 100,
-  backgroundColor: "var(--hue-1)",
-  borderRadius: 5,
-};

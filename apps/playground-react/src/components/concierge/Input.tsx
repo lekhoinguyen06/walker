@@ -9,7 +9,8 @@ const defaultValue = `
   {
     "command": "click",
     "target": "",
-    "message": ""
+    "body": "Le Khoi Nguyen",
+    "message": "Hi!"
   }
 ]
 `;

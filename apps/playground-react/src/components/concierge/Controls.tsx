@@ -26,6 +26,7 @@ import { Kbd } from "../ui/kbd";
 import { useRuntime } from "@repo/react";
 import { MapModal } from "./Map";
 import { Input } from "./Input";
+import Mouse from "./Mouse";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
@@ -121,12 +122,13 @@ export function Controls({
     <TooltipProvider timeout={100} delay={100}>
       <div
         className={cn(
-          "fixed bottom-6 left-auto right-auto z-50 flex rounded-full shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-black/20",
+          "fixed bottom-6 left-auto right-auto z-50 flex items-center rounded-full shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-black/20",
           (orientation === "right" || orientation === "left") && "flex-col",
           orientation === "right" && "right-6 bottom-6",
           orientation === "left" && "left-6 bottom-6",
         )}
       >
+        <Mouse />
         {isPlaying ? (
           <Tooltip>
             <TooltipTrigger>

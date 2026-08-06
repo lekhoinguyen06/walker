@@ -10,7 +10,7 @@ import {
 } from "@repo/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
-import { mouseMiddleware, MouseProvider } from "./MouseProvider";
+import { mouseMiddleware } from "./MouseProvider";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -82,10 +82,8 @@ export function RuntimeProvider({
   });
 
   return (
-    <MouseProvider>
-      <RuntimeContext.Provider value={{ runtime }}>
-        {children}
-      </RuntimeContext.Provider>
-    </MouseProvider>
+    <RuntimeContext.Provider value={{ runtime }}>
+      {children}
+    </RuntimeContext.Provider>
   );
 }
