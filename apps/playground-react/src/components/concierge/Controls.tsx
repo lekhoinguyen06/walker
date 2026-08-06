@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-hotkeys";
 import { Kbd } from "../ui/kbd";
 import { useRuntime } from "@repo/react";
+import { MapModal } from "./Map";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
@@ -27,6 +28,7 @@ export function Controls({
 }: ControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDevboxOpen, setIsDevboxOpen] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
   const runtime = useRuntime();
 
   useHotkey("Space", () => {
@@ -42,6 +44,7 @@ export function Controls({
   });
 
   useHotkey("M", () => {
+    setIsMapOpen((prev) => !prev);
     runtime.map();
   });
 
@@ -163,16 +166,23 @@ export function Controls({
           <>
             <Tooltip>
               <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon-lg"
-                  className={cn("rounded-full", isMapHeld && "bg-accent")}
-                  onClick={() => {
-                    runtime.map();
-                  }}
-                >
-                  <Braces />
-                </Button>
+                <MapModal
+                  open={isMapOpen}
+                  setOpen={setIsMapOpen}
+                  trigger={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      className={cn("rounded-full", isMapHeld && "bg-accent")}
+                      onClick={() => {
+                        setIsMapOpen(true);
+                        runtime.map();
+                      }}
+                    >
+                      <Braces />
+                    </Button>
+                  }
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <p>
