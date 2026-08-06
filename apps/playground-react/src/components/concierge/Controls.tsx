@@ -1,4 +1,13 @@
-import { Braces, CodeXml, Layers, Pause, Play, Trash, X } from "lucide-react";
+import {
+  Braces,
+  Brackets,
+  CodeXml,
+  Layers,
+  Pause,
+  Play,
+  Trash,
+  X,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -16,6 +25,7 @@ import {
 import { Kbd } from "../ui/kbd";
 import { useRuntime } from "@repo/react";
 import { MapModal } from "./Map";
+import { Input } from "./Input";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
@@ -68,7 +78,7 @@ export function Controls({
     <TooltipProvider timeout={100} delay={100}>
       <div
         className={cn(
-          "fixed bottom-6 left-auto right-auto z-50 flex rounded-full shadow-2xl",
+          "fixed bottom-6 left-auto right-auto z-50 flex rounded-full shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-black/20",
           (orientation === "right" || orientation === "left") && "flex-col",
           orientation === "right" && "right-6 bottom-6",
           orientation === "left" && "left-6 bottom-6",
@@ -209,6 +219,30 @@ export function Controls({
                 <p>
                   Inspect queues
                   <Kbd>I</Kbd>
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  trigger={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      className={cn(
+                        "rounded-full",
+                        isInspectHeld && "bg-accent",
+                      )}
+                    >
+                      <Brackets />
+                    </Button>
+                  }
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  Input Actions
+                  <Kbd>A</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>

@@ -12,6 +12,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/geist": "^5.2.8",
+    "@monaco-editor/react": "^4.7.0",
     "@repo/react": "workspace:*",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-hotkeys": "^0.10.0",

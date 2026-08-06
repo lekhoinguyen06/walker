@@ -9,7 +9,7 @@ import {
 import z from "zod";
 import debug from "debug";
 import type { FlowType } from "../flow/type";
-import { map as mapper } from "../map/map";
+import { mapper } from "../map/mapper";
 
 export type RuntimeType = typeof Runtime;
 
@@ -96,8 +96,8 @@ export class Runtime {
   }
 
   map() {
+    console.log("Generating Map");
     const map: MapType = mapper();
-    console.log("Generated map: ", map);
     return map;
   }
 

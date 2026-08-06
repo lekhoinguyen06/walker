@@ -1,24 +1,22 @@
 import type { ItemType, MapType } from "./type";
 import hash from "object-hash";
 
-export function map(): MapType {
-  const registry: Record<
-    string,
-    ItemType & { children: Record<string, ItemType> }
-  > = {};
-  const tree: Record<string, ItemType> = {};
-  let Map: MapType = { map: {}, hash: "" };
+export function mapper(): MapType {
+  const registry: MapType["map"] = {};
+  const tree: MapType["map"] = {};
   const all = document.querySelectorAll("walker-element");
 
   // Build flat map
   all.forEach((el) => {
     const id = el.getAttribute("id");
     if (!id) return;
+    const type = el.getAttribute("type") || "";
     const description = el.getAttribute("description") || "";
-    const content = el.innerHTML || "";
+    const content = el.textContent || "";
 
     registry[id] = {
       id: id,
+      type,
       description,
       content,
       children: {},
