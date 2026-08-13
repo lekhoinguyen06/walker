@@ -4,7 +4,7 @@ import { Toaster } from "./components/ui/toast";
 import { Item } from "@repo/react";
 import { Controls } from "./components/concierge/Controls";
 
-// Update pnpm lockfile
+// Pinning ts to lower version to avoid issues with tsup and react types.
 
 function AppLayout() {
   return (
