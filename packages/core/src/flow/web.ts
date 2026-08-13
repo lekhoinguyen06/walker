@@ -27,6 +27,27 @@ export const webFlows: FlowsType = new Map([
       },
     },
   ],
+  [
+    "select",
+    {
+      command: "select",
+      description: "Trigger select",
+      route: "*",
+      handler: async (props) => {
+        const element = document.querySelector(
+          `walker-element#${props.action.target} > *`,
+        );
+
+        if (element instanceof HTMLElement) {
+          await props.context.middlewares?.get("message")?.handler(props);
+          await props.context.middlewares?.get("scroll")?.handler(props);
+          await props.context.middlewares?.get("mouse")?.handler(props);
+          await wait(1000);
+          element.click();
+        }
+      },
+    },
+  ],
   // {
   //   command: "navigate",
   //   description:
@@ -51,7 +72,7 @@ export const webFlows: FlowsType = new Map([
       route: "*",
       handler: async (props) => {
         const element = document.querySelector(
-          `walker-element #${props.action.target} > *`,
+          `walker-element#${props.action.target} > *`,
         );
 
         if (element instanceof HTMLInputElement) {

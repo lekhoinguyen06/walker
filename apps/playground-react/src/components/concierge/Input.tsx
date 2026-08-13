@@ -43,7 +43,7 @@ const defaultValue = `
     "message": "Let's pick some fruit!"
   },
   {
-    "command": "click",
+    "command": "select",
     "target": "select-trigger",
     "message": "Let's see what we have!"
   },

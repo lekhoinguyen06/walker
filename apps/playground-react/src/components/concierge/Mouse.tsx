@@ -17,7 +17,7 @@ export default function Mouse() {
   return (
     <div
       ref={containerRef}
-      className="size-8 flex justify-center items-center z-[9999]"
+      className="size-8 flex justify-center items-center z-999999"
     >
       <div>
         <motion.div

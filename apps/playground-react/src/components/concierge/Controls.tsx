@@ -43,12 +43,13 @@ export function Controls({
   const runtime = useRuntime();
 
   useHotkey(
-    "Space",
+    "0",
     () => {
       runtime.next();
     },
     {
       enabled: !isInputOpen,
+      ignoreInputs: true,
     },
   );
 
@@ -105,7 +106,7 @@ export function Controls({
     },
   );
 
-  const isSpaceHeld = useKeyHold("Space");
+  const isNextHold = useKeyHold("0");
   const isCtrlHeld = useKeyHold("Control");
   const isMHeld = useKeyHold("M");
   const isIHeld = useKeyHold("I");
@@ -120,7 +121,7 @@ export function Controls({
     <TooltipProvider timeout={100} delay={100}>
       <div
         className={cn(
-          "fixed bottom-6 left-auto right-auto z-50 flex items-center rounded-full shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-black/20",
+          "fixed bottom-6 left-1/2 transform -translate-x-1/2 z-999999 p-1 flex items-center rounded-full shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-black/20",
           (orientation === "right" || orientation === "left") && "flex-col",
           orientation === "right" && "right-6 bottom-6",
           orientation === "left" && "left-6 bottom-6",
@@ -131,18 +132,21 @@ export function Controls({
           <TooltipTrigger>
             <Button
               variant="ghost"
-              size="icon-lg"
-              className={cn("rounded-full", isSpaceHeld && "bg-accent")}
+              size="lg"
+              className={cn(
+                "rounded-full font-brand text-lg",
+                isNextHold && "text-red-500 text-xl",
+              )}
               onClick={() => {
                 runtime.next();
               }}
             >
-              <Play />
+              W
             </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              Play <Kbd>Space</Kbd>
+              Next <Kbd>0</Kbd>
             </p>
           </TooltipContent>
         </Tooltip>

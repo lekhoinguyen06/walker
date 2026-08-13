@@ -70,6 +70,9 @@ export class Runtime {
           middlewares: this.middlewares,
         },
       });
+      if (this.nextAction.command === "select") {
+        await this.next();
+      }
     }
   }
 
