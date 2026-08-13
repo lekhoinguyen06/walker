@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
 import { Item } from "@repo/react";
 import { Controls } from "./components/concierge/Controls";
-import { createPortal } from "react-dom";
 
 function AppLayout() {
   return (
@@ -16,7 +15,7 @@ function AppLayout() {
       >
         <Toaster />
       </Item>
-      {createPortal(<Controls devMode={true} />, document.body)}
+      <Controls devMode={true} />
     </div>
   );
 }

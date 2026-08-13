@@ -18,7 +18,6 @@ import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
 import { ToastPage } from "./features/toast/page";
 import { toast } from "./components/ui/toast";
-import { Controls } from "./components/concierge/Controls";
 
 const router = createBrowserRouter([
   {
