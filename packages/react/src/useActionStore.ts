@@ -38,6 +38,7 @@ export const useActionStore = create<
       popFront: () => {
         const state = get();
         const action = state.actions[0];
+        console.log("Popping front action: %O", action);
         if (action) {
           set((state) => ({ actions: state.actions.slice(1) }));
         }

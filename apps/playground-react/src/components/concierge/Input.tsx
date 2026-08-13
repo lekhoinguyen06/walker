@@ -8,9 +8,49 @@ const defaultValue = `
 [
   {
     "command": "click",
-    "target": "",
-    "body": "Le Khoi Nguyen",
-    "message": "Hi!"
+    "target": "button-input",
+    "message": "Let's walk to the Input component!"
+  },
+  {
+    "command": "input",
+    "target": "input",
+    "body": "Hello World!",
+    "message": "Let's type in 'Hello World!'"
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
+  {
+    "command": "click",
+    "target": "button-button",
+    "message": "Let's click something!"
+  },
+  {
+    "command": "click",
+    "target": "button",
+    "message": "Clicking..."
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
+  {
+    "command": "click",
+    "target": "button-select",
+    "message": "Let's pick some fruit!"
+  },
+  {
+    "command": "click",
+    "target": "select-trigger",
+    "message": "Let's see what we have!"
+  },
+  {
+    "command": "click",
+    "target": "select-item-banana",
+    "message": "Banana na na na!"
   }
 ]
 `;

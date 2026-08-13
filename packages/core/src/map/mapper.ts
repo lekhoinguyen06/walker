@@ -34,7 +34,6 @@ export function mapper(): MapType {
     if (parentEl) {
       const parentId = parentEl.getAttribute("id");
       if (parentId && registry[parentId] && registry[id]) {
-        console.log(`Attaching child ${id} to parent ${parentId}`);
         registry[parentId].children[id] = registry[id];
       }
     }

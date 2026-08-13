@@ -14,7 +14,7 @@ export const webFlows: FlowsType = new Map([
       route: "*",
       handler: async (props) => {
         const element = document.querySelector(
-          `walker-element #${props.action.target} > *`,
+          `walker-element#${props.action.target} > *`,
         );
 
         if (element instanceof HTMLElement) {

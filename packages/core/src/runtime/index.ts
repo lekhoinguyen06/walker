@@ -53,11 +53,10 @@ export class Runtime {
 
   async next() {
     this.nextAction = this.adapter.actionStore.popFront();
+    console.log("Executing Action: %O", this.nextAction);
 
-    while (this.nextAction) {
-      console.log("Executing Action: %O", this.nextAction);
-
-      const flow = this.flows.get(this.nextAction?.command);
+    if (this.nextAction) {
+      const flow = this.flows.get(this.nextAction.command);
 
       if (!flow) {
         const errorMessage = `No flow found for command: ${this.nextAction.command}`;
@@ -71,7 +70,6 @@ export class Runtime {
           middlewares: this.middlewares,
         },
       });
-      this.nextAction = this.adapter.actionStore.popFront();
     }
   }
 
@@ -80,7 +78,7 @@ export class Runtime {
       this.adapter.actionStore.pushBack(action);
     }
 
-    await this.next();
+    // await this.next();
   }
 
   async rawWalk(inputActions: string) {
@@ -101,7 +99,6 @@ export class Runtime {
   }
 
   map() {
-    console.log("Generating Map");
     const map: MapType = mapper();
     return map;
   }

@@ -45,7 +45,7 @@ export function RuntimeProvider({
   const config: ConfigType = {
     ...userConfig,
     mode: "tailored",
-    gap: 1000,
+    gap: 200,
     isPaused: false,
     verbose: false,
     ...userConfig,

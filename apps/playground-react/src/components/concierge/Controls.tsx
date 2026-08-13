@@ -37,7 +37,6 @@ export function Controls({
   orientation = "bottom",
   devMode = false,
 }: ControlsProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isDevboxOpen, setIsDevboxOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isInputOpen, setIsInputOpen] = useState(false);
@@ -46,7 +45,7 @@ export function Controls({
   useHotkey(
     "Space",
     () => {
-      setIsPlaying((prev) => !prev);
+      runtime.next();
     },
     {
       enabled: !isInputOpen,
@@ -107,7 +106,6 @@ export function Controls({
   );
 
   const isSpaceHeld = useKeyHold("Space");
-  const isExitHeld = useKeyHold("Escape");
   const isCtrlHeld = useKeyHold("Control");
   const isMHeld = useKeyHold("M");
   const isIHeld = useKeyHold("I");
@@ -129,65 +127,22 @@ export function Controls({
         )}
       >
         <Mouse />
-        {isPlaying ? (
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant="ghost"
-                size="icon-lg"
-                className={cn("rounded-full", isSpaceHeld && "bg-accent")}
-                onClick={() => {
-                  setIsPlaying(false);
-                  runtime.pause();
-                }}
-              >
-                <Pause />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                Pause <Kbd>Space</Kbd>
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant="ghost"
-                size="icon-lg"
-                className={cn("rounded-full", isSpaceHeld && "bg-accent")}
-                onClick={() => {
-                  setIsPlaying(true);
-                  runtime.next();
-                }}
-              >
-                <Play />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                Play <Kbd>Space</Kbd>
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
         <Tooltip>
           <TooltipTrigger>
             <Button
               variant="ghost"
               size="icon-lg"
-              className={cn("rounded-full", isExitHeld && "bg-accent")}
+              className={cn("rounded-full", isSpaceHeld && "bg-accent")}
               onClick={() => {
-                runtime.cancel();
+                runtime.next();
               }}
             >
-              <X />
+              <Play />
             </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              Cancel <Kbd>Escape</Kbd>
+              Play <Kbd>Space</Kbd>
             </p>
           </TooltipContent>
         </Tooltip>

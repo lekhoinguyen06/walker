@@ -1,4 +1,5 @@
 import type { WalkerElementProps } from "@repo/core";
+import slugify from "slugify";
 
 declare module "react" {
   namespace JSX {
@@ -14,7 +15,11 @@ export function Item(
   },
 ) {
   return (
-    <walker-element id={props.id} type="item" description={props.description}>
+    <walker-element
+      id={slugify(props.id)}
+      type="item"
+      description={props.description}
+    >
       {props.children}
     </walker-element>
   );
@@ -26,7 +31,11 @@ export function Page(
   },
 ) {
   return (
-    <walker-element id={props.id} type="page" description={props.description}>
+    <walker-element
+      id={slugify(props.id)}
+      type="page"
+      description={props.description}
+    >
       {props.children}
     </walker-element>
   );
@@ -38,7 +47,11 @@ export function App(
   },
 ) {
   return (
-    <walker-element id={props.id} type="app" description={props.description}>
+    <walker-element
+      id={slugify(props.id)}
+      type="app"
+      description={props.description}
+    >
       {props.children}
     </walker-element>
   );

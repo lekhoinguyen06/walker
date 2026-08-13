@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@repo/core": "workspace:*",
+    "slugify": "^1.6.9",
     "zod": "^4.4.3",
     "zustand": "^5.0.0"
   },
