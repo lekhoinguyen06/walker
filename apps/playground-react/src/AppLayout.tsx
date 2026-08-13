@@ -4,7 +4,7 @@ import { Toaster } from "./components/ui/toast";
 import { Item } from "@repo/react";
 import { Controls } from "./components/concierge/Controls";
 
-// Update lockfile
+// Update pnpm lockfile
 
 function AppLayout() {
   return (
