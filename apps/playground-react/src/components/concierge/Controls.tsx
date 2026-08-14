@@ -1,13 +1,4 @@
-import {
-  Braces,
-  Brackets,
-  CodeXml,
-  Layers,
-  Pause,
-  Play,
-  Trash,
-  X,
-} from "lucide-react";
+import { Bolt, CodeXml, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -17,105 +8,26 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import {
-  useHotkey,
-  useHotkeySequence,
-  useKeyHold,
-} from "@tanstack/react-hotkeys";
+import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Kbd } from "../ui/kbd";
 import { useRuntime } from "@repo/react";
-import { MapModal } from "./Map";
-import { Input } from "./Input";
 import Mouse from "./Mouse";
+import { DevPortalModal } from "./DevPortal";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
-  devMode?: boolean;
 };
 
-export function Controls({
-  orientation = "bottom",
-  devMode = false,
-}: ControlsProps) {
-  const [isDevboxOpen, setIsDevboxOpen] = useState(false);
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const [isInputOpen, setIsInputOpen] = useState(false);
+export function Controls({ orientation = "bottom" }: ControlsProps) {
   const runtime = useRuntime();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDevOpen, setIsDevOpen] = useState(false);
 
-  useHotkey(
-    "0",
-    () => {
-      runtime.next();
-    },
-    {
-      enabled: !isInputOpen,
-      ignoreInputs: true,
-    },
-  );
-
-  useHotkey("Escape", () => {
-    // Stop walk
+  useHotkey("0", () => {
+    runtime.next();
   });
-
-  useHotkey("Control+D", () => {
-    setIsDevboxOpen((prev) => !prev);
-  });
-
-  useHotkey(
-    "Control+M",
-    () => {
-      setIsDevboxOpen(true);
-      setIsMapOpen((prev) => !prev);
-      runtime.map();
-    },
-    {
-      enabled: devMode,
-    },
-  );
-
-  useHotkey(
-    "Control+I",
-    () => {
-      setIsDevboxOpen(true);
-      runtime.listFlows();
-      runtime.listActions();
-      runtime.listHistory();
-    },
-    {
-      enabled: devMode,
-    },
-  );
-
-  useHotkey(
-    "Control+C",
-    () => {
-      console.clear();
-    },
-    {
-      enabled: devMode,
-    },
-  );
-
-  useHotkey(
-    "Control+A",
-    () => {
-      setIsInputOpen((prev) => !prev);
-    },
-    {
-      enabled: devMode,
-    },
-  );
 
   const isNextHold = useKeyHold("0");
-  const isCtrlHeld = useKeyHold("Control");
-  const isMHeld = useKeyHold("M");
-  const isIHeld = useKeyHold("I");
-  const isCHeld = useKeyHold("C");
-  const isAHeld = useKeyHold("A");
-  const isMapHeld = isCtrlHeld && isMHeld;
-  const isInspectHeld = isCtrlHeld && isIHeld;
-  const isClearHeld = isCtrlHeld && isCHeld;
-  const isInputHeld = isCtrlHeld && isAHeld;
 
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -135,7 +47,7 @@ export function Controls({
               size="lg"
               className={cn(
                 "rounded-full font-brand text-lg",
-                isNextHold && "text-red-500 text-xl",
+                isNextHold && "text-red-500 text-2xl",
               )}
               onClick={() => {
                 runtime.next();
@@ -150,51 +62,41 @@ export function Controls({
             </p>
           </TooltipContent>
         </Tooltip>
-        {devMode && (
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant="ghost"
-                size="icon-lg"
-                className={cn("rounded-full", isDevboxOpen && "bg-accent")}
-                onClick={() => setIsDevboxOpen(!isDevboxOpen)}
-              >
-                <CodeXml />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {isDevboxOpen ? "Close Devbox" : "Open Devbox"}
-                <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd>
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-        {devMode && isDevboxOpen && (
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="lg"
+              className={cn("rounded-full")}
+              onClick={() => {
+                setIsMenuOpen((prev) => !prev);
+              }}
+            >
+              <Menu />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              Menu <Kbd>Ctrl</Kbd> + <Kbd>M</Kbd>
+            </p>
+          </TooltipContent>
+        </Tooltip>
+        {isMenuOpen && (
           <>
             <Tooltip>
               <TooltipTrigger>
-                <MapModal
-                  open={isMapOpen}
-                  setOpen={setIsMapOpen}
-                  trigger={
-                    <Button
-                      variant="ghost"
-                      size="icon-lg"
-                      className={cn("rounded-full", isMapHeld && "bg-accent")}
-                      onClick={() => {
-                        setIsMapOpen(true);
-                        runtime.map();
-                      }}
-                    >
-                      <Braces />
-                    </Button>
-                  }
-                />
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className={cn("rounded-full")}
+                  onClick={() => {}}
+                >
+                  <Bolt />
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Map <Kbd>Control</Kbd> + <Kbd>M</Kbd>
+                  Settings <Kbd>Ctrl</Kbd> + <Kbd>S</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -202,63 +104,22 @@ export function Controls({
               <TooltipTrigger>
                 <Button
                   variant="ghost"
-                  size="icon-lg"
-                  className={cn("rounded-full", isInspectHeld && "bg-accent")}
+                  size="lg"
+                  className={cn("rounded-full")}
                   onClick={() => {
-                    runtime.listFlows();
-                    runtime.listActions();
-                    runtime.listHistory();
+                    setIsDevOpen((prev) => !prev);
                   }}
                 >
-                  <Layers />
+                  <DevPortalModal
+                    open={isDevOpen}
+                    setOpen={setIsDevOpen}
+                    trigger={<CodeXml />}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Inspect queues
-                  <Kbd>Control</Kbd> + <Kbd>I</Kbd>
-                </p>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  open={isInputOpen}
-                  setOpen={setIsInputOpen}
-                  trigger={
-                    <Button
-                      variant="ghost"
-                      size="icon-lg"
-                      className={cn("rounded-full", isInputHeld && "bg-accent")}
-                    >
-                      <Brackets />
-                    </Button>
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>
-                  Input Actions
-                  <Kbd>Control</Kbd> + <Kbd>A</Kbd>
-                </p>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon-lg"
-                  className={cn("rounded-full", isClearHeld && "bg-accent")}
-                  onClick={() => {
-                    console.clear();
-                  }}
-                >
-                  <Trash />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>
-                  Clear logs <Kbd>Control</Kbd> + <Kbd>C</Kbd>
+                  DevTools <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd>
                 </p>
               </TooltipContent>
             </Tooltip>

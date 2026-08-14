@@ -32,7 +32,7 @@ export default function Mouse() {
             stiffness: 200,
             damping: 30,
           }}
-          className="aspect-square size-4 bg-red-500"
+          className="aspect-square size-4 bg-foreground"
         />
       </div>
     </div>

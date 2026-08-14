@@ -11,6 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import { useRuntime, type MapType } from "@repo/react";
 import type { Dispatch, SetStateAction } from "react";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 export function MapItem({ map }: { map: MapType["map"] }) {
   return (
@@ -72,5 +81,25 @@ export function MapModal({
         </DialogContent>
       </form>
     </Dialog>
+  );
+}
+
+export function Map() {
+  const runtime = useRuntime();
+  const map = runtime.map().map;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Map</CardTitle>
+        <CardDescription>Your Walker map</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="size-full overflow-scroll">
+          <MapItem map={map} />
+        </div>
+      </CardContent>
+      <CardFooter></CardFooter>
+    </Card>
   );
 }
