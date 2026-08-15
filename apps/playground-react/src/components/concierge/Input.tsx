@@ -136,15 +136,7 @@ export function InputModal({
   );
 }
 
-export function Input({
-  open,
-  setOpen,
-  trigger,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  trigger: React.ReactElement;
-}) {
+export function Input() {
   const runtime = useRuntime();
   const editorRef = useRef<any>(null);
 
@@ -153,7 +145,6 @@ export function Input({
   }
 
   function showValue() {
-    setOpen(false);
     runtime.rawWalk(editorRef.current.getValue());
   }
 

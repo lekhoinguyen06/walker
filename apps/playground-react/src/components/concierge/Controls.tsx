@@ -26,8 +26,22 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
   useHotkey("0", () => {
     runtime.next();
   });
-
   const isNextHold = useKeyHold("0");
+
+  useHotkey("Control+D", () => {
+    if (isMenuOpen) {
+      setIsDevOpen((prev) => !prev);
+    }
+  });
+
+  useHotkey("Control+M", () => {
+    setIsMenuOpen((prev) => !prev);
+  });
+  const isCtrlHold = useKeyHold("Control");
+  const isMHold = useKeyHold("M");
+  const isDHold = useKeyHold("D");
+  const isDevHold = isCtrlHold && isDHold;
+  const isMenuHold = isCtrlHold && isMHold;
 
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -67,7 +81,10 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
             <Button
               variant="ghost"
               size="lg"
-              className={cn("rounded-full")}
+              className={cn(
+                "rounded-full",
+                (isMenuOpen || isMenuHold) && "bg-accent",
+              )}
               onClick={() => {
                 setIsMenuOpen((prev) => !prev);
               }}
@@ -102,20 +119,25 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className={cn("rounded-full")}
-                  onClick={() => {
-                    setIsDevOpen((prev) => !prev);
-                  }}
-                >
-                  <DevPortalModal
-                    open={isDevOpen}
-                    setOpen={setIsDevOpen}
-                    trigger={<CodeXml />}
-                  />
-                </Button>
+                <DevPortalModal
+                  open={isDevOpen}
+                  setOpen={setIsDevOpen}
+                  trigger={
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className={cn(
+                        "rounded-full",
+                        (isDevOpen || isDevHold) && "bg-accent",
+                      )}
+                      onClick={() => {
+                        setIsDevOpen((prev) => !prev);
+                      }}
+                    >
+                      <CodeXml />
+                    </Button>
+                  }
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <p>

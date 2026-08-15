@@ -10,6 +10,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Map } from "./Map";
 import { Input } from "./Input";
+import { Chat } from "./Chat";
 
 export function DevPortalModal({
   open,
@@ -22,37 +23,35 @@ export function DevPortalModal({
 }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger render={trigger} />
-        <DialogContent className="max-w-none! overflow-scroll">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-brand">
-              Dev Portal
-            </DialogTitle>
-            <DialogDescription>
-              Inspect, debug, and manage your Walker App.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="w-full">
-            <Tabs defaultValue="overview">
-              <TabsList variant="default">
-                <TabsTrigger value="chat">Chat</TabsTrigger>
-                <TabsTrigger value="map">Map</TabsTrigger>
-                <TabsTrigger value="manual">Manual</TabsTrigger>
-                <TabsTrigger value="inspect">Inspect</TabsTrigger>
-              </TabsList>
-              <TabsContent value="chat" className="size-full"></TabsContent>
-              <TabsContent value="map" className="size-full">
-                <Map />
-              </TabsContent>
-              <TabsContent value="manual" className="size-full">
-                <Input />
-              </TabsContent>
-              <TabsContent value="inspect" className="size-full"></TabsContent>
-            </Tabs>
-          </div>
-        </DialogContent>
-      </form>
+      <DialogTrigger render={trigger} />
+      <DialogContent className="w-[80vw] h-fit max-h-[80vh] max-w-none! overflow-scroll flex flex-col gap-3">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-brand">Dev Portal</DialogTitle>
+          <DialogDescription>
+            Inspect, debug, and manage your Walker App.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="w-full">
+          <Tabs defaultValue="overview">
+            <TabsList variant="default">
+              <TabsTrigger value="chat">Chat</TabsTrigger>
+              <TabsTrigger value="map">Map</TabsTrigger>
+              <TabsTrigger value="manual">Manual</TabsTrigger>
+              <TabsTrigger value="inspect">Inspect</TabsTrigger>
+            </TabsList>
+            <TabsContent value="chat" className="size-full">
+              <Chat />
+            </TabsContent>
+            <TabsContent value="map" className="size-full">
+              <Map />
+            </TabsContent>
+            <TabsContent value="manual" className="size-full">
+              <Input />
+            </TabsContent>
+            <TabsContent value="inspect" className="size-full"></TabsContent>
+          </Tabs>
+        </div>
+      </DialogContent>
     </Dialog>
   );
 }

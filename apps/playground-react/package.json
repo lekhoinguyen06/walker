@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ai-sdk/react": "^4.0.34",
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/geist": "^5.2.8",
     "@monaco-editor/react": "^4.7.0",
     "@repo/react": "workspace:*",
+    "@shadcn/helpers": "^0.2.0",
+    "@shadcn/react": "^0.2.1",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-hotkeys": "^0.10.0",
     "class-variance-authority": "^0.7.1",
