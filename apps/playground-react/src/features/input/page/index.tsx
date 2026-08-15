@@ -9,7 +9,7 @@ export function InputPage() {
       id="input-page"
       description="The page to demonstrate Walker behavior to input text"
     >
-      <div className="w-full max-w-2xl flex flex-col gap-24">
+      <div className="w-full max-w-2xl flex flex-col gap-24 items-center">
         <CodeBlock raw={InputBasicRaw} code={<InputBasic />} />
       </div>
     </Page>

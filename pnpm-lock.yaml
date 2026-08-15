@@ -156,16 +156,25 @@ importers:
         version: link:../../packages/react
       '@shadcn/helpers':
         specifier: ^0.2.0
-        version: 0.2.0
+        version: 0.2.0(ai@7.0.66)
       '@shadcn/react':
         specifier: ^0.2.1
         version: 0.2.1(@types/react@19.2.17)(react@19.2.8)
       '@tailwindcss/vite':
         specifier: ^4.2.0
         version: 4.2.0(vite@8.1.5)
+      '@tanstack/highlight':
+        specifier: ^0.0.10
+        version: 0.0.10
+      '@tanstack/markdown':
+        specifier: ^0.0.13
+        version: 0.0.13(react@19.2.8)
       '@tanstack/react-hotkeys':
         specifier: ^0.10.0
         version: 0.10.0(react-dom@19.2.8)(react@19.2.8)
+      ai:
+        specifier: ^7.0.66
+        version: 7.0.66(zod@4.4.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -319,6 +328,18 @@ packages:
       zod: 4.4.3
     dev: false
 
+  /@ai-sdk/gateway@4.0.52(zod@4.4.3):
+    resolution: {integrity: sha512-SXUM8jzzuTUJRq+EOgPd5to6DSx0EKslVn+IVZHbUEX6k/3vCPNrvjckbK26HnNxHU/STxm+zTSJteqrO+7Z0w==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+    dependencies:
+      '@ai-sdk/provider': 4.0.7
+      '@ai-sdk/provider-utils': 5.0.27(zod@4.4.3)
+      '@vercel/oidc': 3.2.0
+      zod: 4.4.3
+    dev: false
+
   /@ai-sdk/mcp@2.0.15(zod@4.4.3):
     resolution: {integrity: sha512-JIwbud+pMM6GgXDhwm5/lSpg7y8kAO1JHJ4NQEmfST6nXy3Gijaxy4LIrKqVR/1N5VPZAfwOdSsUWtbtTp6zZw==}
     engines: {node: '>=22'}
@@ -344,8 +365,29 @@ packages:
       zod: 4.4.3
     dev: false
 
+  /@ai-sdk/provider-utils@5.0.27(zod@4.4.3):
+    resolution: {integrity: sha512-EzAn4pdgG5g0xXtH6lE2zyNmfjDQIDjATkfqzuidEI35g++hh4+07vnjzkT/RmGmIClPZiRj/Q2GMPV2V7mkHw==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+    dependencies:
+      '@ai-sdk/provider': 4.0.7
+      '@standard-schema/spec': 1.1.0
+      '@workflow/serde': 4.1.0
+      eventsource-parser: 3.1.0
+      undici: 7.28.0
+      zod: 4.4.3
+    dev: false
+
   /@ai-sdk/provider@4.0.3:
     resolution: {integrity: sha512-e0CpNWJUY7OxAFAnCZkw+ri9QOHWwTs1tXP42782KFGCU07qt8NiXCrCVowyCB5dP2r5/Uls+g2oPd8kOJn9dw==}
+    engines: {node: '>=22'}
+    dependencies:
+      json-schema: 0.4.0
+    dev: false
+
+  /@ai-sdk/provider@4.0.7:
+    resolution: {integrity: sha512-6or44XprPzKbr8zkmzosowSE0pxkvJcoojBL+mCZvPUt3kvXp3XSNqeVun9golb1acEfSo6yaEBRT18h2VU+1Q==}
     engines: {node: '>=22'}
     dependencies:
       json-schema: 0.4.0
@@ -2430,7 +2472,7 @@ packages:
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
     dev: false
 
-  /@shadcn/helpers@0.2.0:
+  /@shadcn/helpers@0.2.0(ai@7.0.66):
     resolution: {integrity: sha512-wpcZNuRgdW16jLwjvh4mbREKpVFrGY+nBM3Okgic8b04sijN5CHW1Nl/AEMajsP3INaCTNnqMCouOalZ7OHvEQ==}
     peerDependencies:
       '@tanstack/ai': '>=0.40.0 <0.41.0'
@@ -2443,6 +2485,8 @@ packages:
         optional: true
       ai:
         optional: true
+    dependencies:
+      ai: 7.0.66(zod@4.4.3)
     dev: false
 
   /@shadcn/react@0.2.1(@types/react@19.2.17)(react@19.2.7):
@@ -2869,11 +2913,30 @@ packages:
       vite: 8.1.5(@types/node@24.13.2)
     dev: false
 
+  /@tanstack/highlight@0.0.10:
+    resolution: {integrity: sha512-RNWn4BYgroDnHSdWduHVUN3hXM5OZUVwynuY2Fwh4el2hVy0woe9XZBZ5IIxC50h1y8SEYkBipS+cPgdzRc7Zg==}
+    engines: {node: '>=18'}
+    dev: false
+
   /@tanstack/hotkeys@0.8.0:
     resolution: {integrity: sha512-vqH7X9nb0MTJ/O08++dB5bP9jgj4+BIPOUu/U+6myG86lDsirZSVSobpq5UQpE7nBuk62i8eIYeOhd+OMl/UrA==}
     engines: {node: '>=18'}
     dependencies:
       '@tanstack/store': 0.11.0
+    dev: false
+
+  /@tanstack/markdown@0.0.13(react@19.2.8):
+    resolution: {integrity: sha512-ZSQP2ulBvlPzdpZeRheBJnaELo7e4ET/D/XrfgweHyqhhLMN5vUJJAUl7ufSRd7GlfO/vwdzjKPh0E0JwqJkDA==}
+    peerDependencies:
+      octane: '>=0.1.12'
+      react: '>=18'
+    peerDependenciesMeta:
+      octane:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 19.2.8
     dev: false
 
   /@tanstack/react-hotkeys@0.10.0(react-dom@19.2.8)(react@19.2.8):
@@ -3313,6 +3376,18 @@ packages:
       '@ai-sdk/gateway': 4.0.23(zod@4.4.3)
       '@ai-sdk/provider': 4.0.3
       '@ai-sdk/provider-utils': 5.0.11(zod@4.4.3)
+      zod: 4.4.3
+    dev: false
+
+  /ai@7.0.66(zod@4.4.3):
+    resolution: {integrity: sha512-wBUyoCYF3GVr+62nelBgR8YbpTSsMZrzFyOOjiwijylNSM2TFCW35C+Pml2vc59/WLMpyhS/LWZ55M+B9DAcSg==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+    dependencies:
+      '@ai-sdk/gateway': 4.0.52(zod@4.4.3)
+      '@ai-sdk/provider': 4.0.7
+      '@ai-sdk/provider-utils': 5.0.27(zod@4.4.3)
       zod: 4.4.3
     dev: false
 

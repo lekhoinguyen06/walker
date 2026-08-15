@@ -10,7 +10,7 @@ export function ToastPage() {
       id="toast-page"
       description="The page to demonstrate Walker with toast notifications"
     >
-      <div className="w-full max-w-2xl flex flex-col gap-24">
+      <div className="w-full max-w-2xl flex flex-col gap-24 items-center">
         <CodeBlock raw={ToastDemoRaw} code={<ToastDemo />} />
         <CodeBlock raw={AppLayout} />
       </div>

@@ -1,9 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { Clipboard, Play } from "lucide-react";
+import { ArrowDown, ArrowUp, Clipboard, Play } from "lucide-react";
 import { useCopyToClipboard, useDarkMode } from "usehooks-ts";
 import { toast } from "@/components/ui/toast";
-import ShikiHighlighter from "react-shiki";
 import { useState } from "react";
+import { Markdown } from "@tanstack/markdown/react";
+import { createThemeCss } from "@tanstack/highlight/theme";
+import { githubDarkTheme } from "@tanstack/highlight/themes/github-dark";
+import { githubLightTheme } from "@tanstack/highlight/themes/github-light";
+import { highlightMarkdownCode } from "@/lib/markdown-highlighter";
+import { cn } from "@/lib/utils";
+
+const themeCss = createThemeCss({
+  light: githubLightTheme,
+  dark: githubDarkTheme,
+  lightSelector: ".markdown-renderer",
+  darkSelector: ".dark .markdown-renderer",
+  codeBlockSelector: ".markdown-renderer pre.tm-code",
+  lineNumbersSelector: ".markdown-renderer .tm-code--line-numbers",
+});
 
 export function CodeBlock({
   raw,
@@ -12,7 +26,6 @@ export function CodeBlock({
   raw: string;
   code?: React.ReactNode;
 }) {
-  const { isDarkMode } = useDarkMode();
   const [_, copy] = useCopyToClipboard();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,43 +48,45 @@ export function CodeBlock({
       });
   };
 
+  const source = ["```tsx {2}", raw.trim(), "```"].join("\n");
+
   return (
-    <div className="w-full max-w-2xl flex flex-col gap-6 p-6 rounded-[24px] border">
+    <div className="w-[90vw] sm:w-[80vw] max-w-2xl flex flex-col gap-6 p-6 rounded-[24px] border">
       {code && (
         <div className="w-full flex items-center justify-center min-h-120">
           {code}
         </div>
       )}
-      <div
-        className={`sm:block hidden overflow-scroll transition-all duration-300 border rounded-[12px] ${
-          isExpanded ? "max-h-none" : "max-h-100"
-        }`}
-      >
-        <ShikiHighlighter
-          language="jsx"
-          theme={isDarkMode ? "github-dark" : "github-light"}
+      <div className="w-full relative">
+        <div
+          className={cn(
+            "markdown-renderer",
+            isExpanded ? "max-h-full" : "max-h-120 overflow-scroll",
+          )}
         >
-          {raw.trim() || ""}
-        </ShikiHighlighter>
+          <style>{themeCss}</style>
+          <Markdown highlighter={highlightMarkdownCode}>{source}</Markdown>
+          <div className="absolute top-0 right-0 flex gap-1">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="hover:cursor-pointer"
+              onClick={handleCopy(raw.trim())}
+            >
+              <Clipboard />
+            </Button>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="hover:cursor-pointer"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? <ArrowUp /> : <ArrowDown />}
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="w-full flex gap-6 justify-end">
-        <Button
-          variant="outline"
-          size="lg"
-          className="rounded-full hover:cursor-pointer"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? "Show Less" : "Show Full"}
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="rounded-full hover:cursor-pointer"
-          onClick={handleCopy(raw.trim())}
-        >
-          <Clipboard />
-          Copy
-        </Button>
         <Button
           variant="outline"
           size="lg"
