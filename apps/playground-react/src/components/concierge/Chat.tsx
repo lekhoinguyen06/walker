@@ -1,5 +1,3 @@
-"use client";
-
 import { useChat } from "@ai-sdk/react";
 import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
 import { DefaultChatTransport } from "ai";
@@ -10,7 +8,6 @@ import {
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -64,7 +61,6 @@ export function Chat() {
 
   const [input, setInput] = useState("");
   const isBusy = status === "submitted" || status === "streaming";
-  console.log("messages", messages);
   return (
     <MessageScrollerProvider>
       <div className="flex h-[60vh] flex-col gap-3">

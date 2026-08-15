@@ -24,7 +24,7 @@ export function DevPortalModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={trigger} />
-      <DialogContent className="w-[80vw] h-fit max-h-[80vh] max-w-none! overflow-scroll flex flex-col gap-3">
+      <DialogContent className="w-[90vw] h-fit max-h-[80vh] max-w-none! overflow-scroll flex flex-col gap-3">
         <DialogHeader>
           <DialogTitle className="text-2xl font-brand">Dev Portal</DialogTitle>
           <DialogDescription>

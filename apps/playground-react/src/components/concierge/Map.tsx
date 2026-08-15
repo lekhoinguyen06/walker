@@ -1,22 +1,8 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useRuntime, type MapType } from "@repo/react";
-import type { Dispatch, SetStateAction } from "react";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
@@ -55,35 +41,6 @@ export function MapItem({ map }: { map: MapType["map"] }) {
   );
 }
 
-export function MapModal({
-  open,
-  setOpen,
-  trigger,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  trigger: React.ReactElement;
-}) {
-  const runtime = useRuntime();
-  const map = runtime.map().map;
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger render={trigger} />
-        <DialogContent className="w-fit! max-w-full!">
-          <DialogHeader>
-            <DialogTitle>Map</DialogTitle>
-            {/* <DialogDescription>Your Walker map</DialogDescription> */}
-          </DialogHeader>
-          <div className="w-full overflow-scroll">
-            <MapItem map={map} />
-          </div>
-        </DialogContent>
-      </form>
-    </Dialog>
-  );
-}
-
 export function Map() {
   const runtime = useRuntime();
   const map = runtime.map().map;
@@ -99,7 +56,6 @@ export function Map() {
           <MapItem map={map} />
         </div>
       </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 }
