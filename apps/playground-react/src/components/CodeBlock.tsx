@@ -1,23 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, Clipboard, Play } from "lucide-react";
-import { useCopyToClipboard, useDarkMode } from "usehooks-ts";
+import { useCopyToClipboard } from "usehooks-ts";
 import { toast } from "@/components/ui/toast";
 import { useState } from "react";
 import { Markdown } from "@tanstack/markdown/react";
-import { createThemeCss } from "@tanstack/highlight/theme";
-import { githubDarkTheme } from "@tanstack/highlight/themes/github-dark";
-import { githubLightTheme } from "@tanstack/highlight/themes/github-light";
-import { highlightMarkdownCode } from "@/lib/markdown-highlighter";
+import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
-
-const themeCss = createThemeCss({
-  light: githubLightTheme,
-  dark: githubDarkTheme,
-  lightSelector: ".markdown-renderer",
-  darkSelector: ".dark .markdown-renderer",
-  codeBlockSelector: ".markdown-renderer pre.tm-code",
-  lineNumbersSelector: ".markdown-renderer .tm-code--line-numbers",
-});
 
 export function CodeBlock({
   raw,

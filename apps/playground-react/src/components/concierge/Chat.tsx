@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
 import { DefaultChatTransport } from "ai";
 import { Markdown } from "@tanstack/markdown/react";
+import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
 import {
   Card,
   CardAction,
@@ -38,6 +39,9 @@ import { Bubble, BubbleContent } from "../ui/bubble";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
+
+const streamingExtensions = [streamingMarkdownExtension()];
 
 export function Chat() {
   const { messages, sendMessage, status, setMessages } = useChat({
@@ -59,8 +63,8 @@ export function Chat() {
   });
 
   const [input, setInput] = useState("");
-  // const nextMessage = chat.next(messages);
   const isBusy = status === "submitted" || status === "streaming";
+  console.log("messages", messages);
   return (
     <MessageScrollerProvider>
       <div className="flex h-[60vh] flex-col gap-3">
@@ -131,9 +135,18 @@ export function Chat() {
                                 .filter((part) => part.type === "text")
                                 .map((part, index) => {
                                   return (
-                                    <Markdown key={index}>
-                                      {String(part.text)}
-                                    </Markdown>
+                                    <div
+                                      key={index}
+                                      className="markdown-renderer"
+                                    >
+                                      <style>{themeCss}</style>
+                                      <Markdown
+                                        extensions={streamingExtensions}
+                                        highlighter={highlightMarkdownCode}
+                                      >
+                                        {String(part.text)}
+                                      </Markdown>
+                                    </div>
                                   );
                                 })}
                             </BubbleContent>
@@ -147,49 +160,41 @@ export function Chat() {
               </MessageScroller>
             )}
           </CardContent>
-          <CardFooter className="flex-col gap-2 bg-white">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (isBusy) {
-                  return;
-                }
-                void sendMessage({
-                  text: input,
-                });
-                setInput("");
-              }}
-              className="w-full"
-            >
-              <InputGroup className="border-none">
-                <div className="w-full">
-                  <span
-                    className="line-clamp-2 opacity-60 data-[status=ready]:opacity-100"
-                    data-status={status}
-                  ></span>
-                </div>
-                <InputGroupAddon align="block-end">
-                  <Input
-                    placeholder="Type your message..."
-                    type="text"
-                    className="border-none"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                  />
-                  <InputGroupButton
-                    type="submit"
-                    variant="default"
-                    size="icon-sm"
-                    disabled={isBusy}
-                    className="rounded-none aspect-square"
-                  >
-                    <ArrowUpIcon />
-                    <span className="sr-only">Send</span>
-                  </InputGroupButton>
-                </InputGroupAddon>
-              </InputGroup>
-            </form>
-          </CardFooter>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (isBusy) {
+                return;
+              }
+              void sendMessage({
+                text: input,
+              });
+              setInput("");
+            }}
+            className="w-full"
+          >
+            <InputGroup className="border-none">
+              <InputGroupAddon align="block-end">
+                <Input
+                  placeholder="Type your message..."
+                  type="text"
+                  className="border-none text-foreground"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <InputGroupButton
+                  type="submit"
+                  variant="default"
+                  size="icon-sm"
+                  disabled={isBusy}
+                  className="rounded-none aspect-square bg-white"
+                >
+                  <ArrowUpIcon />
+                  <span className="sr-only">Send</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+          </form>
         </Card>
       </div>
     </MessageScrollerProvider>
