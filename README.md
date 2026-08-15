@@ -1,4 +1,4 @@
-# Walker
+![Light](./assets/light.svg)
 
 Walk the web, walk the earth.
 
