@@ -1,1 +1,21 @@
-An open-source front-end library to propel an AI-human driven UI/UX future.
+# Walker
+
+Walk the web, walk the earth.
+
+## Why
+
+The world of MCP protocol and personal agent is amazing. There is no denying the power of AI and the potential it holds.
+
+However, we hate the blindness that comes with it. When we ask the agent to do something, it loads, shows some thoughts, and says it is done. We have no idea what changes or what it is doing. This lack of ownership over the agent's work hinders AI adoption and prevents us from fully leveraging its capabilities into professional or production work.
+
+So we decided to build Walker, a framework that allows backend controlled interactive agents.
+
+## Benefits
+
+- **Awareness**: Walker know which page the user is on, what they want, and the context of their interactions. This context can come from custom hooks, page context, and element context.
+- **Ownership**: Walker interact on user screen. It can ask for decisions, request permission, and revert changes where possible. This allows users to see what the agent is doing, and have the ability to intervene or audit if necessary.
+- **Agnostic**: Walker aim to support all major frameworks and languages.
+
+## Principles
+
+- **Simple**: We believe in simplicity. Developers, humans, and agents should be able to understand and use Walker without any friction. We strive to make the framework as simple and intuitive as possible, while still providing powerful features and capabilities.

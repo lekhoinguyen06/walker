@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Map } from "./Map";
 import { Input } from "./Input";
 import { Chat } from "./Chat";
+import { Building } from "../Building";
 
 export function DevPortalModal({
   open,
@@ -37,7 +38,9 @@ export function DevPortalModal({
               <TabsTrigger value="chat">Chat</TabsTrigger>
               <TabsTrigger value="map">Map</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
-              <TabsTrigger value="inspect">Inspect</TabsTrigger>
+              <TabsTrigger value="flow">Flow</TabsTrigger>
+              <TabsTrigger value="document">Document</TabsTrigger>
+              <TabsTrigger value="history">History</TabsTrigger>
             </TabsList>
             <TabsContent value="chat" className="size-full">
               <Chat />
@@ -48,7 +51,15 @@ export function DevPortalModal({
             <TabsContent value="manual" className="size-full">
               <Input />
             </TabsContent>
-            <TabsContent value="inspect" className="size-full"></TabsContent>
+            <TabsContent value="flow" className="size-full">
+              <Building />
+            </TabsContent>
+            <TabsContent value="document" className="size-full">
+              <Building />
+            </TabsContent>
+            <TabsContent value="history" className="size-full">
+              <Building />
+            </TabsContent>
           </Tabs>
         </div>
       </DialogContent>

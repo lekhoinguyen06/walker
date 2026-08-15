@@ -1,5 +1,10 @@
 import { useChat } from "@ai-sdk/react";
-import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
+import {
+  ArrowUpIcon,
+  CircleAlert,
+  MessageCircleDashedIcon,
+  RotateCcw,
+} from "lucide-react";
 import { DefaultChatTransport } from "ai";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
@@ -44,7 +49,7 @@ export function Chat() {
   const { messages, sendMessage, status, setMessages } = useChat({
     // messages: initialMessages,
     transport: new DefaultChatTransport({
-      api: "http://localhost:8787/api/chat",
+      api: `${process.env.VITE_CHAT_API_URL}/api/chat`,
       prepareSendMessagesRequest: ({ id, messages, trigger, messageId }) => {
         const msgs = messages.map((message) => ({
           role: message.role,
@@ -67,7 +72,13 @@ export function Chat() {
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
             <CardTitle>Chat</CardTitle>
-            <CardDescription>How can I help you today?</CardDescription>
+            <CardDescription className="flex items-center gap-1">
+              <CircleAlert size={12} className="text-destructive" />
+              <span className="text-xs font-semibold text-destructive">
+                Please do not enter sensitive data. Our AI provider may use
+                prompts for training and may retain prompt data.
+              </span>
+            </CardDescription>
             <CardAction>
               <Button
                 variant="ghost"

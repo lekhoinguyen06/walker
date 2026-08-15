@@ -2,6 +2,6 @@
 
 ## Todo
 
-- Add Tanstack AI
+- Add Walk Agent
 
 ## Backlog
