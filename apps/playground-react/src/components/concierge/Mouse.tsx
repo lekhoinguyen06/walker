@@ -1,4 +1,4 @@
-import { useMouseOffset } from "@repo/react";
+import { Item, useMouseOffset } from "@repo/react";
 import * as motion from "motion/react-client";
 import { useMemo, useRef } from "react";
 
@@ -15,26 +15,28 @@ export default function Mouse() {
   }, [targetX, targetY]);
 
   return (
-    <div
-      ref={containerRef}
-      className="size-8 flex justify-center items-center z-999999"
-    >
-      <div>
-        <motion.div
-          animate={{
-            x: targetX - offset.x,
-            y: targetY - offset.y,
-          }}
-          transition={{
-            duration: 0.2,
-            ease: "easeOut",
-            type: "spring",
-            stiffness: 200,
-            damping: 30,
-          }}
-          className="aspect-square size-4 bg-foreground"
-        />
+    <Item id="mouse-container" description="The container of Walker Mouse.">
+      <div
+        ref={containerRef}
+        className="size-8 flex justify-center items-center z-999999"
+      >
+        <div>
+          <motion.div
+            animate={{
+              x: targetX - offset.x,
+              y: targetY - offset.y,
+            }}
+            transition={{
+              duration: 0.2,
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 200,
+              damping: 30,
+            }}
+            className="aspect-square size-4 bg-foreground"
+          />
+        </div>
       </div>
-    </div>
+    </Item>
   );
 }

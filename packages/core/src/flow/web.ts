@@ -7,15 +7,54 @@ import type { FlowsType } from "./type";
  */
 export const webFlows: FlowsType = new Map([
   [
+    "start",
+    {
+      command: "start",
+      description: "Inform the start of the walk.",
+      route: "*",
+      handler: async (props) => {
+        const gap = props.context.config.gap;
+        await wait(gap);
+        await props.context.hooks.onMessage?.(props);
+        await wait(gap);
+        await props.context.hooks.onScroll?.(props);
+        await wait(gap);
+        await props.context.hooks.onMouse?.(props);
+      },
+    },
+  ],
+  [
+    "end",
+    {
+      command: "end",
+      description: "Cleanup and inform the end of the walk.",
+      route: "*",
+      handler: async (props) => {
+        const gap = props.context.config.gap;
+        await wait(gap);
+        await props.context.hooks.onMessage?.(props);
+        await wait(gap);
+        await props.context.hooks.onScroll?.(props);
+        await wait(gap);
+        await props.context.hooks.onMouse?.({
+          ...props,
+          action: {
+            ...props.action,
+            target: "mouse-container",
+          },
+        });
+      },
+    },
+  ],
+  [
     "click",
     {
       command: "click",
       description: "Click on an element",
       route: "*",
       handler: async (props) => {
-        const element = document.querySelector(
-          `walker-element#${props.action.target} > *`,
-        );
+        const walker = document.getElementById(props.action.target);
+        const element = walker?.firstElementChild;
 
         if (element instanceof HTMLElement) {
           const gap = props.context.config.gap;
@@ -38,9 +77,8 @@ export const webFlows: FlowsType = new Map([
       description: "Trigger select",
       route: "*",
       handler: async (props) => {
-        const element = document.querySelector(
-          `walker-element#${props.action.target} > *`,
-        );
+        const walker = document.getElementById(props.action.target);
+        const element = walker?.firstElementChild;
 
         if (element instanceof HTMLElement) {
           const gap = props.context.config.gap;
@@ -63,9 +101,8 @@ export const webFlows: FlowsType = new Map([
       description: "Input text into an element.",
       route: "*",
       handler: async (props) => {
-        const element = document.querySelector(
-          `walker-element#${props.action.target} > *`,
-        );
+        const walker = document.getElementById(props.action.target);
+        const element = walker?.firstElementChild;
 
         if (element instanceof HTMLInputElement) {
           const gap = props.context.config.gap;

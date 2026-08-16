@@ -51,7 +51,79 @@ const defaultValue = `
     "command": "click",
     "target": "select-item-banana",
     "message": "Banana na na na!"
-  }
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
+  {
+    "command": "click",
+    "target": "button-dialog",
+    "message": "Let's go fill in a form!"
+  },
+  {
+    "command": "click",
+    "target": "dialog-trigger",
+    "message": "Let's see what we have here..."
+  },
+  {
+    "command": "input",
+    "target": "name-input",
+    "body": "Walker Jr.",
+    "message": "Let's type in 'Walker Jr.'"
+  },
+  {
+    "command": "input",
+    "target": "username-input",
+    "body": "@walker",
+    "message": "Let's type in '@walker'"
+  },
+  {
+    "command": "click",
+    "target": "dialog-save",
+    "message": "Nice! Let's save it!"
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
+  {
+    "command": "click",
+    "target": "button-scroll-area",
+    "message": "Let's go scroll something!"
+  },
+  {
+    "command": "click",
+    "target": "v1.2.0-beta.1",
+    "message": "I am gonna pick the earliest version."
+  },
+  {
+    "command": "click",
+    "target": "v1.2.0-beta.50",
+    "message": "You know what, I am gonna pick the latest version."
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
+  {
+    "command": "click",
+    "target": "button-toast",
+    "message": "I can really see what you see, let's read a toast message!"
+  },
+  {
+    "command": "click",
+    "target": "toast-trigger",
+    "message": "Let's see what we have here..."
+  },
+  {
+    "command": "click",
+    "target": "navigation-button-home",
+    "message": "Let's go see the next component!"
+  },
 ]
 `;
 

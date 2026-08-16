@@ -8,10 +8,8 @@ export function useMouseOffset() {
 export async function mouse(props: HookPropsType): HookResponseType {
   const { setX, setY } = useMouseStore.getState();
 
-  const targetEl = document.querySelector(
-    `walker-element#${props.action.target} > *`,
-  );
-  console.log("targetEl:", targetEl);
+  const walker = document.getElementById(props.action.target);
+  const targetEl = walker?.firstElementChild;
 
   if (targetEl) {
     const targetX = targetEl.getBoundingClientRect().x;
