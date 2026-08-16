@@ -13,14 +13,18 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Item } from "@repo/react";
+import { useState } from "react";
 
 export function DialogDemo() {
+  const [name, setName] = useState("Pedro Duarte");
+  const [username, setUsername] = useState("@peduarte");
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Item
       id="dialog-demo"
       description="This is example dialog for the Walker Playground, try open it and fill in the details!"
     >
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <form>
           <Item id="dialog-trigger" description="Click to open the dialog">
             <DialogTrigger
@@ -45,7 +49,8 @@ export function DialogDemo() {
                     <Input
                       id="name-1"
                       name="name"
-                      defaultValue="Pedro Duarte"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </Item>
                 </Field>
@@ -58,7 +63,8 @@ export function DialogDemo() {
                     <Input
                       id="username-1"
                       name="username"
-                      defaultValue="@peduarte"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </Item>
                 </Field>
@@ -76,7 +82,9 @@ export function DialogDemo() {
                   id="dialog-save"
                   description="Click to save changes and close the dialog"
                 >
-                  <Button type="submit">Save changes</Button>
+                  <Button type="submit" onClick={() => setIsOpen(false)}>
+                    Save changes
+                  </Button>
                 </Item>
               </DialogFooter>
             </DialogContent>
