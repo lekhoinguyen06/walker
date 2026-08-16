@@ -1,7 +1,31 @@
 import { Page } from "@repo/react";
 import { ScrollAreaDemo } from "../components/ScrollAreaDemo";
 import ScrollAreaDemoRaw from "../components/ScrollAreaDemo?raw";
-import { CodeBlock } from "@/components/CodeBlock";
+import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+
+const content: RawCode[] = [
+  {
+    lang: "tsx",
+    content: ScrollAreaDemoRaw,
+  },
+  {
+    lang: "json",
+    content: `
+[
+  {
+    "command": "click",
+    "target": "v1.2.0-beta.1",
+    "message": "I am gonna pick the earliest version."
+  },
+  {
+    "command": "click",
+    "target": "v1.2.0-beta.50",
+    "message": "You know what, I am gonna pick the latest version."
+  }
+]
+    `,
+  },
+];
 
 export function ScrollAreaPage() {
   return (

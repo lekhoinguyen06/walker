@@ -5,6 +5,7 @@ import { js } from "@tanstack/highlight/languages/js";
 import { plaintext } from "@tanstack/highlight/languages/plaintext";
 import { ts } from "@tanstack/highlight/languages/ts";
 import { tsx } from "@tanstack/highlight/languages/tsx";
+import { json } from "@tanstack/highlight/languages/json";
 import { createTanStackMarkdownHighlighter } from "@tanstack/highlight/markdown";
 import { createThemeCss } from "@tanstack/highlight/theme";
 import githubDarkTheme from "@tanstack/highlight/themes/github-dark";
@@ -12,7 +13,7 @@ import githubLightTheme from "@tanstack/highlight/themes/github-light";
 import type { CodeHighlighter } from "@tanstack/markdown";
 
 const highlighter = createHighlighter({
-  languages: [plaintext, html, js, ts, tsx],
+  languages: [plaintext, html, js, ts, tsx, json],
 });
 
 export const highlightMarkdownCode: CodeHighlighter =

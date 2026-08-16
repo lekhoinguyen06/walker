@@ -1,7 +1,26 @@
 import { Page } from "@repo/react";
 import { ButtonDefault } from "../components/ButtonDefault";
 import ButtonDefaultRaw from "../components/ButtonDefault?raw";
-import { CodeBlock } from "@/components/CodeBlock";
+import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+
+const content: RawCode[] = [
+  {
+    lang: "tsx",
+    content: ButtonDefaultRaw,
+  },
+  {
+    lang: "json",
+    content: `
+[
+  {
+    "command": "click",
+    "target": "button",
+    "message": "Clicking..."
+  }
+]
+    `,
+  },
+];
 
 export function ButtonPage() {
   return (
@@ -10,7 +29,7 @@ export function ButtonPage() {
       description="The page to demonstrate Walker behavior to click a button"
     >
       <div className="w-full flex flex-col gap-24 items-center">
-        <CodeBlock raw={ButtonDefaultRaw} code={<ButtonDefault />} />
+        <CodeBlock raw={content} code={<ButtonDefault />} />
       </div>
     </Page>
   );

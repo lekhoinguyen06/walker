@@ -1,8 +1,10 @@
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRuntime } from "@repo/react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { toast } from "../ui/toast";
+import { useDarkMode } from "usehooks-ts";
 
 const defaultValue = `
 [
@@ -130,13 +132,28 @@ const defaultValue = `
 export function Input() {
   const runtime = useRuntime();
   const editorRef = useRef<any>(null);
+  const { isDarkMode } = useDarkMode();
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
   }
 
   function showValue() {
-    runtime.rawWalk(editorRef.current.getValue());
+    try {
+      runtime.rawWalk(editorRef.current.getValue());
+      toast.add({
+        title: "Success",
+        description: "Walk loaded. Press key '0' to start walking.",
+        type: "success",
+      });
+    } catch (error) {
+      console.error("Failed to load walk.", error);
+      toast.add({
+        title: "Error",
+        description: "Failed to load walk.",
+        type: "error",
+      });
+    }
   }
 
   return (
@@ -152,6 +169,7 @@ export function Input() {
             defaultLanguage="json"
             defaultValue={defaultValue}
             onMount={handleEditorDidMount}
+            theme={isDarkMode ? "vs-dark" : "light"}
             options={{
               scrollbar: {
                 vertical: "hidden",

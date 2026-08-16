@@ -1,7 +1,43 @@
 import { Page } from "@repo/react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
-import { CodeBlock } from "@/components/CodeBlock";
+import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+
+const content: RawCode[] = [
+  {
+    lang: "tsx",
+    content: DialogDemoRaw,
+  },
+  {
+    lang: "json",
+    content: `
+[
+  {
+    "command": "click",
+    "target": "dialog-trigger",
+    "message": "Let's see what we have here..."
+  },
+  {
+    "command": "input",
+    "target": "name-input",
+    "body": "Walker Jr.",
+    "message": "Let's type in 'Walker Jr.'"
+  },
+  {
+    "command": "input",
+    "target": "username-input",
+    "body": "@walker",
+    "message": "Let's type in '@walker'"
+  },
+  {
+    "command": "click",
+    "target": "dialog-save",
+    "message": "Nice! Let's save it!"
+  }
+]
+    `,
+  },
+];
 
 export function DialogPage() {
   return (
@@ -10,7 +46,7 @@ export function DialogPage() {
       description="The page to demonstrate Walker capability to interact with dialogs"
     >
       <div className="w-full max-w-2xl flex flex-col gap-24 items-center">
-        <CodeBlock raw={DialogDemoRaw} code={<DialogDemo />} />
+        <CodeBlock raw={content} code={<DialogDemo />} />
       </div>
     </Page>
   );
