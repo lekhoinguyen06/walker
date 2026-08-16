@@ -123,7 +123,7 @@ const defaultValue = `
     "command": "click",
     "target": "navigation-button-home",
     "message": "Let's go see the next component!"
-  },
+  }
 ]
 `;
 

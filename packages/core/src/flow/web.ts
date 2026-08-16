@@ -7,46 +7,6 @@ import type { FlowsType } from "./type";
  */
 export const webFlows: FlowsType = new Map([
   [
-    "start",
-    {
-      command: "start",
-      description: "Inform the start of the walk.",
-      route: "*",
-      handler: async (props) => {
-        const gap = props.context.config.gap;
-        await wait(gap);
-        await props.context.hooks.onMessage?.(props);
-        await wait(gap);
-        await props.context.hooks.onScroll?.(props);
-        await wait(gap);
-        await props.context.hooks.onMouse?.(props);
-      },
-    },
-  ],
-  [
-    "end",
-    {
-      command: "end",
-      description: "Cleanup and inform the end of the walk.",
-      route: "*",
-      handler: async (props) => {
-        const gap = props.context.config.gap;
-        await wait(gap);
-        await props.context.hooks.onMessage?.(props);
-        await wait(gap);
-        await props.context.hooks.onScroll?.(props);
-        await wait(gap);
-        await props.context.hooks.onMouse?.({
-          ...props,
-          action: {
-            ...props.action,
-            target: "mouse-container",
-          },
-        });
-      },
-    },
-  ],
-  [
     "click",
     {
       command: "click",
