@@ -3,14 +3,14 @@ import {
   type AdapterType,
   type ConfigType,
   type FlowsType,
-  type MiddlewaresType,
+  type HooksType,
   Runtime,
   webFlows,
-  webMiddlewares,
+  webHooks,
 } from "@repo/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
-import { mouseMiddleware } from "./MouseProvider";
+import { mouse } from "./MouseProvider";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -24,7 +24,7 @@ export function useRuntime() {
 // --------------------------------- Runtime Provider ---------------------------------
 type RuntimeProviderProps = {
   config: Partial<ConfigType>;
-  middlewares?: MiddlewaresType;
+  hooks?: HooksType;
   flows?: FlowsType;
   children: React.ReactNode;
   mouse?: React.ReactNode;
@@ -39,13 +39,12 @@ const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
 export function RuntimeProvider({
   config: userConfig,
   flows: userFlows,
-  middlewares: userMiddlewares,
+  hooks: userHooks,
   children,
 }: RuntimeProviderProps) {
   const config: ConfigType = {
-    ...userConfig,
     mode: "tailored",
-    gap: 200,
+    gap: 400,
     isPaused: false,
     verbose: false,
     ...userConfig,
@@ -74,11 +73,11 @@ export function RuntimeProvider({
     config,
     adapter,
     flows: new Map([...webFlows, ...(userFlows || [])]),
-    middlewares: new Map([
-      ...webMiddlewares,
-      ["mouse", mouseMiddleware],
-      ...(userMiddlewares || []),
-    ]),
+    hooks: {
+      ...webHooks,
+      onMouse: mouse,
+      ...userHooks,
+    },
   });
 
   return (

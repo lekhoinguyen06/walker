@@ -1,5 +1,8 @@
 import z from "zod";
 import { ActionSchema } from "../action/type";
+import { HookFactory, HooksSchema } from "../hook/type";
+import { FlowsSchema } from "../flow/type";
+import { ConfigSchema } from "../config/type";
 
 // --- Action Store ---
 export const ActionStorePushHandler = z.function({
@@ -26,18 +29,17 @@ export const ActionStoreSchema = z.object({
   clear: ActionStoreReturnManyHandler,
 });
 
-export const ConfigSchema = z.object({
-  mode: z.enum(["tailored", "open"]).catch("tailored"),
-  gap: z.number().catch(0),
-  isPaused: z.boolean().catch(false),
-  verbose: z.boolean().catch(false),
-  url: z.string().optional(),
-});
-
 export const AdapterSchema = z.object({
   actionStore: ActionStoreSchema,
   historyStore: ActionStoreSchema,
 });
 
-export type ConfigType = z.infer<typeof ConfigSchema>;
+export const RuntimePropsSchema = z.object({
+  config: ConfigSchema,
+  adapter: AdapterSchema,
+  flows: FlowsSchema,
+  hooks: HooksSchema,
+});
+
 export type AdapterType = z.infer<typeof AdapterSchema>;
+export type RuntimePropsType = z.infer<typeof RuntimePropsSchema>;

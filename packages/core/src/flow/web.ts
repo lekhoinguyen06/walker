@@ -18,10 +18,14 @@ export const webFlows: FlowsType = new Map([
         );
 
         if (element instanceof HTMLElement) {
-          await props.context.middlewares?.get("message")?.handler(props);
-          await props.context.middlewares?.get("scroll")?.handler(props);
-          await props.context.middlewares?.get("mouse")?.handler(props);
-          await wait(1000);
+          const gap = props.context.config.gap;
+          await wait(gap);
+          await props.context.hooks.onMessage?.(props);
+          await wait(gap);
+          await props.context.hooks.onScroll?.(props);
+          await wait(gap);
+          await props.context.hooks.onMouse?.(props);
+          await wait(gap > 1000 ? gap : 1000);
           element.click();
         }
       },
@@ -39,31 +43,19 @@ export const webFlows: FlowsType = new Map([
         );
 
         if (element instanceof HTMLElement) {
-          await props.context.middlewares?.get("message")?.handler(props);
-          await props.context.middlewares?.get("scroll")?.handler(props);
-          await props.context.middlewares?.get("mouse")?.handler(props);
-          await wait(1000);
+          const gap = props.context.config.gap;
+          await wait(gap);
+          await props.context.hooks.onMessage?.(props);
+          await wait(gap);
+          await props.context.hooks.onScroll?.(props);
+          await wait(gap);
+          await props.context.hooks.onMouse?.(props);
+          await wait(gap > 1000 ? gap : 1000);
           element.click();
         }
       },
     },
   ],
-  // {
-  //   command: "navigate",
-  //   description:
-  //     "Navigate to a URL. This is hard navigation, use the click command on a button if possible for soft navigation.",
-  //   route: "*",
-  //   handler: async ({ message, target }) => {
-  //     const element = document.querySelector(`walker-element #${target} > *`);
-
-  //     if (element instanceof HTMLElement) {
-  //       alert(message);
-  //       await wait(1000);
-  //       element.click();
-  //       await wait(1000);
-  //     }
-  //   },
-  // },
   [
     "input",
     {
@@ -76,10 +68,14 @@ export const webFlows: FlowsType = new Map([
         );
 
         if (element instanceof HTMLInputElement) {
-          await props.context.middlewares?.get("message")?.handler(props);
-          await props.context.middlewares?.get("scroll")?.handler(props);
-          await props.context.middlewares?.get("mouse")?.handler(props);
-          await wait(1000);
+          const gap = props.context.config.gap;
+          await wait(gap);
+          await props.context.hooks.onMessage?.(props);
+          await wait(gap);
+          await props.context.hooks.onScroll?.(props);
+          await wait(gap);
+          await props.context.hooks.onMouse?.(props);
+          await wait(gap > 1000 ? gap : 1000);
           if (props.action.body) {
             element.value = props.action.body;
           }

@@ -8,9 +8,8 @@ import { InputPage } from "./features/input/page";
 import {
   RuntimeProvider,
   App,
-  type MiddlewarePropsType,
-  type MiddlewareResponseType,
-  type MiddlewareType,
+  type HookPropsType,
+  type HookResponseType,
 } from "@repo/react";
 import { ButtonPage } from "./features/button/page";
 import { SelectPage } from "./features/select/page";
@@ -60,23 +59,19 @@ const router = createBrowserRouter([
   },
 ]);
 
-async function message(props: MiddlewarePropsType): MiddlewareResponseType {
+async function message(props: HookPropsType): HookResponseType {
   toast.add({
     title: props.action.message,
   });
 }
 
-export const messageMiddleware: MiddlewareType = {
-  name: "message",
-  description: "Displays a message to the user",
-  handler: message,
-};
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RuntimeProvider
       config={{}}
-      middlewares={new Map([["message", messageMiddleware]])}
+      hooks={{
+        onMessage: message,
+      }}
     >
       <App
         id="playground-react"

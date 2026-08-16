@@ -1,15 +1,11 @@
 import { ActionSchema, type ActionType } from "../action/type";
 import type { MapType } from "../map/type";
-import {
-  AdapterSchema,
-  ConfigSchema,
-  type AdapterType,
-  type ConfigType,
-} from "./type";
+import { AdapterSchema, type AdapterType, type RuntimePropsType } from "./type";
 import z from "zod";
 import { FlowsSchema, type FlowsType, type FlowType } from "../flow/type";
 import { mapper } from "../map/mapper";
-import { MiddlewaresSchema, type MiddlewaresType } from "../middleware/type";
+import { ConfigSchema, type ConfigType } from "../config/type";
+import { HooksSchema, type HooksType } from "../hook/type";
 
 export type RuntimeType = typeof Runtime;
 
@@ -17,24 +13,18 @@ export class Runtime {
   private readonly config: ConfigType;
   private readonly adapter: AdapterType;
   private readonly flows: FlowsType = new Map();
-  private readonly middlewares: MiddlewaresType = new Map();
+  private readonly hooks: HooksType = {
+    onScroll: async () => {},
+    onMessage: async () => {},
+    onMouse: async () => {},
+  };
   private nextAction: ActionType | undefined;
 
-  constructor({
-    config,
-    adapter,
-    flows,
-    middlewares,
-  }: {
-    config: ConfigType;
-    adapter: AdapterType;
-    flows?: FlowsType;
-    middlewares?: MiddlewaresType;
-  }) {
+  constructor({ config, adapter, flows, hooks }: RuntimePropsType) {
     this.config = ConfigSchema.parse(config);
     this.adapter = AdapterSchema.parse(adapter);
     this.flows = FlowsSchema.parse(flows);
-    this.middlewares = MiddlewaresSchema.parse(middlewares);
+    this.hooks = HooksSchema.parse(hooks);
   }
 
   // async walk(prompt: string) {
@@ -63,13 +53,18 @@ export class Runtime {
         this.nextAction = undefined;
         throw new Error(errorMessage);
       }
-      await flow.handler({
-        action: this.nextAction,
-        context: {
-          config: this.config,
-          middlewares: this.middlewares,
-        },
-      });
+      // flow.schema?.parse(this.nextAction);
+      try {
+        await flow.handler({
+          action: this.nextAction,
+          context: {
+            config: this.config,
+            hooks: this.hooks,
+          },
+        });
+      } catch (error) {
+        console.error("Error executing flow handler:", error);
+      }
       if (this.nextAction.command === "select") {
         await this.next();
       }
@@ -80,8 +75,6 @@ export class Runtime {
     for (const action of inputActions) {
       this.adapter.actionStore.pushBack(action);
     }
-
-    // await this.next();
   }
 
   async rawWalk(inputActions: string) {

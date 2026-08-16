@@ -1,7 +1,7 @@
 import z from "zod";
 import { ActionSchema } from "../action/type";
-import { ConfigSchema } from "../runtime/type";
-import { MiddlewaresSchema } from "../middleware/type";
+import { ConfigSchema } from "../config/type";
+import { HooksSchema } from "../hook/type";
 
 export const HandlerFactory = z.function({
   input: [
@@ -9,7 +9,7 @@ export const HandlerFactory = z.function({
       action: ActionSchema,
       context: z.object({
         config: ConfigSchema,
-        middlewares: MiddlewaresSchema,
+        hooks: HooksSchema,
       }),
     }),
   ],
@@ -20,6 +20,7 @@ export const FlowSchema = z.object({
   command: z.string(),
   description: z.string(),
   route: z.string().or(z.literal("*")),
+  // schema: z.custom<z.ZodType>().optional(),
   handler: HandlerFactory,
 });
 

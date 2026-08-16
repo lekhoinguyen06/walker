@@ -1,17 +1,11 @@
-import type {
-  MiddlewarePropsType,
-  MiddlewareResponseType,
-  MiddlewareType,
-} from "@repo/core";
+import type { HookPropsType, HookFactory, HookResponseType } from "@repo/core";
 import { useMouseStore } from "./useMouseStore";
 
 export function useMouseOffset() {
   return useMouseStore();
 }
 
-export async function mouseMiddlewareHandler(
-  props: MiddlewarePropsType,
-): MiddlewareResponseType {
+export async function mouse(props: HookPropsType): HookResponseType {
   const { setX, setY } = useMouseStore.getState();
 
   const targetEl = document.querySelector(
@@ -33,9 +27,3 @@ export async function mouseMiddlewareHandler(
 
   return;
 }
-
-export const mouseMiddleware: MiddlewareType = {
-  name: "mouse",
-  description: "Middleware to handle mouse movement in React",
-  handler: mouseMiddlewareHandler,
-};
