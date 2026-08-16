@@ -68,17 +68,17 @@ async function message(props: HookPropsType): HookResponseType {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RuntimeProvider
-      config={{}}
-      hooks={{
-        onMessage: message,
+      app={{
+        id: "playground-react",
+        description: "The Walker library's playground for React",
+      }}
+      props={{
+        hooks: {
+          onMessage: message,
+        },
       }}
     >
-      <App
-        id="playground-react"
-        description="The Walker library's playground for React"
-      >
-        <RouterProvider router={router} />
-      </App>
+      <RouterProvider router={router} />
     </RuntimeProvider>
   </StrictMode>,
 );
