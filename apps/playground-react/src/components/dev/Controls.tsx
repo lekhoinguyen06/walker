@@ -55,11 +55,12 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
         Your are provided flows, which are the actions you are allowed to perform.
         You are provided map, which consist of objects of Items.
         An action object is what you need to return, an example is: {
-          walkId: "123",
-          command: "click",
-          target: "input-button",
+          walkId: "123", // Just return "123" for now, we are still building the framework
+          command: "click", // You can also choose other commands provided by the flows.
+          target: "input-button", // You have to choose a target that exist in the map. Items in the map contains ids, you have to pick one.
           message: "Let's go to the input page!"
         }
+        Try to keep output and thinking as concise as possible to quickly return result.
       `,
         flows: runtime.listFlows(),
         map: runtime.map(),

@@ -1,17 +1,11 @@
 import { useObject } from "@ai-sdk/react";
-import {
-  ArrowUpIcon,
-  CircleAlert,
-  MessageCircleDashedIcon,
-  RotateCcw,
-} from "lucide-react";
+import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
 import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -67,6 +61,7 @@ export function Walk() {
         target: "input-button", // You have to choose a target that exist in the map. Items in the map contains ids, you have to pick one.
         message: "Let's go to the input page!"
       }
+      Try to keep output and thinking as concise as possible to quickly return result.
     `,
     flows: runtime?.listFlows(),
     map: runtime?.map(),
@@ -79,13 +74,13 @@ export function Walk() {
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
             <CardTitle>Walk inspection</CardTitle>
-            <CardDescription className="flex items-center gap-1">
+            {/*<CardDescription className="flex items-center gap-1">
               <CircleAlert size={12} className="text-destructive" />
               <span className="text-xs font-semibold text-destructive">
                 Please do not enter sensitive data. Our AI provider may use
                 prompts for training and may retain prompt data.
               </span>
-            </CardDescription>
+            </CardDescription>*/}
             <CardAction>
               <Button
                 variant="ghost"

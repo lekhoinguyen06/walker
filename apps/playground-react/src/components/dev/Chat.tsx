@@ -1,10 +1,5 @@
 import { useChat } from "@ai-sdk/react";
-import {
-  ArrowUpIcon,
-  CircleAlert,
-  MessageCircleDashedIcon,
-  RotateCcw,
-} from "lucide-react";
+import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
 import { DefaultChatTransport } from "ai";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
@@ -12,7 +7,6 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -71,13 +65,13 @@ export function Chat() {
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
             <CardTitle>Chat</CardTitle>
-            <CardDescription className="flex items-center gap-1">
+            {/*<CardDescription className="flex items-center gap-1">
               <CircleAlert size={12} className="text-destructive" />
               <span className="text-xs font-semibold text-destructive">
                 Please do not enter sensitive data. Our AI provider may use
                 prompts for training and may retain prompt data.
               </span>
-            </CardDescription>
+            </CardDescription>*/}
             <CardAction>
               <Button
                 variant="ghost"
