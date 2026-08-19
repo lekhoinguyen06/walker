@@ -1,9 +1,7 @@
-export interface WalkerElementProps<T = unknown> {
-  id: string;
-  type: string;
-  description: string;
-  scope?: "active" | "inactive";
-  value?: string;
+import { ObservedAttributes } from "./walk.const";
+import type { ItemType } from "../map/map.dto";
+
+export interface WalkerElementProps<T = unknown> extends ItemType {
   children?: T;
 }
 
@@ -12,7 +10,7 @@ export class WalkerElement extends HTMLElement {
     super();
   }
 
-  static observedAttributes = ["id", "type", "description", "scope", "value"];
+  static observedAttributes = ObservedAttributes;
 
   // connectedCallback() {
   //   console.log("Custom element added to page.");

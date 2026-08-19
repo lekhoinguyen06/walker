@@ -7,10 +7,9 @@ import { Components } from "./components/Components";
 import { InputPage } from "./features/input/page";
 import {
   RuntimeProvider,
-  App,
   type HookPropsType,
   type HookResponseType,
-} from "@repo/react";
+} from "@walker/react";
 import { ButtonPage } from "./features/button/page";
 import { SelectPage } from "./features/select/page";
 import { DialogPage } from "./features/dialog/page";
@@ -68,11 +67,11 @@ async function message(props: HookPropsType): HookResponseType {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RuntimeProvider
-      app={{
-        id: "playground-react",
-        description: "The Walker library's playground for React",
-      }}
-      props={{
+      config={{
+        app: {
+          id: "playground-react",
+          description: "The Walker library's playground for React",
+        },
         hooks: {
           onMessage: message,
         },

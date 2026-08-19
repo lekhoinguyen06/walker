@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
-import { Item } from "@repo/react";
-import { Controls } from "./components/concierge/Controls";
+import { Item } from "@walker/react";
+import { Controls } from "./components/dev/Controls";
 
 // Pinning ts to lower version to avoid issues with tsup and react types.
 
@@ -14,10 +14,11 @@ function AppLayout() {
       <Item
         id="toast-container"
         description="The container for toast notifications. It is recommended to place this at the root of your application."
+        scope="inactive"
       >
         <Toaster />
       </Item>
-      <Controls devMode={true} />
+      <Controls />
     </div>
   );
 }

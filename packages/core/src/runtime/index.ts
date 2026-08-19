@@ -1,13 +1,16 @@
-import { ActionSchema, type ActionType } from "../action/type";
-import type { MapType } from "../map/type";
-import { AdapterSchema, type AdapterType, type RuntimePropsType } from "./type";
+import { ActionSchema, type ActionType } from "../action/action.dto";
+import type { MapType } from "../map/map.dto";
+import {
+  AdapterSchema,
+  type AdapterType,
+  type RuntimePropsType,
+} from "./runtime.dto";
 import z from "zod";
-import { FlowsSchema, type FlowsType, type FlowType } from "../flow/type";
+import { FlowsSchema, type FlowsType, type FlowType } from "../flow/flow.dto";
 import { mapper } from "../map/mapper";
-import { ConfigSchema, type ConfigType } from "../config/type";
-import { HooksSchema, type HooksType } from "../hook/type";
-
-export type RuntimeType = typeof Runtime;
+import { ConfigSchema, type ConfigType } from "../config/config.dto";
+import { HooksSchema, type HooksType } from "../hook/hook.dto";
+import log from "loglevel";
 
 export class Runtime {
   private readonly config: ConfigType;
@@ -19,12 +22,31 @@ export class Runtime {
     onMouse: async () => {},
   };
   private nextAction: ActionType | undefined;
+  private logger = log;
 
   constructor({ config, adapter, flows, hooks }: RuntimePropsType) {
+    this.logger.setDefaultLevel("TRACE");
+    this.logger.trace("[TRACE]: Initializing Runtime Instance");
     this.config = ConfigSchema.parse(config);
+    this.logger.debug({
+      event: "[DEBUG]: Inject Config",
+      config: this.config,
+    });
     this.adapter = AdapterSchema.parse(adapter);
+    this.logger.debug({
+      event: "[DEBUG]: Inject Adapter",
+      adapter: this.adapter,
+    });
     this.flows = FlowsSchema.parse(flows);
+    this.logger.debug({
+      event: "[DEBUG]: Inject Flows",
+      flows: this.flows,
+    });
     this.hooks = HooksSchema.parse(hooks);
+    this.logger.debug({
+      event: "[DEBUG]: Inject Hooks",
+      hooks: this.hooks,
+    });
   }
 
   // async walk(prompt: string) {
@@ -42,18 +64,26 @@ export class Runtime {
   // }
 
   async next() {
+    this.logger.trace("[TRACE]: Executing next function");
     this.nextAction = this.adapter.actionStore.popFront();
-    console.log("Executing Action: %O", this.nextAction);
+    this.logger.debug({
+      event: "[DEBUG]: NextAction Object",
+      nextAction: this.nextAction,
+    });
 
     if (this.nextAction) {
       const flow = this.flows.get(this.nextAction.command);
+      this.logger.debug({
+        event: "[DEBUG]: Flow Object",
+        flow: flow,
+      });
 
       if (!flow) {
         const errorMessage = `No flow found for command: ${this.nextAction.command}`;
         this.nextAction = undefined;
         throw new Error(errorMessage);
       }
-      // flow.schema?.parse(this.nextAction);
+
       try {
         await flow.handler({
           action: this.nextAction,
@@ -63,9 +93,12 @@ export class Runtime {
           },
         });
       } catch (error) {
-        console.error("Error executing flow handler:", error);
+        this.logger.error("Error executing flow handler:", error);
       }
       if (this.nextAction.command === "select") {
+        this.logger.trace(
+          "[TRACE]: Current Action has the select command, which triggers next function programmatrically.",
+        );
         await this.next();
       }
     }
@@ -83,39 +116,24 @@ export class Runtime {
     await this.manualWalk(parsedInput);
   }
 
-  pause() {
-    console.log("Pausing Runtime");
-    this.config.isPaused = true;
-  }
-
-  async resume() {
-    console.log("Resuming Runtime");
-    this.config.isPaused = false;
-    await this.next();
-  }
-
   map() {
     const map: MapType = mapper();
     return map;
   }
 
   listHistory() {
-    console.log("History: %O", this.adapter.historyStore.list());
     return this.adapter.historyStore.list();
   }
 
   listFlows() {
-    console.log("Flows: %O", this.flows);
     return this.flows;
   }
 
   listActions() {
-    console.log("Actions: %O", this.adapter.actionStore.list());
     return this.adapter.actionStore.list();
   }
 
   cancel() {
-    console.log("Cancelling walk");
     this.adapter.actionStore.clear();
   }
 }

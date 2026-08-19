@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ArrowUp, Clipboard, Play } from "lucide-react";
+import { ArrowDown, ArrowUp, Clipboard } from "lucide-react";
 import { useCopyToClipboard } from "usehooks-ts";
 import { toast } from "@/components/ui/toast";
 import { useState } from "react";
 import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
-import { useRuntime } from "@repo/react";
+import { useRuntime } from "@walker/react";
 
 export type RawCode = {
   lang: "tsx" | "json";

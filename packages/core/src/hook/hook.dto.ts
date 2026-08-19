@@ -1,6 +1,6 @@
 import z from "zod";
-import { ActionSchema } from "../action/type";
-import { ConfigSchema } from "../config/type";
+import { ActionSchema } from "../action/action.dto";
+import { ConfigSchema } from "../config/config.dto";
 
 export const HookPropsSchema = z.object({
   action: ActionSchema,

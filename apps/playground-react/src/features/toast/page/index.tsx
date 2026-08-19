@@ -1,4 +1,4 @@
-import { Page } from "@repo/react";
+import { Page } from "@walker/react";
 import { ToastDemo } from "../components/ToastDemo";
 import ToastDemoRaw from "../components/ToastDemo?raw";
 import AppLayout from "../../../AppLayout?raw";

@@ -1,4 +1,4 @@
-import { Page } from "@repo/react";
+import { Page } from "@walker/react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";

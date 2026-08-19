@@ -1,4 +1,4 @@
-import type { ActionType } from "@repo/core";
+import type { ActionType } from "@walker/core";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

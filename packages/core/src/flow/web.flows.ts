@@ -1,9 +1,8 @@
 import { wait } from "../shared/utils/wait";
-import type { FlowsType } from "./type";
+import type { FlowsType } from "./flow.dto";
 
 /**
  * webFlows is a collection of flows that are specific to web applications provided by the core library.
- * @type {FlowsType}
  */
 export const webFlows: FlowsType = new Map([
   [

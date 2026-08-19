@@ -2,9 +2,12 @@ import z from "zod";
 
 export const ItemSchema = z.object({
   id: z.string(),
-  type: z.string().optional(),
+  type: z.string(),
   description: z.string(),
-  content: z.string(),
+  state: z.record(z.string(), z.string()).nullable().optional(),
+  scope: z.enum(["active", "inactive", "disabled"]),
+  content: z.string().nullable().optional(),
+  raw: z.string().nullable().optional(),
 });
 
 export const ItemWithChildrenSchema = ItemSchema.extend({
@@ -12,10 +15,5 @@ export const ItemWithChildrenSchema = ItemSchema.extend({
 });
 
 export type ItemType = z.infer<typeof ItemSchema>;
-
-export const MapSchema = z.object({
-  hash: z.string(),
-  map: z.record(z.string(), ItemWithChildrenSchema),
-});
-
+export const MapSchema = z.record(z.string(), ItemWithChildrenSchema);
 export type MapType = z.infer<typeof MapSchema>;

@@ -1,8 +1,6 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import { Item } from "@repo/react";
+import { Item } from "@walker/react";
 
 export function ToastDemo() {
   function showToast() {

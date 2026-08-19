@@ -7,10 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/toast";
-import { Item, useRuntime } from "@repo/react";
-import { useHotkey } from "@tanstack/react-hotkeys";
-import { useRef } from "react";
+import { Item } from "@walker/react";
 
 const items = [
   { label: "Select a fruit", value: null },

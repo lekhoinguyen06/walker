@@ -1,4 +1,4 @@
-import { Item, useMouseOffset } from "@repo/react";
+import { Item, useMouseOffset } from "@walker/react";
 import * as motion from "motion/react-client";
 import { useMemo, useRef } from "react";
 

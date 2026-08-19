@@ -1,4 +1,4 @@
-import { Item } from "@repo/react";
+import { Item } from "@walker/react";
 import { Button } from "./ui/button";
 
 const components: { label: string; href: string }[] = [

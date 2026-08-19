@@ -8,11 +8,11 @@ import {
   type WalkerElementProps,
   webFlows,
   webHooks,
-} from "@repo/core";
+} from "@walker/core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 import { mouse } from "./MouseProvider";
-import { App, type AppElementProps } from "./Components";
+import { App, type ElementProps } from "./Components";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -38,20 +38,18 @@ type RuntimeContextType = {
 const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
 
 export function RuntimeProvider({
-  app: { id, description, scope, value },
-  props: { config: userConfig, hooks: userHooks, flows: userFlows },
+  config: userConfig,
   children,
 }: {
-  props: RuntimeProviderProps;
-  app: AppElementProps;
+  config: RuntimeProviderProps & { app: ElementProps };
   children: React.ReactNode;
 }) {
   const config: ConfigType = {
     mode: "tailored",
+    isLoading: false,
     gap: 400,
-    isPaused: false,
     verbose: false,
-    ...userConfig,
+    ...userConfig.config,
   };
 
   const adapter: AdapterType = {
@@ -76,19 +74,17 @@ export function RuntimeProvider({
   const runtime = new Runtime({
     config,
     adapter,
-    flows: new Map([...webFlows, ...(userFlows || [])]),
+    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
     hooks: {
       ...webHooks,
       onMouse: mouse,
-      ...userHooks,
+      ...userConfig.hooks,
     },
   });
 
   return (
     <RuntimeContext.Provider value={{ runtime }}>
-      <App id={id} description={description} scope={scope} value={value}>
-        {children}
-      </App>
+      <App {...userConfig.app}>{children}</App>
     </RuntimeContext.Provider>
   );
 }

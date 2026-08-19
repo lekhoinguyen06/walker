@@ -1,4 +1,4 @@
-import type { WalkerElementProps } from "@repo/core";
+import type { WalkerElementProps } from "@walker/core";
 import slugify from "slugify";
 
 declare module "react" {
@@ -13,69 +13,48 @@ export type BaseElementProps = WalkerElementProps & {
   children?: React.ReactNode;
 };
 
+export type ElementProps = Omit<WalkerElementProps, "type" | "scope"> & {
+  scope?: WalkerElementProps["scope"];
+  children?: React.ReactNode;
+};
+
 export function Base(props: BaseElementProps) {
   return <walker-element {...props}>{props.children}</walker-element>;
 }
 
-export type ItemElementProps = Pick<
-  WalkerElementProps,
-  "id" | "description"
-> & {
-  children?: React.ReactNode;
-  value?: Record<string, any>;
-};
-
-export function Item(props: ItemElementProps) {
+export function Item(props: ElementProps) {
   return (
     <walker-element
+      {...props}
       id={slugify(props.id)}
       type="item"
-      description={props.description}
-      value={JSON.stringify(props.value || {})}
+      scope={props.scope ? props.scope : "inactive"}
     >
       {props.children}
     </walker-element>
   );
 }
 
-export type PageElementProps = Pick<
-  WalkerElementProps,
-  "id" | "description" | "scope"
-> & {
-  children?: React.ReactNode;
-  value?: Record<string, any>;
-};
-
-export function Page(props: PageElementProps) {
+export function Page(props: ElementProps) {
   return (
     <walker-element
+      {...props}
       id={slugify(props.id)}
       type="page"
-      description={props.description}
-      scope={props.scope}
-      value={JSON.stringify(props.value || {})}
+      scope={props.scope ? props.scope : "inactive"}
     >
       {props.children}
     </walker-element>
   );
 }
 
-export type AppElementProps = Pick<
-  WalkerElementProps,
-  "id" | "description" | "scope"
-> & {
-  children?: React.ReactNode;
-  value?: Record<string, any>;
-};
-
-export function App(props: AppElementProps) {
+export function App(props: ElementProps) {
   return (
     <walker-element
+      {...props}
       id={slugify(props.id)}
       type="app"
-      description={props.description}
-      scope={props.scope}
-      value={JSON.stringify(props.value || {})}
+      scope={props.scope ? props.scope : "active"}
     >
       {props.children}
     </walker-element>

@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Item } from "@repo/react";
+import { Item } from "@walker/react";
 
 export function InputBasic() {
   return (

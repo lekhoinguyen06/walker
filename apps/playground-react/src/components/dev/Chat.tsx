@@ -50,7 +50,7 @@ export function Chat() {
     // messages: initialMessages,
     transport: new DefaultChatTransport({
       api: `${process.env.VITE_CHAT_API_URL}/api/chat`,
-      prepareSendMessagesRequest: ({ id, messages, trigger, messageId }) => {
+      prepareSendMessagesRequest: ({ messages }) => {
         const msgs = messages.map((message) => ({
           role: message.role,
           content: message.parts.map((part) => part.text).join("\n"),

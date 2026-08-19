@@ -1,4 +1,4 @@
-import { useRuntime, type MapType } from "@repo/react";
+import { useRuntime } from "@walker/react";
 import {
   Card,
   CardContent,

@@ -1,19 +1,19 @@
 // Type exports
-export * from "./runtime/type";
-export * from "./action/type";
-export * from "./flow/type";
-export * from "./map/type";
-export * from "./walk/type";
-export * from "./hook/type";
-export * from "./config/type";
-export * from "./runtime/type";
+export * from "./runtime/runtime.dto";
+export * from "./action/action.dto";
+export * from "./flow/flow.dto";
+export * from "./map/map.dto";
+export * from "./walk/walk.dto";
+export * from "./hook/hook.dto";
+export * from "./config/config.dto";
+export * from "./runtime/runtime.dto";
 
 // Default exports
-export * from "./flow/web";
-export * from "./hook/web";
+export * from "./flow/web.flows";
+export * from "./hook/web.hooks";
 
 // Runtime exports
 export * from "./runtime/index";
 
-// Component exports
+// Element exports
 export * from "./walk/walker-element";

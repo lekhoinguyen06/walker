@@ -1,4 +1,4 @@
-import { Page } from "@repo/react";
+import { Page } from "@walker/react";
 import { ButtonDefault } from "../components/ButtonDefault";
 import ButtonDefaultRaw from "../components/ButtonDefault?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";

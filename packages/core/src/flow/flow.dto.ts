@@ -1,7 +1,7 @@
 import z from "zod";
-import { ActionSchema } from "../action/type";
-import { ConfigSchema } from "../config/type";
-import { HooksSchema } from "../hook/type";
+import { ActionSchema } from "../action/action.dto";
+import { ConfigSchema } from "../config/config.dto";
+import { HooksSchema } from "../hook/hook.dto";
 
 export const HandlerFactory = z.function({
   input: [

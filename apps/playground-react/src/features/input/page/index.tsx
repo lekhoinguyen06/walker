@@ -1,4 +1,4 @@
-import { Page } from "@repo/react";
+import { Page } from "@walker/react";
 import { InputBasic } from "../components/InputBasic";
 import InputBasicRaw from "../components/InputBasic?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";

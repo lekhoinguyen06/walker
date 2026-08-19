@@ -1,5 +1,5 @@
 {
-  "name": "@repo/react",
+  "name": "@walker/react",
   "version": "0.0.0",
   "description": "Walker library adapter for React framework",
   "license": "ISC",
@@ -23,7 +23,7 @@
     "react-dom": "^19.2.8"
   },
   "dependencies": {
-    "@repo/core": "workspace:*",
+    "@walker/core": "workspace:*",
     "slugify": "^1.6.9",
     "zod": "^4.4.3",
     "zustand": "^5.0.0"

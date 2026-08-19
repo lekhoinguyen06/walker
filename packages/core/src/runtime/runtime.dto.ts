@@ -1,8 +1,9 @@
 import z from "zod";
-import { ActionSchema } from "../action/type";
-import { HookFactory, HooksSchema } from "../hook/type";
-import { FlowsSchema } from "../flow/type";
-import { ConfigSchema } from "../config/type";
+import { ActionSchema } from "../action/action.dto";
+import { HookFactory, HooksSchema } from "../hook/hook.dto";
+import { FlowsSchema } from "../flow/flow.dto";
+import { ConfigSchema } from "../config/config.dto";
+import { Runtime } from ".";
 
 // --- Action Store ---
 export const ActionStorePushHandler = z.function({
@@ -43,3 +44,4 @@ export const RuntimePropsSchema = z.object({
 
 export type AdapterType = z.infer<typeof AdapterSchema>;
 export type RuntimePropsType = z.infer<typeof RuntimePropsSchema>;
+export type RuntimeType = typeof Runtime;

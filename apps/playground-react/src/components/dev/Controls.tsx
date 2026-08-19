@@ -10,7 +10,7 @@ import {
 } from "../ui/tooltip";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Kbd } from "../ui/kbd";
-import { useRuntime } from "@repo/react";
+import { useRuntime } from "@walker/react";
 import Mouse from "./Mouse";
 import { DevPortalModal } from "./DevPortal";
 
