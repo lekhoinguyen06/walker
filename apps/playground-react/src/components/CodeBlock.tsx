@@ -79,7 +79,7 @@ function Code({ raw }: CodeProps) {
             )}
             onClick={() => {
               try {
-                runtime.rawWalk(raw.content.trim());
+                runtime.addRawActions(raw.content.trim());
                 toast.add({
                   type: "success",
                   title: "Walk loaded. Press key 0 to start the walk.",

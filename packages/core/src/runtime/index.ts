@@ -49,20 +49,6 @@ export class Runtime {
     });
   }
 
-  // async walk(prompt: string) {
-  //   const actions = await this.walker.send({
-  //     flows: this.flowStore.list(),
-  //     history: this.historyStore.list(),
-  //     prompt,
-  //     map: this.currentMap,
-  //   })
-
-  //   const parsedActions = z.array(ActionSchema).parse(actions);
-  //   for (const action of parsedActions) {
-  //     this.config.actionStore.pushBack(action);
-  //   }
-  // }
-
   async next() {
     this.logger.trace("[TRACE]: Executing next function");
     this.nextAction = this.adapter.actionStore.popFront();
@@ -110,16 +96,16 @@ export class Runtime {
     return this.adapter.actionStore.list().length;
   }
 
-  async manualWalk(inputActions: ActionType[]) {
+  async addActions(inputActions: ActionType[]) {
     for (const action of inputActions) {
       this.adapter.actionStore.pushBack(action);
     }
   }
 
-  async rawWalk(inputActions: string) {
+  async addRawActions(inputActions: string) {
     const input = JSON.parse(inputActions);
     const parsedInput = z.array(ActionSchema).parse(input);
-    await this.manualWalk(parsedInput);
+    await this.addActions(parsedInput);
   }
 
   map() {

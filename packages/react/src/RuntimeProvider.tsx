@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import {
+  type ActionType,
   type AdapterType,
   type ConfigType,
   type FlowsType,
@@ -82,6 +83,8 @@ function RuntimeProviderContent({
     [userConfig.config],
   );
 
+  const actions = useActionStore((state) => state.list());
+
   const adapter: AdapterType = {
     actionStore: {
       pushBack: useActionStore((state) => state.pushBack),
@@ -101,18 +104,16 @@ function RuntimeProviderContent({
     },
   };
 
-  const runtime = useMemo(() => {
-    return new Runtime({
-      config,
-      adapter,
-      flows: new Map([...webFlows, ...(userConfig.flows || [])]),
-      hooks: {
-        ...webHooks,
-        onMouse: mouse,
-        ...userConfig.hooks,
-      },
-    });
-  }, [config]);
+  const runtime = new Runtime({
+    config,
+    adapter,
+    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
+    hooks: {
+      ...webHooks,
+      onMouse: mouse,
+      ...userConfig.hooks,
+    },
+  });
 
   const { mutate: walk, isPending: isWalking } = useMutation({
     mutationFn: async () => {
@@ -126,7 +127,7 @@ function RuntimeProviderContent({
         runtime,
         walk,
         isWalking,
-        actionsInQueueCount: runtime.countActionsInQueued(),
+        actionsInQueueCount: actions.length,
       }}
     >
       <App {...userConfig.app}>{children}</App>

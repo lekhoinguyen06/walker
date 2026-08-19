@@ -163,7 +163,7 @@ export function Input() {
 
   function showValue() {
     try {
-      runtime.rawWalk(editorRef.current.getValue());
+      runtime.addRawActions(editorRef.current.getValue());
       toast.add({
         title: "Success",
         description: "Walk loaded. Press key '0' to start walking.",

@@ -2,9 +2,8 @@
 
 ## Todo
 
-- Add Walk Input
+- Dispatch events in flows
 - Add Mouse Popover message hook
-- Add clear ActionQueue
 - Make Action message optional
 
 ## Backlog
