@@ -101,7 +101,13 @@ export class Runtime {
         );
         await this.next();
       }
+    } else {
+      this.logger.trace("[TRACE]: No next action found.");
     }
+  }
+
+  countActionsInQueued() {
+    return this.adapter.actionStore.list().length;
   }
 
   async manualWalk(inputActions: ActionType[]) {

@@ -303,6 +303,9 @@ importers:
 
   packages/react:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^5.101.4
+        version: 5.101.4(react@19.2.8)
       '@walker/core':
         specifier: workspace:*
         version: link:../core
@@ -3027,6 +3030,10 @@ packages:
       react: 19.2.8
     dev: false
 
+  /@tanstack/query-core@5.101.4:
+    resolution: {integrity: sha512-gNwcvOJcRbLWPOLG/2OBm+zM+Yv+MKsXKEOWC57USuZDEsI71hEErQsiEGx5wX9rzWWkfwM0fVSPoiIFSsxfiw==}
+    dev: false
+
   /@tanstack/react-hotkeys@0.10.0(react-dom@19.2.8)(react@19.2.8):
     resolution: {integrity: sha512-GwOSndI5j3qBVYTmgP1mYyRTnlxb2MS17cwGlsavSxMQPSnmDf+m3LzMIpRMs+3zzQMjg3cYhHsFYizYlFI2tw==}
     engines: {node: '>=18'}
@@ -3038,6 +3045,15 @@ packages:
       '@tanstack/react-store': 0.11.0(react-dom@19.2.8)(react@19.2.8)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
+    dev: false
+
+  /@tanstack/react-query@5.101.4(react@19.2.8):
+    resolution: {integrity: sha512-yRg2pfOCxIs4ZJW3XYYHU/WgtD04FHSnfHlpRT7h7pR77hwkdRG4wxbKe4aq6P0RvXUTBSQpQeadS1SUYUe+KA==}
+    peerDependencies:
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-core': 5.101.4
+      react: 19.2.8
     dev: false
 
   /@tanstack/react-store@0.11.0(react-dom@19.2.8)(react@19.2.8):

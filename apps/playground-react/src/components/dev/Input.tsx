@@ -153,7 +153,7 @@ const defaultValue = `
 `;
 
 export function Input() {
-  const runtime = useRuntime();
+  const { runtime } = useRuntime();
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();
 

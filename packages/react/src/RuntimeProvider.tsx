@@ -1,10 +1,11 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import {
   type AdapterType,
   type ConfigType,
   type FlowsType,
   type HooksType,
   Runtime,
+  type RuntimeType,
   type WalkerElementProps,
   webFlows,
   webHooks,
@@ -13,6 +14,11 @@ import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 import { mouse } from "./MouseProvider";
 import { App, type ElementProps } from "./Components";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+} from "@tanstack/react-query";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -20,7 +26,7 @@ export function useRuntime() {
   if (!context) {
     throw new Error("useRuntime must be used within a RuntimeProvider");
   }
-  return context.runtime;
+  return context;
 }
 
 // --------------------------------- Runtime Provider ---------------------------------
@@ -33,6 +39,9 @@ type RuntimeProviderProps = {
 
 type RuntimeContextType = {
   runtime: Runtime;
+  walk: () => void;
+  actionsInQueueCount: number;
+  isWalking: boolean;
 };
 
 const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
@@ -44,13 +53,34 @@ export function RuntimeProvider({
   config: RuntimeProviderProps & { app: ElementProps };
   children: React.ReactNode;
 }) {
-  const config: ConfigType = {
-    mode: "tailored",
-    isLoading: false,
-    gap: 400,
-    verbose: false,
-    ...userConfig.config,
-  };
+  const queryClient = useMemo(() => new QueryClient(), []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RuntimeProviderContent config={userConfig}>
+        {children}
+      </RuntimeProviderContent>
+    </QueryClientProvider>
+  );
+}
+
+function RuntimeProviderContent({
+  config: userConfig,
+  children,
+}: {
+  config: RuntimeProviderProps & { app: ElementProps };
+  children: React.ReactNode;
+}) {
+  const config: ConfigType = useMemo(
+    () => ({
+      mode: "tailored",
+      isLoading: false,
+      gap: 400,
+      verbose: false,
+      ...userConfig.config,
+    }),
+    [userConfig.config],
+  );
 
   const adapter: AdapterType = {
     actionStore: {
@@ -71,19 +101,34 @@ export function RuntimeProvider({
     },
   };
 
-  const runtime = new Runtime({
-    config,
-    adapter,
-    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
-    hooks: {
-      ...webHooks,
-      onMouse: mouse,
-      ...userConfig.hooks,
+  const runtime = useMemo(() => {
+    return new Runtime({
+      config,
+      adapter,
+      flows: new Map([...webFlows, ...(userConfig.flows || [])]),
+      hooks: {
+        ...webHooks,
+        onMouse: mouse,
+        ...userConfig.hooks,
+      },
+    });
+  }, [config]);
+
+  const { mutate: walk, isPending: isWalking } = useMutation({
+    mutationFn: async () => {
+      await runtime.next();
     },
   });
 
   return (
-    <RuntimeContext.Provider value={{ runtime }}>
+    <RuntimeContext.Provider
+      value={{
+        runtime,
+        walk,
+        isWalking,
+        actionsInQueueCount: runtime.countActionsInQueued(),
+      }}
+    >
       <App {...userConfig.app}>{children}</App>
     </RuntimeContext.Provider>
   );

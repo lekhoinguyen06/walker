@@ -23,6 +23,7 @@
     "react-dom": "^19.2.8"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.4",
     "@walker/core": "workspace:*",
     "slugify": "^1.6.9",
     "zod": "^4.4.3",

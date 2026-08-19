@@ -19,13 +19,19 @@ type ControlsProps = {
 };
 
 export function Controls({ orientation = "bottom" }: ControlsProps) {
-  const runtime = useRuntime();
+  const { walk, actionsInQueueCount, isWalking } = useRuntime();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDevOpen, setIsDevOpen] = useState(false);
 
-  useHotkey("0", () => {
-    runtime.next();
-  });
+  useHotkey(
+    "0",
+    () => {
+      walk();
+    },
+    {
+      enabled: !isWalking,
+    },
+  );
   const isNextHold = useKeyHold("0");
 
   useHotkey("Control+D", () => {
@@ -61,11 +67,12 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
               size="lg"
               className={cn(
                 "rounded-full font-brand text-lg",
+                isWalking && "bg-red-500 text-white",
                 isNextHold && "text-red-500 text-2xl",
+                actionsInQueueCount > 0 && !isWalking && "text-red-500",
               )}
-              onClick={() => {
-                runtime.next();
-              }}
+              onClick={walk}
+              disabled={isWalking}
             >
               W
             </Button>
