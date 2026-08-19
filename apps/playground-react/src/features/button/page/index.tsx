@@ -13,6 +13,7 @@ const content: RawCode[] = [
     content: `
 [
   {
+    "walkId": "uuid",
     "command": "click",
     "target": "button",
     "message": "Clicking..."

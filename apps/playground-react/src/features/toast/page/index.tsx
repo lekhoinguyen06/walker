@@ -18,6 +18,7 @@ const content: RawCode[] = [
     content: `
 [
   {
+    "walkId": "uuid",
     "command": "click",
     "target": "toast-trigger",
     "message": "Let's see what we have here..."

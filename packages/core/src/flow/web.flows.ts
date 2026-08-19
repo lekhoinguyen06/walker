@@ -25,6 +25,16 @@ export const webFlows: FlowsType = new Map([
           await props.context.hooks.onMouse?.(props);
           await wait(gap > 1000 ? gap : 1000);
           element.click();
+
+          // Move mouse back to container
+          await props.context.hooks.onMouse?.({
+            ...props,
+            action: {
+              ...props.action,
+              target: "mouse-container",
+            },
+          });
+          await wait(gap > 1000 ? gap : 1000);
         }
       },
     },
@@ -75,6 +85,16 @@ export const webFlows: FlowsType = new Map([
           if (props.action.body) {
             element.value = props.action.body;
           }
+
+          // Move mouse back to container
+          await props.context.hooks.onMouse?.({
+            ...props,
+            action: {
+              ...props.action,
+              target: "mouse-container",
+            },
+          });
+          await wait(gap > 1000 ? gap : 1000);
         }
       },
     },

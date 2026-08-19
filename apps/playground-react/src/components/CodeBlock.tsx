@@ -23,7 +23,7 @@ function Code({ raw }: CodeProps) {
   const source = ["```" + raw.lang.trim(), raw.content.trim(), "```"].join(
     "\n",
   );
-  const runtime = useRuntime();
+  const { runtime } = useRuntime();
 
   const handleCopy = (text: string) => () => {
     copy(text)

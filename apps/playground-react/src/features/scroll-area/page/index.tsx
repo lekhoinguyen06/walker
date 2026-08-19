@@ -13,11 +13,13 @@ const content: RawCode[] = [
     content: `
 [
   {
+    "walkId": "uuid",
     "command": "click",
     "target": "v1.2.0-beta.1",
     "message": "I am gonna pick the earliest version."
   },
   {
+    "walkId": "uuid",
     "command": "click",
     "target": "v1.2.0-beta.50",
     "message": "You know what, I am gonna pick the latest version."
