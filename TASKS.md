@@ -2,9 +2,9 @@
 
 ## Todo
 
+- Add Walk endpoint
 - Add clear ActionQueue
 - Make Action message optional
-- Add Walk endpoint
 
 ## Backlog
 

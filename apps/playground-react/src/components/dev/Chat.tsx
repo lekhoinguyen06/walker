@@ -118,23 +118,10 @@ export function Chat() {
                         align={message.role === "assistant" ? "start" : "end"}
                         key={message.id}
                       >
-                        <MessageAvatar>
-                          <Avatar>
-                            <AvatarImage
-                              src={
-                                message.role === "assistant"
-                                  ? "/walker-icon.svg"
-                                  : "https://github.com/shadcn.png"
-                              }
-                              alt="@shadcn"
-                            />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                        </MessageAvatar>
                         <MessageContent>
                           <Bubble
                             variant={
-                              message.role === "assistant" ? "muted" : "default"
+                              message.role === "assistant" ? "ghost" : "outline"
                             }
                           >
                             <BubbleContent>
@@ -144,7 +131,7 @@ export function Chat() {
                                   return (
                                     <div
                                       key={index}
-                                      className="markdown-renderer"
+                                      className="markdown-renderer typeset first:*:mt-0"
                                     >
                                       <style>{themeCss}</style>
                                       <Markdown

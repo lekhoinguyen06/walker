@@ -38,7 +38,6 @@ export function DevPortalModal({
               <TabsTrigger value="chat">Chat</TabsTrigger>
               <TabsTrigger value="map">Map</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
-              <TabsTrigger value="flow">Flow</TabsTrigger>
               <TabsTrigger value="document">Document</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>
             </TabsList>
@@ -50,9 +49,6 @@ export function DevPortalModal({
             </TabsContent>
             <TabsContent value="manual" className="size-full">
               <Input />
-            </TabsContent>
-            <TabsContent value="flow" className="size-full">
-              <Building />
             </TabsContent>
             <TabsContent value="document" className="size-full">
               <Building />

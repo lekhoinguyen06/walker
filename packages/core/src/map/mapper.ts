@@ -40,6 +40,7 @@ export function mapper(): MapType {
       id: getAttr(el, "id"),
       type: getAttr(el, "type"),
       description: getAttr(el, "description"),
+      scope: getAttr(el, "scope"),
       state: getAttr(el, "state"),
       raw: el.innerHTML.trim(),
       content: el.textContent.trim(),
@@ -68,7 +69,7 @@ export function mapper(): MapType {
     const parentEl = el.parentElement?.closest(`walker-element`);
 
     if (parentEl) {
-      const parentId = getRequiredAttr(el, "id", "Unreachable");
+      const parentId = getRequiredAttr(parentEl, "id", "Unreachable");
       if (registry[parentId] && registry[id]) {
         registry[parentId].children[id] = registry[id];
       }

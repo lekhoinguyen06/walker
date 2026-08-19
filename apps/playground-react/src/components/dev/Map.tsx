@@ -1,4 +1,4 @@
-import { useRuntime } from "@walker/react";
+import { useRuntime, type MapType } from "@walker/react";
 import {
   Card,
   CardContent,
@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "../ui/card";
 
-export function MapItem({ map }: { map: MapType["map"] }) {
+export function MapItem({ map }: { map: MapType }) {
   return (
     <>
       {Object.keys(map).map((item) => (
@@ -42,8 +42,9 @@ export function MapItem({ map }: { map: MapType["map"] }) {
 }
 
 export function Map() {
-  const runtime = useRuntime();
-  const map = runtime.map().map;
+  const { runtime } = useRuntime();
+  const map = runtime.map();
+  console.log("map", map);
 
   return (
     <Card>
