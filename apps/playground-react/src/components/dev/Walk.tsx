@@ -1,11 +1,10 @@
-import { useChat } from "@ai-sdk/react";
+import { useObject } from "@ai-sdk/react";
 import {
   ArrowUpIcon,
   CircleAlert,
   MessageCircleDashedIcon,
   RotateCcw,
 } from "lucide-react";
-import { DefaultChatTransport } from "ai";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
 import {
@@ -35,42 +34,51 @@ import {
   MessageScrollerProvider,
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
-import { Message, MessageContent } from "../ui/message";
-import { Bubble, BubbleContent } from "../ui/bubble";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
+import { ActionSchema, useRuntime } from "@walker/react";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
-export function Chat() {
-  const { messages, sendMessage, status, setMessages } = useChat({
-    // messages: initialMessages,
-    transport: new DefaultChatTransport({
-      api: `${process.env.VITE_CHAT_API_URL}/api/chat`,
-      prepareSendMessagesRequest: ({ messages }) => {
-        const msgs = messages.map((message) => ({
-          role: message.role,
-          content: message.parts.map((part) => part.text).join("\n"),
-        }));
-        return {
-          body: {
-            messages: msgs,
-          },
-        };
-      },
-    }),
-  });
-
+export function Walk() {
   const [input, setInput] = useState("");
-  const isBusy = status === "submitted" || status === "streaming";
+  const { runtime } = useRuntime();
+  const { object, submit, isLoading } = useObject({
+    api: `${process.env.VITE_WALK_API_URL}/api/walk`,
+    schema: ActionSchema,
+    onFinish: (result) => {
+      runtime.manualWalk([result.object]);
+    },
+  });
+  const isBusy = isLoading;
+
+  console.log("flows", runtime.listFlows());
+
+  const context = {
+    guide: `
+      You are a Walker agent. Your task is to assist the user navigate the web.
+      Your are provided flows, which are the actions you are allowed to perform.
+      You are provided map, which consist of objects of Items.
+      An action object is what you need to return, an example is: {
+        walkId: "123", // Just return "123" for now, we are still building the framework
+        command: "click", // You can also choose other commands provided by the flows.
+        target: "input-button", // You have to choose a target that exist in the map. Items in the map contains ids, you have to pick one.
+        message: "Let's go to the input page!"
+      }
+    `,
+    flows: runtime?.listFlows(),
+    map: runtime?.map(),
+    prompt: input.trim(),
+  };
+
   return (
     <MessageScrollerProvider>
       <div className="flex h-[60vh] flex-col gap-3">
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
-            <CardTitle>Chat</CardTitle>
+            <CardTitle>Walk inspection</CardTitle>
             <CardDescription className="flex items-center gap-1">
               <CircleAlert size={12} className="text-destructive" />
               <span className="text-xs font-semibold text-destructive">
@@ -84,7 +92,6 @@ export function Chat() {
                 size="icon"
                 onClick={() => {
                   setInput("");
-                  setMessages([]);
                 }}
               >
                 <RotateCcw />
@@ -92,7 +99,7 @@ export function Chat() {
             </CardAction>
           </CardHeader>
           <CardContent className="flex-1 overflow-hidden p-0">
-            {messages.length === 0 ? (
+            {!object ? (
               <Empty className="h-full">
                 <EmptyHeader>
                   <EmptyMedia variant="icon">
@@ -112,41 +119,15 @@ export function Chat() {
                     aria-busy={isBusy}
                     className="p-(--card-spacing)"
                   >
-                    {messages.map((message) => (
-                      <Message
-                        align={message.role === "assistant" ? "start" : "end"}
-                        key={message.id}
+                    <div className="markdown-renderer typeset first:*:mt-0">
+                      <style>{themeCss}</style>
+                      <Markdown
+                        extensions={streamingExtensions}
+                        highlighter={highlightMarkdownCode}
                       >
-                        <MessageContent>
-                          <Bubble
-                            variant={
-                              message.role === "assistant" ? "ghost" : "outline"
-                            }
-                          >
-                            <BubbleContent>
-                              {message.parts
-                                .filter((part) => part.type === "text")
-                                .map((part, index) => {
-                                  return (
-                                    <div
-                                      key={index}
-                                      className="markdown-renderer typeset first:*:mt-0"
-                                    >
-                                      <style>{themeCss}</style>
-                                      <Markdown
-                                        extensions={streamingExtensions}
-                                        highlighter={highlightMarkdownCode}
-                                      >
-                                        {String(part.text)}
-                                      </Markdown>
-                                    </div>
-                                  );
-                                })}
-                            </BubbleContent>
-                          </Bubble>
-                        </MessageContent>
-                      </Message>
-                    ))}
+                        {"```json \n" + JSON.stringify(object) + "\n```"}
+                      </Markdown>
+                    </div>
                   </MessageScrollerContent>
                 </MessageScrollerViewport>
                 <MessageScrollerButton />
@@ -156,12 +137,10 @@ export function Chat() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (isBusy) {
+              if (isBusy || input.trim().length === 0) {
                 return;
               }
-              void sendMessage({
-                text: input,
-              });
+              submit(context);
               setInput("");
             }}
             className="w-full"

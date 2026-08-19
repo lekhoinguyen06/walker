@@ -12,6 +12,7 @@ import { Map } from "./Map";
 import { Input } from "./Input";
 import { Chat } from "./Chat";
 import { Building } from "../Building";
+import { Walk } from "./Walk";
 
 export function DevPortalModal({
   open,
@@ -36,6 +37,7 @@ export function DevPortalModal({
           <Tabs defaultValue="overview">
             <TabsList variant="default">
               <TabsTrigger value="chat">Chat</TabsTrigger>
+              <TabsTrigger value="walk">Walk</TabsTrigger>
               <TabsTrigger value="map">Map</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
               <TabsTrigger value="document">Document</TabsTrigger>
@@ -43,6 +45,9 @@ export function DevPortalModal({
             </TabsList>
             <TabsContent value="chat" className="size-full">
               <Chat />
+            </TabsContent>
+            <TabsContent value="walk" className="size-full">
+              <Walk />
             </TabsContent>
             <TabsContent value="map" className="size-full">
               <Map />

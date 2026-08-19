@@ -132,7 +132,10 @@ export class Runtime {
   }
 
   listFlows() {
-    return this.flows;
+    return Array.from(this.flows.values()).map((f) => ({
+      command: f.command,
+      description: f.description,
+    }));
   }
 
   listActions() {

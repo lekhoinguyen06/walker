@@ -2,7 +2,8 @@
 
 ## Todo
 
-- Add Walk endpoint
+- Add Walk Input
+- Add Mouse Popover message hook
 - Add clear ActionQueue
 - Make Action message optional
 

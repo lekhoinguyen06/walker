@@ -42,8 +42,8 @@ export function mapper(): MapType {
       description: getAttr(el, "description"),
       scope: getAttr(el, "scope"),
       state: getAttr(el, "state"),
-      raw: el.innerHTML.trim(),
-      content: el.textContent.trim(),
+      // raw: el.innerHTML.trim(),
+      // content: el.textContent.trim(),
     });
 
     uniqueGuard(

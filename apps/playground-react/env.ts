@@ -9,11 +9,15 @@ export function envFactory(mode: string) {
       "process.env.VITE_CHAT_API_URL": JSON.stringify(
         "https://chat.concierge.api.vstaffs.com",
       ),
+      "process.env.VITE_WALK_API_URL": JSON.stringify(
+        "https://walk.concierge.api.vstaffs.com",
+      ),
     };
   } else if (mode === "development" || mode === "test") {
     return {
       "process.env.VITE_APP_ENV": JSON.stringify("development"),
       "process.env.VITE_CHAT_API_URL": JSON.stringify("http://localhost:8787"),
+      "process.env.VITE_WALK_API_URL": JSON.stringify("http://localhost:8787"),
     };
   } else {
     throw new Error(`Unknown mode: ${mode}`);
