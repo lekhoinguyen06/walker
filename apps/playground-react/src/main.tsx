@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "@walker/react/index.css";
 import "./index.css";
 import AppLayout from "./AppLayout";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
