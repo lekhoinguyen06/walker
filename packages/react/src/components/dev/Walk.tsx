@@ -32,7 +32,8 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { ActionSchema, useRuntime } from "@walker/react";
+import { ActionSchema } from "@walker/core";
+import { useRuntime } from "@/RuntimeProvider";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
@@ -43,7 +44,9 @@ export function Walk() {
     api: `${process.env.VITE_WALK_API_URL}/api/walk`,
     schema: ActionSchema,
     onFinish: (result) => {
-      runtime.manualWalk([result.object]);
+      if (result.object) {
+        runtime.addActions([result.object]);
+      }
     },
   });
   const isBusy = isLoading;

@@ -1,7 +1,7 @@
 import Editor from "@monaco-editor/react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { useRuntime } from "@walker/react";
+import { useRuntime } from "@/RuntimeProvider";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { toast } from "../ui/toast";
 import { useDarkMode } from "usehooks-ts";

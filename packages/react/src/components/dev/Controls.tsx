@@ -10,12 +10,13 @@ import {
 } from "../ui/tooltip";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Kbd } from "../ui/kbd";
-import { ActionSchema, useRuntime } from "@walker/react";
 import Mouse from "./Mouse";
 import { DevPortalModal } from "./DevPortal";
 import { useObject } from "@ai-sdk/react";
 import { Input } from "../ui/input";
 import { toast } from "../ui/toast";
+import { useRuntime } from "@/RuntimeProvider";
+import { ActionSchema } from "@walker/core";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";
@@ -28,8 +29,10 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
     api: `${process.env.VITE_WALK_API_URL}/api/walk`,
     schema: ActionSchema,
     onFinish: (result) => {
-      runtime.addActions([result.object]);
-      walk();
+      if (result.object) {
+        runtime.addActions([result.object]);
+        walk();
+      }
     },
   });
 
