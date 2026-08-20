@@ -1,4 +1,3 @@
-import { useObject } from "@ai-sdk/react";
 import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
@@ -6,6 +5,7 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -32,58 +32,25 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { ActionSchema } from "@walker/core";
-import { useRuntime } from "@/RuntimeProvider";
+import { useConciergeWalk } from "./dev.hook";
+import { generateWalkPrompt } from "./dev.prompt";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
-export function Walk() {
+export function Peek() {
   const [input, setInput] = useState("");
-  const { runtime } = useRuntime();
-  const { object, submit, isLoading } = useObject({
-    api: `${process.env.VITE_WALK_API_URL}/api/walk`,
-    schema: ActionSchema,
-    onFinish: (result) => {
-      if (result.object) {
-        runtime.addActions([result.object]);
-      }
-    },
-  });
+  const { object, submit, isLoading } = useConciergeWalk();
   const isBusy = isLoading;
-
-  console.log("flows", runtime.listFlows());
-
-  const context = {
-    guide: `
-      You are a Walker agent. Your task is to assist the user navigate the web.
-      Your are provided flows, which are the actions you are allowed to perform.
-      You are provided map, which consist of objects of Items.
-      An action object is what you need to return, an example is: {
-        walkId: "123", // Just return "123" for now, we are still building the framework
-        command: "click", // You can also choose other commands provided by the flows.
-        target: "input-button", // You have to choose a target that exist in the map. Items in the map contains ids, you have to pick one.
-        message: "Let's go to the input page!"
-      }
-      Try to keep output and thinking as concise as possible to quickly return result.
-    `,
-    flows: runtime?.listFlows(),
-    map: runtime?.map(),
-    prompt: input.trim(),
-  };
 
   return (
     <MessageScrollerProvider>
       <div className="flex h-[60vh] flex-col gap-3">
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
-            <CardTitle>Walk inspection</CardTitle>
-            {/*<CardDescription className="flex items-center gap-1">
-              <CircleAlert size={12} className="text-destructive" />
-              <span className="text-xs font-semibold text-destructive">
-                Please do not enter sensitive data. Our AI provider may use
-                prompts for training and may retain prompt data.
-              </span>
-            </CardDescription>*/}
+            <CardTitle>Peak</CardTitle>
+            <CardDescription className="flex items-center gap-1">
+              <span className="text-xs">Peak into each walk's data.</span>
+            </CardDescription>
             <CardAction>
               <Button
                 variant="ghost"
@@ -138,7 +105,7 @@ export function Walk() {
               if (isBusy || input.trim().length === 0) {
                 return;
               }
-              submit(context);
+              submit(generateWalkPrompt(input));
               setInput("");
             }}
             className="w-full"

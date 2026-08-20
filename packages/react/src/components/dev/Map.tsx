@@ -49,12 +49,12 @@ export function Map() {
     <Card>
       <CardHeader>
         <CardTitle>Map</CardTitle>
-        <CardDescription>Your Walker map</CardDescription>
+        <CardDescription>
+          <span className="text-xs">View your app's current landscape.</span>
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="size-full overflow-scroll">
-          <MapItem map={map} />
-        </div>
+      <CardContent className="size-full overflow-scroll">
+        <MapItem map={map} />
       </CardContent>
     </Card>
   );

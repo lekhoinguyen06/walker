@@ -2,7 +2,13 @@ import Editor from "@monaco-editor/react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useRuntime } from "@/RuntimeProvider";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { toast } from "../ui/toast";
 import { useDarkMode } from "usehooks-ts";
 
@@ -182,7 +188,12 @@ export function Input() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Input</CardTitle>
+        <CardTitle>Manual</CardTitle>
+        <CardDescription>
+          <span className="text-xs">
+            Manually input walk actions in JSON format.
+          </span>
+        </CardDescription>
       </CardHeader>
       <CardContent className="size-full">
         <div>

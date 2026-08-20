@@ -53,7 +53,7 @@ export const useHistoryStore = create<
       },
     }),
     {
-      name: "history-storage",
+      name: "walker-history-storage",
     },
   ),
 );

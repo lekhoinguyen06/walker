@@ -1,12 +1,11 @@
-import { useChat } from "@ai-sdk/react";
 import { ArrowUpIcon, MessageCircleDashedIcon, RotateCcw } from "lucide-react";
-import { DefaultChatTransport } from "ai";
 import { Markdown } from "@tanstack/markdown/react";
 import { streamingMarkdownExtension } from "@tanstack/markdown/extensions/streaming";
 import {
   Card,
   CardAction,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -35,27 +34,12 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
+import { useConciergeChat } from "./dev.hook";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
 export function Chat() {
-  const { messages, sendMessage, status, setMessages } = useChat({
-    // messages: initialMessages,
-    transport: new DefaultChatTransport({
-      api: `${process.env.VITE_CHAT_API_URL}/api/chat`,
-      prepareSendMessagesRequest: ({ messages }) => {
-        const msgs = messages.map((message) => ({
-          role: message.role,
-          content: message.parts.map((part) => part.text).join("\n"),
-        }));
-        return {
-          body: {
-            messages: msgs,
-          },
-        };
-      },
-    }),
-  });
+  const { messages, setMessages, sendMessage, status } = useConciergeChat();
 
   const [input, setInput] = useState("");
   const isBusy = status === "submitted" || status === "streaming";
@@ -65,13 +49,12 @@ export function Chat() {
         <Card className="mx-auto w-full h-[60vh] gap-0">
           <CardHeader className="gap-1 border-b">
             <CardTitle>Chat</CardTitle>
-            {/*<CardDescription className="flex items-center gap-1">
-              <CircleAlert size={12} className="text-destructive" />
-              <span className="text-xs font-semibold text-destructive">
-                Please do not enter sensitive data. Our AI provider may use
-                prompts for training and may retain prompt data.
+            <CardDescription className="flex items-center gap-1">
+              <span className="text-xs">
+                Chat and see how the walk suggestion feature works. Walker will
+                suggest walks when suitable.
               </span>
-            </CardDescription>*/}
+            </CardDescription>
             <CardAction>
               <Button
                 variant="ghost"

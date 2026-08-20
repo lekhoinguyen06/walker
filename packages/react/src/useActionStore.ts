@@ -54,7 +54,7 @@ export const useActionStore = create<
       },
     }),
     {
-      name: "action-storage",
+      name: "walker-action-storage",
     },
   ),
 );
