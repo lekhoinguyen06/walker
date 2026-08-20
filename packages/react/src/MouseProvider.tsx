@@ -16,12 +16,11 @@ export async function mouse(props: HookPropsType): HookResponseType {
   const targetEl = walker?.firstElementChild;
 
   if (targetEl) {
-    const targetX = targetEl.getBoundingClientRect().x;
-    const targetWidth = targetEl.getBoundingClientRect().width;
-    const centerX = targetX + targetWidth / 2;
-    const targetY = targetEl.getBoundingClientRect().y;
-    const targetHeight = targetEl.getBoundingClientRect().height;
-    const centerY = targetY + targetHeight / 2;
+    const rect = targetEl.getBoundingClientRect();
+    console.log("Rect:", rect);
+
+    const centerX = rect.x + rect.width / 2 + window.scrollX;
+    const centerY = rect.y + rect.height / 2 + window.scrollY;
 
     setX(centerX);
     setY(centerY);
