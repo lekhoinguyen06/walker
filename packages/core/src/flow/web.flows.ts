@@ -83,7 +83,13 @@ export const webFlows: FlowsType = new Map([
           await props.context.hooks.onMouse?.(props);
           await wait(gap > 1000 ? gap : 1000);
           if (props.action.body) {
-            element.value = props.action.body;
+            // React specific, we may need to provided React flow later when we support more frameworks
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+              window.HTMLInputElement.prototype,
+              "value",
+            )?.set;
+            nativeInputValueSetter?.call(element, props.action.body);
+            element.dispatchEvent(new Event("input", { bubbles: true }));
           }
 
           // Move mouse back to container
