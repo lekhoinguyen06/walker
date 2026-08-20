@@ -2,6 +2,8 @@
 
 ## Todo
 
+- Use & dispatch state for Input
+- Dispatch hover event for click flow
 - Provide ctx for mapper
 - Detail logging
 - Write v1 API tests
