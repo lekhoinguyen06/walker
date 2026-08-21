@@ -40,6 +40,10 @@ function WalkInput() {
     handleSubmit();
   });
 
+  const isCtrlHold = useKeyHold("Control");
+  const isWHold = useKeyHold("W");
+  const isWalkHold = isCtrlHold && isWHold;
+
   const handleSubmit = () => {
     if (actionsInQueueCount === 0 && !isBusy) {
       if (input.trim() === "") {
@@ -59,28 +63,56 @@ function WalkInput() {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-      className={cn(
-        isMobile
-          ? "fixed top-0 left-1/2 transform -translate-x-1/2 -translate-y-[120%] w-[90vw] max-w-96 shadow-2xl"
-          : "mx-2 w-[30vw]",
-      )}
-    >
-      <Input
-        type="text"
-        id="prompt-input"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Let's take a walk! Type your prompt here..."
-        className={cn("w-full rounded-full bg-background/90")}
-        disabled={isBusy || actionsInQueueCount > 0}
-        autoFocus
-      />
-    </form>
+    <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+        className={cn(
+          isMobile
+            ? "fixed top-0 left-1/2 transform -translate-x-1/2 -translate-y-[120%] w-[90vw] max-w-96 shadow-2xl"
+            : "mx-2 w-[30vw]",
+        )}
+      >
+        <Input
+          type="text"
+          id="prompt-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Let's take a walk! Type your prompt here..."
+          className={cn("w-full rounded-full bg-background/90")}
+          disabled={isBusy || actionsInQueueCount > 0}
+          autoFocus
+        />
+      </form>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="lg"
+              className={cn(
+                "rounded-full font-brand text-lg",
+                actionsInQueueCount > 0 && !isBusy && "animate-bounce",
+                isBusy && "bg-red-500 text-white",
+                isWalkHold && "text-2xl",
+              )}
+              onClick={handleSubmit}
+              type="submit"
+              disabled={isLoading}
+            >
+              W
+            </Button>
+          }
+        ></TooltipTrigger>
+        <TooltipContent>
+          <p>
+            Walk <Kbd>Ctrl</Kbd> + <Kbd>W</Kbd>
+          </p>
+        </TooltipContent>
+      </Tooltip>
+    </>
   );
 }
 
@@ -102,8 +134,6 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
   const isCtrlHold = useKeyHold("Control");
   const isMHold = useKeyHold("M");
   const isDHold = useKeyHold("D");
-  const isWHold = useKeyHold("W");
-  const isWalkHold = isCtrlHold && isWHold;
   const isDevHold = isCtrlHold && isDHold;
   const isMenuHold = isCtrlHold && isMHold;
 
@@ -139,31 +169,6 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
         </Tooltip>
         <Mouse />
         <WalkInput />
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="lg"
-                className={cn(
-                  "rounded-full font-brand text-lg",
-                  actionsInQueueCount > 0 && !isBusy && "animate-bounce",
-                  isBusy && "bg-red-500 text-white",
-                  isWalkHold && "text-2xl",
-                )}
-                type="submit"
-                disabled={isLoading}
-              >
-                W
-              </Button>
-            }
-          ></TooltipTrigger>
-          <TooltipContent>
-            <p>
-              Walk <Kbd>Ctrl</Kbd> + <Kbd>W</Kbd>
-            </p>
-          </TooltipContent>
-        </Tooltip>
         <Tooltip>
           <TooltipTrigger>
             <Button
