@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Item } from "@walker/react";
+import { useState } from "react";
 
 const items = [
   { label: "Select a fruit", value: null },
@@ -19,12 +20,13 @@ const items = [
 ];
 
 export function SelectDemo() {
+  const [value, setValue] = useState<string | null>(null);
   return (
     <Item
       id="select"
       description="This is example select for the Walker Playground."
     >
-      <Select items={items}>
+      <Select items={items} value={value} onValueChange={(v) => setValue(v)}>
         <Item
           id="select-trigger"
           description="This is the select trigger. Click to open the select dropdown."

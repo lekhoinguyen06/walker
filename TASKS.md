@@ -2,9 +2,6 @@
 
 ## Todo
 
-- Use state for Input & Select demos
-- Dispatch hover event for click flow
-- Remove support for `content` and `raw` in Walker Element
 - Provide ctx for mapper
 - Detail logging
 - Write v1 API tests

@@ -82,7 +82,7 @@ function Code({ raw }: CodeProps) {
                 runtime.addRawActions(raw.content.trim());
                 toast.add({
                   type: "success",
-                  title: "Walk loaded. Press key 0 to start the walk.",
+                  title: "Walk loaded. Press key Ctrl + W to start the walk.",
                   timeout: 2000,
                 });
               } catch (error) {
