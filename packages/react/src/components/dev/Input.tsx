@@ -163,7 +163,7 @@ export function Input() {
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();
 
-  function handleEditorDidMount(editor, monaco) {
+  function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
   }
 

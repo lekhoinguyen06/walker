@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "gen-doc": "turbo run gen-doc",
     "dev": "turbo run dev",
     "dev:react": "turbo run dev --filter=playground-react...",
     "dev:landing": "turbo run dev --filter=landing...",

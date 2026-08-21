@@ -39,7 +39,7 @@ const streamingExtensions = [streamingMarkdownExtension()];
 
 export function Peek() {
   const [input, setInput] = useState("");
-  const { object, submit, isLoading } = useConciergeWalk();
+  const { runtime, object, submit, isLoading } = useConciergeWalk();
   const isBusy = isLoading;
 
   return (
@@ -105,7 +105,7 @@ export function Peek() {
               if (isBusy || input.trim().length === 0) {
                 return;
               }
-              submit(generateWalkPrompt(input));
+              submit(generateWalkPrompt(runtime, input));
               setInput("");
             }}
             className="w-full"

@@ -7,7 +7,7 @@
     "light": "#FFFF00",
     "dark": "#000000"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "logo/walker-icon.svg",
   "navigation": {
     "tabs": [
       {
@@ -37,9 +37,7 @@
         "groups": [
           {
             "group": "Typescript",
-            "pages": [
-              "languages/server/ts/getting-started"
-            ]
+            "pages": ["languages/server/ts/getting-started"]
           }
         ]
       },
@@ -48,41 +46,30 @@
         "groups": [
           {
             "group": "React",
-            "pages": [
-              "languages/client/react/getting-started"
-            ]
+            "pages": ["languages/client/react/getting-started"]
           }
         ]
       },
       {
-        "tab": "Frameworks",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "Typescript",
-            "pages": [
-              "frameworks/nestjs/index",
-              "frameworks/encore/index"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
+            "group": "Core SDK",
+            "sdk": {
+              "format": "typedoc",
+              "source": "../packages/core/typedoc.json",
+              "directory": "sdk/core"
+            },
+            "pages": ["sdk/core/overview"]
           },
           {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "group": "React SDK",
+            "sdk": {
+              "format": "typedoc",
+              "source": "../packages/react/typedoc.json",
+              "directory": "sdk/react"
+            },
+            "pages": ["sdk/react/overview"]
           }
         ]
       }

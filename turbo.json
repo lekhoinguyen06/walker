@@ -10,6 +10,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "gen-doc": {
+      "dependsOn": ["^gen-doc"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": ["typedoc.json"]
     }
   },
   "ui": "tui"

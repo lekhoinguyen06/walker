@@ -126,7 +126,7 @@ export function mapper(ctx: ContextType): MapType {
 
     if (parentEl) {
       const parentId = getRequiredAttr(parentEl, "id", "Unreachable");
-      if (registry[parentId] && registry[id]) {
+      if (registry[parentId] && registry[parentId].children && registry[id]) {
         registry[parentId].children[id] = registry[id];
       }
     }

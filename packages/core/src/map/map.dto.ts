@@ -11,7 +11,7 @@ export const ItemSchema = z.object({
 });
 
 export const MapItemSchema = ItemSchema.extend({
-  children: z.record(z.string(), ItemSchema),
+  children: z.record(z.string(), ItemSchema).optional(),
   contentValue: z.string().optional(),
   rawValue: z.string().optional(),
 });

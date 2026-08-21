@@ -17,7 +17,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "gen-doc": "pnpm exec typedoc --json typedoc.json src/index.ts"
   },
   "peerDependencies": {
     "react": "^19.2.8",
@@ -53,6 +54,7 @@
     "postcss": "^8.5.26",
     "tailwindcss": "^4.2.0",
     "tsup": "^8.5.1",
+    "typedoc": "^0.28.20",
     "typescript": "~6.0.2"
   }
 }

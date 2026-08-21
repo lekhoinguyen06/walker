@@ -13,7 +13,9 @@ export function useConciergeChat() {
       prepareSendMessagesRequest: ({ messages }) => {
         const msgs = messages.map((message) => ({
           role: message.role,
-          content: message.parts.map((part) => part.text).join("\n"),
+          content: message.parts
+            .map((part) => (part as { text: string }).text)
+            .join("\n"),
         }));
         return {
           body: {
