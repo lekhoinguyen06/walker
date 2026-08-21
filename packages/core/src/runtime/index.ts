@@ -138,6 +138,10 @@ export class Runtime {
     this.adapter.actionStore.clear();
   }
 
+  getConfig() {
+    return this.config;
+  }
+
   getLogger() {
     return this.logger;
   }
