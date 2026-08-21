@@ -43,7 +43,6 @@ export function MapItem({ map }: { map: MapType }) {
 export function Map() {
   const { runtime } = useRuntime();
   const map = runtime.map();
-  console.log("map", map);
 
   return (
     <Card>

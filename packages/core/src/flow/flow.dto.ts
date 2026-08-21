@@ -2,13 +2,13 @@ import z from "zod";
 import { ActionSchema } from "../action/action.dto";
 import { ConfigSchema } from "../config/config.dto";
 import { HooksSchema } from "../hook/hook.dto";
+import { ContextSchema } from "../context/context.dto";
 
 export const HandlerFactory = z.function({
   input: [
     z.object({
       action: ActionSchema,
-      context: z.object({
-        config: ConfigSchema,
+      context: ContextSchema.extend({
         hooks: HooksSchema,
       }),
     }),

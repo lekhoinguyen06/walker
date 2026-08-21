@@ -1,8 +1,18 @@
+import type { ContextType } from "../context/context.dto";
 import { type ObservedAttributesType } from "../walk/walk.dto";
 import { ItemSchema, type MapType } from "./map.dto";
 
-function uniqueGuard(set: Set<string>, val: string, msg: string) {
+function uniqueGuard(
+  ctx: ContextType,
+  set: Set<string>,
+  val: string,
+  msg: string,
+) {
   if (set.has(val)) {
+    ctx.logger.error({
+      event: "Duplicate walker-element id",
+      id: val,
+    });
     throw Error(msg);
   }
   set.add(val);
@@ -28,11 +38,18 @@ function getRequiredAttr(
   return val;
 }
 
-export function mapper(): MapType {
+export function mapper(ctx: ContextType): MapType {
   const registry: MapType = {};
   const tree: MapType = {};
   const all = document.querySelectorAll("walker-element");
   const seenIds = new Set<string>();
+
+  ctx.logger.trace("Enter mapper function");
+
+  ctx.logger.debug({
+    event: "Found walker-element elements",
+    count: all.length,
+  });
 
   // Build flat map
   all.forEach((el) => {
@@ -43,10 +60,11 @@ export function mapper(): MapType {
       scope: getAttr(el, "scope"),
       state: getAttr(el, "state"),
       // raw: el.innerHTML.trim(),
-      // content: el.textContent.trim(),
+      // content: el.innerText.trim(),
     });
 
     uniqueGuard(
+      ctx,
       seenIds,
       item.id,
       "<walker-element> element must be unique. Found more than one <walker-element> elements with the same id attribute when generating map.",
@@ -55,6 +73,7 @@ export function mapper(): MapType {
     registry[item.id] = {
       id: item.id,
       type: item.type,
+      scope: item.scope,
       description: item.description,
       content: item.content,
       state: item.state,
@@ -84,6 +103,11 @@ export function mapper(): MapType {
     if (!parentEl && registry[id]) {
       tree[id] = registry[id];
     }
+  });
+
+  ctx.logger.debug({
+    event: "Mapping done",
+    map: tree,
   });
 
   return tree;

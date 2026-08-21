@@ -76,6 +76,9 @@ createRoot(document.getElementById("root")!).render(
         hooks: {
           onMessage: message,
         },
+        config: {
+          verbose: true,
+        },
       }}
     >
       <RouterProvider router={router} />

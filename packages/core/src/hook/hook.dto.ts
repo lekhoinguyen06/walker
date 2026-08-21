@@ -1,12 +1,11 @@
 import z from "zod";
 import { ActionSchema } from "../action/action.dto";
 import { ConfigSchema } from "../config/config.dto";
+import { ContextSchema } from "../context/context.dto";
 
 export const HookPropsSchema = z.object({
   action: ActionSchema,
-  context: z.object({
-    config: ConfigSchema,
-  }),
+  context: ContextSchema,
 });
 
 export const HookResponseSchema = z.promise(z.void());

@@ -1,5 +1,4 @@
 import { ActionSchema, type ActionType } from "../action/action.dto";
-import type { MapType } from "../map/map.dto";
 import {
   AdapterSchema,
   type AdapterType,
@@ -10,57 +9,58 @@ import { FlowsSchema, type FlowsType, type FlowType } from "../flow/flow.dto";
 import { mapper } from "../map/mapper";
 import { ConfigSchema, type ConfigType } from "../config/config.dto";
 import { HooksSchema, type HooksType } from "../hook/hook.dto";
-import log from "loglevel";
+import { getLogger, LoggerLevel } from "../shared/utils/logger";
 
 export class Runtime {
   private readonly config: ConfigType;
   private readonly adapter: AdapterType;
-  private readonly flows: FlowsType = new Map();
-  private readonly hooks: HooksType = {
-    onScroll: async () => {},
-    onMessage: async () => {},
-    onMouse: async () => {},
-  };
+  private readonly flows: FlowsType;
+  private readonly hooks: HooksType;
   private nextAction: ActionType | undefined;
-  private logger = log;
+  private logger;
 
   constructor({ config, adapter, flows, hooks }: RuntimePropsType) {
-    this.logger.setDefaultLevel("TRACE");
-    this.logger.trace("[TRACE]: Initializing Runtime Instance");
+    const level = !config.verbose ? LoggerLevel.INFO : LoggerLevel.TRACE;
+    this.logger = getLogger(level);
+    this.logger.trace("Initializing Runtime Instance");
+
     this.config = ConfigSchema.parse(config);
     this.logger.debug({
-      event: "[DEBUG]: Inject Config",
+      event: "Inject Config",
       config: this.config,
     });
+
     this.adapter = AdapterSchema.parse(adapter);
     this.logger.debug({
-      event: "[DEBUG]: Inject Adapter",
+      event: "Inject Adapter",
       adapter: this.adapter,
     });
+
     this.flows = FlowsSchema.parse(flows);
     this.logger.debug({
-      event: "[DEBUG]: Inject Flows",
+      event: "Inject Flows",
       flows: this.flows,
     });
+
     this.hooks = HooksSchema.parse(hooks);
     this.logger.debug({
-      event: "[DEBUG]: Inject Hooks",
+      event: "Inject Hooks",
       hooks: this.hooks,
     });
   }
 
   async next() {
-    this.logger.trace("[TRACE]: Executing next function");
+    this.logger.trace("Executing next function");
     this.nextAction = this.adapter.actionStore.popFront();
     this.logger.debug({
-      event: "[DEBUG]: NextAction Object",
+      event: "NextAction Object",
       nextAction: this.nextAction,
     });
 
     if (this.nextAction) {
       const flow = this.flows.get(this.nextAction.command);
       this.logger.debug({
-        event: "[DEBUG]: Flow Object",
+        event: "Flow Object",
         flow: flow,
       });
 
@@ -75,20 +75,24 @@ export class Runtime {
           action: this.nextAction,
           context: {
             config: this.config,
+            logger: this.logger,
             hooks: this.hooks,
           },
         });
       } catch (error) {
-        this.logger.error("Error executing flow handler:", error);
+        this.logger.error({
+          event: "Error executing flow handler",
+          error: error,
+        });
       }
       if (this.nextAction.command === "select") {
         this.logger.trace(
-          "[TRACE]: Current Action has the select command, which triggers next function programmatrically.",
+          "Current Action has the select command, which triggers next function programmatrically.",
         );
         await this.next();
       }
     } else {
-      this.logger.trace("[TRACE]: No next action found.");
+      this.logger.trace("No next action found.");
     }
   }
 
@@ -109,8 +113,10 @@ export class Runtime {
   }
 
   map() {
-    const map: MapType = mapper();
-    return map;
+    return mapper({
+      config: this.config,
+      logger: this.logger,
+    });
   }
 
   listHistory() {
@@ -130,5 +136,9 @@ export class Runtime {
 
   cancel() {
     this.adapter.actionStore.clear();
+  }
+
+  getLogger() {
+    return this.logger;
   }
 }
