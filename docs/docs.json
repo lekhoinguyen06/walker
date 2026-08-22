@@ -57,8 +57,8 @@
             "group": "Core SDK",
             "sdk": {
               "format": "typedoc",
-              "source": "../packages/core/typedoc.json",
-              "directory": "sdk/core"
+              "source": "sdk-artifacts/walker-core/typedoc.json",
+              "directory": "sdk/walker-core"
             },
             "pages": ["sdk/core/overview"]
           },
@@ -66,8 +66,8 @@
             "group": "React SDK",
             "sdk": {
               "format": "typedoc",
-              "source": "../packages/react/typedoc.json",
-              "directory": "sdk/react"
+              "source": "sdk-artifacts/walker-react/typedoc.json",
+              "directory": "sdk/walker-react"
             },
             "pages": ["sdk/react/overview"]
           }

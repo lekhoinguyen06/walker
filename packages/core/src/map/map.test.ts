@@ -29,7 +29,7 @@ function mockRuntime() {
         clear: () => [],
       },
     },
-    flows: new Map(),
+    flows: [],
     hooks: {},
   });
 

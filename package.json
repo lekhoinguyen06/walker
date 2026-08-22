@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "docs": "cd ./docs && mint dev",
     "gen-doc": "turbo run gen-doc",
     "dev": "turbo run dev",
     "dev:react": "turbo run dev --filter=playground-react...",

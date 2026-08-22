@@ -28,7 +28,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
     "dev": "tsup --watch",
-    "gen-doc": "pnpm exec typedoc --json typedoc.json src/index.ts"
+    "gen-doc": "pnpm exec typedoc --json typedoc.json"
   },
   "peerDependencies": {
     "react": "^19.2.8",
