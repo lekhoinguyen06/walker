@@ -1,5 +1,9 @@
 {
-  "name": "@walker/core",
+  "name": "walker-core",
+  "version": "0.1.0",
+  "description": "Walker core library.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
   "module": "index.ts",
   "type": "module",
   "main": "dist/index.js",

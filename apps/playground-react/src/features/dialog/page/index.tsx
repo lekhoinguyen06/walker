@@ -1,7 +1,8 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import DialogActions from "@/shared/actions/dialog.action.json";
 
 const content: RawCode[] = [
   {
@@ -10,36 +11,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "dialog-trigger",
-    "message": "Let's see what we have here..."
-  },
-  {
-    "walkId": "uuid",
-    "command": "input",
-    "target": "name-input",
-    "body": "Walker Jr.",
-    "message": "Let's type in 'Walker Jr.'"
-  },
-  {
-    "walkId": "uuid",
-    "command": "input",
-    "target": "username-input",
-    "body": "@walker",
-    "message": "Let's type in '@walker'"
-  },
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "dialog-save",
-    "message": "Nice! Let's save it!"
-  }
-]
-    `,
+    content: JSON.stringify(DialogActions, null, 2),
   },
 ];
 

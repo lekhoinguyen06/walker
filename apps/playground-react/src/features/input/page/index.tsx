@@ -1,7 +1,8 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { InputBasic } from "../components/InputBasic";
 import InputBasicRaw from "../components/InputBasic?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import InputActions from "@/shared/actions/input.action.json";
 
 const content: RawCode[] = [
   {
@@ -10,17 +11,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "input",
-    "target": "input",
-    "body": "Hello World!",
-    "message": "Let's type in 'Hello World!'"
-  }
-]
-    `,
+    content: JSON.stringify(InputActions, null, 2),
   },
 ];
 

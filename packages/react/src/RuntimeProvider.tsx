@@ -10,7 +10,7 @@ import {
   type WalkerElementProps,
   webFlows,
   webHooks,
-} from "@walker/core";
+} from "walker-core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 import { mouse } from "./MouseProvider";
@@ -107,7 +107,7 @@ function RuntimeProviderContent({
   const runtime = new Runtime({
     config,
     adapter,
-    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
+    flows: [...webFlows, ...(userConfig.flows || [])],
     hooks: {
       ...webHooks,
       onMouse: mouse,

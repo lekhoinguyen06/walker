@@ -9,7 +9,7 @@ export * from "./config/config.dto";
 export * from "./runtime/runtime.dto";
 
 // Default exports
-export * from "./flow/web.flows";
+export * from "./flow/web";
 export * from "./hook/web.hooks";
 
 // Runtime exports

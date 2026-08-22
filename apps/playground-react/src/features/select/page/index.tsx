@@ -1,7 +1,8 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { SelectDemo } from "../components/SelectDemo";
 import SelectDemoRaw from "../components/SelectDemo?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import SelectActions from "@/shared/actions/select.action.json";
 
 const content: RawCode[] = [
   {
@@ -10,22 +11,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "select",
-    "target": "select-trigger",
-    "message": "Let's see what we have!"
-  },
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "select-item-banana",
-    "message": "Banana na na na!"
-  }
-]
-    `,
+    content: JSON.stringify(SelectActions, null, 2),
   },
 ];
 

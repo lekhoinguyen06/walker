@@ -1,7 +1,8 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { ScrollAreaDemo } from "../components/ScrollAreaDemo";
 import ScrollAreaDemoRaw from "../components/ScrollAreaDemo?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import ScrollAreaActions from "@/shared/actions/scroll-area.action.json";
 
 const content: RawCode[] = [
   {
@@ -10,22 +11,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "v1.2.0-beta.1",
-    "message": "I am gonna pick the earliest version."
-  },
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "v1.2.0-beta.50",
-    "message": "You know what, I am gonna pick the latest version."
-  }
-]
-    `,
+    content: JSON.stringify(ScrollAreaActions, null, 2),
   },
 ];
 

@@ -9,7 +9,7 @@
 - Unify stores
 - Spread config options
 - Use typedoc plugin to generate docs to markdown and transport to docs folder
-- Pass flows' body schema to `useConciergeWalk`
+
 - Add none flow for none walk purposes
 - Add `body.end` attribute in Action to declare walk ended to clean history, survey star, and cleanup callbacks
 - Add walk history to prompt context

@@ -1,9 +1,9 @@
 {
-  "name": "@walker/react",
-  "version": "0.0.0",
+  "name": "walker-react",
+  "version": "0.1.0",
   "description": "Walker library adapter for React framework",
-  "license": "ISC",
-  "author": "",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -12,7 +12,17 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./index.css": "./dist/index.css"
+    "./dev": {
+      "types": "./dist/dev/index.d.ts",
+      "import": "./dist/dev/index.js",
+      "require": "./dist/dev/index.cjs"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs"
+    },
+    "./dev/index.css": "./dist/dev/index.css"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,7 +43,7 @@
     "@tanstack/markdown": "^0.0.13",
     "@tanstack/react-hotkeys": "^0.10.0",
     "@tanstack/react-query": "^5.101.4",
-    "@walker/core": "workspace:*",
+    "walker-core": "workspace:*",
     "ai": "^7.0.66",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

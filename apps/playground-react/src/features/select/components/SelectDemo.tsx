@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Item } from "@walker/react";
+import { Item } from "walker-react";
 import { useState } from "react";
 
 const items = [

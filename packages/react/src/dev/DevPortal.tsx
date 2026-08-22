@@ -7,11 +7,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { Dispatch, SetStateAction } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Map } from "./Map";
 import { Input } from "./Input";
 import { Chat } from "./Chat";
-import { Building } from "../Building";
+import { Building } from "@/components/Building";
 import { Peek } from "./Peek";
 
 export function DevPortalModal({
@@ -53,7 +53,7 @@ export function DevPortalModal({
               <Input />
             </TabsContent>
             <TabsContent value="peek" className="size-full">
-              <Building />
+              <Peek />
             </TabsContent>
             <TabsContent value="document" className="size-full">
               <Building />

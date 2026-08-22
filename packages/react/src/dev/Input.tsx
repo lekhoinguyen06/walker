@@ -8,8 +8,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { toast } from "../ui/toast";
+} from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 import { useDarkMode } from "usehooks-ts";
 
 const defaultValue = `
@@ -59,7 +59,7 @@ const defaultValue = `
   },
   {
     "walkId": "uuid",
-    "command": "select",
+    "command": "click",
     "target": "select-trigger",
     "message": "Let's see what we have!"
   },
@@ -153,7 +153,7 @@ const defaultValue = `
     "walkId": "uuid",
     "command": "click",
     "target": "navigation-button-home",
-    "message": "Let's go see the next component!"
+    "message": "That's it! We are done with the walk. Let's go back home!"
   }
 ]
 `;

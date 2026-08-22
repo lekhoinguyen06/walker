@@ -1,0 +1,28 @@
+[
+  {
+    "walkId": "uuid",
+    "command": "click",
+    "target": "dialog-trigger",
+    "message": "Let's see what we have here..."
+  },
+  {
+    "walkId": "uuid",
+    "command": "input",
+    "target": "name-input",
+    "body": "Walker Jr.",
+    "message": "Let's type in 'Walker Jr.'"
+  },
+  {
+    "walkId": "uuid",
+    "command": "input",
+    "target": "username-input",
+    "body": "@walker",
+    "message": "Let's type in '@walker'"
+  },
+  {
+    "walkId": "uuid",
+    "command": "click",
+    "target": "dialog-save",
+    "message": "Nice! Let's save it!"
+  }
+]

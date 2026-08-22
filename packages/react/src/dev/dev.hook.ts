@@ -1,8 +1,8 @@
 import { useRuntime } from "@/RuntimeProvider";
 import { useChat, useObject } from "@ai-sdk/react";
-import { ActionSchema } from "@walker/core";
+import { ActionSchema } from "walker-core";
 import { DefaultChatTransport } from "ai";
-import { toast } from "../ui/toast";
+import { toast } from "@/components/ui/toast";
 import { useMediaQuery } from "usehooks-ts";
 
 export function useConciergeChat() {
@@ -40,13 +40,11 @@ export function useConciergeWalk({
   const { runtime, walk, isWalking, actionsInQueueCount } = useRuntime();
   const query = useObject({
     api: `${process.env.VITE_WALK_API_URL}/api/walk`,
-    schema: ActionSchema,
+    schema: runtime.getJoinedFlowsSchema(),
     onFinish: async (result) => {
-      if (result.object) {
-        runtime.addActions([result.object]);
-        if (!noWalk) {
-          walk();
-        }
+      runtime.addActions([ActionSchema.parse(result.object)]);
+      if (!noWalk) {
+        walk();
       }
     },
     onError: (error) => {

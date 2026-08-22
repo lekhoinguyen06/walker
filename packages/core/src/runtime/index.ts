@@ -58,7 +58,7 @@ export class Runtime {
     });
 
     if (this.nextAction) {
-      const flow = this.flows.get(this.nextAction.command);
+      const flow = this.getFlow(this.nextAction.command);
       this.logger.debug({
         event: "Flow Object",
         flow: flow,
@@ -84,12 +84,6 @@ export class Runtime {
           event: "Error executing flow handler",
           error: error,
         });
-      }
-      if (this.nextAction.command === "select") {
-        this.logger.trace(
-          "Current Action has the select command, which triggers next function programmatrically.",
-        );
-        await this.next();
       }
     } else {
       this.logger.trace("No next action found.");
@@ -127,6 +121,7 @@ export class Runtime {
     return Array.from(this.flows.values()).map((f) => ({
       command: f.command,
       description: f.description,
+      schema: f.schema.toJSONSchema(),
     }));
   }
 
@@ -136,6 +131,16 @@ export class Runtime {
 
   cancel() {
     this.adapter.actionStore.clear();
+  }
+
+  getFlow(command: string): FlowType | undefined {
+    return this.flows.find((f) => f.command === command);
+  }
+
+  getJoinedFlowsSchema() {
+    const schemas = this.flows.map((f) => f.schema);
+    const joined = z.union(schemas);
+    return joined;
   }
 
   getConfig() {

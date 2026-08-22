@@ -5,8 +5,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import type { MapType } from "@walker/core";
+} from "@/components/ui/card";
+import type { MapType } from "walker-core";
 
 export function MapItem({ map }: { map: MapType }) {
   return (

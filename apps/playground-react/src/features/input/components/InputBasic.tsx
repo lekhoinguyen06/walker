@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Item } from "@walker/react";
+import { Item } from "walker-react";
 import { useState } from "react";
 
 export function InputBasic() {

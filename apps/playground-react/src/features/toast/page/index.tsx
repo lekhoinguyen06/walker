@@ -1,8 +1,9 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { ToastDemo } from "../components/ToastDemo";
 import ToastDemoRaw from "../components/ToastDemo?raw";
 import AppLayout from "../../../AppLayout?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import ToastActions from "@/shared/actions/toast.action.json";
 
 const content: RawCode[] = [
   {
@@ -15,16 +16,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "toast-trigger",
-    "message": "Let's see what we have here..."
-  }
-]
-    `,
+    content: JSON.stringify(ToastActions, null, 2),
   },
 ];
 

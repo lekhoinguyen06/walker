@@ -1,7 +1,8 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
-import { Item, Controls } from "@walker/react";
+import { Item } from "walker-react";
+import { Controls } from "walker-react/dev";
 
 // Pinning ts to lower version to avoid issues with tsup and react types.
 

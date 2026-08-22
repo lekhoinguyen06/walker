@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
-import { useRuntime } from "@walker/react";
+import { useRuntime } from "walker-react";
 
 export type RawCode = {
   lang: "tsx" | "json";

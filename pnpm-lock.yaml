@@ -169,9 +169,6 @@ importers:
       '@tanstack/react-hotkeys':
         specifier: ^0.10.0
         version: 0.10.0(react-dom@19.2.8)(react@19.2.8)
-      '@walker/react':
-        specifier: workspace:*
-        version: link:../../packages/react
       ai:
         specifier: ^7.0.66
         version: 7.0.66(zod@4.4.3)
@@ -220,6 +217,9 @@ importers:
       vite-plugin-svgr:
         specifier: ^5.2.0
         version: 5.2.0(typescript@6.0.3)(vite@8.1.5)
+      walker-react:
+        specifier: workspace:*
+        version: link:../../packages/react
     devDependencies:
       '@shikijs/rehype':
         specifier: ^4.3.1
@@ -318,9 +318,6 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.101.4
         version: 5.101.4(react@19.2.8)
-      '@walker/core':
-        specifier: workspace:*
-        version: link:../core
       ai:
         specifier: ^7.0.66
         version: 7.0.66(zod@4.4.3)
@@ -357,6 +354,9 @@ importers:
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.2.8)
+      walker-core:
+        specifier: workspace:*
+        version: link:../core
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -8015,7 +8015,7 @@ packages:
       '@gerrit0/mini-shiki': 3.23.0
       lunr: 2.3.9
       markdown-it: 14.3.0
-      minimatch: 10.2.6
+      minimatch: 10.2.5
       typescript: 6.0.3
       yaml: 2.9.0
     dev: true

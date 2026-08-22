@@ -1,5 +1,5 @@
 import { Bolt, CodeXml, Menu, Trash, X } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -7,22 +7,16 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "@/components/ui/tooltip";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
-import { Kbd } from "../ui/kbd";
+import { Kbd } from "@/components/ui/kbd";
 import Mouse from "./Mouse";
 import { DevPortalModal } from "./DevPortal";
-import { Input } from "../ui/input";
-import { toast } from "../ui/toast";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/toast";
 import { generateWalkPrompt } from "./dev.prompt";
 import { useConciergeWalk, useScreenSize } from "./dev.hook";
 import { useWalkInputStore } from "./dev.store";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import type { useScreen } from "usehooks-ts";
 
 type ControlsProps = {
   orientation?: "bottom" | "right" | "left";

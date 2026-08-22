@@ -1,4 +1,4 @@
-import type { Runtime } from "@walker/core";
+import type { Runtime } from "walker-core";
 
 export function generateWalkPrompt(runtime: Runtime, input: string): string {
   const context = {
@@ -10,7 +10,8 @@ export function generateWalkPrompt(runtime: Runtime, input: string): string {
         walkId: "123", // Just return "123" for now, we are still building the framework
         command: "click", // You can also choose other commands provided by the flows.
         target: "input-button", // You have to choose a target that exist in the map. Items in the map contains ids, you have to pick one.
-        message: "Let's go to the input page!"
+        message: "Let's go to the input page!",
+        body:  // Depending on the flow you choose, you may need to provide additional data in the body. Please follow the provided JSON schema of each flow.
       }
       Try to keep output and thinking as concise as possible to quickly return result.
     `,

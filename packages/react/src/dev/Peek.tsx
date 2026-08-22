@@ -28,9 +28,9 @@ import {
   MessageScrollerProvider,
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
-import { Input } from "../ui/input";
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { useConciergeWalk } from "./dev.hook";
 import { generateWalkPrompt } from "./dev.prompt";
@@ -39,8 +39,11 @@ const streamingExtensions = [streamingMarkdownExtension()];
 
 export function Peek() {
   const [input, setInput] = useState("");
-  const { runtime, object, submit, isLoading } = useConciergeWalk();
+  const { runtime, object, submit, isLoading } = useConciergeWalk({
+    noWalk: true,
+  });
   const isBusy = isLoading;
+  const [lastPrompt, setLastPrompt] = useState("");
 
   return (
     <MessageScrollerProvider>
@@ -90,7 +93,14 @@ export function Peek() {
                         extensions={streamingExtensions}
                         highlighter={highlightMarkdownCode}
                       >
-                        {"```json \n" + JSON.stringify(object) + "\n```"}
+                        {"### Prompt\n\n" +
+                          "```json\n" +
+                          JSON.stringify(JSON.parse(lastPrompt), null, 2) +
+                          "\n```\n\n" +
+                          "### Object\n\n" +
+                          "```json\n" +
+                          JSON.stringify(object, null, 2) +
+                          "\n```"}
                       </Markdown>
                     </div>
                   </MessageScrollerContent>
@@ -105,7 +115,9 @@ export function Peek() {
               if (isBusy || input.trim().length === 0) {
                 return;
               }
-              submit(generateWalkPrompt(runtime, input));
+              const prompt = generateWalkPrompt(runtime, input);
+              setLastPrompt(prompt);
+              submit(prompt);
               setInput("");
             }}
             className="w-full"
@@ -113,6 +125,7 @@ export function Peek() {
             <InputGroup className="border-none">
               <InputGroupAddon align="block-end">
                 <Input
+                  id="peek-input"
                   placeholder="Type your message..."
                   type="text"
                   className="border-none text-foreground"

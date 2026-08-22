@@ -28,11 +28,11 @@ import {
   MessageScrollerProvider,
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
-import { Message, MessageContent } from "../ui/message";
-import { Bubble, BubbleContent } from "../ui/bubble";
-import { Input } from "../ui/input";
+import { Message, MessageContent } from "@/components/ui/message";
+import { Bubble, BubbleContent } from "@/components/ui/bubble";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { useConciergeChat } from "./dev.hook";
 

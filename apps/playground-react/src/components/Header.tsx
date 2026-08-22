@@ -5,7 +5,7 @@ import VueLogo from "../assets/vuedotjs.svg?react";
 import SvelteLogo from "../assets/svelte.svg?react";
 import SolidLogo from "../assets/solid.svg?react";
 import AngularLogo from "../assets/angular.svg?react";
-import { Item, Page } from "@walker/react";
+import { Item, Page } from "walker-react";
 
 export default function Header() {
   return (

@@ -1,7 +1,8 @@
-import { Page } from "@walker/react";
+import { Page } from "walker-react";
 import { ButtonDefault } from "../components/ButtonDefault";
 import ButtonDefaultRaw from "../components/ButtonDefault?raw";
 import { CodeBlock, type RawCode } from "@/components/CodeBlock";
+import ButtonActions from "@/shared/actions/button.action.json";
 
 const content: RawCode[] = [
   {
@@ -10,16 +11,7 @@ const content: RawCode[] = [
   },
   {
     lang: "json",
-    content: `
-[
-  {
-    "walkId": "uuid",
-    "command": "click",
-    "target": "button",
-    "message": "Clicking..."
-  }
-]
-    `,
+    content: JSON.stringify(ButtonActions, null, 2),
   },
 ];
 

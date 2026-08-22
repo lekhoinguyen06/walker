@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Item } from "@walker/react";
+import { Item } from "walker-react";
 
 export function ButtonDefault() {
   return (

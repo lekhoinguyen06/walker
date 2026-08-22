@@ -1,4 +1,4 @@
-import type { WalkerElementProps } from "@walker/core";
+import type { WalkerElementProps } from "walker-core";
 import slugify from "slugify";
 
 declare module "react" {
