@@ -4,6 +4,7 @@ import { HookFactory, HooksSchema } from "../hook/hook.dto";
 import { FlowsSchema } from "../flow/flow.dto";
 import { ConfigSchema } from "../config/config.dto";
 import { Runtime } from ".";
+import { HistorySchema } from "../history/history.dto";
 
 // --- Action Store ---
 export const ActionStorePushHandler = z.function({
@@ -30,9 +31,40 @@ export const ActionStoreSchema = z.object({
   clear: ActionStoreReturnManyHandler,
 });
 
+// --- History Store ---
+export const HistoryStorePushHandler = z.function({
+  input: [HistorySchema],
+  output: z.void(),
+});
+
+export const HistoryStoreUpdateHandler = z.function({
+  input: [HistorySchema.partial()],
+  output: z.void(),
+});
+
+export const HistoryStorePopHandler = z.function({
+  input: [],
+  output: z.optional(HistorySchema),
+});
+
+export const HistoryStoreReturnManyHandler = z.function({
+  input: [],
+  output: z.array(HistorySchema),
+});
+
+export const HistoryStoreSchema = z.object({
+  updateBack: HistoryStoreUpdateHandler,
+  pushBack: HistoryStorePushHandler,
+  pushFront: HistoryStorePushHandler,
+  popBack: HistoryStorePopHandler,
+  popFront: HistoryStorePopHandler,
+  list: HistoryStoreReturnManyHandler,
+  clear: HistoryStoreReturnManyHandler,
+});
+
 export const AdapterSchema = z.object({
   actionStore: ActionStoreSchema,
-  historyStore: ActionStoreSchema,
+  historyStore: HistoryStoreSchema,
 });
 
 export const RuntimePropsSchema = z.object({

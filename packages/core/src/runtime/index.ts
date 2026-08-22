@@ -71,6 +71,16 @@ export class Runtime {
       }
 
       try {
+        this.adapter.historyStore.pushBack({
+          action: this.nextAction,
+          flow: {
+            command: flow.command,
+            description: flow.description,
+          },
+          map: this.map(),
+          prompt: this.nextAction?.prompt || "No prompt provided",
+        });
+
         await flow.handler({
           action: this.nextAction,
           context: {
@@ -84,6 +94,10 @@ export class Runtime {
           event: "Error executing flow handler",
           error: error,
         });
+        this.adapter.historyStore.updateBack({
+          error: (error as Error).message.slice(0, 100),
+        });
+        throw error;
       }
     } else {
       this.logger.trace("No next action found.");
@@ -129,8 +143,10 @@ export class Runtime {
     return this.adapter.actionStore.list();
   }
 
-  cancel() {
+  clear() {
+    this.adapter.historyStore.clear();
     this.adapter.actionStore.clear();
+    this.logger.trace("Runtime canceled: history and action stores cleared.");
   }
 
   getFlow(command: string): FlowType | undefined {

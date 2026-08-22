@@ -8,7 +8,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
+import {
+  useHotkey,
+  useHotkeySequence,
+  useKeyHold,
+} from "@tanstack/react-hotkeys";
 import { Kbd } from "@/components/ui/kbd";
 import Mouse from "./Mouse";
 import { DevPortalModal } from "./DevPortal";
@@ -111,10 +115,11 @@ function WalkInput() {
 }
 
 export function Controls({ orientation = "bottom" }: ControlsProps) {
-  const { isWalking, isLoading, actionsInQueueCount } = useConciergeWalk();
+  const { runtime, isWalking, isLoading } = useConciergeWalk();
   const isBusy = isWalking || isLoading;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDevOpen, setIsDevOpen] = useState(false);
+  const setInput = useWalkInputStore((state) => state.setInput);
 
   useHotkey("Control+D", () => {
     if (isMenuOpen) {
@@ -124,12 +129,19 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
   useHotkey("Control+M", () => {
     setIsMenuOpen((prev) => !prev);
   });
+  useHotkey("Control+Shift+C", () => {
+    runtime.clear();
+    setInput("");
+  });
 
   const isCtrlHold = useKeyHold("Control");
+  const isShiftHold = useKeyHold("Shift");
+  const isCHold = useKeyHold("C");
   const isMHold = useKeyHold("M");
   const isDHold = useKeyHold("D");
   const isDevHold = isCtrlHold && isDHold;
   const isMenuHold = isCtrlHold && isMHold;
+  const isClearHold = isCtrlHold && isShiftHold && isCHold;
 
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -147,18 +159,21 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
               variant="ghost"
               size="lg"
               className={cn(
-                "rounded-full",
-                // (isMenuOpen || isMenuHold) && "bg-accent",
+                "rounded-full hover:text-red-500 hover:cursor-pointer",
+                isClearHold && "bg-accent text-red-500",
               )}
               onClick={() => {
-                // setIsMenuOpen((prev) => !prev);
+                runtime.clear();
+                setInput("");
               }}
             >
               <X />
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Clear</p>
+            <p>
+              Clear <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>C</Kbd>{" "}
+            </p>
           </TooltipContent>
         </Tooltip>
         <Mouse />

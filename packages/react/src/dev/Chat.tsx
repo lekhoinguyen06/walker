@@ -45,8 +45,8 @@ export function Chat() {
   const isBusy = status === "submitted" || status === "streaming";
   return (
     <MessageScrollerProvider>
-      <div className="flex h-[60vh] flex-col gap-3">
-        <Card className="mx-auto w-full h-[60vh] gap-0">
+      <div className="flex flex-col gap-3">
+        <Card className="mx-auto w-full gap-0">
           <CardHeader className="gap-1 border-b">
             <CardTitle>Chat</CardTitle>
             <CardDescription className="flex items-center gap-1">
@@ -68,7 +68,7 @@ export function Chat() {
               </Button>
             </CardAction>
           </CardHeader>
-          <CardContent className="flex-1 overflow-hidden p-0">
+          <CardContent className="w-full h-[50vh] overflow-hidden p-0">
             {messages.length === 0 ? (
               <Empty className="h-full">
                 <EmptyHeader>

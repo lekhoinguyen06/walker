@@ -52,8 +52,10 @@ export function Map() {
           <span className="text-xs">View your app's current landscape.</span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="size-full overflow-scroll">
-        <MapItem map={map} />
+      <CardContent>
+        <div className="w-full h-[50vh] overflow-scroll">
+          <MapItem map={map} />
+        </div>
       </CardContent>
     </Card>
   );

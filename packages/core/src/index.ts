@@ -7,6 +7,7 @@ export * from "./walk/walk.dto";
 export * from "./hook/hook.dto";
 export * from "./config/config.dto";
 export * from "./runtime/runtime.dto";
+export * from "./history/history.dto";
 
 // Default exports
 export * from "./flow/web";

@@ -13,6 +13,7 @@ import { Input } from "./Input";
 import { Chat } from "./Chat";
 import { Building } from "@/components/Building";
 import { Peek } from "./Peek";
+import { History } from "./History";
 
 export function DevPortalModal({
   open,
@@ -26,7 +27,7 @@ export function DevPortalModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={trigger} />
-      <DialogContent className="w-[90vw] h-fit max-h-[80vh] max-w-none! overflow-scroll flex flex-col gap-3">
+      <DialogContent className="w-[90vw] h-fit max-w-none! overflow-scroll flex flex-col gap-3">
         <DialogHeader>
           <DialogTitle className="text-2xl font-brand">Dev Portal</DialogTitle>
           <DialogDescription>
@@ -40,25 +41,25 @@ export function DevPortalModal({
               <TabsTrigger value="map">Map</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
               <TabsTrigger value="peek">Peek</TabsTrigger>
-              <TabsTrigger value="document">Document</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>
+              <TabsTrigger value="document">Document</TabsTrigger>
             </TabsList>
-            <TabsContent value="chat" className="size-full">
+            <TabsContent value="chat">
               <Chat />
             </TabsContent>
-            <TabsContent value="map" className="size-full">
+            <TabsContent value="map">
               <Map />
             </TabsContent>
-            <TabsContent value="manual" className="size-full">
+            <TabsContent value="manual">
               <Input />
             </TabsContent>
-            <TabsContent value="peek" className="size-full">
+            <TabsContent value="peek">
               <Peek />
             </TabsContent>
-            <TabsContent value="document" className="size-full">
-              <Building />
+            <TabsContent value="history">
+              <History />
             </TabsContent>
-            <TabsContent value="history" className="size-full">
+            <TabsContent value="document">
               <Building />
             </TabsContent>
           </Tabs>

@@ -198,7 +198,7 @@ export function Input() {
       <CardContent className="size-full">
         <div>
           <Editor
-            height="40vh"
+            height="50vh"
             width="100%"
             defaultLanguage="json"
             defaultValue={defaultValue}

@@ -95,6 +95,7 @@ function RuntimeProviderContent({
       clear: useActionStore((state) => state.clear),
     },
     historyStore: {
+      updateBack: useHistoryStore((state) => state.updateBack),
       pushBack: useHistoryStore((state) => state.pushBack),
       pushFront: useHistoryStore((state) => state.pushFront),
       popBack: useHistoryStore((state) => state.popBack),
