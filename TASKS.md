@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Deploy `walker-core` v0.1.0 and `walker-react` v0.1.0 to npm using Github Actions
 - Register package names `walker-core`, `walker-react`, `walker-cli`, `walker-svelte`, `walker-vue`, `walker-angular`, `walker-prompts`, and `walker-sdk` to npm
 
 - Error cases tests
@@ -10,7 +9,7 @@
 
 - Add none flow for none walk purposes
 - Add `action.end: boolean` attribute in Action to declare walk ended to clean history, survey star, and cleanup callbacks
-- Deploy `walker-core` v0.1.0 and `walker-react` v0.1.1 to npm
+- Deploy `walker-core` v0.1.2 and `walker-react` v0.1.2 to npm
 
 ## Backlog
 
