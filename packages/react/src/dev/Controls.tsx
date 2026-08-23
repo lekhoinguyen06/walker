@@ -81,7 +81,6 @@ function WalkInput() {
           placeholder="Let's take a walk! Type your prompt here..."
           className={cn("w-full rounded-full bg-background/90")}
           disabled={isBusy || actionsInQueueCount > 0}
-          autoFocus
         />
       </form>
       <Tooltip>
@@ -159,8 +158,8 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
               variant="ghost"
               size="lg"
               className={cn(
-                "rounded-full hover:text-red-500 hover:cursor-pointer",
-                isClearHold && "bg-accent text-red-500",
+                "rounded-full hover:text-red-500 hover:bg-destructive/10 hover:cursor-pointer",
+                isClearHold && "text-red-500 bg-destructive/10",
               )}
               onClick={() => {
                 runtime.clear();
@@ -172,7 +171,7 @@ export function Controls({ orientation = "bottom" }: ControlsProps) {
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              Clear <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>C</Kbd>{" "}
+              Clear <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>C</Kbd>
             </p>
           </TooltipContent>
         </Tooltip>

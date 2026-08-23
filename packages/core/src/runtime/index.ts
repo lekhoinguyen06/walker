@@ -150,11 +150,11 @@ export class Runtime {
   }
 
   getFlow(command: string): FlowType | undefined {
-    return this.flows.find((f) => f.command === command);
+    return this.flows.get(command);
   }
 
   getJoinedFlowsSchema() {
-    const schemas = this.flows.map((f) => f.schema);
+    const schemas = Array.from(this.flows.values()).map((f) => f.schema);
     const joined = z.union(schemas);
     return joined;
   }

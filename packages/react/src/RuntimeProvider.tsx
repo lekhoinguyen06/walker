@@ -108,7 +108,7 @@ function RuntimeProviderContent({
   const runtime = new Runtime({
     config,
     adapter,
-    flows: [...webFlows, ...(userConfig.flows || [])],
+    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
     hooks: {
       ...webHooks,
       onMouse: mouse,

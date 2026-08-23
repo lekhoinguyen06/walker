@@ -26,7 +26,7 @@ export const FlowSchema = z.object({
 
 type InferSchema<T> = T extends z.ZodType<infer U> ? U : never;
 
-export const FlowsSchema = z.array(FlowSchema);
+export const FlowsSchema = z.map(z.string(), FlowSchema);
 
 export type FlowType<S extends z.ZodType = z.ZodType> = {
   command: string;
@@ -39,10 +39,8 @@ export type FlowType<S extends z.ZodType = z.ZodType> = {
   }) => Promise<void>;
 };
 
-export function createFlow<S extends z.ZodType>(
-  config: FlowType<S>,
-): FlowType<S> {
-  return config;
+export function createFlow<S extends z.ZodType>(config: FlowType<S>): FlowType {
+  return config as FlowType;
 }
 
 export type FlowsType = z.infer<typeof FlowsSchema>;
