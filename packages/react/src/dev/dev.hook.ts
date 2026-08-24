@@ -9,7 +9,7 @@ export function useConciergeChat() {
   return useChat({
     // messages: initialMessages,
     transport: new DefaultChatTransport({
-      api: `${process.env.VITE_CHAT_API_URL}/api/chat`,
+      api: `${process.env.VITE_CHAT_API_URL}/chat`,
       prepareSendMessagesRequest: ({ messages }) => {
         const msgs = messages.map((message) => ({
           role: message.role,
@@ -39,7 +39,7 @@ export function useConciergeWalk({
 }: { noWalk?: boolean } = {}) {
   const { runtime, walk, isWalking, actionsInQueueCount } = useRuntime();
   const query = useObject({
-    api: `${process.env.VITE_WALK_API_URL}/api/walk`,
+    api: `${process.env.VITE_WALK_API_URL}/walk`,
     schema: runtime.getJoinedFlowsSchema(),
     onFinish: async (result) => {
       runtime.addActions([ActionSchema.parse(result.object)]);
