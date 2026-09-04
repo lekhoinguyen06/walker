@@ -1,4 +1,8 @@
-import type { HookPropsType, HookFactory, HookResponseType } from "walker-core";
+import type {
+  HookPropsType,
+  HookFactory,
+  HookResponseType,
+} from "../../walker-core/dist";
 import { useMouseStore } from "./useMouseStore";
 
 export function useMouseOffset() {

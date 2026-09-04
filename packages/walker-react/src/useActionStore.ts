@@ -1,4 +1,4 @@
-import type { ActionType } from "walker-core";
+import type { ActionType } from "../../walker-core/dist";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

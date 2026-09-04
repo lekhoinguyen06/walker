@@ -1,4 +1,4 @@
-import type { HistoryType } from "walker-core";
+import type { HistoryType } from "../../walker-core/dist";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
