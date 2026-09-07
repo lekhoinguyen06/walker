@@ -10,7 +10,7 @@ import {
   type WalkerElementProps,
   webFlows,
   webHooks,
-} from "../../walker-core/dist";
+} from "walker-core";
 import { useActionStore } from "./useActionStore";
 import { useHistoryStore } from "./useHistoryStore";
 import { mouse } from "./MouseProvider";

@@ -1,6 +1,6 @@
 import { useRuntime } from "@/RuntimeProvider";
 import { useChat, useObject } from "@ai-sdk/react";
-import { ActionSchema } from "../../../walker-core/dist";
+import { ActionSchema } from "walker-core";
 import { DefaultChatTransport } from "ai";
 import { toast } from "@/components/ui/toast";
 import { useMediaQuery } from "usehooks-ts";

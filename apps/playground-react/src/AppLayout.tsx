@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
 import { Item } from "walker-react";
-import { Controls } from "walker-react/dev";
+import { Panel, PanelInput } from "walker-react/dev";
 
 // Pinning ts to lower version to avoid issues with tsup and react types.
 
@@ -18,7 +18,7 @@ function AppLayout() {
       >
         <Toaster />
       </Item>
-      <Controls />
+      <Panel style="primary" />
     </div>
   );
 }

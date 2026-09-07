@@ -1,6 +1,6 @@
 import { Item } from "@/Components";
 import { useMouseOffset } from "@/MouseProvider";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
 
 export default function Mouse() {

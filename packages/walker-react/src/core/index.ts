@@ -1,1 +1,1 @@
-export * from "../../../walker-core/dist";
+export * from "walker-core";
