@@ -14,6 +14,11 @@ import { useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
+import Mouse from "./Mouse";
+import { useWalk } from "./dev.hook";
+import { generateWalkPrompt } from "./dev.prompt";
+import type { set } from "zod/v3";
+import { useWalkInputStore } from "./dev.store";
 
 const panelVariants = cva(
   "relative z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -43,6 +48,7 @@ const panelVariants = cva(
 );
 
 export type PanelProps = VariantProps<typeof panelVariants> & {
+  url: string;
   className?: string;
 };
 
@@ -50,11 +56,18 @@ export function Panel({
   style = "primary",
   position = "bottom",
   hidden = true,
+  url,
   className,
 }: PanelProps) {
   const [hiddenState, setHiddenState] = useState(hidden ?? true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const input = useWalkInputStore((state) => state.input);
+  const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef(null);
+  const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
+    useWalk({
+      url,
+    });
 
   function handleClickOutside() {
     setHiddenState(true);
@@ -66,16 +79,43 @@ export function Panel({
     setHiddenState((prev) => !prev);
   });
 
-  useHotkey("Control+M", () => {
-    setIsPopupOpen((prev) => !prev);
-  });
+  useHotkey(
+    "Control+M",
+    () => {
+      setIsPopupOpen((prev) => !prev);
+    },
+    {
+      enabled: !hiddenState,
+    },
+  );
+
+  useHotkey(
+    "Control+W",
+    () => {
+      handleSubmit();
+    },
+    {
+      enabled: !hiddenState,
+    },
+  );
+
+  const handleSubmit = () => {
+    if (actionsInQueueCount === 0 && !isLoading && !isWalking) {
+      if (input.trim() === "") {
+        return;
+      }
+      submit({
+        input,
+        prompt: generateWalkPrompt(runtime, input),
+      });
+    } else {
+      walk();
+    }
+  };
 
   const isCtrlHold = useKeyHold("Control");
-  const isPHold = useKeyHold("P");
   const isMHold = useKeyHold("M");
-  const isWHold = useKeyHold("W");
   const isMenuHold = isCtrlHold && isMHold;
-  const isWalkHold = isCtrlHold && isWHold;
 
   return (
     <AnimatePresence>
@@ -87,7 +127,7 @@ export function Panel({
         layout
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.4,
+          duration: 0.2,
           ease: "easeOut",
         }}
       >
@@ -99,7 +139,7 @@ export function Panel({
             </Button>
           </PanelPopup>
         </AnimatePresence>
-        <PanelInput />
+        <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
         <div className="w-full flex gap-1.5">
           <Button
             variant="ghost"
@@ -113,36 +153,65 @@ export function Panel({
             <span className="font-bold">vstaffs</span>
             <span className="font-bold">People. Believe.</span>
           </div>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <span className="font-brand">W</span>
-          </Button>
+          <Mouse>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "rounded-full",
+                isLoading && "bg-accent text-black",
+                isWalking && "bg-red-500 text-white",
+              )}
+            >
+              <span className="font-brand">W</span>
+            </Button>
+          </Mouse>
         </div>
       </motion.div>
     </AnimatePresence>
   );
 }
 
+export type PanelInputProps = React.ComponentProps<typeof Input> & {
+  input: string;
+  setInput: (input: string) => void;
+  onSubmit?: () => void;
+};
+
 export function PanelInput({
   className,
+  input,
+  setInput,
+  onSubmit,
   ...props
-}: React.ComponentProps<typeof Input>) {
-  const [inputValue, setInputValue] = useState("");
+}: PanelInputProps) {
   const [isExpanding, setIsExpanding] = useState(false);
-
-  useEffect(() => {
-    setIsExpanding(inputValue.length > 50);
-  }, [inputValue]);
+  const isTooLong = input.length > 50;
+  const isNewLine = input.includes("\n");
 
   return (
     <Textarea
+      id="walk-input"
       placeholder="Let's take a walk"
       className={cn(
         "w-full min-h-8 h-8 py-1 rounded-[16px] bg-background text-foreground resize-none",
         isExpanding && "h-16 rounded-[16px]",
       )}
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-      autoFocus
+      value={input}
+      onChange={(e) => {
+        setInput(e.target.value);
+        setIsExpanding(isTooLong || isNewLine);
+      }}
+      onKeyDown={(e) => {
+        if (e.key !== "Enter") return;
+
+        if (e.shiftKey) {
+          return;
+        }
+
+        e.preventDefault();
+        onSubmit?.();
+      }}
     />
   );
 }

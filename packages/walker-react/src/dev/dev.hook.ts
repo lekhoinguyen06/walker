@@ -64,6 +64,33 @@ export function useConciergeWalk({
   };
 }
 
+export type UseWalkProps = {
+  url: string;
+  noWalk?: boolean;
+};
+
+export function useWalk({ url, noWalk = false }: UseWalkProps) {
+  const runtime = useRuntime();
+  const logger = runtime.runtime.getLogger();
+  const query = useObject({
+    api: url + "/walk",
+    schema: ActionSchema.loose(),
+    onFinish: async (result) => {
+      runtime.runtime.addActions([ActionSchema.parse(result.object)]);
+      if (!noWalk) {
+        runtime.walk();
+      }
+    },
+    onError: (error) => {
+      logger.error(error);
+    },
+  });
+  return {
+    ...query,
+    ...runtime,
+  };
+}
+
 export function useScreenSize() {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");

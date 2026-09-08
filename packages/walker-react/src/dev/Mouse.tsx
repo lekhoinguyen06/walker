@@ -3,7 +3,11 @@ import { useMouseOffset } from "@/MouseProvider";
 import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
 
-export default function Mouse() {
+export type MouseProps = {
+  children: React.ReactNode;
+};
+
+export default function Mouse({ children }: MouseProps) {
   const { x: targetX, y: targetY } = useMouseOffset();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -34,8 +38,9 @@ export default function Mouse() {
               stiffness: 200,
               damping: 30,
             }}
-            className="aspect-square size-4 bg-foreground"
-          />
+          >
+            {children}
+          </motion.div>
         </div>
       </div>
     </Item>
