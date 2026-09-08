@@ -5,6 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { ChevronsDown, Menu, Repeat } from "lucide-react";
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
   type Dispatch,
@@ -61,6 +62,7 @@ export function Panel({
 }: PanelProps) {
   const [hiddenState, setHiddenState] = useState(hidden ?? true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef(null);
@@ -99,6 +101,20 @@ export function Panel({
     },
   );
 
+  useHotkey(
+    "Control+D",
+    () => {
+      if (selectedTab === "dev") {
+        setSelectedTab("menu");
+      } else {
+        setSelectedTab("dev");
+      }
+    },
+    {
+      enabled: !hiddenState,
+    },
+  );
+
   const handleSubmit = () => {
     if (actionsInQueueCount === 0 && !isLoading && !isWalking) {
       if (input.trim() === "") {
@@ -115,64 +131,72 @@ export function Panel({
 
   const isCtrlHold = useKeyHold("Control");
   const isMHold = useKeyHold("M");
-  const isMenuHold = isCtrlHold && isMHold;
+  const isMenuHold = useMemo(
+    () => isCtrlHold && isMHold,
+    [isCtrlHold, isMHold],
+  );
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className={cn(
-          panelVariants({ style, position, hidden: hiddenState, className }),
-        )}
-        ref={ref}
-        layout
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
-      >
-        <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
-        <AnimatePresence>
-          <PanelPopup isOpen={isPopupOpen}>
+    <div
+      className={cn(
+        panelVariants({ style, position, hidden: hiddenState, className }),
+      )}
+      ref={ref}
+    >
+      <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
+      <PanelPopup
+        isOpen={isPopupOpen}
+        selectedTab={selectedTab}
+        tabs={{
+          menu: (
             <Button variant="ghost" size="icon" className="rounded-full">
               <Repeat />
             </Button>
-          </PanelPopup>
-        </AnimatePresence>
-        <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
-        <motion.div
-          layout
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          className="w-full flex gap-1.5"
+          ),
+          dev: (
+            <>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Repeat />
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Repeat />
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Repeat />
+              </Button>
+            </>
+          ),
+        }}
+      ></PanelPopup>
+      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
+      <div className="w-full flex gap-1.5">
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn("rounded-full", isMenuHold && "bg-accent")}
+          onClick={() => setIsPopupOpen((prev) => !prev)}
         >
+          <Menu />
+        </Button>
+        <div className="w-full flex gap-3 items-center rounded-full px-3 bg-red-500">
+          <span className="font-bold">vstaffs</span>
+          <span className="font-bold">People. Believe.</span>
+        </div>
+        <Mouse>
           <Button
             variant="ghost"
             size="icon"
-            className={cn("rounded-full", isMenuHold && "bg-accent")}
-            onClick={() => setIsPopupOpen((prev) => !prev)}
+            className={cn(
+              "rounded-full",
+              isLoading && "bg-accent text-black",
+              isWalking && "bg-red-500 text-white",
+            )}
           >
-            <Menu />
+            <span className="font-brand">W</span>
           </Button>
-          <div className="w-full flex gap-3 items-center rounded-full px-3 bg-red-500">
-            <span className="font-bold">vstaffs</span>
-            <span className="font-bold">People. Believe.</span>
-          </div>
-          <Mouse>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "rounded-full",
-                isLoading && "bg-accent text-black",
-                isWalking && "bg-red-500 text-white",
-              )}
-            >
-              <span className="font-brand">W</span>
-            </Button>
-          </Mouse>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+        </Mouse>
+      </div>
+    </div>
   );
 }
 
@@ -198,36 +222,28 @@ export function PanelInput({
   }, [input]);
 
   return (
-    <motion.div
-      layout
-      transition={{
-        duration: 0.1,
-        ease: "easeOut",
+    <Textarea
+      id="walk-input"
+      placeholder="Let's take a walk"
+      className={cn(
+        "w-full min-h-none h-8 py-1 rounded-[16px] bg-background text-foreground resize-none shrink-0",
+        isExpanding && "h-16 rounded-[16px]",
+      )}
+      value={input}
+      onChange={(e) => {
+        setInput(e.target.value);
       }}
-    >
-      <Textarea
-        id="walk-input"
-        placeholder="Let's take a walk"
-        className={cn(
-          "w-full min-h-none h-8 py-1 rounded-[16px] bg-background text-foreground resize-none",
-          isExpanding && "h-16 rounded-[16px]",
-        )}
-        value={input}
-        onChange={(e) => {
-          setInput(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key !== "Enter") return;
+      onKeyDown={(e) => {
+        if (e.key !== "Enter") return;
 
-          if (e.shiftKey) {
-            return;
-          }
+        if (e.shiftKey) {
+          return;
+        }
 
-          e.preventDefault();
-          onSubmit?.();
-        }}
-      />
-    </motion.div>
+        e.preventDefault();
+        onSubmit?.();
+      }}
+    />
   );
 }
 
@@ -260,23 +276,30 @@ function PanelTag({ isHidden, setHidden }: PanelTagProps) {
 
 type PanelPopupProps = {
   isOpen?: boolean;
+  selectedTab: string;
+  tabs: { [key: string]: React.ReactNode };
   children?: React.ReactNode;
 };
 
-function PanelPopup({ isOpen = false, children }: PanelPopupProps) {
+function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <motion.div
-          className="w-full flex items-center overflow-x-scroll"
-          initial={{ y: 10, height: 0, opacity: 0 }}
-          animate={{ y: 0, height: "auto", opacity: 1 }}
-          exit={{ y: -10, height: 0, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          {children}
-        </motion.div>
+        <div>
+          <AnimatePresence>
+            <motion.div
+              key={selectedTab}
+              className="w-full flex items-center overflow-x-scroll"
+              initial={{ y: 6, height: 0, opacity: 0 }}
+              animate={{ y: 0, height: "auto", opacity: 1 }}
+              exit={{ y: -6, height: 0, opacity: 0 }}
+              transition={{ duration: 0.2, type: "keyframes" }}
+            >
+              {tabs[selectedTab]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }
