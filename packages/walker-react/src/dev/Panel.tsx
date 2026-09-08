@@ -140,7 +140,11 @@ export function Panel({
           </PanelPopup>
         </AnimatePresence>
         <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
-        <div className="w-full flex gap-1.5">
+        <motion.div
+          layout
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="w-full flex gap-1.5"
+        >
           <Button
             variant="ghost"
             size="icon"
@@ -166,7 +170,7 @@ export function Panel({
               <span className="font-brand">W</span>
             </Button>
           </Mouse>
-        </div>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
   );
@@ -189,30 +193,41 @@ export function PanelInput({
   const isTooLong = input.length > 50;
   const isNewLine = input.includes("\n");
 
+  useEffect(() => {
+    setIsExpanding(isTooLong || isNewLine);
+  }, [input]);
+
   return (
-    <Textarea
-      id="walk-input"
-      placeholder="Let's take a walk"
-      className={cn(
-        "w-full min-h-8 h-8 py-1 rounded-[16px] bg-background text-foreground resize-none",
-        isExpanding && "h-16 rounded-[16px]",
-      )}
-      value={input}
-      onChange={(e) => {
-        setInput(e.target.value);
-        setIsExpanding(isTooLong || isNewLine);
+    <motion.div
+      layout
+      transition={{
+        duration: 0.1,
+        ease: "easeOut",
       }}
-      onKeyDown={(e) => {
-        if (e.key !== "Enter") return;
+    >
+      <Textarea
+        id="walk-input"
+        placeholder="Let's take a walk"
+        className={cn(
+          "w-full min-h-none h-8 py-1 rounded-[16px] bg-background text-foreground resize-none",
+          isExpanding && "h-16 rounded-[16px]",
+        )}
+        value={input}
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter") return;
 
-        if (e.shiftKey) {
-          return;
-        }
+          if (e.shiftKey) {
+            return;
+          }
 
-        e.preventDefault();
-        onSubmit?.();
-      }}
-    />
+          e.preventDefault();
+          onSubmit?.();
+        }}
+      />
+    </motion.div>
   );
 }
 
@@ -254,10 +269,10 @@ function PanelPopup({ isOpen = false, children }: PanelPopupProps) {
       {isOpen && (
         <motion.div
           className="w-full flex items-center overflow-x-scroll"
-          initial={{ height: 0 }}
-          animate={{ height: "auto" }}
-          exit={{ height: 0 }}
-          transition={{ duration: 0.1 }}
+          initial={{ y: 10, height: 0, opacity: 0 }}
+          animate={{ y: 0, height: "auto", opacity: 1 }}
+          exit={{ y: -10, height: 0, opacity: 0 }}
+          transition={{ duration: 0.2 }}
         >
           {children}
         </motion.div>
