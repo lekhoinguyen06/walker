@@ -24,7 +24,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { useOnClickOutside } from "usehooks-ts";
+import { useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
@@ -185,10 +185,7 @@ export function Panel({
           >
             <Menu />
           </Button>
-          <div className="w-full flex gap-3 items-center rounded-full px-3 bg-red-500">
-            <span className="font-bold">vstaffs</span>
-            <span className="font-bold">People. Believe.</span>
-          </div>
+          <PanelSuggest />
           <Mouse>
             <Button
               variant="ghost"
@@ -371,5 +368,60 @@ export function UserMenu({ onDev }: MenuProps) {
         <Code />
       </Button>
     </>
+  );
+}
+
+type SuggestType = {
+  url: string;
+  alt: string;
+};
+
+type SuggestBuffer = SuggestType[];
+
+const suggestions: SuggestBuffer = [
+  {
+    url: "https://i.pinimg.com/1200x/a4/36/60/a43660b58cc3bc73a74891b5d3057fba.jpg",
+    alt: "Suggest",
+  },
+  {
+    url: "https://i.pinimg.com/736x/0e/d9/8c/0ed98cb79189661757777d66eca52437.jpg",
+    alt: "Suggest",
+  },
+  {
+    url: "https://i.pinimg.com/originals/fe/63/ae/fe63ae16020f4e852b818dc3d1452e26.gif",
+    alt: "Suggest",
+  },
+  {
+    url: "https://i.pinimg.com/originals/0d/bb/34/0dbb3414f38ec6a65d10d88225d71cb2.gif",
+    alt: "Suggest",
+  },
+];
+
+export function PanelSuggest() {
+  const [count, setCount] = useState<number>(0);
+  const [delay, setDelay] = useState<number>(10000);
+  const [isPlaying, setPlaying] = useState<boolean>(true);
+
+  useInterval(
+    () => {
+      if (count >= suggestions.length - 1) {
+        setCount(0);
+      } else {
+        setCount(count + 1);
+      }
+    },
+    isPlaying ? delay : null,
+  );
+
+  return (
+    <div className="w-full h-8 flex items-center justify-center rounded-full bg-muted overflow-hidden">
+      {suggestions[count] && (
+        <img
+          src={suggestions[count].url}
+          alt={suggestions[count].alt}
+          className="size-full object-cover"
+        />
+      )}
+    </div>
   );
 }
