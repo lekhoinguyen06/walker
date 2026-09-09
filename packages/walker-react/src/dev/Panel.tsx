@@ -2,7 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronsDown, Menu, Repeat } from "lucide-react";
+import {
+  Brackets,
+  ChevronLeft,
+  ChevronsDown,
+  Code,
+  History,
+  Layers,
+  ListCheck,
+  Map,
+  Menu,
+  MessageCircle,
+  MousePointer,
+  Repeat,
+} from "lucide-react";
 import {
   useEffect,
   useMemo,
@@ -36,8 +49,10 @@ const panelVariants = cva(
         right: "fixed bottom-6 right-6",
       },
       hidden: {
-        true: "translate-y-[calc(100%_+_24px)]",
-        false: "translate-y-0",
+        // true: "translate-y-[calc(100%_+_24px)]",
+        // false: "translate-y-0",
+        true: "",
+        false: "",
       },
     },
     defaultVariants: {
@@ -137,66 +152,59 @@ export function Panel({
   );
 
   return (
-    <div
-      className={cn(
-        panelVariants({ style, position, hidden: hiddenState, className }),
-      )}
-      ref={ref}
-    >
-      <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
-      <PanelPopup
-        isOpen={isPopupOpen}
-        selectedTab={selectedTab}
-        tabs={{
-          menu: (
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Repeat />
-            </Button>
-          ),
-          dev: (
-            <>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Repeat />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Repeat />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Repeat />
-              </Button>
-            </>
-          ),
+    <AnimatePresence>
+      <motion.div
+        ref={ref}
+        initial={{ y: 0 }}
+        animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
+        exit={{ y: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: "anticipate",
         }}
-      ></PanelPopup>
-      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
-      <div className="w-full flex gap-1.5">
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn("rounded-full", isMenuHold && "bg-accent")}
-          onClick={() => setIsPopupOpen((prev) => !prev)}
-        >
-          <Menu />
-        </Button>
-        <div className="w-full flex gap-3 items-center rounded-full px-3 bg-red-500">
-          <span className="font-bold">vstaffs</span>
-          <span className="font-bold">People. Believe.</span>
-        </div>
-        <Mouse>
+        className={cn(
+          panelVariants({ style, position, hidden: hiddenState, className }),
+        )}
+      >
+        <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
+        <PanelPopup
+          isOpen={isPopupOpen}
+          selectedTab={selectedTab}
+          tabs={{
+            menu: <UserMenu onDev={() => setSelectedTab("dev")} />,
+            dev: <DevMenu onReturn={() => setSelectedTab("menu")} />,
+          }}
+        ></PanelPopup>
+        <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
+        <div className="w-full flex gap-1.5">
           <Button
             variant="ghost"
             size="icon"
-            className={cn(
-              "rounded-full",
-              isLoading && "bg-accent text-black",
-              isWalking && "bg-red-500 text-white",
-            )}
+            className={cn("rounded-full", isMenuHold && "bg-accent")}
+            onClick={() => setIsPopupOpen((prev) => !prev)}
           >
-            <span className="font-brand">W</span>
+            <Menu />
           </Button>
-        </Mouse>
-      </div>
-    </div>
+          <div className="w-full flex gap-3 items-center rounded-full px-3 bg-red-500">
+            <span className="font-bold">vstaffs</span>
+            <span className="font-bold">People. Believe.</span>
+          </div>
+          <Mouse>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "rounded-full",
+                isLoading && "bg-accent text-black",
+                isWalking && "bg-red-500 text-white",
+              )}
+            >
+              <span className="font-brand">W</span>
+            </Button>
+          </Mouse>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -283,23 +291,85 @@ type PanelPopupProps = {
 
 function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
   return (
+    <div className={cn(isOpen ? "" : "-mb-1.5")}>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key={selectedTab}
+            className="w-full flex items-center overflow-x-scroll"
+            initial={{ y: "100%", height: 0, opacity: 0, scaleY: 0.8 }}
+            animate={{
+              y: 0,
+              height: "auto",
+              opacity: 1,
+              scaleY: 1,
+            }}
+            exit={{ y: "-100%", height: 0, opacity: 0, scaleY: 0.8 }}
+            transition={{ duration: 0.2, type: "keyframes" }}
+          >
+            {tabs[selectedTab]}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+type DevMenuProps = {
+  onReturn: () => void;
+};
+
+export function DevMenu({ onReturn }: DevMenuProps) {
+  return (
     <>
-      {isOpen && (
-        <div>
-          <AnimatePresence>
-            <motion.div
-              key={selectedTab}
-              className="w-full flex items-center overflow-x-scroll"
-              initial={{ y: 6, height: 0, opacity: 0 }}
-              animate={{ y: 0, height: "auto", opacity: 1 }}
-              exit={{ y: -6, height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, type: "keyframes" }}
-            >
-              {tabs[selectedTab]}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      )}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={onReturn}
+      >
+        <ChevronLeft />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <MessageCircle />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <Brackets />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <Layers />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <History />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <ListCheck />
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <MousePointer />
+      </Button>
+    </>
+  );
+}
+
+type MenuProps = {
+  onDev: () => void;
+};
+
+export function UserMenu({ onDev }: MenuProps) {
+  return (
+    <>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <Repeat />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={onDev}
+      >
+        <Code />
+      </Button>
     </>
   );
 }
