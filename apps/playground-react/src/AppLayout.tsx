@@ -18,11 +18,7 @@ function AppLayout() {
       >
         <Toaster />
       </Item>
-      <Panel
-        style="primary"
-        hidden={false}
-        url={process.env.VITE_WALK_API_URL}
-      />
+      <Panel style="primary" url={process.env.VITE_WALK_API_URL} />
     </div>
   );
 }

@@ -33,6 +33,7 @@ import { useWalk } from "./dev.hook";
 import { generateWalkPrompt } from "./dev.prompt";
 import type { set } from "zod/v3";
 import { useWalkInputStore } from "./dev.store";
+import { Chat } from "./Chat";
 
 const panelVariants = cva(
   "relative z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -48,17 +49,10 @@ const panelVariants = cva(
         left: "fixed bottom-6 left-6",
         right: "fixed bottom-6 right-6",
       },
-      hidden: {
-        // true: "translate-y-[calc(100%_+_24px)]",
-        // false: "translate-y-0",
-        true: "",
-        false: "",
-      },
     },
     defaultVariants: {
       style: "primary",
       position: "bottom",
-      hidden: true,
     },
   },
 );
@@ -71,13 +65,13 @@ export type PanelProps = VariantProps<typeof panelVariants> & {
 export function Panel({
   style = "primary",
   position = "bottom",
-  hidden = true,
   url,
   className,
 }: PanelProps) {
-  const [hiddenState, setHiddenState] = useState(hidden ?? true);
+  const [hiddenState, setHiddenState] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef(null);
@@ -162,17 +156,24 @@ export function Panel({
           duration: 0.2,
           ease: "anticipate",
         }}
-        className={cn(
-          panelVariants({ style, position, hidden: hiddenState, className }),
-        )}
+        className={cn(panelVariants({ style, position, className }))}
       >
+        <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
         <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
         <PanelPopup
           isOpen={isPopupOpen}
           selectedTab={selectedTab}
           tabs={{
             menu: <UserMenu onDev={() => setSelectedTab("dev")} />,
-            dev: <DevMenu onReturn={() => setSelectedTab("menu")} />,
+            dev: (
+              <DevMenu
+                onReturn={() => setSelectedTab("menu")}
+                onChatClick={() => {
+                  setIsChatOpen(true);
+                  setHiddenState(true);
+                }}
+              />
+            ),
           }}
         ></PanelPopup>
         <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
@@ -314,9 +315,10 @@ function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
 
 type DevMenuProps = {
   onReturn: () => void;
+  onChatClick: () => void;
 };
 
-export function DevMenu({ onReturn }: DevMenuProps) {
+export function DevMenu({ onReturn, onChatClick }: DevMenuProps) {
   return (
     <>
       <Button
@@ -327,7 +329,12 @@ export function DevMenu({ onReturn }: DevMenuProps) {
       >
         <ChevronLeft />
       </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={onChatClick}
+      >
         <MessageCircle />
       </Button>
       <Button variant="ghost" size="icon" className="rounded-full">
