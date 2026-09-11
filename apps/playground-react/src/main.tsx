@@ -12,9 +12,9 @@ import { SelectPage } from "./features/select/page";
 import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
 import { ToastPage } from "./features/toast/page";
-import { toast } from "./components/ui/toast";
 import type { HookPropsType } from "walker-react/core";
 import type { HookResponseType } from "walker-react/core";
+import { PanelToastProvider, usePanelToast } from "walker-react/dev";
 
 const router = createBrowserRouter([
   {
@@ -57,14 +57,26 @@ const router = createBrowserRouter([
   },
 ]);
 
-async function message(props: HookPropsType): HookResponseType {
-  toast.add({
-    title: props.action.message,
-  });
+function Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <StrictMode>
+      <PanelToastProvider>{children}</PanelToastProvider>
+    </StrictMode>
+  );
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+function App() {
+  const { pushToast } = usePanelToast();
+
+  const messageHook = async function message(
+    props: HookPropsType,
+  ): HookResponseType {
+    pushToast({
+      type: "walking",
+      message: props.action.message,
+    });
+  };
+  return (
     <RuntimeProvider
       config={{
         app: {
@@ -72,7 +84,7 @@ createRoot(document.getElementById("root")!).render(
           description: "The Walker library's playground for React",
         },
         hooks: {
-          onMessage: message,
+          onMessage: messageHook,
         },
         config: {
           verbose: true,
@@ -81,5 +93,11 @@ createRoot(document.getElementById("root")!).render(
     >
       <RouterProvider router={router} />
     </RuntimeProvider>
-  </StrictMode>,
+  );
+}
+
+createRoot(document.getElementById("root")!).render(
+  <Provider>
+    <App />
+  </Provider>,
 );

@@ -17,15 +17,18 @@ import {
   Repeat,
 } from "lucide-react";
 import {
+  createContext,
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
   type Dispatch,
+  type ReactNode,
   type RefObject,
   type SetStateAction,
 } from "react";
-import { useInterval, useOnClickOutside } from "usehooks-ts";
+import { useCountdown, useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
@@ -44,14 +47,9 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 
 const panelVariants = cva(
-  "relative z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
+  "z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl",
   {
     variants: {
-      style: {
-        primary: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-        glass: "bg-background/80 text-foreground backdrop-blur-md",
-      },
       position: {
         bottom: "fixed bottom-6 left-1/2 -translate-x-1/2",
         left: "fixed bottom-6 left-6",
@@ -59,8 +57,23 @@ const panelVariants = cva(
       },
     },
     defaultVariants: {
-      style: "primary",
       position: "bottom",
+    },
+  },
+);
+
+const panelContentVariants = cva(
+  "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
+  {
+    variants: {
+      style: {
+        primary: "bg-primary text-primary-foreground",
+        secondary: "bg-secondary text-secondary-foreground",
+        glass: "bg-background/80 text-foreground backdrop-blur-md",
+      },
+    },
+    defaultVariants: {
+      style: "primary",
     },
   },
 );
@@ -70,13 +83,60 @@ export type PanelProps = VariantProps<typeof panelVariants> & {
   className?: string;
 };
 
-export function Panel({
-  style = "primary",
-  position = "bottom",
+export function Panel({ position = "bottom", url, className }: PanelProps) {
+  const [hiddenState, setHiddenState] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  function handleClickOutside() {
+    setHiddenState(true);
+  }
+
+  useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        ref={ref}
+        initial={{ y: 0 }}
+        animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
+        exit={{ y: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: "anticipate",
+        }}
+        className={cn(panelVariants({ position, className }))}
+      >
+        {/* Absolute componnents */}
+        <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+        <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
+
+        {/* Flex-col components */}
+        <PanelToast isHidden={hiddenState} setIsHidden={setHiddenState} />
+        <PanelContent
+          url={url}
+          isHidden={hiddenState}
+          setIsHidden={setHiddenState}
+        />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export type PanelContentProps = VariantProps<typeof panelContentVariants> & {
+  url: string;
+  className?: string;
+  isHidden: boolean;
+  setIsHidden: Dispatch<SetStateAction<boolean>>;
+};
+
+export function PanelContent({
+  style,
   url,
   className,
-}: PanelProps) {
-  const [hiddenState, setHiddenState] = useState(false);
+  isHidden,
+  setIsHidden,
+}: PanelContentProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -89,13 +149,13 @@ export function Panel({
     });
 
   function handleClickOutside() {
-    setHiddenState(true);
+    setIsHidden(true);
   }
 
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   useHotkey("Control+P", () => {
-    setHiddenState((prev) => !prev);
+    setIsHidden((prev) => !prev);
   });
 
   useHotkey(
@@ -104,7 +164,7 @@ export function Panel({
       setIsPopupOpen((prev) => !prev);
     },
     {
-      enabled: !hiddenState,
+      enabled: !isHidden,
     },
   );
 
@@ -114,7 +174,7 @@ export function Panel({
       handleSubmit();
     },
     {
-      enabled: !hiddenState,
+      enabled: !isHidden,
     },
   );
 
@@ -128,10 +188,11 @@ export function Panel({
       }
     },
     {
-      enabled: !hiddenState,
+      enabled: !isHidden,
     },
   );
 
+  const { pushToast } = usePanelToast();
   const handleSubmit = () => {
     if (actionsInQueueCount === 0 && !isLoading && !isWalking) {
       if (input.trim() === "") {
@@ -142,6 +203,11 @@ export function Panel({
         prompt: generateWalkPrompt(runtime, input),
       });
     } else {
+      console.log("Hello");
+      pushToast({
+        type: "info",
+        message: "Manual walk",
+      });
       walk();
     }
   };
@@ -154,63 +220,50 @@ export function Panel({
   );
 
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={ref}
-        initial={{ y: 0 }}
-        animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
-        exit={{ y: 0 }}
-        transition={{
-          duration: 0.2,
-          ease: "anticipate",
+    <div className={cn(panelContentVariants({ style, className }))}>
+      <PanelPopup
+        isOpen={isPopupOpen}
+        selectedTab={selectedTab}
+        tabs={{
+          menu: <UserMenu onDev={() => setSelectedTab("dev")} />,
+          dev: (
+            <DevMenu
+              onReturn={() => setSelectedTab("menu")}
+              onChatClick={() => {
+                setIsChatOpen(true);
+                setIsHidden(true);
+              }}
+            />
+          ),
         }}
-        className={cn(panelVariants({ style, position, className }))}
-      >
-        <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-        <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
-        <PanelPopup
-          isOpen={isPopupOpen}
-          selectedTab={selectedTab}
-          tabs={{
-            menu: <UserMenu onDev={() => setSelectedTab("dev")} />,
-            dev: (
-              <DevMenu
-                onReturn={() => setSelectedTab("menu")}
-                onChatClick={() => {
-                  setIsChatOpen(true);
-                  setHiddenState(true);
-                }}
-              />
-            ),
-          }}
-        ></PanelPopup>
-        <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
-        <div className="w-full flex gap-1.5">
+      ></PanelPopup>
+      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
+      <div className="w-full flex gap-1.5">
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn("rounded-full", isMenuHold && "bg-accent")}
+          onClick={() => setIsPopupOpen((prev) => !prev)}
+        >
+          <Menu />
+        </Button>
+        <PanelSuggest />
+        <Mouse>
           <Button
             variant="ghost"
             size="icon"
-            className={cn("rounded-full", isMenuHold && "bg-accent")}
-            onClick={() => setIsPopupOpen((prev) => !prev)}
+            className={cn(
+              "rounded-full",
+              isLoading && "bg-accent text-black",
+              isWalking && "bg-red-500 text-white",
+            )}
+            onClick={handleSubmit}
           >
-            <Menu />
+            <span className="font-brand">W</span>
           </Button>
-          <PanelSuggest />
-          <Mouse>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "rounded-full",
-                isLoading && "bg-accent text-black",
-                isWalking && "bg-red-500 text-white",
-              )}
-            >
-              <span className="font-brand">W</span>
-            </Button>
-          </Mouse>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        </Mouse>
+      </div>
+    </div>
   );
 }
 
@@ -268,11 +321,11 @@ type PanelTagProps = {
 
 function PanelTag({ isHidden, setHidden }: PanelTagProps) {
   return (
-    <div className="absolute top-0 left-1/2 translate-y-[-96%] -translate-x-1/2 shadow-lg">
+    <div className="absolute top-0 left-1/2 -translate-y-full -translate-x-1/2">
       <Button
         variant="default"
         size="icon"
-        className="rounded-none"
+        className="rounded-none border-none shadow-2xl"
         onClick={() => {
           setHidden((prev) => !prev);
         }}
@@ -420,12 +473,6 @@ type MenuProps = {
 export function UserMenu({ onDev }: MenuProps) {
   return (
     <TooltipProvider timeout={100} delay={100}>
-      {/*<Tooltip>
-        <TooltipTrigger></TooltipTrigger>
-        <TooltipContent>
-          <p>Clear</p>
-        </TooltipContent>
-      </Tooltip>*/}
       <Tooltip>
         <TooltipTrigger>
           <Button variant="ghost" size="icon" className="rounded-full">
@@ -507,5 +554,125 @@ export function PanelSuggest() {
         />
       )}
     </div>
+  );
+}
+
+const panelToastVariants = cva(
+  "w-full flex flex-col pb-6 -mb-6 rounded-t-[24px]",
+  {
+    variants: {
+      type: {
+        walking: "bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50",
+        info: "bg-blue-50 text-blue-900 dark:bg-blue-950 dark:text-blue-50",
+        success:
+          "bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-50",
+        warn: "bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-50",
+        error: "bg-destructive/10 text-destructive dark:bg-destructive/90",
+      },
+    },
+    defaultVariants: {
+      type: "info",
+    },
+  },
+);
+
+type PanelToastProps = {
+  isHidden: boolean;
+  setIsHidden: Dispatch<SetStateAction<boolean>>;
+};
+
+export function PanelToast({ isHidden, setIsHidden }: PanelToastProps) {
+  const { toast } = usePanelToast();
+  useEffect(() => {
+    if (isHidden) {
+      setIsHidden(false);
+    }
+  }, [toast]);
+  return (
+    <AnimatePresence>
+      {toast && (
+        <motion.div
+          initial={{ y: "100%", height: 0, opacity: 0 }}
+          animate={{
+            y: 0,
+            height: "auto",
+            opacity: 1,
+          }}
+          exit={{ y: "100%", height: 0, opacity: 0 }}
+          transition={{ duration: 1, type: "spring" }}
+          className={cn(panelToastVariants({ type: toast.type }))}
+        >
+          <div className="w-full flex items-center px-6 min-h-8">
+            <span
+              className={cn(
+                "text-sm",
+                toast.type === "walking" ? "shimmer" : "",
+              )}
+            >
+              {toast.message}
+            </span>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+type PanelToastItemType = {
+  type: VariantProps<typeof panelToastVariants>["type"];
+  message: string;
+  duration?: number;
+};
+
+type PanelToastContextType = {
+  toast: PanelToastItemType | null;
+  pushToast: (toast: PanelToastItemType | null) => void;
+};
+
+const PanelToastContext = createContext<PanelToastContextType | null>(null);
+
+export function usePanelToast() {
+  const cxt = useContext(PanelToastContext);
+  if (!cxt) {
+    throw new Error("usePanelToast must be used within a PanelToastProvider");
+  }
+  return cxt;
+}
+
+export function PanelToastProvider({ children }: { children: ReactNode }) {
+  const [toast, setToast] = useState<PanelToastItemType | null>(null);
+  const [duration, setDuration] = useState<number>(3);
+
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
+    countStart: duration,
+    intervalMs: 1000,
+  });
+
+  const pushToast = (toast: PanelToastItemType | null) => {
+    resetCountdown();
+    setToast(toast);
+  };
+
+  useEffect(() => {
+    if (count === 0) {
+      setToast(null);
+    }
+  }, [count]);
+
+  useEffect(() => {
+    if (toast) {
+      if (toast.duration) {
+        setDuration(toast.duration);
+      } else {
+        setDuration(3);
+      }
+      startCountdown();
+    }
+  }, [toast]);
+
+  return (
+    <PanelToastContext.Provider value={{ toast, pushToast }}>
+      {children}
+    </PanelToastContext.Provider>
   );
 }

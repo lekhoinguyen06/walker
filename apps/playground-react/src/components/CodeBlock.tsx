@@ -7,6 +7,7 @@ import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
 import { useRuntime } from "walker-react";
+import { usePanelToast } from "walker-react/dev";
 
 export type RawCode = {
   lang: "tsx" | "json";
@@ -24,22 +25,20 @@ function Code({ raw }: CodeProps) {
     "\n",
   );
   const { runtime } = useRuntime();
+  const { pushToast } = usePanelToast();
 
   const handleCopy = (text: string) => () => {
     copy(text)
       .then(() => {
-        toast.add({
-          type: "success",
-          title: "Copied to clipboard",
-          timeout: 2000,
+        pushToast({
+          message: "Copied to clipboard",
+          type: "info",
         });
       })
-      .catch((error) => {
-        console.error("Failed to copy", error);
-        toast.add({
+      .catch(() => {
+        pushToast({
+          message: "Failed to copy",
           type: "error",
-          title: "Failed to copy",
-          timeout: 2000,
         });
       });
   };
@@ -80,17 +79,14 @@ function Code({ raw }: CodeProps) {
             onClick={() => {
               try {
                 runtime.addRawActions(raw.content.trim());
-                toast.add({
-                  type: "success",
-                  title: "Walk loaded. Press key Ctrl + W to start the walk.",
-                  timeout: 2000,
+                pushToast({
+                  type: "info",
+                  message: "Walk loaded. Press key Ctrl + W to start the walk.",
                 });
               } catch (error) {
-                console.error("Failed to execute rawWalk", error);
-                toast.add({
+                pushToast({
                   type: "error",
-                  title: "Failed to load walk",
-                  timeout: 2000,
+                  message: "Failed to load walk",
                 });
               }
             }}
