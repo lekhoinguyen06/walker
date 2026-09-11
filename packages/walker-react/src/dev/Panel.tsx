@@ -35,6 +35,13 @@ import { generateWalkPrompt } from "./dev.prompt";
 import type { set } from "zod/v3";
 import { useWalkInputStore } from "./dev.store";
 import { Chat } from "./Chat";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Kbd } from "@/components/ui/kbd";
 
 const panelVariants = cva(
   "relative z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -321,39 +328,88 @@ type DevMenuProps = {
 
 export function DevMenu({ onReturn, onChatClick }: DevMenuProps) {
   return (
-    <>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={onReturn}
-      >
-        <ChevronLeft />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={onChatClick}
-      >
-        <MessageCircle />
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Brackets />
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Layers />
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <History />
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <ListCheck />
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <MousePointer />
-      </Button>
-    </>
+    <TooltipProvider timeout={100} delay={100}>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onReturn}
+          >
+            <ChevronLeft />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Return to menu</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onChatClick}
+          >
+            <MessageCircle />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open chat panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Brackets />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open manual input panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Layers />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open stack panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <History />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open history panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <ListCheck />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open test panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <MousePointer />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Enable interactive inspection</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -363,19 +419,39 @@ type MenuProps = {
 
 export function UserMenu({ onDev }: MenuProps) {
   return (
-    <>
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Repeat />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={onDev}
-      >
-        <Code />
-      </Button>
-    </>
+    <TooltipProvider timeout={100} delay={100}>
+      {/*<Tooltip>
+        <TooltipTrigger></TooltipTrigger>
+        <TooltipContent>
+          <p>Clear</p>
+        </TooltipContent>
+      </Tooltip>*/}
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Repeat />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Switch to loop mode</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onDev}
+          >
+            <Code />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Developer menu</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
