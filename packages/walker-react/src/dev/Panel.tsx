@@ -14,6 +14,8 @@ import {
   Menu,
   MessageCircle,
   MousePointer,
+  PanelBottom,
+  PanelLeft,
   Repeat,
 } from "lucide-react";
 import {
@@ -35,7 +37,6 @@ import { Textarea } from "@/components/ui/textarea";
 import Mouse from "./Mouse";
 import { useWalk } from "./dev.hook";
 import { generateWalkPrompt } from "./dev.prompt";
-import type { set } from "zod/v3";
 import { useWalkInputStore } from "./dev.store";
 import { Chat } from "./Chat";
 import {
@@ -44,16 +45,71 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Kbd } from "@/components/ui/kbd";
+import { create } from "zustand";
+
+const PANEL_POSITION = {
+  LEFT: "left",
+  RIGHT: "right",
+  BOTTOM: "bottom",
+} as const;
+
+type PanelPosition = (typeof PANEL_POSITIONS)[number];
+
+const PANEL_POSITIONS = [
+  PANEL_POSITION.LEFT,
+  PANEL_POSITION.RIGHT,
+  PANEL_POSITION.BOTTOM,
+] as const;
+
+function togglePanelPosition(position: PanelPosition): PanelPosition {
+  const index = PANEL_POSITIONS.indexOf(position);
+  return PANEL_POSITIONS[(index + 1) % PANEL_POSITIONS.length] as PanelPosition;
+}
+
+type PanelStoreType = {
+  url: string;
+
+  setUrl: (url: string) => void;
+
+  // Variants
+  position: VariantProps<typeof panelVariants>["position"];
+  style: VariantProps<typeof panelContentVariants>["style"];
+  isHidden: boolean;
+
+  setPosition: (
+    position: VariantProps<typeof panelVariants>["position"],
+  ) => void;
+  setStyle: (style: VariantProps<typeof panelContentVariants>["style"]) => void;
+  setIsHidden: (isHidden: boolean) => void;
+
+  // Constructor
+  setStore: (state: Partial<PanelStoreType>) => void;
+};
+
+const usePanelStore = create<PanelStoreType>((set) => ({
+  setStore: (state: Partial<PanelStoreType>) => set(state),
+
+  url: "",
+  setUrl: (url: string) => set({ url }),
+
+  position: "bottom",
+  setPosition: (position: VariantProps<typeof panelVariants>["position"]) =>
+    set({ position }),
+  style: "primary",
+  setStyle: (style: VariantProps<typeof panelContentVariants>["style"]) =>
+    set({ style }),
+  isHidden: false,
+  setIsHidden: (isHidden: boolean) => set({ isHidden }),
+}));
 
 const panelVariants = cva(
   "z-999999 flex flex-col w-full max-w-[90vw] sm:max-w-xl",
   {
     variants: {
       position: {
-        bottom: "fixed bottom-6 left-1/2 -translate-x-1/2",
-        left: "fixed bottom-6 left-6",
-        right: "fixed bottom-6 right-6",
+        [PANEL_POSITION.BOTTOM]: "fixed left-1/2 -translate-x-1/2 bottom-6",
+        [PANEL_POSITION.LEFT]: "fixed left-6 bottom-6",
+        [PANEL_POSITION.RIGHT]: "fixed right-6 bottom-6",
       },
     },
     defaultVariants: {
@@ -79,62 +135,71 @@ const panelContentVariants = cva(
 );
 
 export type PanelProps = VariantProps<typeof panelVariants> & {
+  hidden?: boolean;
   url: string;
   className?: string;
 };
 
-export function Panel({ position = "bottom", url, className }: PanelProps) {
-  const [hiddenState, setHiddenState] = useState(false);
+export function Panel({
+  position = "bottom",
+  url,
+  hidden,
+  className,
+}: PanelProps) {
+  const {
+    position: positionState,
+    isHidden: hiddenState,
+    setIsHidden,
+    setStore,
+  } = usePanelStore();
+
   const ref = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setStore({ position, url, isHidden: hidden });
+  }, [position, url, hidden, setStore]);
+
   function handleClickOutside() {
-    setHiddenState(true);
+    setIsHidden(true);
   }
 
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={ref}
-        initial={{ y: 0 }}
-        animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
-        exit={{ y: 0 }}
-        transition={{
-          duration: 0.2,
-          ease: "anticipate",
-        }}
-        className={cn(panelVariants({ position, className }))}
-      >
-        {/* Absolute componnents */}
-        <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
+    <motion.div
+      layout
+      ref={ref}
+      transition={{
+        duration: 0.2,
+        ease: "anticipate",
+      }}
+      className={cn(panelVariants({ position: positionState, className }))}
+    >
+      <AnimatePresence>
+        <motion.div
+          initial={{ y: 0 }}
+          animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
+          exit={{ y: 0 }}
+          transition={{
+            duration: 0.2,
+            ease: "anticipate",
+          }}
+        >
+          {/* Absolute componnents */}
+          <PanelTag />
 
-        {/* Flex-col components */}
-        <PanelToast isHidden={hiddenState} setIsHidden={setHiddenState} />
-        <PanelContent
-          url={url}
-          isHidden={hiddenState}
-          setIsHidden={setHiddenState}
-        />
-      </motion.div>
-    </AnimatePresence>
+          {/* Flex-col components */}
+          <PanelToast />
+          <PanelContent />
+        </motion.div>
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
-export type PanelContentProps = VariantProps<typeof panelContentVariants> & {
-  url: string;
-  className?: string;
-  isHidden: boolean;
-  setIsHidden: Dispatch<SetStateAction<boolean>>;
-};
+export function PanelContent({ className }: { className?: string }) {
+  const { isHidden, setIsHidden, url, style } = usePanelStore();
 
-export function PanelContent({
-  style,
-  url,
-  className,
-  isHidden,
-  setIsHidden,
-}: PanelContentProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -145,7 +210,6 @@ export function PanelContent({
     useWalk({
       url,
     });
-
   function handleClickOutside() {
     setIsHidden(true);
   }
@@ -153,7 +217,7 @@ export function PanelContent({
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   useHotkey("Control+P", () => {
-    setIsHidden((prev) => !prev);
+    setIsHidden(!isHidden);
   });
 
   useHotkey(
@@ -313,12 +377,8 @@ export function PanelInput({
   );
 }
 
-type PanelTagProps = {
-  isHidden: boolean;
-  setHidden: Dispatch<SetStateAction<boolean>>;
-};
-
-function PanelTag({ isHidden, setHidden }: PanelTagProps) {
+function PanelTag() {
+  const { isHidden, setIsHidden } = usePanelStore();
   return (
     <div className="absolute top-0 left-1/2 -translate-y-full -translate-x-1/2">
       <Button
@@ -326,7 +386,7 @@ function PanelTag({ isHidden, setHidden }: PanelTagProps) {
         size="icon"
         className="rounded-none border-none shadow-2xl"
         onClick={() => {
-          setHidden((prev) => !prev);
+          setIsHidden(!isHidden);
         }}
       >
         <motion.div
@@ -470,6 +530,7 @@ type MenuProps = {
 };
 
 export function UserMenu({ onDev }: MenuProps) {
+  const { position, setPosition } = usePanelStore();
   return (
     <TooltipProvider timeout={100} delay={100}>
       <Tooltip>
@@ -495,6 +556,23 @@ export function UserMenu({ onDev }: MenuProps) {
         </TooltipTrigger>
         <TooltipContent>
           <p>Developer menu</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => {
+              setPosition(togglePanelPosition(position));
+            }}
+          >
+            <PanelBottom />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Toggle panel position</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -575,12 +653,8 @@ const panelToastVariants = cva(
   },
 );
 
-type PanelToastProps = {
-  isHidden: boolean;
-  setIsHidden: Dispatch<SetStateAction<boolean>>;
-};
-
-export function PanelToast({ isHidden, setIsHidden }: PanelToastProps) {
+export function PanelToast() {
+  const { isHidden, setIsHidden } = usePanelStore();
   const { toast } = usePanelToast();
   useEffect(() => {
     if (isHidden) {

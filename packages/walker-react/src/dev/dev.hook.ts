@@ -4,6 +4,7 @@ import { ActionSchema } from "walker-core";
 import { DefaultChatTransport } from "ai";
 import { toast } from "@/components/ui/toast";
 import { useMediaQuery } from "usehooks-ts";
+import { usePanelToast } from "./Panel";
 
 export function useConciergeChat() {
   return useChat({
@@ -71,6 +72,7 @@ export type UseWalkProps = {
 
 export function useWalk({ url, noWalk = false }: UseWalkProps) {
   const runtime = useRuntime();
+  const { toast, pushToast } = usePanelToast();
   const logger = runtime.runtime.getLogger();
   const query = useObject({
     api: url + "/walk",
@@ -82,6 +84,10 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
       }
     },
     onError: (error) => {
+      pushToast({
+        type: "error",
+        message: error.message,
+      });
       logger.error(error);
     },
   });
