@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
 
 export type MouseProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export default function Mouse({ children }: MouseProps) {

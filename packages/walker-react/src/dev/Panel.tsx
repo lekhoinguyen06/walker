@@ -22,6 +22,7 @@ import {
   useRef,
   useState,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
 } from "react";
 import { useInterval, useOnClickOutside } from "usehooks-ts";
@@ -74,7 +75,7 @@ export function Panel({
   const [isChatOpen, setIsChatOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
     useWalk({
       url,
@@ -84,7 +85,7 @@ export function Panel({
     setHiddenState(true);
   }
 
-  useOnClickOutside(ref, handleClickOutside);
+  useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   useHotkey("Control+P", () => {
     setHiddenState((prev) => !prev);
