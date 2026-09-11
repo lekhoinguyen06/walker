@@ -85,7 +85,6 @@ export type PanelProps = VariantProps<typeof panelVariants> & {
 
 export function Panel({ position = "bottom", url, className }: PanelProps) {
   const [hiddenState, setHiddenState] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   function handleClickOutside() {
@@ -108,7 +107,6 @@ export function Panel({ position = "bottom", url, className }: PanelProps) {
         className={cn(panelVariants({ position, className }))}
       >
         {/* Absolute componnents */}
-        <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
         <PanelTag isHidden={hiddenState} setHidden={setHiddenState} />
 
         {/* Flex-col components */}
@@ -203,7 +201,6 @@ export function PanelContent({
         prompt: generateWalkPrompt(runtime, input),
       });
     } else {
-      console.log("Hello");
       pushToast({
         type: "info",
         message: "Manual walk",
@@ -221,6 +218,8 @@ export function PanelContent({
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
+      <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+
       <PanelPopup
         isOpen={isPopupOpen}
         selectedTab={selectedTab}
