@@ -1,5 +1,5 @@
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
+import { useRef, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { useRuntime } from "@/RuntimeProvider";
 import {
@@ -11,6 +11,15 @@ import {
 } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 import { useDarkMode } from "usehooks-ts";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { RefreshCcw } from "lucide-react";
+import { usePanelToast } from "./Panel";
 
 const defaultValue = `
 [
@@ -158,10 +167,16 @@ const defaultValue = `
 ]
 `;
 
-export function Input() {
+export type InputProps = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export function Input({ isOpen, setIsOpen }: InputProps) {
   const { runtime } = useRuntime();
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();
+  const { pushToast } = usePanelToast();
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
@@ -170,35 +185,33 @@ export function Input() {
   function showValue() {
     try {
       runtime.addRawActions(editorRef.current.getValue());
-      toast.add({
-        title: "Success",
-        description: "Walk loaded. Press key '0' to start walking.",
+      pushToast({
         type: "success",
+        message: "Walk loaded. Press Ctrl + W to start walking.",
       });
+      setIsOpen(false);
     } catch (error) {
-      console.error("Failed to load walk.", error);
-      toast.add({
-        title: "Error",
-        description: "Failed to load walk.",
+      pushToast({
         type: "error",
+        message: "Something went wrong. Failed to load walk.",
       });
     }
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Manual</CardTitle>
-        <CardDescription>
-          <span className="text-xs">
-            Manually input walk actions in JSON format.
-          </span>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="size-full">
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="max-w-none sm:max-w-none max-h-none w-[80vw] flex flex-col">
+        <DialogHeader>
+          <DialogTitle>Manual input</DialogTitle>
+          <DialogDescription>
+            <span className="text-xs">
+              Manually input walk actions in JSON format.
+            </span>
+          </DialogDescription>
+        </DialogHeader>
         <div>
           <Editor
-            height="50vh"
+            height="60vh"
             width="100%"
             defaultLanguage="json"
             defaultValue={defaultValue}
@@ -233,21 +246,23 @@ export function Input() {
         </div>
         <div className="flex gap-3 justify-end">
           <Button
-            variant="outline"
-            className="rounded-full"
+            variant="ghost"
+            size="icon"
             onClick={() => editorRef.current.setValue(defaultValue)}
+            className="rounded-full hover:bg-primary hover:text-white"
           >
-            Clear
+            <RefreshCcw />
           </Button>
           <Button
-            variant="outline"
-            className="rounded-full"
+            variant="ghost"
+            size="icon"
             onClick={showValue}
+            className="rounded-full hover:bg-primary hover:text-white"
           >
-            Walk
+            <span className="font-brand">W</span>
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

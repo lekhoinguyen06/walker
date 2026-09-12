@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "./Input";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
@@ -205,6 +205,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef<HTMLDivElement>(null);
@@ -285,6 +286,7 @@ export function PanelContent({ className }: { className?: string }) {
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
       <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <Input isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
 
       <PanelPopup
         isOpen={isPopupOpen}
@@ -296,6 +298,10 @@ export function PanelContent({ className }: { className?: string }) {
               onReturn={() => setSelectedTab("menu")}
               onChatClick={() => {
                 setIsChatOpen(true);
+                setIsHidden(true);
+              }}
+              onInputClick={() => {
+                setIsInputOpen(true);
                 setIsHidden(true);
               }}
             />
@@ -332,14 +338,13 @@ export function PanelContent({ className }: { className?: string }) {
   );
 }
 
-export type PanelInputProps = React.ComponentProps<typeof Input> & {
+export type PanelInputProps = {
   input: string;
   setInput: (input: string) => void;
   onSubmit?: () => void;
 };
 
 export function PanelInput({
-  className,
   input,
   setInput,
   onSubmit,
@@ -438,9 +443,10 @@ function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
 type DevMenuProps = {
   onReturn: () => void;
   onChatClick: () => void;
+  onInputClick: () => void;
 };
 
-export function DevMenu({ onReturn, onChatClick }: DevMenuProps) {
+export function DevMenu({ onReturn, onChatClick, onInputClick }: DevMenuProps) {
   return (
     <TooltipProvider timeout={100} delay={100}>
       <Tooltip>
@@ -475,7 +481,12 @@ export function DevMenu({ onReturn, onChatClick }: DevMenuProps) {
       </Tooltip>
       <Tooltip>
         <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onInputClick}
+          >
             <Brackets />
           </Button>
         </TooltipTrigger>
@@ -759,14 +770,9 @@ export function PanelToastProvider({ children }: { children: ReactNode }) {
     const nextDuration = toast.duration ?? 3;
 
     setDuration(nextDuration);
-  }, [toast]);
-
-  useEffect(() => {
-    if (!toast) return;
-
     resetCountdown();
     startCountdown();
-  }, [duration, toast, resetCountdown, startCountdown]);
+  }, [toast]);
 
   useEffect(() => {
     if (count === 0 && toast) {
