@@ -17,6 +17,7 @@ import {
   PanelBottom,
   PanelLeft,
   Repeat,
+  Trash,
 } from "lucide-react";
 import {
   createContext,
@@ -46,6 +47,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { create } from "zustand";
+import { useRuntime } from "@/RuntimeProvider";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -531,6 +533,8 @@ type MenuProps = {
 
 export function UserMenu({ onDev }: MenuProps) {
   const { position, setPosition } = usePanelStore();
+  const { pushToast } = usePanelToast();
+  const { runtime } = useRuntime();
   return (
     <TooltipProvider timeout={100} delay={100}>
       <Tooltip>
@@ -549,13 +553,17 @@ export function UserMenu({ onDev }: MenuProps) {
             variant="ghost"
             size="icon"
             className="rounded-full"
-            onClick={onDev}
+            onClick={() => {
+              if (position) {
+                setPosition(togglePanelPosition(position));
+              }
+            }}
           >
-            <Code />
+            <PanelBottom />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Developer menu</p>
+          <p>Toggle panel position</p>
         </TooltipContent>
       </Tooltip>
       <Tooltip>
@@ -565,14 +573,34 @@ export function UserMenu({ onDev }: MenuProps) {
             size="icon"
             className="rounded-full"
             onClick={() => {
-              setPosition(togglePanelPosition(position));
+              runtime.clear();
+              pushToast({
+                type: "success",
+                message: "Cleared walk history.",
+                duration: 1,
+              });
             }}
           >
-            <PanelBottom />
+            <Trash />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Toggle panel position</p>
+          <p>Clear walk history</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onDev}
+          >
+            <Code />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Developer menu</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -722,26 +750,29 @@ export function PanelToastProvider({ children }: { children: ReactNode }) {
   });
 
   const pushToast = (toast: PanelToastItemType | null) => {
-    resetCountdown();
     setToast(toast);
   };
 
   useEffect(() => {
-    if (count === 0) {
-      setToast(null);
-    }
-  }, [count]);
+    if (!toast) return;
+
+    const nextDuration = toast.duration ?? 3;
+
+    setDuration(nextDuration);
+  }, [toast]);
 
   useEffect(() => {
-    if (toast) {
-      if (toast.duration) {
-        setDuration(toast.duration);
-      } else {
-        setDuration(3);
-      }
-      startCountdown();
+    if (!toast) return;
+
+    resetCountdown();
+    startCountdown();
+  }, [duration, toast, resetCountdown, startCountdown]);
+
+  useEffect(() => {
+    if (count === 0 && toast) {
+      setToast(null);
     }
-  }, [toast]);
+  }, [count, toast]);
 
   return (
     <PanelToastContext.Provider value={{ toast, pushToast }}>
