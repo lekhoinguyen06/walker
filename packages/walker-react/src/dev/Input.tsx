@@ -172,7 +172,7 @@ export type InputProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export function Input({ isOpen, setIsOpen }: InputProps) {
+export function InputPanel({ isOpen, setIsOpen }: InputProps) {
   const { runtime } = useRuntime();
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();

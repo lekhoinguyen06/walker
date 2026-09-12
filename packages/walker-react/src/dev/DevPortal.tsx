@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import type { Dispatch, SetStateAction } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Map } from "./Map";
-import { Input } from "./Input";
-import { Chat } from "./Chat";
+import { MapPanel } from "./Map";
+import { InputPanel } from "./Input";
+import { ChatPanel } from "./Chat";
 import { Building } from "@/components/Building";
 import { Peek } from "./Peek";
 import { History } from "./History";
@@ -44,14 +44,14 @@ export function DevPortalModal({
               <TabsTrigger value="history">History</TabsTrigger>
               <TabsTrigger value="document">Document</TabsTrigger>
             </TabsList>
-            <TabsContent value="chat">
-              <Chat />
+            {/*<TabsContent value="chat">
+              <ChatPanel />
             </TabsContent>
             <TabsContent value="map">
-              <Map />
+              <MapPanel />
             </TabsContent>
             <TabsContent value="manual">
-              <Input />
+              <InputPanel />
             </TabsContent>
             <TabsContent value="peek">
               <Peek />
@@ -61,7 +61,7 @@ export function DevPortalModal({
             </TabsContent>
             <TabsContent value="document">
               <Building />
-            </TabsContent>
+            </TabsContent>*/}
           </Tabs>
         </div>
       </DialogContent>

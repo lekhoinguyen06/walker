@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "./Input";
+import { InputPanel } from "./Input";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
@@ -39,7 +39,7 @@ import Mouse from "./Mouse";
 import { useWalk } from "./dev.hook";
 import { generateWalkPrompt } from "./dev.prompt";
 import { useWalkInputStore } from "./dev.store";
-import { Chat } from "./Chat";
+import { ChatPanel } from "./Chat";
 import {
   Tooltip,
   TooltipContent,
@@ -48,6 +48,7 @@ import {
 } from "@/components/ui/tooltip";
 import { create } from "zustand";
 import { useRuntime } from "@/RuntimeProvider";
+import { MapPanel } from "./Map";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -206,6 +207,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isInputOpen, setIsInputOpen] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef<HTMLDivElement>(null);
@@ -285,8 +287,9 @@ export function PanelContent({ className }: { className?: string }) {
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
-      <Chat isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-      <Input isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
+      <ChatPanel isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <InputPanel isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
+      <MapPanel isOpen={isMapOpen} setIsOpen={setIsMapOpen} />
 
       <PanelPopup
         isOpen={isPopupOpen}
@@ -303,6 +306,10 @@ export function PanelContent({ className }: { className?: string }) {
               onInputClick={() => {
                 setIsInputOpen(true);
                 setIsHidden(true);
+              }}
+              onMapClick={() => {
+                setIsHidden(true);
+                setIsMapOpen(true);
               }}
             />
           ),
@@ -444,9 +451,15 @@ type DevMenuProps = {
   onReturn: () => void;
   onChatClick: () => void;
   onInputClick: () => void;
+  onMapClick: () => void;
 };
 
-export function DevMenu({ onReturn, onChatClick, onInputClick }: DevMenuProps) {
+export function DevMenu({
+  onReturn,
+  onChatClick,
+  onInputClick,
+  onMapClick,
+}: DevMenuProps) {
   return (
     <TooltipProvider timeout={100} delay={100}>
       <Tooltip>
@@ -492,6 +505,21 @@ export function DevMenu({ onReturn, onChatClick, onInputClick }: DevMenuProps) {
         </TooltipTrigger>
         <TooltipContent>
           <p>Open manual input panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onMapClick}
+          >
+            <Map />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open map panel</p>
         </TooltipContent>
       </Tooltip>
       <Tooltip>

@@ -37,7 +37,7 @@ export type ChatProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export function Chat({ isOpen, setIsOpen }: ChatProps) {
+export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
   const { messages, setMessages, sendMessage, status } = useConciergeChat();
 
   const [input, setInput] = useState("");
