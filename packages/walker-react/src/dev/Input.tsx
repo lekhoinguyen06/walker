@@ -2,14 +2,6 @@ import Editor from "@monaco-editor/react";
 import { useRef, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { useRuntime } from "@/RuntimeProvider";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { toast } from "@/components/ui/toast";
 import { useDarkMode } from "usehooks-ts";
 import {
   Dialog,
@@ -202,7 +194,7 @@ export function InputPanel({ isOpen, setIsOpen }: InputProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-none sm:max-w-none max-h-none w-[80vw] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Manual input</DialogTitle>
+          <DialogTitle className="font-brand">Manual input</DialogTitle>
           <DialogDescription>
             <span className="text-xs">
               Manually input walk actions in JSON format.

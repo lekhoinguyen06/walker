@@ -142,7 +142,7 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-none sm:max-w-none max-h-none w-[80vw] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Map</DialogTitle>
+          <DialogTitle className="font-brand">Map</DialogTitle>
           <DialogDescription>
             <span className="text-xs">View your app's current landscape.</span>
           </DialogDescription>
@@ -157,17 +157,18 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
             <MapItem map={map} />
           </div>
           {selectedItem && (
-            <div className="relative w-full sm:min-w-[40vw] min-w-full p-3 sm:border-l">
+            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l">
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-1.5 right-1.5 rounded-none"
+                className="absolute top-1.5 right-1.5"
                 onClick={() => setSelectedItem(null)}
               >
                 <X />
               </Button>
+              <div className="font-brand">Details</div>
               {Object.entries(selectedItem).map(([key, value]) => (
-                <div key={key} className="pb-3">
+                <div key={key}>
                   <div className="text-xs font-light">{key}</div>
                   <div className="text-sm">{String(value)}</div>
                 </div>
@@ -178,16 +179,4 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
       </DialogContent>
     </Dialog>
   );
-}
-
-function isValidJson(value: unknown): boolean {
-  if (typeof value !== "string") {
-    return false;
-  }
-  try {
-    JSON.parse(value);
-    return true;
-  } catch {
-    return false;
-  }
 }
