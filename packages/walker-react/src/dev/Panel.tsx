@@ -49,6 +49,7 @@ import {
 import { create } from "zustand";
 import { useRuntime } from "@/RuntimeProvider";
 import { MapPanel } from "./Map";
+import { StackPanel } from "./Stack";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -208,6 +209,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isStackOpen, setIsStackOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef<HTMLDivElement>(null);
@@ -290,6 +292,7 @@ export function PanelContent({ className }: { className?: string }) {
       <ChatPanel isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
       <InputPanel isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
       <MapPanel isOpen={isMapOpen} setIsOpen={setIsMapOpen} />
+      <StackPanel isOpen={isStackOpen} setIsOpen={setIsStackOpen} />
 
       <PanelPopup
         isOpen={isPopupOpen}
@@ -310,6 +313,10 @@ export function PanelContent({ className }: { className?: string }) {
               onMapClick={() => {
                 setIsHidden(true);
                 setIsMapOpen(true);
+              }}
+              onStackClick={() => {
+                setIsHidden(true);
+                setIsStackOpen(true);
               }}
             />
           ),
@@ -452,6 +459,7 @@ type DevMenuProps = {
   onChatClick: () => void;
   onInputClick: () => void;
   onMapClick: () => void;
+  onStackClick: () => void;
 };
 
 export function DevMenu({
@@ -459,6 +467,7 @@ export function DevMenu({
   onChatClick,
   onInputClick,
   onMapClick,
+  onStackClick,
 }: DevMenuProps) {
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -524,7 +533,12 @@ export function DevMenu({
       </Tooltip>
       <Tooltip>
         <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onStackClick}
+          >
             <Layers />
           </Button>
         </TooltipTrigger>
