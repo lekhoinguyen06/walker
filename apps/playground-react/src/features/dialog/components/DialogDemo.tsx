@@ -22,7 +22,7 @@ export function DialogDemo() {
   return (
     <Item
       id="dialog-demo"
-      description="This is example dialog for the Walker Playground, try open it and fill in the details!"
+      description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
     >
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <form>
@@ -33,19 +33,21 @@ export function DialogDemo() {
           </Item>
           <Item id="dialog-content" description="The content of the dialog">
             <DialogContent className="sm:max-w-sm">
-              <Item id="dialog-header" description="The header of the dialog">
-                <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
-                  <DialogDescription>
-                    Make changes to your profile here. Click save when
-                    you&apos;re done.
-                  </DialogDescription>
-                </DialogHeader>
-              </Item>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>
+                  Make changes to your profile here. Click save when you&apos;re
+                  done.
+                </DialogDescription>
+              </DialogHeader>
               <FieldGroup>
                 <Field>
                   <Label htmlFor="name-1">Name</Label>
-                  <Item id="name-input" description="The input for the name">
+                  <Item
+                    id="name-input"
+                    description="The input for the name"
+                    state={name}
+                  >
                     <Input
                       id="name-1"
                       name="name"
@@ -59,6 +61,7 @@ export function DialogDemo() {
                   <Item
                     id="username-input"
                     description="The input for the username"
+                    state={username}
                   >
                     <Input
                       id="username-1"

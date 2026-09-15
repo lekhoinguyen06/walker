@@ -7,7 +7,7 @@ export function InputBasic() {
   return (
     <Item
       id="input"
-      description="This is example button for the Walker Playground, try click it!"
+      description="This is example button for the Walker Playground, try the input flow!"
     >
       <Input
         placeholder="Enter text"
