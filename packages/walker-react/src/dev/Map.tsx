@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
@@ -136,9 +136,15 @@ export type MapProps = {
 
 export function MapPanel({ isOpen, setIsOpen }: MapProps) {
   const { runtime } = useRuntime();
-  const map = runtime.map();
+  const [map, setMap] = useState<MapType>(() => runtime.map());
   const { selectedItem, setSelectedItem } = useSelectedItemStore();
   const { isMobile } = useScreenSize();
+
+  useEffect(() => {
+    if (isOpen) {
+      setMap(runtime.map());
+    }
+  }, [isOpen, runtime]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
