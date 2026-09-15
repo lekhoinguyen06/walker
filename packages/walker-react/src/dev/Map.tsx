@@ -13,6 +13,8 @@ import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useScreenSize } from "./dev.hook";
+import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
+import { Markdown } from "@tanstack/markdown/react";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;
@@ -157,7 +159,7 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
             <MapItem map={map} />
           </div>
           {selectedItem && (
-            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l">
+            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll">
               <Button
                 variant="ghost"
                 size="icon"
@@ -167,12 +169,30 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
                 <X />
               </Button>
               <div className="font-brand">Details</div>
-              {Object.entries(selectedItem).map(([key, value]) => (
-                <div key={key}>
-                  <div className="text-xs font-light">{key}</div>
-                  <div className="text-sm">{String(value)}</div>
-                </div>
-              ))}
+              {Object.entries(selectedItem).map(([key, value]) => {
+                if (key === "children") {
+                  return (
+                    <div key={key}>
+                      <div className="text-xs font-light">{key}</div>
+                      <div className="markdown-renderer max-h-60 overflow-y-scroll">
+                        <style>{themeCss}</style>
+                        <Markdown highlighter={highlightMarkdownCode}>
+                          {"```json\n" +
+                            JSON.stringify(value, null, 2) +
+                            "\n```"}
+                        </Markdown>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={key}>
+                      <div className="text-xs font-light">{key}</div>
+                      <div className="text-sm">{String(value)}</div>
+                    </div>
+                  );
+                }
+              })}
             </div>
           )}
         </div>

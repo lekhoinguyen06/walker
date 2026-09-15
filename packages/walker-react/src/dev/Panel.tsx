@@ -50,6 +50,7 @@ import { create } from "zustand";
 import { useRuntime } from "@/RuntimeProvider";
 import { MapPanel } from "./Map";
 import { StackPanel } from "./Stack";
+import { HistoryPanel } from "./History";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -210,6 +211,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isStackOpen, setIsStackOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const input = useWalkInputStore((state) => state.input);
   const setInput = useWalkInputStore((state) => state.setInput);
   const ref = useRef<HTMLDivElement>(null);
@@ -293,6 +295,7 @@ export function PanelContent({ className }: { className?: string }) {
       <InputPanel isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
       <MapPanel isOpen={isMapOpen} setIsOpen={setIsMapOpen} />
       <StackPanel isOpen={isStackOpen} setIsOpen={setIsStackOpen} />
+      <HistoryPanel isOpen={isHistoryOpen} setIsOpen={setIsHistoryOpen} />
 
       <PanelPopup
         isOpen={isPopupOpen}
@@ -317,6 +320,10 @@ export function PanelContent({ className }: { className?: string }) {
               onStackClick={() => {
                 setIsHidden(true);
                 setIsStackOpen(true);
+              }}
+              onHistoryClick={() => {
+                setIsHidden(true);
+                setIsHistoryOpen(true);
               }}
             />
           ),
@@ -460,6 +467,7 @@ type DevMenuProps = {
   onInputClick: () => void;
   onMapClick: () => void;
   onStackClick: () => void;
+  onHistoryClick: () => void;
 };
 
 export function DevMenu({
@@ -468,6 +476,7 @@ export function DevMenu({
   onInputClick,
   onMapClick,
   onStackClick,
+  onHistoryClick,
 }: DevMenuProps) {
   return (
     <TooltipProvider timeout={100} delay={100}>
@@ -548,7 +557,12 @@ export function DevMenu({
       </Tooltip>
       <Tooltip>
         <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onHistoryClick}
+          >
             <History />
           </Button>
         </TooltipTrigger>
