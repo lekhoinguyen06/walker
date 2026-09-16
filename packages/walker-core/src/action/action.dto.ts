@@ -2,11 +2,11 @@ import z from "zod";
 
 export const ActionSchema = z
   .object({
-    command: z.string(),
+    flow: z.string(),
     message: z.string(),
-    target: z.string(),
-    prompt: z.string().optional(),
-    end: z.boolean().optional(),
+    targetId: z.string(),
+    prompt: z.string(),
+    end: z.boolean(),
   })
   .loose();
 

@@ -1,8 +1,10 @@
 [
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "button",
-    "message": "Clicking..."
+    "flow": "click",
+    "targetId": "button",
+    "message": "Clicking...",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]

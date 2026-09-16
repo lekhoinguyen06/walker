@@ -1,14 +1,18 @@
 [
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "v1.2.0-beta.1",
-    "message": "I am gonna pick the earliest version."
+    "flow": "click",
+    "targetId": "v1.2.0-beta.1",
+    "message": "I am gonna pick the earliest version.",
+    "prompt": "Demo example.",
+    "end": false
   },
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "v1.2.0-beta.50",
-    "message": "You know what, I am gonna pick the latest version."
+    "flow": "click",
+    "targetId": "v1.2.0-beta.50",
+    "message": "You know what, I am gonna pick the latest version.",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]

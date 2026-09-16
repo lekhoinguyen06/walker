@@ -1,5 +1,6 @@
 import type { WalkerElementProps } from "walker-core";
 import slugify from "slugify";
+import { useActive } from "./useActive";
 
 declare module "react" {
   namespace JSX {
@@ -13,22 +14,25 @@ export type BaseElementProps = WalkerElementProps & {
   children?: React.ReactNode;
 };
 
-export type ElementProps = Omit<WalkerElementProps, "type" | "scope"> & {
-  scope?: WalkerElementProps["scope"];
-  children?: React.ReactNode;
-};
+export type ElementProps = BaseElementProps;
 
 export function Base(props: BaseElementProps) {
-  return <walker-element {...props}>{props.children}</walker-element>;
+  const { active } = useActive(slugify(props.id));
+  return (
+    <walker-element {...props} id={slugify(props.id)} scope={active}>
+      {props.children}
+    </walker-element>
+  );
 }
 
 export function Item(props: ElementProps) {
+  const { active } = useActive(slugify(props.id));
   return (
     <walker-element
       {...props}
       id={slugify(props.id)}
       type="item"
-      scope={props.scope ? props.scope : "inactive"}
+      scope={active}
     >
       {props.children}
     </walker-element>
@@ -36,12 +40,13 @@ export function Item(props: ElementProps) {
 }
 
 export function Page(props: ElementProps) {
+  const { active } = useActive(slugify(props.id));
   return (
     <walker-element
       {...props}
       id={slugify(props.id)}
       type="page"
-      scope={props.scope ? props.scope : "inactive"}
+      scope={active}
     >
       {props.children}
     </walker-element>
@@ -49,13 +54,10 @@ export function Page(props: ElementProps) {
 }
 
 export function App(props: ElementProps) {
+  const { active } = useActive(slugify(props.id));
+  console.log("Is in active scope", active);
   return (
-    <walker-element
-      {...props}
-      id={slugify(props.id)}
-      type="app"
-      scope={props.scope ? props.scope : "active"}
-    >
+    <walker-element {...props} id={slugify(props.id)} type="app" scope={active}>
       {props.children}
     </walker-element>
   );

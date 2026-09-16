@@ -2,6 +2,9 @@ import { beforeEach, describe, expect, it, test } from "vitest";
 import { mapper } from "./mapper";
 import { Runtime } from "../runtime";
 import type { ContextType } from "../context/context.dto";
+import { mockItem } from "./map.helpers";
+import type { ItemType } from "./map.dto";
+import { tr } from "zod/v4/locales";
 
 function mockRuntime() {
   const runtime = new Runtime({
@@ -27,9 +30,10 @@ function mockRuntime() {
         popFront: () => undefined,
         list: () => [],
         clear: () => [],
+        updateBack: () => {},
       },
     },
-    flows: [],
+    flows: new Map(),
     hooks: {},
   });
 
@@ -57,7 +61,8 @@ describe("mapper", () => {
       <walker-element
         id="my-app"
         type="app"
-        scope="active"
+        scope
+        state=""
         description="My app is nice."
       >
         <div></div>
@@ -67,14 +72,17 @@ describe("mapper", () => {
     const result = mapper(ctx);
 
     expect(result).toEqual({
-      "my-app": {
+      "my-app": mockItem({
         id: "my-app",
         type: "app",
-        scope: "active",
+        scope: true,
+        isInActiveScope: true,
+        state: "",
         description: "My app is nice.",
-        state: null,
+        content: false,
+        raw: false,
         children: {},
-      },
+      }),
     });
   });
 
@@ -83,10 +91,11 @@ describe("mapper", () => {
       <walker-element
         id="my-app"
         type="app"
-        scope="active"
+        scope
+        state=""
         description="My app is nice."
-        raw="true"
-        content="true"
+        raw
+        content
       >
         <div>Walk the web, walk the Earth!</div>
       </walker-element>
@@ -95,18 +104,19 @@ describe("mapper", () => {
     const result = mapper(ctx);
 
     expect(result).toEqual({
-      "my-app": {
+      "my-app": mockItem({
         id: "my-app",
         type: "app",
-        scope: "active",
+        scope: true,
+        isInActiveScope: true,
         description: "My app is nice.",
-        state: null,
+        state: "",
         raw: true,
         content: true,
         rawValue: "<div>Walk the web, walk the Earth!</div>",
         contentValue: "Walk the web, walk the Earth!",
         children: {},
-      },
+      }),
     });
   });
 
@@ -115,10 +125,11 @@ describe("mapper", () => {
       <walker-element
         id="my-app"
         type="app"
-        scope="active"
+        scope
+        state=""
         description="My app is nice."
-        raw="true"
-        content="true"
+        raw
+        content
       >
         <div>
           <div>Walker</div>
@@ -130,12 +141,13 @@ describe("mapper", () => {
     const result = mapper(ctx);
 
     expect(result).toEqual({
-      "my-app": {
+      "my-app": mockItem({
         id: "my-app",
         type: "app",
-        scope: "active",
+        scope: true,
+        isInActiveScope: true,
         description: "My app is nice.",
-        state: null,
+        state: "",
         raw: true,
         content: true,
         rawValue: `<div>
@@ -145,7 +157,7 @@ describe("mapper", () => {
         contentValue: `Walker
           Walk the web, walk the Earth!`,
         children: {},
-      },
+      }),
     });
   });
 
@@ -154,13 +166,14 @@ describe("mapper", () => {
       <walker-element
         id="my-app"
         type="app"
-        scope="active"
+        scope
+        state=""
         description="My app is nice."
       >
         <walker-element
           id="page-1"
           type="page"
-          scope="active"
+          state=""
           description="My page is nice."
         >
         </walker-element>
@@ -170,44 +183,51 @@ describe("mapper", () => {
     const result = mapper(ctx);
 
     expect(result).toEqual({
-      "my-app": {
+      "my-app": mockItem({
         id: "my-app",
         type: "app",
-        scope: "active",
+        scope: true,
+        isInActiveScope: true,
         description: "My app is nice.",
-        state: null,
+        state: "",
+        raw: false,
+        content: false,
         children: {
-          "page-1": {
+          "page-1": mockItem({
             id: "page-1",
             type: "page",
-            scope: "active",
+            scope: false,
+            isInActiveScope: true,
             description: "My page is nice.",
-            state: null,
+            state: "",
+            raw: false,
+            content: false,
             children: {},
-          },
+          }),
         },
-      },
+      }),
     });
   });
 
-  it("maps structed Walker Items", () => {
+  it("maps structured Walker Items", () => {
     document.body.innerHTML = `
       <walker-element
         id="my-app"
         type="app"
-        scope="active"
+        state=""
         description="My app is nice."
       >
         <walker-element
           id="page-1"
           type="page"
-          scope="active"
+          scope
+          state=""
           description="My page is nice."
         >
           <walker-element
             id="item-1"
             type="item"
-            scope="active"
+            state=""
             description="My item is nice."
           >
           </walker-element>
@@ -215,7 +235,7 @@ describe("mapper", () => {
         <walker-element
           id="page-2"
           type="page"
-          scope="active"
+          state=""
           description="My page is nice."
         >
         </walker-element>
@@ -225,44 +245,56 @@ describe("mapper", () => {
     const result = mapper(ctx);
 
     expect(result).toEqual({
-      "my-app": {
+      "my-app": mockItem({
         id: "my-app",
         type: "app",
-        scope: "active",
+        scope: false,
+        isInActiveScope: false,
         description: "My app is nice.",
-        state: null,
+        state: "",
+        raw: false,
+        content: false,
         children: {
-          "page-1": {
+          "page-1": mockItem({
             id: "page-1",
             type: "page",
-            scope: "active",
+            scope: true,
+            isInActiveScope: true,
             description: "My page is nice.",
-            state: null,
+            state: "",
+            raw: false,
+            content: false,
             children: {
-              "item-1": {
+              "item-1": mockItem({
                 id: "item-1",
                 type: "item",
-                scope: "active",
+                scope: false,
+                isInActiveScope: true,
                 description: "My item is nice.",
-                state: null,
+                state: "",
+                raw: false,
+                content: false,
                 children: {},
-              },
+              }),
             },
-          },
-          "page-2": {
+          }),
+          "page-2": mockItem({
             id: "page-2",
             type: "page",
-            scope: "active",
+            scope: false,
+            isInActiveScope: false,
             description: "My page is nice.",
-            state: null,
+            state: "",
+            raw: false,
+            content: false,
             children: {},
-          },
+          }),
         },
-      },
+      }),
     });
   });
 
-  it("should throw an error when there are more than two root Walker Items", () => {});
+  it("should throw an error when there are more than two root Walker App Items", () => {});
 
   it("should throw an error when there are more than one Walker Item of type 'app'", () => {});
 

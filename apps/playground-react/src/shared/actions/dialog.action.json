@@ -1,28 +1,40 @@
 [
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "dialog-trigger",
-    "message": "Let's see what we have here..."
+    "flow": "click",
+    "targetId": "dialog-trigger",
+    "message": "Let's see what we have here...",
+    "prompt": "Demo example.",
+    "end": false
   },
   {
     "walkId": "uuid",
-    "command": "input",
-    "target": "name-input",
-    "body": "Walker Jr.",
-    "message": "Let's type in 'Walker Jr.'"
+    "flow": "input",
+    "targetId": "name-input",
+    "body": {
+      "input": "Walker Jr."
+    },
+    "message": "Let's type in 'Walker Jr.'",
+    "prompt": "Demo example.",
+    "end": false
   },
   {
     "walkId": "uuid",
-    "command": "input",
-    "target": "username-input",
-    "body": "@walker",
-    "message": "Let's type in '@walker'"
+    "flow": "input",
+    "targetId": "username-input",
+    "body": {
+      "input": "@walker"
+    },
+    "message": "Let's type in '@walker'",
+    "prompt": "Demo example.",
+    "end": false
   },
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "dialog-save",
-    "message": "Nice! Let's save it!"
+    "flow": "click",
+    "targetId": "dialog-save",
+    "message": "Nice! Let's save it!",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]

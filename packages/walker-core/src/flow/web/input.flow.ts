@@ -2,17 +2,22 @@ import z from "zod";
 import { ActionSchema } from "../../action/action.dto";
 import { createFlow } from "../flow.dto";
 import { wait } from "../../shared/utils/wait";
+import { createFlowBodySchema } from "../flow.helpers";
+
+const InputFlowBodySchema = z.object({
+  input: z.string(),
+});
 
 export const inputFlow = createFlow({
   command: "input",
   description: "Input text into an element.",
-  schema: ActionSchema.extend({
-    command: z.literal("input"),
-    body: z.string().optional(),
+  schema: createFlowBodySchema({
+    flow: "input",
+    schema: InputFlowBodySchema,
   }),
   route: "*",
   handler: async (props) => {
-    const walker = document.getElementById(props.action.target);
+    const walker = document.getElementById(props.action.targetId);
     const element = walker?.firstElementChild;
 
     if (element instanceof HTMLInputElement) {
@@ -24,13 +29,13 @@ export const inputFlow = createFlow({
       await wait(gap);
       await props.context.hooks.onMouse?.(props);
       await wait(gap > 1000 ? gap : 1000);
-      if (props.action.body) {
+      if (props.action.body.input) {
         // React specific, we may need to provided React flow later when we support more frameworks
         const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
           window.HTMLInputElement.prototype,
           "value",
         )?.set;
-        nativeInputValueSetter?.call(element, props.action.body);
+        nativeInputValueSetter?.call(element, props.action.body.input);
         element.dispatchEvent(new Event("input", { bubbles: true }));
       }
 
@@ -39,7 +44,7 @@ export const inputFlow = createFlow({
         ...props,
         action: {
           ...props.action,
-          target: "mouse-container",
+          targetId: "mouse-container",
         },
       });
       await wait(gap > 1000 ? gap : 1000);

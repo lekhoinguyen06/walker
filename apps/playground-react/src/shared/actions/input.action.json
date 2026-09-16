@@ -1,9 +1,13 @@
 [
   {
     "walkId": "uuid",
-    "command": "input",
-    "target": "input",
-    "body": "Hello World!",
-    "message": "Let's type in 'Hello World!'"
+    "flow": "input",
+    "targetId": "input",
+    "body": {
+      "input": "Hello World!"
+    },
+    "message": "Let's type in 'Hello World!'",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]

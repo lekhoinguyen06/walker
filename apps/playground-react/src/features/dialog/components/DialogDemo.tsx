@@ -12,10 +12,11 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Item } from "walker-react";
+import { Item, useActive } from "walker-react";
 import { useState } from "react";
 
 export function DialogDemo() {
+  const { active, setActiveId, resetActiveId } = useActive("dialog-demo");
   const [name, setName] = useState("Pedro Duarte");
   const [username, setUsername] = useState("@peduarte");
   const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +24,19 @@ export function DialogDemo() {
     <Item
       id="dialog-demo"
       description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
+      scope={active}
     >
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(val) => {
+          setIsOpen(val);
+          if (val) {
+            setActiveId("dialog-demo");
+          } else {
+            resetActiveId();
+          }
+        }}
+      >
         <form>
           <Item id="dialog-trigger" description="Click to open the dialog">
             <DialogTrigger

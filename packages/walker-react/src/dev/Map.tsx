@@ -107,7 +107,14 @@ export function MapItemContent({
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
         />
-        <div className="text-xs font-semibold text-nowrap">{item.id}</div>
+        <div
+          className={cn(
+            "text-xs text-nowrap",
+            item.isInActiveScope && "font-semibold",
+          )}
+        >
+          {item.id}
+        </div>
         <div className="text-xs text-nowrap">{item.description}</div>
       </div>
       {item.children && !isCollapsed && (
@@ -136,7 +143,7 @@ export type MapProps = {
 
 export function MapPanel({ isOpen, setIsOpen }: MapProps) {
   const { runtime } = useRuntime();
-  const [map, setMap] = useState<MapType>(() => runtime.map());
+  const [map, setMap] = useState<MapType>({});
   const { selectedItem, setSelectedItem } = useSelectedItemStore();
   const { isMobile } = useScreenSize();
 

@@ -43,7 +43,7 @@ export function mapper(ctx: ContextType): MapType {
   const tree: MapType = {};
   const all = document.querySelectorAll("walker-element");
   const seenIds = new Set<string>();
-  const seenTypes = new Set<string>();
+  let seenScope = false;
 
   ctx.logger.trace("Enter mapper function");
 
@@ -54,8 +54,8 @@ export function mapper(ctx: ContextType): MapType {
 
   // Build flat map
   all.forEach((el) => {
-    let isRawEnabled = getAttr(el, "raw") == "true" ? true : false;
-    let isContentEnabled = getAttr(el, "content") == "true" ? true : false;
+    let isRawEnabled = getAttr(el, "raw") == "";
+    let isContentEnabled = getAttr(el, "content") == "";
 
     // Validation: raw attribute may only be set on leaf nodes (nodes without <walker-element> children)
     if (isRawEnabled) {
@@ -83,10 +83,11 @@ export function mapper(ctx: ContextType): MapType {
       id: getAttr(el, "id"),
       type: getAttr(el, "type"),
       description: getAttr(el, "description"),
-      scope: getAttr(el, "scope"),
+      scope: getAttr(el, "scope") === "",
+      isInActiveScope: el.closest("walker-element[scope]") ? true : false,
       state: getAttr(el, "state"),
-      ...(isRawEnabled && { raw: isRawEnabled }),
-      ...(isContentEnabled && { content: isContentEnabled }),
+      raw: isRawEnabled,
+      content: isContentEnabled,
     });
 
     uniqueGuard(
@@ -105,10 +106,20 @@ export function mapper(ctx: ContextType): MapType {
       );
     }
 
+    if (item.scope === true) {
+      if (seenScope) {
+        throw new Error(
+          `Found multiple <walker-element> elements with arttribute scope when generating map. Only one <walker-element> element can have scope.`,
+        );
+      }
+      seenScope = true;
+    }
+
     registry[item.id] = {
       id: item.id,
       type: item.type,
       scope: item.scope,
+      isInActiveScope: item.isInActiveScope,
       description: item.description,
       content: item.content,
       raw: item.raw,
@@ -119,6 +130,12 @@ export function mapper(ctx: ContextType): MapType {
     };
   });
 
+  if (seenScope === false) {
+    throw new Error(
+      `There must be exactly one <walker-element> element with attribute scope. ${all.length} found.`,
+    );
+  }
+
   // Attach children
   all.forEach((el) => {
     const id = getRequiredAttr(el, "id", "Unreachable");
@@ -126,6 +143,7 @@ export function mapper(ctx: ContextType): MapType {
 
     if (parentEl) {
       const parentId = getRequiredAttr(parentEl, "id", "Unreachable");
+
       if (registry[parentId] && registry[parentId].children && registry[id]) {
         registry[parentId].children[id] = registry[id];
       }

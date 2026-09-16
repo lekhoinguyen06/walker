@@ -1,6 +1,4 @@
 import z from "zod";
-import { ActionSchema, type ActionType } from "../action/action.dto";
-import { ConfigSchema } from "../config/config.dto";
 import { HooksSchema, type HooksType } from "../hook/hook.dto";
 import { ContextSchema, type ContextType } from "../context/context.dto";
 

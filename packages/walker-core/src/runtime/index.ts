@@ -10,6 +10,7 @@ import { mapper } from "../map/mapper";
 import { ConfigSchema, type ConfigType } from "../config/config.dto";
 import { HooksSchema, type HooksType } from "../hook/hook.dto";
 import { getLogger, LoggerLevel } from "../shared/utils/logger";
+import { validateAction } from "../action/action.validator";
 
 export class Runtime {
   private readonly config: ConfigType;
@@ -58,16 +59,30 @@ export class Runtime {
     });
 
     if (this.nextAction) {
-      const flow = this.getFlow(this.nextAction.command);
+      const action = validateAction({
+        ctx: {
+          config: this.config,
+          logger: this.logger,
+        },
+        flows: this.flows,
+        map: this.map(),
+        action: this.nextAction,
+      });
+
+      const flow = this.getFlow(action.flow);
       this.logger.debug({
         event: "Flow Object",
         flow: flow,
       });
 
       if (!flow) {
-        const errorMessage = `No flow found for command: ${this.nextAction.command}`;
-        this.nextAction = undefined;
-        throw new Error(errorMessage);
+        this.logger.error({
+          event: "No flow found",
+          nextAction: action,
+        });
+        throw new Error(
+          `No flow found for action with action.flow : ${action.flow}`,
+        );
       }
 
       try {
@@ -78,11 +93,11 @@ export class Runtime {
             description: flow.description,
           },
           map: this.map(),
-          prompt: this.nextAction?.prompt || "No prompt provided",
+          prompt: action.prompt,
         });
 
         await flow.handler({
-          action: this.nextAction,
+          action,
           context: {
             config: this.config,
             logger: this.logger,
@@ -108,16 +123,24 @@ export class Runtime {
     return this.adapter.actionStore.list().length;
   }
 
-  async addActions(inputActions: ActionType[]) {
+  addActions(inputActions: ActionType[]) {
     for (const action of inputActions) {
       this.adapter.actionStore.pushBack(action);
     }
   }
 
-  async addRawActions(inputActions: string) {
+  addRawActions(inputActions: string) {
     const input = JSON.parse(inputActions);
-    const parsedInput = z.array(ActionSchema).parse(input);
-    await this.addActions(parsedInput);
+    const result = z.array(ActionSchema).safeParse(input);
+    if (!result.success) {
+      this.logger.error({
+        event: "Error parsing actions",
+        error: result.error,
+      });
+      throw new Error("Invalid Actions format");
+    }
+
+    this.addActions(result.data);
   }
 
   map() {

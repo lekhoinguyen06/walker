@@ -12,7 +12,7 @@ export function useMouseOffset() {
 export async function mouse(props: HookPropsType): HookResponseType {
   const { setX, setY } = useMouseStore.getState();
 
-  const walker = document.getElementById(props.action.target);
+  const walker = document.getElementById(props.action.targetId);
   const targetEl = walker?.firstElementChild;
 
   if (targetEl) {

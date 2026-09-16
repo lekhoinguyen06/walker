@@ -1,14 +1,18 @@
 [
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "select-trigger",
-    "message": "Let's see what we have!"
+    "flow": "click",
+    "targetId": "select-trigger",
+    "message": "Let's see what we have!",
+    "prompt": "Demo example.",
+    "end": false
   },
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "select-item-banana",
-    "message": "Banana na na na!"
+    "flow": "click",
+    "targetId": "select-item-banana",
+    "message": "Banana na na na!",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]

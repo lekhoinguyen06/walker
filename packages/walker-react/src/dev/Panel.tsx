@@ -267,6 +267,10 @@ export function PanelContent({ className }: { className?: string }) {
   const handleSubmit = () => {
     if (actionsInQueueCount === 0 && !isLoading && !isWalking) {
       if (input.trim() === "") {
+        pushToast({
+          type: "info",
+          message: "Input is empty, please instruct Walker.",
+        });
         return;
       }
       submit({
@@ -739,7 +743,7 @@ const panelToastVariants = cva(
         success:
           "bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-50",
         warn: "bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-50",
-        error: "bg-destructive/10 text-destructive dark:bg-destructive/90",
+        error: "bg-red-50 text-destructive dark:bg-red-950",
       },
     },
     defaultVariants: {

@@ -2,16 +2,15 @@ import z from "zod";
 import { ActionSchema } from "../../action/action.dto";
 import { wait } from "../../shared/utils/wait";
 import { createFlow } from "../flow.dto";
+import { createFlowBodySchema } from "../flow.helpers";
 
 export const clickFlow = createFlow({
   command: "click",
   description: "Click on an element",
   route: "*",
-  schema: ActionSchema.extend({
-    command: z.literal("click"),
-  }),
+  schema: createFlowBodySchema({ flow: "click" }),
   handler: async (props) => {
-    const walker = document.getElementById(props.action.target);
+    const walker = document.getElementById(props.action.targetId);
     const element = walker?.firstElementChild;
 
     if (element instanceof HTMLElement) {
@@ -30,7 +29,7 @@ export const clickFlow = createFlow({
         ...props,
         action: {
           ...props.action,
-          target: "mouse-container",
+          targetId: "mouse-container",
         },
       });
       await wait(gap > 1000 ? gap : 1000);

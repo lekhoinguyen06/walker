@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useMemo } from "react";
 import {
   type ActionType,
   type AdapterType,
@@ -6,8 +6,6 @@ import {
   type FlowsType,
   type HooksType,
   Runtime,
-  type RuntimeType,
-  type WalkerElementProps,
   webFlows,
   webHooks,
 } from "walker-core";
@@ -20,6 +18,7 @@ import {
   QueryClientProvider,
   useMutation,
 } from "@tanstack/react-query";
+import { useActive } from "./useActive";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -72,6 +71,13 @@ function RuntimeProviderContent({
   config: RuntimeProviderProps & { app: ElementProps };
   children: React.ReactNode;
 }) {
+  const { setDefaultActiveId } = useActive(userConfig.app.id);
+
+  useEffect(() => {
+    console.log("Setting default active id", userConfig.app.id);
+    setDefaultActiveId(userConfig.app.id);
+  }, [setDefaultActiveId, userConfig.app.id]);
+
   const config: ConfigType = useMemo(
     () => ({
       mode: "tailored",

@@ -1,8 +1,10 @@
 [
   {
     "walkId": "uuid",
-    "command": "click",
-    "target": "toast-trigger",
-    "message": "Let's see what we have here..."
+    "flow": "click",
+    "targetId": "toast-trigger",
+    "message": "Let's see what we have here...",
+    "prompt": "Demo example.",
+    "end": true
   }
 ]
