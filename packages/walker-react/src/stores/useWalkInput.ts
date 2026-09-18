@@ -20,3 +20,12 @@ export const useWalkInputStore = create<
     },
   ),
 );
+
+export function useWalkInput() {
+  const input = useWalkInputStore((state) => state.input);
+  const setInput = useWalkInputStore((state) => state.setInput);
+  return {
+    input,
+    setInput,
+  };
+}

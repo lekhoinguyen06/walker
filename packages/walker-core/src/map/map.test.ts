@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it, test } from "vitest";
-import { mapper } from "./mapper";
+import { mapper } from "./map";
 import { Runtime } from "../runtime";
-import type { ContextType } from "../context/context.dto";
+import type { ContextType } from "../context";
 import { mockItem } from "./map.helpers";
-import type { ItemType } from "./map.dto";
-import { tr } from "zod/v4/locales";
 
 function mockRuntime() {
   const runtime = new Runtime({

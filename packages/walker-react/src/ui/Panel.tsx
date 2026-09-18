@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { InputPanel } from "./Input";
+import { InputPanel } from "@/dev/Input";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
@@ -35,11 +35,11 @@ import { useCountdown, useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
-import Mouse from "./Mouse";
-import { useWalk } from "./dev.hook";
-import { generateWalkPrompt } from "./dev.prompt";
-import { useWalkInputStore } from "./dev.store";
-import { ChatPanel } from "./Chat";
+import { Mouse } from "@/mouse";
+import { useWalk } from "@/hooks";
+import { generateWalkPrompt } from "@/prompt";
+import { useWalkInput } from "@/stores/useWalkInput";
+import { ChatPanel } from "@/dev/Chat";
 import {
   Tooltip,
   TooltipContent,
@@ -47,10 +47,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { create } from "zustand";
-import { useRuntime } from "@/RuntimeProvider";
-import { MapPanel } from "./Map";
-import { StackPanel } from "./Stack";
-import { HistoryPanel } from "./History";
+import { useRuntime } from "@/runtime";
+import { MapPanel } from "@/dev/Map";
+import { StackPanel } from "@/dev/Stack";
+import { HistoryPanel } from "@/dev/History";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -212,8 +212,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isStackOpen, setIsStackOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const input = useWalkInputStore((state) => state.input);
-  const setInput = useWalkInputStore((state) => state.setInput);
+  const { input, setInput } = useWalkInput();
   const ref = useRef<HTMLDivElement>(null);
   const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
     useWalk({

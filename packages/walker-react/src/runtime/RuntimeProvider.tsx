@@ -9,16 +9,16 @@ import {
   webFlows,
   webHooks,
 } from "walker-core";
-import { useActionStore } from "./useActionStore";
-import { useHistoryStore } from "./useHistoryStore";
-import { mouse } from "./MouseProvider";
-import { App, type ElementProps } from "./Components";
+import { useActionStore } from "@/action";
+import { useHistoryStore } from "@/history";
+import { mouseHook } from "@/mouse";
+import { App, type ElementProps } from "@/item";
 import {
   QueryClient,
   QueryClientProvider,
   useMutation,
 } from "@tanstack/react-query";
-import { useActive } from "./useActive";
+import { useScope } from "@/scope";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -71,7 +71,7 @@ function RuntimeProviderContent({
   config: RuntimeProviderProps & { app: ElementProps };
   children: React.ReactNode;
 }) {
-  const { setDefaultActiveId } = useActive(userConfig.app.id);
+  const { setDefaultActiveId } = useScope(userConfig.app.id);
 
   useEffect(() => {
     console.log("Setting default active id", userConfig.app.id);
@@ -117,7 +117,7 @@ function RuntimeProviderContent({
     flows: new Map([...webFlows, ...(userConfig.flows || [])]),
     hooks: {
       ...webHooks,
-      onMouse: mouse,
+      onMouse: mouseHook,
       ...userConfig.hooks,
     },
   });

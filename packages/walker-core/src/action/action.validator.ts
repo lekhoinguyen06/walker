@@ -1,8 +1,7 @@
-import { ActionSchema, type ActionType } from "../action/action.dto";
-import { type ContextType } from "../context/context.dto";
-import type { FlowsType } from "../flow/flow.dto";
-import { type MapType } from "../map/map.dto";
-import { flattenMap } from "../map/map.helpers";
+import { ActionSchema, type ActionType } from "../action";
+import { type ContextType } from "../context";
+import type { FlowsType } from "../flow";
+import { type MapType, flattenMap } from "../map";
 
 function isActionTargetInMap({
   map,

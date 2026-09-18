@@ -12,17 +12,17 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./dev": {
-      "types": "./dist/dev/index.d.ts",
-      "import": "./dist/dev/index.js",
-      "require": "./dist/dev/index.cjs"
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js",
+      "require": "./dist/ui/index.cjs"
     },
     "./core": {
       "types": "./dist/core/index.d.ts",
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs"
     },
-    "./dev/index.css": "./dist/dev/index.css"
+    "./ui/index.css": "./dist/ui/index.css"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

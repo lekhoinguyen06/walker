@@ -5,10 +5,10 @@ export const ItemSchema = z.object({
   type: z.string(),
   description: z.string(),
   state: z.string().nullable(),
-  scope: z.boolean().default(false),
-  isInActiveScope: z.boolean().default(false),
-  content: z.boolean().default(false),
-  raw: z.boolean().default(false),
+  scope: z.boolean(),
+  isInActiveScope: z.boolean(),
+  content: z.boolean(),
+  raw: z.boolean(),
 });
 
 export const MapItemSchema = ItemSchema.extend({

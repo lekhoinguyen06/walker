@@ -1,5 +1,5 @@
 import { ObservedAttributes } from "./walk.const";
-import type { ItemType } from "../map/map.dto";
+import type { ItemType } from "../map";
 
 export interface WalkerElementProps<T = unknown> extends ItemType {
   children?: T;

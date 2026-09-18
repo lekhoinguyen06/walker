@@ -1,7 +1,7 @@
 import z from "zod";
-import { ActionSchema } from "../action/action.dto";
-import { MapSchema } from "../map/map.dto";
-import { FlowSchema } from "../flow/flow.dto";
+import { ActionSchema } from "../action";
+import { MapSchema } from "../map";
+import { FlowSchema } from "../flow";
 
 export const HistorySchema = z.object({
   prompt: z.string(),

@@ -1,20 +1,11 @@
-// Type exports
-export * from "./runtime/runtime.dto";
-export * from "./action/action.dto";
-export * from "./flow/flow.dto";
-export * from "./map/map.dto";
-export * from "./walk/walk.dto";
-export * from "./hook/hook.dto";
-export * from "./config/config.dto";
-export * from "./runtime/runtime.dto";
-export * from "./history/history.dto";
-
-// Default exports
-export * from "./flow/web";
-export * from "./hook/web.hooks";
-
-// Runtime exports
-export * from "./runtime/index";
+export * from "./runtime";
+export * from "./action";
+export * from "./flow";
+export * from "./map";
+export * from "./walk";
+export * from "./hook";
+export * from "./config";
+export * from "./history";
 
 // Element exports
 export * from "./walk/walker-element";

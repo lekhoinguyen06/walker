@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { useConciergeChat } from "./dev.hook";
+import { useConciergeChat } from "@/hooks";
 import {
   Dialog,
   DialogContent,

@@ -6,10 +6,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useRuntime } from "@/RuntimeProvider";
+import { useRuntime } from "@/runtime";
 import { Flower2, X } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useScreenSize } from "./dev.hook";
+import { useScreenSize } from "@/hooks";
 import { type FlowType } from "walker-core";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";

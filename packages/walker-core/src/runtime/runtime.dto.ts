@@ -1,10 +1,10 @@
 import z from "zod";
-import { ActionSchema } from "../action/action.dto";
-import { HookFactory, HooksSchema } from "../hook/hook.dto";
-import { FlowsSchema } from "../flow/flow.dto";
-import { ConfigSchema } from "../config/config.dto";
-import { Runtime } from ".";
-import { HistorySchema } from "../history/history.dto";
+import { ActionSchema } from "../action";
+import { HookFactory, HooksSchema } from "../hook";
+import { FlowsSchema } from "../flow";
+import { ConfigSchema } from "../config";
+import { Runtime } from "./index";
+import { HistorySchema } from "../history";
 
 // --- Action Store ---
 export const ActionStorePushHandler = z.function({

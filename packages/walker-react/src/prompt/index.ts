@@ -1,4 +1,4 @@
-import type { Runtime } from "../../../walker-core/dist";
+import type { Runtime } from "walker-core";
 
 export function generateWalkPrompt(runtime: Runtime, input: string): string {
   const context = {

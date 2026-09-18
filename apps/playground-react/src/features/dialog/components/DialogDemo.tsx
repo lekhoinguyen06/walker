@@ -12,11 +12,11 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Item, useActive } from "walker-react";
+import { Item, useScope } from "walker-react";
 import { useState } from "react";
 
 export function DialogDemo() {
-  const { active, setActiveId, resetActiveId } = useActive("dialog-demo");
+  const { active, setActiveId, resetActiveId } = useScope("dialog-demo");
   const [name, setName] = useState("Pedro Duarte");
   const [username, setUsername] = useState("@peduarte");
   const [isOpen, setIsOpen] = useState(false);

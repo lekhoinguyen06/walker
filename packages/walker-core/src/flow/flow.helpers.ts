@@ -1,6 +1,5 @@
 import z from "zod";
-import { ActionSchema, type ActionType } from "../action/action.dto";
-import type { FlowType } from "./flow.dto";
+import { ActionSchema } from "../action";
 
 type FlowBodySchemaProps<
   F extends string,

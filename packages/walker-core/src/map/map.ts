@@ -1,5 +1,5 @@
 import type { ContextType } from "../context/context.dto";
-import { type ObservedAttributesType } from "../walk/walk.dto";
+import { type ObservedAttributesType } from "../walk";
 import { ItemSchema, type MapType } from "./map.dto";
 
 function uniqueGuard(

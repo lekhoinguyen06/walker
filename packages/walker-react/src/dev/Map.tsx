@@ -1,4 +1,4 @@
-import { useRuntime } from "@/RuntimeProvider";
+import { useRuntime } from "@/runtime";
 import type { ItemType, MapType } from "walker-core";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useScreenSize } from "./dev.hook";
+import { useScreenSize } from "@/hooks";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { Markdown } from "@tanstack/markdown/react";
 

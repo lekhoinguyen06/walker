@@ -1,13 +1,40 @@
-import { Item } from "@/Components";
-import { useMouseOffset } from "@/MouseProvider";
+import { Item } from "@/item";
+import { useMouseOffset } from "./useMouseStore";
 import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
+import type { HookPropsType, HookResponseType } from "walker-core";
+import { usePanelToast } from "@/ui";
 
 export type MouseProps = {
   children?: React.ReactNode;
 };
 
-export default function Mouse({ children }: MouseProps) {
+export async function mouseHook(props: HookPropsType): HookResponseType {
+  const { setX, setY } = useMouseOffset();
+  const { pushToast } = usePanelToast();
+
+  const walker = document.getElementById(props.action.targetId);
+  const targetEl = walker?.firstElementChild;
+
+  if (targetEl) {
+    const rect = targetEl.getBoundingClientRect();
+
+    const centerX = rect.x + rect.width / 2 + window.scrollX;
+    const centerY = rect.y + rect.height / 2 + window.scrollY;
+
+    setX(centerX);
+    setY(centerY);
+  } else {
+    pushToast({
+      type: "error",
+      message: "Item not found",
+    });
+  }
+
+  return;
+}
+
+export function Mouse({ children }: MouseProps) {
   const { x: targetX, y: targetY } = useMouseOffset();
   const containerRef = useRef<HTMLDivElement>(null);
 

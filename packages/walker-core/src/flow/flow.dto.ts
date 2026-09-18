@@ -1,6 +1,6 @@
 import z from "zod";
-import { HooksSchema, type HooksType } from "../hook/hook.dto";
-import { ContextSchema, type ContextType } from "../context/context.dto";
+import { HooksSchema, type HooksType } from "../hook";
+import { ContextSchema, type ContextType } from "../context";
 
 export const HandlerFactory = z.function({
   input: [

@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
 import { Item } from "walker-react";
-import { Panel } from "walker-react/dev";
+import { Panel } from "walker-react/ui";
 
 // Pinning ts to lower version to avoid issues with tsup and react types.
 

@@ -1,7 +1,6 @@
 import z from "zod";
-import { ActionSchema } from "../action/action.dto";
-import { ConfigSchema } from "../config/config.dto";
-import { ContextSchema } from "../context/context.dto";
+import { ActionSchema } from "../action";
+import { ContextSchema } from "../context";
 
 export const HookPropsSchema = z.object({
   action: ActionSchema,

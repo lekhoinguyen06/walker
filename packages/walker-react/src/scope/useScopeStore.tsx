@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import slugify from "slugify";
 
-type ActiveStore = {
+type ScopeStoryType = {
   activeId: string | null;
   defaultId: string | null;
   setActiveId: (id: string) => void;
@@ -9,7 +9,7 @@ type ActiveStore = {
   setDefaultActiveId: (id: string) => void;
 };
 
-export const useActiveStore = create<ActiveStore>((set) => ({
+export const useScopeStore = create<ScopeStoryType>((set) => ({
   activeId: null,
   defaultId: null,
   setActiveId: (id) => set({ activeId: slugify(id) }),
@@ -20,3 +20,17 @@ export const useActiveStore = create<ActiveStore>((set) => ({
       defaultId: state.defaultId ?? slugify(id),
     })),
 }));
+
+export function useScope(id: string) {
+  const activeId = useScopeStore((state) => state.activeId);
+  const setActiveId = useScopeStore((state) => state.setActiveId);
+  const setDefaultActiveId = useScopeStore((state) => state.setDefaultActiveId);
+  const resetActiveId = useScopeStore((state) => state.resetActiveId);
+
+  return {
+    active: activeId === slugify(id),
+    setActiveId,
+    setDefaultActiveId,
+    resetActiveId,
+  };
+}

@@ -7,7 +7,7 @@ import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
 import { useRuntime } from "walker-react";
-import { usePanelToast } from "walker-react/dev";
+import { usePanelToast } from "walker-react/ui";
 
 export type RawCode = {
   lang: "tsx" | "json";

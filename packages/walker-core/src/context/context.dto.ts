@@ -1,5 +1,5 @@
 import z from "zod";
-import { ConfigSchema } from "../config/config.dto";
+import { ConfigSchema } from "../config";
 import { LoggerSchema } from "../shared/utils/logger";
 
 export const ContextSchema = z.object({
