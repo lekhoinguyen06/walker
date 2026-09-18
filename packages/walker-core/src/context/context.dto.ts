@@ -1,10 +1,12 @@
-import z from "zod";
-import { ConfigSchema } from "../config";
-import { LoggerSchema } from "../shared/utils/logger";
+import { type ConfigType } from "../config";
+import type { WebHooksType } from "../hook";
+import { type LoggerType } from "../shared/utils/logger";
 
-export const ContextSchema = z.object({
-  config: ConfigSchema,
-  logger: LoggerSchema,
-});
+export interface ContextType {
+  config: ConfigType;
+  logger: LoggerType;
+}
 
-export type ContextType = z.infer<typeof ContextSchema>;
+export interface ContextWithHook extends ContextType {
+  hooks: WebHooksType;
+}

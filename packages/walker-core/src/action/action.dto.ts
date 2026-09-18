@@ -1,5 +1,14 @@
 import z from "zod";
 
+export interface ActionType<T = any> {
+  flow: string;
+  message: string;
+  targetId: string;
+  prompt: string;
+  end: boolean;
+  body: T;
+}
+
 export const ActionSchema = z
   .object({
     flow: z.string(),
@@ -9,5 +18,3 @@ export const ActionSchema = z
     end: z.boolean(),
   })
   .loose();
-
-export type ActionType = z.infer<typeof ActionSchema>;

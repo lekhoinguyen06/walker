@@ -2,7 +2,7 @@ import z from "zod";
 import {
   ItemSchema,
   type ItemType,
-  type MapItemType,
+  type ItemWithChildrenType,
   type MapType,
 } from "./map.dto";
 
@@ -17,6 +17,6 @@ export function flattenMap(map: MapType): ItemType[] {
   return result;
 }
 
-export function mockItem(props: MapItemType): MapItemType {
+export function mockItem(props: ItemWithChildrenType): ItemWithChildrenType {
   return props;
 }

@@ -1,17 +1,11 @@
-import z from "zod";
-import { ActionSchema } from "../action";
-import { MapSchema } from "../map";
-import { FlowSchema } from "../flow";
+import { type ActionType } from "../action";
+import { type MapType } from "../map";
+import { type FlowItemType, type FlowType } from "../flow";
 
-export const HistorySchema = z.object({
-  prompt: z.string(),
-  flow: FlowSchema.pick({
-    command: true,
-    description: true,
-  }),
-  action: ActionSchema,
-  map: MapSchema,
-  error: z.optional(z.string()),
-});
-
-export type HistoryType = z.infer<typeof HistorySchema>;
+export interface HistoryType {
+  prompt: string;
+  flow: FlowItemType;
+  action: ActionType;
+  map: MapType;
+  logs: string[];
+}

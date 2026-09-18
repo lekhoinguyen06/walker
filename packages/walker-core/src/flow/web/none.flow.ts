@@ -1,5 +1,4 @@
-import { createFlow } from "../flow.dto";
-import { createFlowBodySchema } from "../flow.helpers";
+import { createFlow, createFlowBodySchema } from "../flow.helpers";
 
 export const noneFlow = createFlow({
   command: "none",
@@ -9,5 +8,5 @@ export const noneFlow = createFlow({
   schema: createFlowBodySchema({
     flow: "none",
   }),
-  handler: async (props) => {},
+  handler: async () => {},
 });

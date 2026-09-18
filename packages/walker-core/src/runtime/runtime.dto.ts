@@ -1,79 +1,41 @@
-import z from "zod";
-import { ActionSchema } from "../action";
-import { HookFactory, HooksSchema } from "../hook";
-import { FlowsSchema } from "../flow";
-import { ConfigSchema } from "../config";
+import { type ActionType } from "../action";
+import { type WebHooksType } from "../hook";
+import { type FlowRegistry, type FlowType } from "../flow";
+import { type ConfigType } from "../config";
 import { Runtime } from "./index";
-import { HistorySchema } from "../history";
+import type { HistoryType } from "../history";
 
-// --- Action Store ---
-export const ActionStorePushHandler = z.function({
-  input: [ActionSchema],
-  output: z.void(),
-});
+// --- Action Store Adapter ---
+export interface ActionStoreAdapterType {
+  pushBack: (action: ActionType) => void;
+  pushFront: (action: ActionType) => void;
+  popBack: () => ActionType | undefined;
+  popFront: () => ActionType | undefined;
+  list: () => ActionType[];
+  clear: () => void;
+}
 
-export const ActionStorePopHandler = z.function({
-  input: [],
-  output: z.optional(ActionSchema),
-});
+// --- History Store Adapter ---
+export interface HistoryStoreAdapterType {
+  pushLog: (log: string) => void;
+  pushBack: (history: HistoryType) => void;
+  pushFront: (history: HistoryType) => void;
+  popBack: () => HistoryType | undefined;
+  popFront: () => HistoryType | undefined;
+  list: () => HistoryType[];
+  clear: () => void;
+}
 
-export const ActionStoreReturnManyHandler = z.function({
-  input: [],
-  output: z.array(ActionSchema),
-});
+export interface AdapterType {
+  actionStore: ActionStoreAdapterType;
+  historyStore: HistoryStoreAdapterType;
+}
 
-export const ActionStoreSchema = z.object({
-  pushBack: ActionStorePushHandler,
-  pushFront: ActionStorePushHandler,
-  popBack: ActionStorePopHandler,
-  popFront: ActionStorePopHandler,
-  list: ActionStoreReturnManyHandler,
-  clear: ActionStoreReturnManyHandler,
-});
+export interface RuntimePropsType {
+  config: ConfigType;
+  adapter: AdapterType;
+  flows: FlowRegistry;
+  hooks: WebHooksType;
+}
 
-// --- History Store ---
-export const HistoryStorePushHandler = z.function({
-  input: [HistorySchema],
-  output: z.void(),
-});
-
-export const HistoryStoreUpdateHandler = z.function({
-  input: [HistorySchema.partial()],
-  output: z.void(),
-});
-
-export const HistoryStorePopHandler = z.function({
-  input: [],
-  output: z.optional(HistorySchema),
-});
-
-export const HistoryStoreReturnManyHandler = z.function({
-  input: [],
-  output: z.array(HistorySchema),
-});
-
-export const HistoryStoreSchema = z.object({
-  updateBack: HistoryStoreUpdateHandler,
-  pushBack: HistoryStorePushHandler,
-  pushFront: HistoryStorePushHandler,
-  popBack: HistoryStorePopHandler,
-  popFront: HistoryStorePopHandler,
-  list: HistoryStoreReturnManyHandler,
-  clear: HistoryStoreReturnManyHandler,
-});
-
-export const AdapterSchema = z.object({
-  actionStore: ActionStoreSchema,
-  historyStore: HistoryStoreSchema,
-});
-
-export const RuntimePropsSchema = z.object({
-  config: ConfigSchema,
-  adapter: AdapterSchema,
-  flows: FlowsSchema,
-  hooks: HooksSchema,
-});
-
-export type AdapterType = z.infer<typeof AdapterSchema>;
-export type RuntimePropsType = z.infer<typeof RuntimePropsSchema>;
 export type RuntimeType = typeof Runtime;

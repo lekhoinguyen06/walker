@@ -1,6 +1,6 @@
-import type { HookPropsType, HookResponseType } from "./hook.dto";
+import type { HookPropsType } from "./hook.dto";
 
-export async function scroll(props: HookPropsType): HookResponseType {
+export async function scroll(props: HookPropsType): Promise<void> {
   const walker = document.getElementById(props.action.targetId);
   const element = walker?.firstElementChild;
 

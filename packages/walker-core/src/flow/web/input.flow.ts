@@ -1,13 +1,14 @@
 import z from "zod";
-import { createFlow } from "../flow.dto";
 import { wait } from "../../shared/utils/wait";
-import { createFlowBodySchema } from "../flow.helpers";
+import { createFlow, createFlowBodySchema } from "../flow.helpers";
 
 const InputFlowBodySchema = z.object({
   input: z.string(),
 });
 
-export const inputFlow = createFlow({
+type InputFlowBody = z.infer<typeof InputFlowBodySchema>;
+
+export const inputFlow = createFlow<InputFlowBody>({
   command: "input",
   description: "Input text into an element.",
   schema: createFlowBodySchema({

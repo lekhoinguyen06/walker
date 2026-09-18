@@ -1,5 +1,5 @@
-import type { HookPropsType, HookResponseType } from "./hook.dto";
+import type { HookPropsType } from "./hook.dto";
 
-export async function message(props: HookPropsType): HookResponseType {
+export async function message(props: HookPropsType): Promise<void> {
   alert(props.action.message);
 }

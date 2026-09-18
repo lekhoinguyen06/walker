@@ -1,44 +1,20 @@
-import z from "zod";
-import { HooksSchema, type HooksType } from "../hook";
-import { ContextSchema, type ContextType } from "../context";
+import type { ActionType } from "../action";
+import { type ContextWithHook } from "../context";
 
-export const HandlerFactory = z.function({
-  input: [
-    z.object({
-      action: z.unknown(),
-      context: ContextSchema.extend({
-        hooks: HooksSchema,
-      }),
-    }),
-  ],
-  output: z.promise(z.void()),
-});
-
-export const FlowSchema = z.object({
-  command: z.string(),
-  description: z.string(),
-  route: z.string().or(z.literal("*")),
-  schema: z.instanceof(z.ZodType),
-  handler: z.any(),
-});
-
-type InferSchema<T> = T extends z.ZodType<infer U> ? U : never;
-
-export const FlowsSchema = z.map(z.string(), FlowSchema);
-
-export type FlowType<S extends z.ZodType = z.ZodType> = {
+export interface FlowType<T = any> {
   command: string;
   description: string;
-  route: string | "*";
-  schema: S;
+  route: string;
+  schema: any;
   handler: (props: {
-    action: InferSchema<S>;
-    context: ContextType & { hooks: HooksType };
+    action: ActionType<T>;
+    context: ContextWithHook;
   }) => Promise<void>;
-};
-
-export function createFlow<S extends z.ZodType>(config: FlowType<S>): FlowType {
-  return config as FlowType;
 }
 
-export type FlowsType = z.infer<typeof FlowsSchema>;
+export interface FlowItemType extends Pick<
+  FlowType,
+  "command" | "description"
+> {}
+
+export type FlowRegistry = Map<string, FlowType>;

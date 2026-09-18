@@ -1,21 +1,17 @@
-import { ActionSchema, type ActionType, validateAction } from "../action";
-import {
-  AdapterSchema,
-  type AdapterType,
-  type RuntimePropsType,
-} from "./runtime.dto";
 import z from "zod";
-import { FlowsSchema, type FlowsType, type FlowType } from "../flow";
+import { ActionSchema, type ActionType } from "../action";
+import type { ConfigType } from "../config";
+import type { FlowRegistry, FlowType } from "../flow";
+import type { WebHooksType } from "../hook";
 import { mapper } from "../map";
-import { ConfigSchema, type ConfigType } from "../config";
-import { HooksSchema, type HooksType } from "../hook";
 import { getLogger, LoggerLevel } from "../shared/utils/logger";
+import { type AdapterType, type RuntimePropsType } from "./runtime.dto";
 
 export class Runtime {
   private readonly config: ConfigType;
   private readonly adapter: AdapterType;
-  private readonly flows: FlowsType;
-  private readonly hooks: HooksType;
+  private readonly flows: FlowRegistry;
+  private readonly hooks: WebHooksType;
   private nextAction: ActionType | undefined;
   private logger;
 
@@ -24,29 +20,10 @@ export class Runtime {
     this.logger = getLogger(level);
     this.logger.trace("Initializing Runtime Instance");
 
-    this.config = ConfigSchema.parse(config);
-    this.logger.debug({
-      event: "Inject Config",
-      config: this.config,
-    });
-
-    this.adapter = AdapterSchema.parse(adapter);
-    this.logger.debug({
-      event: "Inject Adapter",
-      adapter: this.adapter,
-    });
-
-    this.flows = FlowsSchema.parse(flows);
-    this.logger.debug({
-      event: "Inject Flows",
-      flows: this.flows,
-    });
-
-    this.hooks = HooksSchema.parse(hooks);
-    this.logger.debug({
-      event: "Inject Hooks",
-      hooks: this.hooks,
-    });
+    this.config = config;
+    this.adapter = adapter;
+    this.flows = flows;
+    this.hooks = hooks;
   }
 
   async next() {
@@ -58,15 +35,16 @@ export class Runtime {
     });
 
     if (this.nextAction) {
-      const action = validateAction({
-        ctx: {
-          config: this.config,
-          logger: this.logger,
-        },
-        flows: this.flows,
-        map: this.map(),
-        action: this.nextAction,
-      });
+      // const action = validateAction({
+      //   ctx: {
+      //     config: this.config,
+      //     logger: this.logger,
+      //   },
+      //   flows: this.flows,
+      //   map: this.map(),
+      //   action: this.nextAction,
+      // });
+      const action = this.nextAction;
 
       const flow = this.getFlow(action.flow);
       this.logger.debug({
@@ -93,6 +71,7 @@ export class Runtime {
           },
           map: this.map(),
           prompt: action.prompt,
+          logs: [],
         });
 
         await flow.handler({
@@ -108,9 +87,9 @@ export class Runtime {
           event: "Error executing flow handler",
           error: error,
         });
-        this.adapter.historyStore.updateBack({
-          error: (error as Error).message.slice(0, 100),
-        });
+        this.adapter.historyStore.pushLog(
+          (error as Error).message.slice(0, 100),
+        );
         throw error;
       }
     } else {
@@ -173,12 +152,6 @@ export class Runtime {
 
   getFlow(command: string): FlowType | undefined {
     return this.flows.get(command);
-  }
-
-  getJoinedFlowsSchema() {
-    const schemas = Array.from(this.flows.values()).map((f) => f.schema);
-    const joined = z.union(schemas);
-    return joined;
   }
 
   getConfig() {

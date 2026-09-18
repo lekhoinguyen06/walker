@@ -1,20 +1,31 @@
 import chalk from "chalk";
 import { z } from "zod";
 
-export const LoggerHandlerFactorySchema = z.function({
-  input: [z.string().or(z.record(z.any(), z.any()))],
-  output: z.void(),
-});
+interface LoggerHandlerFactoryType {
+  (config: string | Record<string, any>): void;
+}
 
-export const LoggerSchema = z.object({
+export const LoggerHandlerFactorySchema: z.ZodType<LoggerHandlerFactoryType> =
+  z.function({
+    input: [z.string().or(z.record(z.any(), z.any()))],
+    output: z.void(),
+  });
+
+export interface LoggerType {
+  trace: LoggerHandlerFactoryType;
+  debug: LoggerHandlerFactoryType;
+  info: LoggerHandlerFactoryType;
+  warn: LoggerHandlerFactoryType;
+  error: LoggerHandlerFactoryType;
+}
+
+export const LoggerSchema: z.ZodType<LoggerType> = z.object({
   trace: LoggerHandlerFactorySchema,
   debug: LoggerHandlerFactorySchema,
   info: LoggerHandlerFactorySchema,
   warn: LoggerHandlerFactorySchema,
   error: LoggerHandlerFactorySchema,
 });
-
-export type LoggerType = z.infer<typeof LoggerSchema>;
 
 export enum LoggerLevel {
   TRACE = 0,

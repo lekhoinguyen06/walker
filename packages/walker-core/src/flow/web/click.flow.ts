@@ -1,6 +1,5 @@
 import { wait } from "../../shared/utils/wait";
-import { createFlow } from "../flow.dto";
-import { createFlowBodySchema } from "../flow.helpers";
+import { createFlow, createFlowBodySchema } from "../flow.helpers";
 
 export const clickFlow = createFlow({
   command: "click",

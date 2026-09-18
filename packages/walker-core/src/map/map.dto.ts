@@ -1,5 +1,16 @@
 import z from "zod";
 
+export interface ItemType {
+  id: string;
+  type: string;
+  description: string;
+  state: string | null;
+  scope: boolean;
+  isInActiveScope: boolean;
+  content: boolean;
+  raw: boolean;
+}
+
 export const ItemSchema = z.object({
   id: z.string(),
   type: z.string(),
@@ -11,14 +22,17 @@ export const ItemSchema = z.object({
   raw: z.boolean(),
 });
 
-export const MapItemSchema = ItemSchema.extend({
+export interface ItemWithChildrenType extends ItemType {
+  children?: Record<string, ItemType>;
+  contentValue?: string;
+  rawValue?: string;
+}
+
+export const ItemWithChildrenSchema = ItemSchema.extend({
   children: z.record(z.string(), ItemSchema).optional(),
   contentValue: z.string().optional(),
   rawValue: z.string().optional(),
 });
 
-export const MapSchema = z.record(z.string(), MapItemSchema);
-
-export type ItemType = z.infer<typeof ItemSchema>;
-export type MapItemType = z.infer<typeof MapItemSchema>;
-export type MapType = z.infer<typeof MapSchema>;
+export interface MapType extends Record<string, ItemWithChildrenType> {}
+export const MapSchema = z.record(z.string(), ItemWithChildrenSchema);
