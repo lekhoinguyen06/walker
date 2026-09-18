@@ -38,7 +38,7 @@ function getRequiredAttr(
   return val;
 }
 
-export function mapper(ctx: ContextType): MapType {
+export function map(ctx: ContextType): MapType {
   const registry: MapType = {};
   const tree: MapType = {};
   const all = document.querySelectorAll("walker-element");

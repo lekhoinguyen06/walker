@@ -11,7 +11,21 @@ export interface ItemType {
   raw: boolean;
 }
 
-export const ItemSchema = z.object({
+type ItemSchemaType = z.ZodObject<
+  {
+    id: z.ZodString;
+    type: z.ZodString;
+    description: z.ZodString;
+    state: z.ZodNullable<z.ZodString>;
+    scope: z.ZodBoolean;
+    isInActiveScope: z.ZodBoolean;
+    content: z.ZodBoolean;
+    raw: z.ZodBoolean;
+  },
+  z.core.$strip
+>;
+
+export const ItemSchema: ItemSchemaType = z.object({
   id: z.string(),
   type: z.string(),
   description: z.string(),
@@ -28,11 +42,34 @@ export interface ItemWithChildrenType extends ItemType {
   rawValue?: string;
 }
 
-export const ItemWithChildrenSchema = ItemSchema.extend({
-  children: z.record(z.string(), ItemSchema).optional(),
-  contentValue: z.string().optional(),
-  rawValue: z.string().optional(),
-});
+type ItemWithChildrenSchemaType = z.ZodObject<
+  {
+    id: z.ZodString;
+    type: z.ZodString;
+    description: z.ZodString;
+    state: z.ZodNullable<z.ZodString>;
+    scope: z.ZodBoolean;
+    isInActiveScope: z.ZodBoolean;
+    content: z.ZodBoolean;
+    raw: z.ZodBoolean;
+    children: z.ZodOptional<z.ZodRecord<z.ZodString, ItemSchemaType>>;
+    contentValue: z.ZodOptional<z.ZodString>;
+    rawValue: z.ZodOptional<z.ZodString>;
+  },
+  z.core.$strip
+>;
+
+export const ItemWithChildrenSchema: ItemWithChildrenSchemaType =
+  ItemSchema.extend({
+    children: z.record(z.string(), ItemSchema).optional(),
+    contentValue: z.string().optional(),
+    rawValue: z.string().optional(),
+  });
 
 export interface MapType extends Record<string, ItemWithChildrenType> {}
-export const MapSchema = z.record(z.string(), ItemWithChildrenSchema);
+
+type MapSchemaType = z.ZodRecord<z.ZodString, ItemWithChildrenSchemaType>;
+export const MapSchema: MapSchemaType = z.record(
+  z.string(),
+  ItemWithChildrenSchema,
+);

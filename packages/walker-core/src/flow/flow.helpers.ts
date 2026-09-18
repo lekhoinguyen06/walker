@@ -1,10 +1,10 @@
 import z from "zod";
-import { ActionSchema, type ActionType } from "../action";
+import { ActionSchema } from "../action";
 import type { FlowType } from "./flow.dto";
 
 export type CreateFlowProps<T> = FlowType<T>;
 
-export function createFlow<T>(props: CreateFlowProps<T>) {
+export function createFlow<T>(props: CreateFlowProps<T>): CreateFlowProps<T> {
   return props;
 }
 

@@ -6,10 +6,21 @@ export interface ActionType<T = any> {
   targetId: string;
   prompt: string;
   end: boolean;
-  body: T;
+  body?: T;
 }
 
-export const ActionSchema = z
+export type ActionSchemaType = z.ZodObject<
+  {
+    flow: z.ZodString;
+    message: z.ZodString;
+    targetId: z.ZodString;
+    prompt: z.ZodString;
+    end: z.ZodBoolean;
+  },
+  z.core.$loose
+>;
+
+export const ActionSchema: ActionSchemaType = z
   .object({
     flow: z.string(),
     message: z.string(),

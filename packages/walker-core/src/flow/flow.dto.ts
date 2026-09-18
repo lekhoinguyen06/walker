@@ -1,5 +1,6 @@
+import type z from "zod";
 import type { ActionType } from "../action";
-import { type ContextWithHook } from "../context";
+import type { ContextType } from "../context";
 
 export interface FlowType<T = any> {
   command: string;
@@ -8,13 +9,13 @@ export interface FlowType<T = any> {
   schema: any;
   handler: (props: {
     action: ActionType<T>;
-    context: ContextWithHook;
+    context: ContextType;
   }) => Promise<void>;
 }
 
 export interface FlowItemType extends Pick<
   FlowType,
-  "command" | "description"
+  "command" | "description" | "schema"
 > {}
 
 export type FlowRegistry = Map<string, FlowType>;

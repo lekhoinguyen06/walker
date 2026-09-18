@@ -1,8 +1,4 @@
-import { type ActionType } from "../action";
-import { type WebHooksType } from "../hook";
-import { type FlowRegistry, type FlowType } from "../flow";
-import { type ConfigType } from "../config";
-import { Runtime } from "./index";
+import type { ActionType } from "../action";
 import type { HistoryType } from "../history";
 
 // --- Action Store Adapter ---
@@ -26,16 +22,10 @@ export interface HistoryStoreAdapterType {
   clear: () => void;
 }
 
+// --- Mouse Store Adapter ---
+export interface MouseAdapterType {}
+
 export interface AdapterType {
   actionStore: ActionStoreAdapterType;
   historyStore: HistoryStoreAdapterType;
 }
-
-export interface RuntimePropsType {
-  config: ConfigType;
-  adapter: AdapterType;
-  flows: FlowRegistry;
-  hooks: WebHooksType;
-}
-
-export type RuntimeType = typeof Runtime;

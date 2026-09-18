@@ -1,164 +1,156 @@
-import z from "zod";
 import { ActionSchema, type ActionType } from "../action";
-import type { ConfigType } from "../config";
-import type { FlowRegistry, FlowType } from "../flow";
-import type { WebHooksType } from "../hook";
-import { mapper } from "../map";
-import { getLogger, LoggerLevel } from "../shared/utils/logger";
-import { type AdapterType, type RuntimePropsType } from "./runtime.dto";
+import type { ContextType } from "../context";
+import type { FlowItemType, FlowType } from "../flow";
+import type { HistoryType } from "../history";
+import { map, type MapType } from "../map";
 
-export class Runtime {
-  private readonly config: ConfigType;
-  private readonly adapter: AdapterType;
-  private readonly flows: FlowRegistry;
-  private readonly hooks: WebHooksType;
-  private nextAction: ActionType | undefined;
-  private logger;
+function getFlow(ctx: ContextType, command: string): FlowType | undefined {
+  return ctx.flows.get(command);
+}
 
-  constructor({ config, adapter, flows, hooks }: RuntimePropsType) {
-    const level = !config.verbose ? LoggerLevel.INFO : LoggerLevel.TRACE;
-    this.logger = getLogger(level);
-    this.logger.trace("Initializing Runtime Instance");
+function getFlowItem(
+  ctx: ContextType,
+  command: string,
+): FlowItemType | undefined {
+  const flow = getFlow(ctx, command);
+  if (!flow) return undefined;
+  return {
+    command: flow.command,
+    description: flow.description,
+    schema: flow.schema.toJSONSchema(),
+  };
+}
 
-    this.config = config;
-    this.adapter = adapter;
-    this.flows = flows;
-    this.hooks = hooks;
-  }
+async function next(ctx: ContextType) {
+  ctx.logger.trace("Executing next function");
+  const action = ctx.adapter.actionStore.popFront();
+  ctx.logger.debug({
+    event: "NextAction Object",
+    nextAction: action,
+  });
 
-  async next() {
-    this.logger.trace("Executing next function");
-    this.nextAction = this.adapter.actionStore.popFront();
-    this.logger.debug({
-      event: "NextAction Object",
-      nextAction: this.nextAction,
+  if (action) {
+    // const action = validateAction({
+    //   ctx: {
+    //     config: ctx.config,
+    //     logger: ctx.logger,
+    //   },
+    //   flows: ctx.flows,
+    //   map: ctx.map(),
+    //   action: ctx.nextAction,
+    // });
+
+    const flow = getFlow(ctx, action.flow);
+    const flowItem = getFlowItem(ctx, action.flow);
+    ctx.logger.debug({
+      event: "Flow Object",
+      flow: flow,
     });
 
-    if (this.nextAction) {
-      // const action = validateAction({
-      //   ctx: {
-      //     config: this.config,
-      //     logger: this.logger,
-      //   },
-      //   flows: this.flows,
-      //   map: this.map(),
-      //   action: this.nextAction,
-      // });
-      const action = this.nextAction;
+    if (!flow || !flowItem) {
+      ctx.logger.error({
+        event: "No flow found",
+        nextAction: action,
+      });
+      throw new Error(
+        `No flow found for action with action.flow : ${action.flow}`,
+      );
+    }
 
-      const flow = this.getFlow(action.flow);
-      this.logger.debug({
-        event: "Flow Object",
-        flow: flow,
+    try {
+      ctx.adapter.historyStore.pushBack({
+        action,
+        flow: flowItem,
+        map: map(ctx),
+        prompt: action.prompt,
+        logs: [],
       });
 
-      if (!flow) {
-        this.logger.error({
-          event: "No flow found",
-          nextAction: action,
-        });
-        throw new Error(
-          `No flow found for action with action.flow : ${action.flow}`,
-        );
-      }
-
-      try {
-        this.adapter.historyStore.pushBack({
-          action: this.nextAction,
-          flow: {
-            command: flow.command,
-            description: flow.description,
-          },
-          map: this.map(),
-          prompt: action.prompt,
-          logs: [],
-        });
-
-        await flow.handler({
-          action,
-          context: {
-            config: this.config,
-            logger: this.logger,
-            hooks: this.hooks,
-          },
-        });
-      } catch (error) {
-        this.logger.error({
-          event: "Error executing flow handler",
-          error: error,
-        });
-        this.adapter.historyStore.pushLog(
-          (error as Error).message.slice(0, 100),
-        );
-        throw error;
-      }
-    } else {
-      this.logger.trace("No next action found.");
-    }
-  }
-
-  countActionsInQueued() {
-    return this.adapter.actionStore.list().length;
-  }
-
-  addActions(inputActions: ActionType[]) {
-    for (const action of inputActions) {
-      this.adapter.actionStore.pushBack(action);
-    }
-  }
-
-  addRawActions(inputActions: string) {
-    const input = JSON.parse(inputActions);
-    const result = z.array(ActionSchema).safeParse(input);
-    if (!result.success) {
-      this.logger.error({
-        event: "Error parsing actions",
-        error: result.error,
+      await flow.handler({
+        action,
+        context: ctx,
       });
-      throw new Error("Invalid Actions format");
+    } catch (error) {
+      ctx.logger.error({
+        event: "Error executing flow handler",
+        error: error,
+      });
+      ctx.adapter.historyStore.pushLog((error as Error).message.slice(0, 100));
+      throw error;
     }
-
-    this.addActions(result.data);
+  } else {
+    ctx.logger.trace("No next action found.");
   }
+}
 
-  map() {
-    return mapper({
-      config: this.config,
-      logger: this.logger,
+export function countActionsInQueued(ctx: ContextType): number {
+  return ctx.adapter.actionStore.list().length;
+}
+
+export function addActions(ctx: ContextType, inputActions: ActionType[]): void {
+  for (const action of inputActions) {
+    ctx.adapter.actionStore.pushBack(action);
+  }
+}
+
+export function addRawActions(ctx: ContextType, inputActions: string): void {
+  const input = JSON.parse(inputActions);
+  const result = z.array(ActionSchema).safeParse(input);
+  if (!result.success) {
+    ctx.logger.error({
+      event: "Error parsing actions",
+      error: result.error,
     });
+    throw new Error("Invalid Actions format");
   }
 
-  listHistory() {
-    return this.adapter.historyStore.list();
-  }
+  addActions(ctx, result.data);
+}
 
-  listFlows() {
-    return Array.from(this.flows.values()).map((f) => ({
-      command: f.command,
-      description: f.description,
-      schema: f.schema.toJSONSchema(),
-    }));
-  }
+export function listHistory(ctx: ContextType): HistoryType[] {
+  return ctx.adapter.historyStore.list();
+}
 
-  listActions() {
-    return this.adapter.actionStore.list();
-  }
+export function listFlows(ctx: ContextType): FlowItemType[] {
+  return Array.from(ctx.flows.values()).map((f) => ({
+    command: f.command,
+    description: f.description,
+    schema: f.schema.toJSONSchema(),
+  }));
+}
 
-  clear() {
-    this.adapter.historyStore.clear();
-    this.adapter.actionStore.clear();
-    this.logger.trace("Runtime canceled: history and action stores cleared.");
-  }
+export function listActions(ctx: ContextType): ActionType[] {
+  return ctx.adapter.actionStore.list();
+}
 
-  getFlow(command: string): FlowType | undefined {
-    return this.flows.get(command);
-  }
+export function clear(ctx: ContextType): void {
+  ctx.adapter.historyStore.clear();
+  ctx.adapter.actionStore.clear();
+  ctx.logger.trace("Runtime canceled: history and action stores cleared.");
+}
 
-  getConfig() {
-    return this.config;
-  }
+export interface RuntimeType {
+  next: () => Promise<void>;
+  map: () => MapType;
+  countActionsInQueued: () => number;
+  addActions: (inputActions: ActionType[]) => void;
+  addRawActions: (inputActions: string) => void;
+  listHistory: () => HistoryType[];
+  listFlows: () => FlowItemType[];
+  listActions: () => ActionType[];
+  clear: () => void;
+}
 
-  getLogger() {
-    return this.logger;
-  }
+export default function runtime(ctx: ContextType): RuntimeType {
+  return {
+    next: () => next(ctx),
+    map: () => map(ctx),
+    countActionsInQueued: () => countActionsInQueued(ctx),
+    addActions: (inputActions: ActionType[]) => addActions(ctx, inputActions),
+    addRawActions: (inputActions: string) => addRawActions(ctx, inputActions),
+    listHistory: () => listHistory(ctx),
+    listFlows: () => listFlows(ctx),
+    listActions: () => listActions(ctx),
+    clear: () => clear(ctx),
+  };
 }

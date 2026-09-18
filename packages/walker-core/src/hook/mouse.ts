@@ -1,4 +1,6 @@
-export async function mouse(props: HookPropsType): HookResponseType {
+import type { HookPropsType } from "./hook.dto";
+
+export async function mouse(props: HookPropsType): Promise<void> {
   const { setX, setY } = useMouseStore.getState();
 
   const walker = document.getElementById(props.action.targetId);

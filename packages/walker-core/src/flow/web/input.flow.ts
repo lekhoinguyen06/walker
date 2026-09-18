@@ -29,7 +29,7 @@ export const inputFlow = createFlow<InputFlowBody>({
       await wait(gap);
       await props.context.hooks.onMouse?.(props);
       await wait(gap > 1000 ? gap : 1000);
-      if (props.action.body.input) {
+      if (props.action.body?.input) {
         // React specific, we may need to provided React flow later when we support more frameworks
         const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
           window.HTMLInputElement.prototype,

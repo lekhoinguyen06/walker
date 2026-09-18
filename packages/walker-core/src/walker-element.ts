@@ -1,5 +1,16 @@
-import { ObservedAttributes } from "./walk.const";
-import type { ItemType } from "../map";
+import type { ItemType } from "./map";
+
+export const ObservedAttributes = [
+  "id",
+  "type",
+  "description",
+  "scope",
+  "state",
+  "content",
+  "raw",
+] as const;
+
+export type ObservedAttributesType = (typeof ObservedAttributes)[number];
 
 export interface WalkerElementProps<T = unknown> extends ItemType {
   children?: T;
@@ -10,7 +21,8 @@ export class WalkerElement extends HTMLElement {
     super();
   }
 
-  static observedAttributes = ObservedAttributes;
+  static observedAttributes: readonly ObservedAttributesType[] =
+    ObservedAttributes;
 
   // connectedCallback() {
   //   console.log("Custom element added to page.");
