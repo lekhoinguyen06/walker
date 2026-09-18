@@ -25,10 +25,9 @@
     "./ui/index.css": "./dist/ui/index.css"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "gen-doc": "pnpm exec typedoc --json typedoc.json src/index.ts src/dev/index.ts && bash ./scripts/ship-doc.sh"
+    "build": "bunup",
+    "dev": "bunup --watch",
+    "gen-doc": "bun exec typedoc --json typedoc.json src/index.ts src/dev/index.ts && bash ./scripts/ship-doc.sh"
   },
   "peerDependencies": {
     "react": "^19.2.8",
@@ -59,12 +58,13 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@bunup/plugin-tailwindcss": "^0.16.32",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.18",
+    "bunup": "^0.16.32",
     "postcss": "^8.5.26",
     "tailwindcss": "^4.2.0",
-    "tsup": "^8.5.1",
     "typedoc": "^0.28.20",
     "typescript": "~6.0.2"
   }

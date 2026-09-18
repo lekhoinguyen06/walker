@@ -75,6 +75,7 @@ function App() {
       message: props.action.message,
     });
   };
+
   return (
     <RuntimeProvider
       config={{

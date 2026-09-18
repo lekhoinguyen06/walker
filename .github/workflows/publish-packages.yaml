@@ -11,14 +11,9 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v7
-        with:
-          node-version: "24.x"
-          registry-url: "https://registry.npmjs.org"
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm run build:packages
-      - run: pnpm publish --recursive --no-git-checks --provenance --access public
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run build:packages
+      - run: bun publish --recursive --no-git-checks --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

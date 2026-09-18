@@ -15,17 +15,17 @@
     }
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "bunup",
+    "dev": "bunup --watch",
     "test": "vitest",
-    "gen-doc": "pnpm exec typedoc --json typedoc.json src/index.ts && bash ./scripts/ship-doc.sh"
+    "gen-doc": "bun exec typedoc --json typedoc.json src/index.ts && bash ./scripts/ship-doc.sh"
   },
   "devDependencies": {
     "@types/bun": "^1.3.14",
     "@types/debug": "^4.1.13",
     "@types/jsdom": "^30.0.0",
+    "bunup": "^0.16.32",
     "jsdom": "^30.0.1",
-    "tsup": "^8.5.1",
     "typedoc": "^0.28.20",
     "vitest": "^4.1.10"
   },

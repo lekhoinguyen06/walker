@@ -1,12 +1,10 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "bunup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm", "cjs"],
   dts: true,
   minify: true,
-  splitting: false,
   sourcemap: true,
   clean: true,
-  treeshake: true,
 });

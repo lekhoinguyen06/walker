@@ -1,3 +1,5 @@
+import "../styles/globals.css";
+
 import { Button } from "@/components/ui/button";
 import { InputPanel } from "@/dev/Input";
 import { cn } from "@/lib/utils";
