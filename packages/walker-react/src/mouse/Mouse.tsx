@@ -1,5 +1,5 @@
 import { Item } from "@/item";
-import { useMouseOffset } from "./useMouseStore";
+import { useMouseOffset, useMouseStore } from "./useMouseStore";
 import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
 import type { HookPropsType, HookResponseType } from "walker-core";
@@ -10,8 +10,7 @@ export type MouseProps = {
 };
 
 export async function mouseHook(props: HookPropsType): HookResponseType {
-  const { setX, setY } = useMouseOffset();
-  const { pushToast } = usePanelToast();
+  const { setX, setY } = useMouseStore.getState();
 
   const walker = document.getElementById(props.action.targetId);
   const targetEl = walker?.firstElementChild;
@@ -25,10 +24,7 @@ export async function mouseHook(props: HookPropsType): HookResponseType {
     setX(centerX);
     setY(centerY);
   } else {
-    pushToast({
-      type: "error",
-      message: "Item not found",
-    });
+    throw new Error("Item not found");
   }
 
   return;
