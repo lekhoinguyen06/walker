@@ -6,14 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { useRuntime } from "@/runtime";
 import { Markdown } from "@tanstack/markdown/react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useScreenSize } from "@/hooks";
 import type { HistoryType } from "walker-core";
 import { cn } from "@/lib/utils";
 import { GalleryHorizontalEnd, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRuntime } from "@/hooks/useRuntime";
+import { useScreenSize } from "@/shared/hooks/useScreenSize";
 
 export type HistoryProps = {
   isOpen: boolean;
@@ -52,7 +52,7 @@ export function HistoryPanel({ isOpen, setIsOpen }: HistoryProps) {
               >
                 <GalleryHorizontalEnd size={12} />
                 <span className="text-xs font-semibold text-nowrap">
-                  {i.action.command}
+                  {i.action.flow}
                 </span>
                 <span className="text-xs text-nowrap">{i.prompt}</span>
               </div>

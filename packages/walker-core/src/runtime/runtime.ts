@@ -141,7 +141,7 @@ export interface RuntimeType {
   clear: () => void;
 }
 
-export default function runtime(ctx: ContextType): RuntimeType {
+export function runtime(ctx: ContextType): RuntimeType {
   return {
     next: () => next(ctx),
     map: () => map(ctx),

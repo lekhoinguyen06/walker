@@ -7,5 +7,11 @@ export interface HistoryType {
   flow: FlowItemType;
   action: ActionType;
   map: MapType;
-  logs: string[];
+  logs: LogItemType[];
+}
+
+export interface LogItemType {
+  type: "user" | "system";
+  message: string;
+  timestamp: number;
 }

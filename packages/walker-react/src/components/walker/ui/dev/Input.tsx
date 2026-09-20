@@ -1,7 +1,6 @@
 import Editor from "@monaco-editor/react";
 import { useRef, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
-import { useRuntime } from "@/runtime";
 import { useDarkMode } from "usehooks-ts";
 import {
   Dialog,
@@ -11,7 +10,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { RefreshCcw } from "lucide-react";
-import { usePanelToast } from "@/ui";
+import { useRuntime } from "@/hooks/useRuntime";
+import { usePanelToast } from "../panel";
 
 const defaultValue = `
 [

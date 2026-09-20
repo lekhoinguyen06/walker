@@ -1,5 +1,5 @@
 import type { ActionType } from "../action";
-import type { HistoryType } from "../history";
+import type { HistoryType, LogItemType } from "../history";
 
 // --- Action Store Adapter ---
 export interface ActionStoreAdapterType {
@@ -13,7 +13,7 @@ export interface ActionStoreAdapterType {
 
 // --- History Store Adapter ---
 export interface HistoryStoreAdapterType {
-  pushLog: (log: string) => void;
+  pushLog: (log: LogItemType) => void;
   pushBack: (history: HistoryType) => void;
   pushFront: (history: HistoryType) => void;
   popBack: () => HistoryType | undefined;

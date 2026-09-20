@@ -2,7 +2,11 @@ import { defineConfig } from "bunup";
 import { tailwindcss } from "@bunup/plugin-tailwindcss";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/core/index.ts", "src/ui/index.ts"],
+  entry: [
+    "src/index.ts",
+    "src/core/index.ts",
+    "src/components/walker/ui/index.ts",
+  ],
   plugins: [tailwindcss()],
   format: ["esm", "cjs"],
   dts: true,

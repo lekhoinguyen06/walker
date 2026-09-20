@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { useConciergeChat } from "@/hooks";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useWalkerChat } from "@/hooks/useWalkerChat";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
@@ -38,7 +38,7 @@ export type ChatProps = {
 };
 
 export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
-  const { messages, setMessages, sendMessage, status } = useConciergeChat();
+  const { messages, setMessages, sendMessage, status } = useWalkerChat();
 
   const [input, setInput] = useState("");
   const isBusy = status === "submitted" || status === "streaming";

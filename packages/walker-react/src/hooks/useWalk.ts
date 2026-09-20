@@ -1,5 +1,5 @@
-import { useRuntime } from "@/runtime";
-import { usePanelToast } from "@/ui/Panel";
+import { useRuntime } from "./useRuntime";
+import { usePanelToast } from "@/components/walker/ui/panel";
 import { useObject } from "@ai-sdk/react";
 import { ActionSchema } from "walker-core";
 
@@ -11,7 +11,6 @@ export type UseWalkProps = {
 export function useWalk({ url, noWalk = false }: UseWalkProps) {
   const runtime = useRuntime();
   const { pushToast } = usePanelToast();
-  const logger = runtime.runtime.getLogger();
   const query = useObject({
     api: url + "/walk",
     schema: ActionSchema.loose(),
@@ -26,7 +25,6 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
         type: "error",
         message: error.message,
       });
-      logger.error(error);
     },
   });
   return {

@@ -1,17 +1,14 @@
-import type { HistoryType } from "walker-core";
+import type {
+  HistoryStoreAdapterType,
+  HistoryType,
+  LogItemType,
+} from "walker-core";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type HistoryStore = {
+export interface HistoryStore extends HistoryStoreAdapterType {
   history: HistoryType[];
-  updateBack: (item: Partial<HistoryType>) => void;
-  pushBack: (item: HistoryType) => void;
-  pushFront: (item: HistoryType) => void;
-  popBack: () => HistoryType | undefined;
-  popFront: () => HistoryType | undefined;
-  list: () => HistoryType[];
-  clear: () => HistoryType[];
-};
+}
 
 export const useHistoryStore = create<
   HistoryStore,
@@ -21,12 +18,15 @@ export const useHistoryStore = create<
     (set, get) => ({
       history: [],
 
-      updateBack: (item) => {
+      pushLog: (log) => {
         const state = get();
         const lastItem = state.history[state.history.length - 1];
         if (lastItem) {
           set((state) => ({
-            history: [...state.history.slice(0, -1), { ...lastItem, ...item }],
+            history: [
+              ...state.history.slice(0, -1),
+              { ...lastItem, logs: [...lastItem.logs, log] },
+            ],
           }));
         }
       },
@@ -72,7 +72,7 @@ export const useHistoryStore = create<
       },
     }),
     {
-      name: "walker-history-storage",
+      name: "walker-history-store",
     },
   ),
 );

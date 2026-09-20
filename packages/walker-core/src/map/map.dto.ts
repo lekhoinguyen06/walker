@@ -18,7 +18,6 @@ type ItemSchemaType = z.ZodObject<
     description: z.ZodString;
     state: z.ZodNullable<z.ZodString>;
     scope: z.ZodBoolean;
-    isInActiveScope: z.ZodBoolean;
     content: z.ZodBoolean;
     raw: z.ZodBoolean;
   },
@@ -31,7 +30,6 @@ export const ItemSchema: ItemSchemaType = z.object({
   description: z.string(),
   state: z.string().nullable(),
   scope: z.boolean(),
-  isInActiveScope: z.boolean(),
   content: z.boolean(),
   raw: z.boolean(),
 });
@@ -49,7 +47,7 @@ type ItemWithChildrenSchemaType = z.ZodObject<
     description: z.ZodString;
     state: z.ZodNullable<z.ZodString>;
     scope: z.ZodBoolean;
-    isInActiveScope: z.ZodBoolean;
+    isInActiveScope: z.ZodOptional<z.ZodBoolean>;
     content: z.ZodBoolean;
     raw: z.ZodBoolean;
     children: z.ZodOptional<z.ZodRecord<z.ZodString, ItemSchemaType>>;
@@ -62,6 +60,7 @@ type ItemWithChildrenSchemaType = z.ZodObject<
 export const ItemWithChildrenSchema: ItemWithChildrenSchemaType =
   ItemSchema.extend({
     children: z.record(z.string(), ItemSchema).optional(),
+    isInActiveScope: z.boolean().optional(),
     contentValue: z.string().optional(),
     rawValue: z.string().optional(),
   });

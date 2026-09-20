@@ -1,16 +1,10 @@
-import type { ActionType } from "../../walker-core/dist";
+import type { ActionStoreAdapterType, ActionType } from "walker-core";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type ActionStore = {
+export interface ActionStore extends ActionStoreAdapterType {
   actions: ActionType[];
-  pushBack: (action: ActionType) => void;
-  pushFront: (action: ActionType) => void;
-  popBack: () => ActionType | undefined;
-  popFront: () => ActionType | undefined;
-  list: () => ActionType[];
-  clear: () => ActionType[];
-};
+}
 
 export const useActionStore = create<
   ActionStore,
@@ -54,7 +48,7 @@ export const useActionStore = create<
       },
     }),
     {
-      name: "walker-action-storage",
+      name: "walker-action-store",
     },
   ),
 );

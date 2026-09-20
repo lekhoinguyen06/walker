@@ -1,24 +1,21 @@
 import React, { createContext, useContext, useEffect, useMemo } from "react";
 import {
-  type ActionType,
-  type AdapterType,
-  type ConfigType,
-  type FlowsType,
-  type HooksType,
-  Runtime,
-  webFlows,
-  webHooks,
-} from "walker-core";
-import { useActionStore } from "@/action";
-import { useHistoryStore } from "@/history";
-import { mouseHook } from "@/mouse";
-import { App, type ElementProps } from "@/item";
-import {
   QueryClient,
   QueryClientProvider,
   useMutation,
 } from "@tanstack/react-query";
-import { useScope } from "@/scope";
+import {
+  LoggerLevel,
+  getLogger,
+  webFlows,
+  webHooks,
+  type ContextType,
+  type RuntimeType,
+  runtime,
+} from "walker-core";
+import { App, type ElementProps } from "@/components/walker/item";
+import { useScope } from "./useScope";
+import { useActionStore, useHistoryStore } from "@/stores/adapters";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -30,15 +27,10 @@ export function useRuntime() {
 }
 
 // --------------------------------- Runtime Provider ---------------------------------
-type RuntimeProviderProps = {
-  config?: Partial<ConfigType>;
-  hooks?: HooksType;
-  flows?: FlowsType;
-  mouse?: React.ReactNode;
-};
+type RuntimeProviderProps = Partial<ContextType>;
 
 type RuntimeContextType = {
-  runtime: Runtime;
+  runtime: RuntimeType;
   walk: () => void;
   actionsInQueueCount: number;
   isWalking: boolean;
@@ -74,24 +66,21 @@ function RuntimeProviderContent({
   const { setDefaultActiveId } = useScope(userConfig.app.id);
 
   useEffect(() => {
-    console.log("Setting default active id", userConfig.app.id);
     setDefaultActiveId(userConfig.app.id);
   }, [setDefaultActiveId, userConfig.app.id]);
 
-  const config: ConfigType = useMemo(
-    () => ({
-      mode: "tailored",
-      isLoading: false,
-      gap: 400,
-      verbose: false,
-      ...userConfig.config,
-    }),
-    [userConfig.config],
-  );
+  const config: ContextType["config"] = {
+    loop: false,
+    isLoading: false,
+    gap: 400,
+    verbose: false,
+    url: undefined,
+    ...userConfig.config,
+  };
 
   const actions = useActionStore((state) => state.list());
 
-  const adapter: AdapterType = {
+  const adapter: ContextType["adapter"] = {
     actionStore: {
       pushBack: useActionStore((state) => state.pushBack),
       pushFront: useActionStore((state) => state.pushFront),
@@ -101,7 +90,7 @@ function RuntimeProviderContent({
       clear: useActionStore((state) => state.clear),
     },
     historyStore: {
-      updateBack: useHistoryStore((state) => state.updateBack),
+      pushLog: useHistoryStore((state) => state.pushLog),
       pushBack: useHistoryStore((state) => state.pushBack),
       pushFront: useHistoryStore((state) => state.pushFront),
       popBack: useHistoryStore((state) => state.popBack),
@@ -111,27 +100,26 @@ function RuntimeProviderContent({
     },
   };
 
-  const runtime = new Runtime({
-    config,
-    adapter,
-    flows: new Map([...webFlows, ...(userConfig.flows || [])]),
-    hooks: {
-      ...webHooks,
-      onMouse: mouseHook,
-      ...userConfig.hooks,
-    },
-  });
+  const runtimeClient = useMemo(() => {
+    return runtime({
+      adapter,
+      config,
+      hooks: webHooks,
+      flows: webFlows,
+      logger: getLogger(LoggerLevel.TRACE),
+    });
+  }, [adapter, config, webHooks, webFlows]);
 
   const { mutate: walk, isPending: isWalking } = useMutation({
     mutationFn: async () => {
-      await runtime.next();
+      await runtimeClient.next();
     },
   });
 
   return (
     <RuntimeContext.Provider
       value={{
-        runtime,
+        runtime: runtimeClient,
         walk,
         isWalking,
         actionsInQueueCount: actions.length,

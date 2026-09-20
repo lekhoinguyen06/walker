@@ -12,7 +12,7 @@ import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
 import { ToastPage } from "./features/toast/page";
 import { PanelToastProvider, usePanelToast } from "walker-react/ui";
-import { type HookPropsType, type HookResponseType } from "walker-react/core";
+import { type HookPropsType } from "walker-react/core";
 import { RuntimeProvider } from "walker-react";
 
 const router = createBrowserRouter([
@@ -69,7 +69,7 @@ function App() {
 
   const messageHook = async function message(
     props: HookPropsType,
-  ): HookResponseType {
+  ): Promise<void> {
     pushToast({
       type: "walking",
       message: props.action.message,

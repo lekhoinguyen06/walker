@@ -1,8 +1,8 @@
-import { usePanelToast } from "@/ui/Panel";
+import { usePanelToast } from "@/components/walker/ui/panel";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
-export function useConciergeChat() {
+export function useWalkerChat() {
   const { pushToast } = usePanelToast();
   return useChat({
     // messages: initialMessages,

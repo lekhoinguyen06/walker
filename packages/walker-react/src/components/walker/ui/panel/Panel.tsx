@@ -1,7 +1,6 @@
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 import { Button } from "@/components/ui/button";
-import { InputPanel } from "@/dev/Input";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
@@ -37,11 +36,6 @@ import { useCountdown, useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
-import { Mouse } from "@/mouse";
-import { useWalk } from "@/hooks";
-import { generateWalkPrompt } from "@/prompt";
-import { useWalkInput } from "@/stores/useWalkInput";
-import { ChatPanel } from "@/dev/Chat";
 import {
   Tooltip,
   TooltipContent,
@@ -49,54 +43,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { create } from "zustand";
-import { useRuntime } from "@/runtime";
-import { MapPanel } from "@/dev/Map";
-import { StackPanel } from "@/dev/Stack";
-import { HistoryPanel } from "@/dev/History";
-
-export type MouseProps = {
-  children?: React.ReactNode;
-};
-
-export function Mouse({ children }: MouseProps) {
-  const { x: targetX, y: targetY } = useMouseOffset();
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const offset = useMemo(() => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    }
-    return { x: 0, y: 0 };
-  }, [targetX, targetY]);
-
-  return (
-    <Item id="mouse-container" description="The container of Walker Mouse.">
-      <div
-        ref={containerRef}
-        className="size-8 flex justify-center items-center z-999999"
-      >
-        <div>
-          <motion.div
-            animate={{
-              x: targetX - offset.x,
-              y: targetY - offset.y,
-            }}
-            transition={{
-              duration: 0.2,
-              ease: "easeOut",
-              type: "spring",
-              stiffness: 200,
-              damping: 30,
-            }}
-          >
-            {children}
-          </motion.div>
-        </div>
-      </div>
-    </Item>
-  );
-}
+import { useWalkerInput } from "@/hooks/useWalkerInput";
+import { useWalk } from "@/hooks/useWalk";
+import { generateWalkPrompt } from "@/utils/prompt";
+import { ChatPanel } from "../dev/Chat";
+import { InputPanel } from "../dev/Input";
+import { MapPanel } from "../dev/Map";
+import { StackPanel } from "../dev/Stack";
+import { HistoryPanel } from "../dev/History";
+import { Mouse } from "../../item";
+import { useRuntime } from "@/hooks/useRuntime";
 
 const PANEL_POSITION = {
   LEFT: "left",
@@ -258,7 +214,7 @@ export function PanelContent({ className }: { className?: string }) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isStackOpen, setIsStackOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const { input, setInput } = useWalkInput();
+  const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
   const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
     useWalk({
