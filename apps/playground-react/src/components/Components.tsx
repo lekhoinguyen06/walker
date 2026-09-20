@@ -3,7 +3,6 @@ import { Button } from "./ui/button";
 
 const components: { label: string; href: string }[] = [
   { label: "Input", href: "/input" },
-  { label: "Button", href: "/button" },
   { label: "Select", href: "/select" },
   { label: "Dialog", href: "/dialog" },
   { label: "Scroll Area", href: "/scroll-area" },

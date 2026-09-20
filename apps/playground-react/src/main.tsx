@@ -7,7 +7,6 @@ import AppLayout from "./AppLayout";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { Components } from "./components/Components";
 import { InputPage } from "./features/input/page";
-import { ButtonPage } from "./features/button/page";
 import { SelectPage } from "./features/select/page";
 import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
@@ -28,10 +27,6 @@ const router = createBrowserRouter([
       {
         path: "input",
         element: <InputPage />,
-      },
-      {
-        path: "button",
-        element: <ButtonPage />,
       },
       {
         path: "select",

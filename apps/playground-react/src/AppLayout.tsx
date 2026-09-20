@@ -6,7 +6,7 @@ import { Panel } from "walker-react/ui";
 
 function AppLayout() {
   return (
-    <div className="w-full min-h-dvh justify-center flex flex-col lg:gap-24 md:gap-12 gap-6 lg:p-24 md:p-12 p-6 items-center overflow-y-scroll">
+    <div className="w-full min-h-dvh justify-center flex flex-col lg:gap-24 md:gap-12 gap-6 lg:p-24 md:p-12 p-6 items-center overflow-y-scroll scrollbar-none">
       <Header />
       <Outlet />
       <Item

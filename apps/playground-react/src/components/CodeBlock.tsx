@@ -13,11 +13,11 @@ export type RawCode = {
   content: string;
 };
 
-type CodeProps = {
+type CodeContentProps = {
   raw: RawCode;
 };
 
-function Code({ raw }: CodeProps) {
+export function CodeContent({ raw }: CodeContentProps) {
   const [_, copy] = useCopyToClipboard();
   const [isExpanded, setIsExpanded] = useState(false);
   const source = ["```" + raw.lang.trim(), raw.content.trim(), "```"].join(
@@ -43,8 +43,13 @@ function Code({ raw }: CodeProps) {
   };
   return (
     <div className="w-full relative">
-      <div className={cn("", isExpanded ? "max-h-full" : "max-h-120")}>
-        <div className="markdown-renderer">
+      <div
+        className={cn(
+          "overflow-auto scrollbar-none",
+          isExpanded ? "max-h-full" : "max-h-120",
+        )}
+      >
+        <div className="markdown-renderer w-fit">
           <style>{themeCss}</style>
           <Markdown highlighter={highlightMarkdownCode}>{source}</Markdown>
         </div>
@@ -95,23 +100,18 @@ function Code({ raw }: CodeProps) {
   );
 }
 
-export function CodeBlock({
-  raw,
-  code,
-}: {
-  raw: RawCode[];
-  code?: React.ReactNode;
-}) {
+export function CodeWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-[90vw] sm:w-[80vw] max-w-2xl flex flex-col gap-6 p-6 rounded-[24px] border">
-      {code && (
-        <div className="w-full flex items-center justify-center min-h-120">
-          {code}
-        </div>
-      )}
-      {raw.map((item, index) => (
-        <Code key={index} raw={item} />
-      ))}
+      {children}
+    </div>
+  );
+}
+
+export function CodeDemo({ component }: { component: React.ReactNode }) {
+  return (
+    <div className="w-full flex items-center justify-center min-h-120">
+      {component}
     </div>
   );
 }
