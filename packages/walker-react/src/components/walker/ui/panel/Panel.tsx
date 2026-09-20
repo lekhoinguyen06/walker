@@ -447,7 +447,7 @@ function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
         {isOpen && (
           <motion.div
             key={selectedTab}
-            className="w-full flex items-center overflow-x-scroll"
+            className="w-full flex items-center"
             initial={{ y: "100%", height: 0, opacity: 0, scaleY: 0.8 }}
             animate={{
               y: 0,

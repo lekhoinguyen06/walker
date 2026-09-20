@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, Clipboard } from "lucide-react";
 import { useCopyToClipboard } from "usehooks-ts";
-import { toast } from "@/components/ui/toast";
 import { useState } from "react";
 import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
@@ -44,14 +43,11 @@ function Code({ raw }: CodeProps) {
   };
   return (
     <div className="w-full relative">
-      <div
-        className={cn(
-          "markdown-renderer",
-          isExpanded ? "max-h-full" : "max-h-120 overflow-scroll",
-        )}
-      >
-        <style>{themeCss}</style>
-        <Markdown highlighter={highlightMarkdownCode}>{source}</Markdown>
+      <div className={cn("", isExpanded ? "max-h-full" : "max-h-120")}>
+        <div className="markdown-renderer">
+          <style>{themeCss}</style>
+          <Markdown highlighter={highlightMarkdownCode}>{source}</Markdown>
+        </div>
         <div className="absolute top-0 right-0 flex gap-1">
           <Button
             variant="ghost"
