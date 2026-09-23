@@ -2,7 +2,7 @@ import { Page } from "walker-react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
-import DialogActions from "@/shared/actions/dialog.action.json";
+import { dialogActionJSON } from "@/shared/actions/dialog.action";
 
 export function DialogPage() {
   return (
@@ -22,7 +22,7 @@ export function DialogPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: JSON.stringify(DialogActions, null, 2),
+              content: dialogActionJSON,
             }}
           />
         </CodeWrapper>
