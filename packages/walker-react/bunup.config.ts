@@ -16,6 +16,7 @@ const config: any = defineConfig({
   sourcemap: true,
   clean: true,
   external: ["react", "react-dom"],
+  env: { NODE_ENV: "production" },
 });
 
 export default config;
