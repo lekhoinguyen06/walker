@@ -32,7 +32,7 @@ export default function Header() {
           </a>
         </Item>
         <div className="flex items-center">
-          <div className="hidden md:flex gap-3">
+          <div className="invisible md:visible flex gap-3">
             <Item
               id="navigation-button-react"
               description="This is the React logo, click it to go to the Walker Playground for React."

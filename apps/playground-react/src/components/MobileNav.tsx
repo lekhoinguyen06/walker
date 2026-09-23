@@ -21,7 +21,7 @@ export function MobileNav() {
         <Button
           variant="ghost"
           size="icon-lg"
-          className="rounded-none md:hidden"
+          className="rounded-none visible md:invisible"
         >
           <PanelRight />
         </Button>
