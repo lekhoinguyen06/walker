@@ -6,6 +6,7 @@ export const ObservedAttributes = [
   "description",
   "scope",
   "state",
+  "refId",
   "content",
   "raw",
 ] as const;

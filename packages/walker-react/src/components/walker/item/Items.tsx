@@ -24,6 +24,7 @@ export function Base(props: ElementProps) {
       id={slugify(props.id)}
       description={props.description}
       type={props.type ?? "item"}
+      refId={props.refId ?? null}
       raw={false}
       content={false}
       scope={active}

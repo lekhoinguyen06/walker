@@ -1,6 +1,7 @@
+import { registry } from "zod";
 import type { ContextType } from "../context/context.dto";
-import { type ObservedAttributesType } from "../walk";
-import { ItemSchema, type MapType } from "./map.dto";
+import { type ObservedAttributesType } from "../walker-element";
+import { MapItemSchema, type MapType } from "./map.dto";
 
 function uniqueGuard(
   ctx: ContextType,
@@ -36,6 +37,30 @@ function getRequiredAttr(
   }
 
   return val;
+}
+
+function checkScope({
+  el,
+  registry,
+}: {
+  el: Element;
+  registry: MapType;
+}): boolean {
+  const refId = getAttr(el, "refId");
+  const parentEl = el.parentElement?.closest(`walker-element`);
+  const parentId = parentEl ? getAttr(parentEl, "id") : null;
+  if (refId) {
+    return document.getElementById(refId)?.closest("walker-element[scope]")
+      ? true
+      : false;
+  }
+
+  // For Items in reference context where there ancestor is in the active scope
+  // Note: rely on the fact that document.querySelectorAll("walker-element") returns elements depth-first, preorder traversal.
+  if (parentId && registry[parentId]?.isInActiveScope) {
+    return true;
+  }
+  return el.closest("walker-element[scope]") ? true : false;
 }
 
 export function map(ctx: ContextType): MapType {
@@ -79,13 +104,13 @@ export function map(ctx: ContextType): MapType {
       }
     }
 
-    const item = ItemSchema.parse({
+    const item = MapItemSchema.parse({
       id: getAttr(el, "id"),
       type: getAttr(el, "type"),
       description: getAttr(el, "description"),
       scope: getAttr(el, "scope") === "",
-      isInActiveScope: el.closest("walker-element[scope]") ? true : false,
       state: getAttr(el, "state"),
+      refId: getAttr(el, "refId"),
       raw: isRawEnabled,
       content: isContentEnabled,
     });
@@ -106,6 +131,24 @@ export function map(ctx: ContextType): MapType {
       );
     }
 
+    registry[item.id] = {
+      id: item.id,
+      type: item.type,
+      description: item.description,
+      scope: item.scope,
+      isInActiveScope: checkScope({
+        el,
+        registry,
+      }),
+      refId: item.refId,
+      content: item.content,
+      raw: item.raw,
+      children: {},
+      state: item.state,
+      ...(item.raw && { rawValue: el.innerHTML.trim() }),
+      ...(item.content && { contentValue: el.textContent.trim() }),
+    };
+
     if (item.scope === true) {
       if (seenScope) {
         throw new Error(
@@ -114,20 +157,6 @@ export function map(ctx: ContextType): MapType {
       }
       seenScope = true;
     }
-
-    registry[item.id] = {
-      id: item.id,
-      type: item.type,
-      scope: item.scope,
-      isInActiveScope: item.isInActiveScope,
-      description: item.description,
-      content: item.content,
-      raw: item.raw,
-      children: {},
-      state: item.state,
-      ...(isRawEnabled && { rawValue: el.innerHTML.trim() }),
-      ...(isContentEnabled && { contentValue: el.textContent.trim() }),
-    };
   });
 
   if (seenScope === false) {
@@ -139,7 +168,10 @@ export function map(ctx: ContextType): MapType {
   // Attach children
   all.forEach((el) => {
     const id = getRequiredAttr(el, "id", "Unreachable");
-    const parentEl = el.parentElement?.closest(`walker-element`);
+    const refId = getAttr(el, "refId");
+    const parentEl = refId
+      ? document.getElementById(refId)
+      : el.parentElement?.closest(`walker-element`);
 
     if (parentEl) {
       const parentId = getRequiredAttr(parentEl, "id", "Unreachable");
@@ -153,9 +185,10 @@ export function map(ctx: ContextType): MapType {
   // Return only root parent
   all.forEach((el) => {
     const id = getRequiredAttr(el, "id", "Unreachable");
+    const refId = getAttr(el, "refId");
     const parentEl = el.parentElement?.closest(`walker-element`);
 
-    if (!parentEl && registry[id]) {
+    if (!parentEl && registry[id] && !refId) {
       tree[id] = registry[id];
     }
   });

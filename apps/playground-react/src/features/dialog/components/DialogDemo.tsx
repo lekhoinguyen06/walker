@@ -43,8 +43,12 @@ export function DialogDemo() {
               render={<Button variant="outline">Open Dialog</Button>}
             />
           </Item>
-          <Item id="dialog-content" description="The content of the dialog">
-            <DialogContent className="sm:max-w-sm">
+          <DialogContent className="sm:max-w-sm">
+            <Item
+              id="dialog-content"
+              description="The content of the dialog"
+              refId="dialog-trigger"
+            >
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
@@ -102,8 +106,8 @@ export function DialogDemo() {
                   </Button>
                 </Item>
               </DialogFooter>
-            </DialogContent>
-          </Item>
+            </Item>
+          </DialogContent>
         </form>
       </Dialog>
     </Item>
