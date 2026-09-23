@@ -10,7 +10,7 @@ export function DialogPage() {
       id="dialog-page"
       description="The page to demonstrate Walker capability to interact with dialogs"
     >
-      <div className="w-full max-w-2xl flex flex-col gap-24 items-center">
+      <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
         <CodeWrapper>
           <CodeDemo component={<DialogDemo />} />
           <CodeContent

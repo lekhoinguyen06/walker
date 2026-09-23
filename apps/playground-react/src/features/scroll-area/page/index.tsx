@@ -10,7 +10,7 @@ export function ScrollAreaPage() {
       id="scroll-area-page"
       description="The page to demonstrate Walker behavior to scroll into view before click an item"
     >
-      <div className="w-full max-w-2xl flex flex-col gap-24 items-center">
+      <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
         <CodeWrapper>
           <CodeDemo component={<ScrollAreaDemo />} />
           <CodeContent
