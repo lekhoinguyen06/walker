@@ -1,24 +1,8 @@
 import { Page } from "walker-react";
 import { SelectDemo } from "../components/SelectDemo";
 import SelectDemoRaw from "../components/SelectDemo?raw";
-import {
-  CodeContent,
-  CodeDemo,
-  CodeWrapper,
-  type RawCode,
-} from "@/components/CodeBlock";
-import SelectActions from "@/shared/actions/select.action.json";
-
-const content: RawCode[] = [
-  {
-    lang: "tsx",
-    content: SelectDemoRaw,
-  },
-  {
-    lang: "json",
-    content: JSON.stringify(SelectActions, null, 2),
-  },
-];
+import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
+import { selectActionJSON } from "@/shared/actions/select.action";
 
 export function SelectPage() {
   return (
@@ -38,7 +22,7 @@ export function SelectPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: JSON.stringify(SelectActions, null, 2),
+              content: selectActionJSON,
             }}
           />
         </CodeWrapper>
