@@ -16,7 +16,6 @@ import {
   MessageCircle,
   MousePointer,
   PanelBottom,
-  PanelLeft,
   Repeat,
   Trash,
 } from "lucide-react";
@@ -27,10 +26,8 @@ import {
   useMemo,
   useRef,
   useState,
-  type Dispatch,
   type ReactNode,
   type RefObject,
-  type SetStateAction,
 } from "react";
 import { useCountdown, useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
@@ -152,7 +149,7 @@ export function Panel({
   url,
   hidden,
   className,
-}: PanelProps) {
+}: PanelProps): ReactNode {
   const {
     position: positionState,
     isHidden: hiddenState,

@@ -1,7 +1,7 @@
 import { defineConfig } from "bunup";
 import { tailwindcss } from "@bunup/plugin-tailwindcss";
 
-export default defineConfig({
+const config: any = defineConfig({
   entry: [
     "src/index.ts",
     "src/core/index.ts",
@@ -9,9 +9,13 @@ export default defineConfig({
   ],
   plugins: [tailwindcss()],
   format: ["esm", "cjs"],
-  dts: true,
+  dts: {
+    inferTypes: true,
+  },
   minify: true,
   sourcemap: true,
   clean: true,
   external: ["react", "react-dom"],
 });
+
+export default config;
