@@ -7,13 +7,14 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "jsx": "react-jsx",
-    "allowJs": true,
 
     // Bundler mode
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
+    "declaration": true,
+    "isolatedDeclarations": true,
 
     // Best practices
     "strict": true,

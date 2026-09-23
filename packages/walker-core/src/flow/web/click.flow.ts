@@ -1,7 +1,11 @@
 import { wait } from "../../shared/utils/wait";
-import { createFlow, createFlowBodySchema } from "../flow.helpers";
+import {
+  createFlow,
+  createFlowBodySchema,
+  type CreateFlowProps,
+} from "../flow.helpers";
 
-export const clickFlow = createFlow({
+export const clickFlow: CreateFlowProps<unknown> = createFlow({
   command: "click",
   description: "Click on an element",
   route: "*",
