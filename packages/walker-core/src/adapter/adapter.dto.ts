@@ -23,9 +23,15 @@ export interface HistoryStoreAdapterType {
 }
 
 // --- Mouse Store Adapter ---
-export interface MouseAdapterType {}
+export interface MouseAdapterType {
+  x: number;
+  y: number;
+  setX: (x: number) => void;
+  setY: (y: number) => void;
+}
 
 export interface AdapterType {
   actionStore: ActionStoreAdapterType;
   historyStore: HistoryStoreAdapterType;
+  mouseStore: MouseAdapterType;
 }

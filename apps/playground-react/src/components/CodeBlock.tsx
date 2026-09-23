@@ -85,6 +85,7 @@ export function CodeContent({ raw }: CodeContentProps) {
                   message: "Walk loaded. Press key Ctrl + W to start the walk.",
                 });
               } catch (error) {
+                console.error(error);
                 pushToast({
                   type: "error",
                   message: "Failed to load walk",

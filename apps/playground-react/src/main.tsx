@@ -82,9 +82,6 @@ function App() {
         hooks: {
           onMessage: messageHook,
         },
-        config: {
-          verbose: true,
-        },
       }}
     >
       <RouterProvider router={router} />

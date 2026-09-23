@@ -15,7 +15,11 @@ import {
 } from "walker-core";
 import { App, type ElementProps } from "@/components/walker/item";
 import { useScope } from "./useScope";
-import { useActionStore, useHistoryStore } from "@/stores/adapters";
+import {
+  useActionStore,
+  useHistoryStore,
+  useMouseStore,
+} from "@/stores/adapters";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -98,14 +102,23 @@ function RuntimeProviderContent({
       list: useHistoryStore((state) => state.list),
       clear: useHistoryStore((state) => state.clear),
     },
+    mouseStore: {
+      x: useMouseStore((state) => state.x),
+      y: useMouseStore((state) => state.y),
+      setX: useMouseStore((state) => state.setX),
+      setY: useMouseStore((state) => state.setY),
+    },
   };
 
   const runtimeClient = useMemo(() => {
     return runtime({
       adapter,
       config,
-      hooks: webHooks,
-      flows: webFlows,
+      hooks: { ...webHooks, ...userConfig.hooks },
+      flows: new Map([
+        ...webFlows,
+        ...(userConfig.flows ? userConfig.flows : []),
+      ]),
       logger: getLogger(LoggerLevel.TRACE),
     });
   }, [adapter, config, webHooks, webFlows]);

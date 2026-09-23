@@ -1,3 +1,4 @@
+import z from "zod";
 import { ActionSchema, type ActionType } from "../action";
 import type { ContextType } from "../context";
 import type { FlowItemType, FlowType } from "../flow";
@@ -75,7 +76,11 @@ async function next(ctx: ContextType) {
         event: "Error executing flow handler",
         error: error,
       });
-      ctx.adapter.historyStore.pushLog((error as Error).message.slice(0, 100));
+      ctx.adapter.historyStore.pushLog({
+        type: "system",
+        message: (error as Error).message.slice(0, 100),
+        timestamp: Date.now(),
+      });
       throw error;
     }
   } else {

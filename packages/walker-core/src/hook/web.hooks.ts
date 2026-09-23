@@ -1,5 +1,6 @@
 import type { HookFactoryType } from "./hook.dto";
 import { message } from "./message";
+import { mouse } from "./mouse";
 import { scroll } from "./scroll";
 
 /**
@@ -8,6 +9,7 @@ import { scroll } from "./scroll";
 export const webHooks: WebHooksType = {
   onMessage: message,
   onScroll: scroll,
+  onMouse: mouse,
 };
 
 export interface WebHooksType {

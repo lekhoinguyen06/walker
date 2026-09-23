@@ -1,7 +1,7 @@
 import type { HookPropsType } from "./hook.dto";
 
 export async function mouse(props: HookPropsType): Promise<void> {
-  const { setX, setY } = useMouseStore.getState();
+  const { setX, setY } = props.context.adapter.mouseStore;
 
   const walker = document.getElementById(props.action.targetId);
   const targetEl = walker?.firstElementChild;

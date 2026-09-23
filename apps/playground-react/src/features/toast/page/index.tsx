@@ -3,7 +3,7 @@ import { ToastDemo } from "../components/ToastDemo";
 import ToastDemoRaw from "../components/ToastDemo?raw";
 import AppLayout from "../../../AppLayout?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
-import ToastActions from "@/shared/actions/toast.action.json";
+import { toastActionJSON } from "@/shared/actions/toast.action";
 
 export function ToastPage() {
   return (
@@ -29,7 +29,7 @@ export function ToastPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: JSON.stringify(ToastActions, null, 2),
+              content: toastActionJSON,
             }}
           />
         </CodeWrapper>
