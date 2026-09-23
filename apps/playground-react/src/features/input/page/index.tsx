@@ -2,7 +2,7 @@ import { Page } from "walker-react";
 import { InputBasic } from "../components/InputBasic";
 import InputBasicRaw from "../components/InputBasic?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
-import InputActions from "@/shared/actions/input.action.json";
+import { inputActionJSON } from "@/shared/actions/input.action";
 
 export function InputPage() {
   return (
@@ -22,7 +22,7 @@ export function InputPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: JSON.stringify(InputActions, null, 2),
+              content: inputActionJSON,
             }}
           />
         </CodeWrapper>
