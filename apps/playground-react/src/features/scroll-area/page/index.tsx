@@ -2,7 +2,7 @@ import { Page } from "walker-react";
 import { ScrollAreaDemo } from "../components/ScrollAreaDemo";
 import ScrollAreaDemoRaw from "../components/ScrollAreaDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
-import ScrollAreaActions from "@/shared/actions/scroll-area.action.json";
+import { scrollAreaActionJSON } from "@/shared/actions/scroll-area.action";
 
 export function ScrollAreaPage() {
   return (
@@ -22,7 +22,7 @@ export function ScrollAreaPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: JSON.stringify(ScrollAreaActions, null, 2),
+              content: scrollAreaActionJSON,
             }}
           />
         </CodeWrapper>
