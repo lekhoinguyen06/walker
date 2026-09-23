@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   QueryClient,
   QueryClientProvider,
@@ -38,6 +44,8 @@ type RuntimeContextType = {
   walk: () => void;
   actionsInQueueCount: number;
   isWalking: boolean;
+  config: ContextType["config"];
+  setConfig: React.Dispatch<React.SetStateAction<ContextType["config"]>>;
 };
 
 const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
@@ -68,19 +76,18 @@ function RuntimeProviderContent({
   children: React.ReactNode;
 }) {
   const { setDefaultActiveId } = useScope(userConfig.app.id);
+  const [config, setconfig] = useState<ContextType["config"]>({
+    loop: false,
+    isLoading: false,
+    gap: 200,
+    verbose: false,
+    url: undefined,
+    ...userConfig.config,
+  });
 
   useEffect(() => {
     setDefaultActiveId(userConfig.app.id);
   }, [setDefaultActiveId, userConfig.app.id]);
-
-  const config: ContextType["config"] = {
-    loop: false,
-    isLoading: false,
-    gap: 400,
-    verbose: false,
-    url: undefined,
-    ...userConfig.config,
-  };
 
   const actions = useActionStore((state) => state.list());
 
@@ -136,6 +143,8 @@ function RuntimeProviderContent({
         walk,
         isWalking,
         actionsInQueueCount: actions.length,
+        config,
+        setConfig: setconfig,
       }}
     >
       <App {...userConfig.app}>{children}</App>

@@ -603,12 +603,28 @@ type MenuProps = {
 export function UserMenu({ onDev }: MenuProps) {
   const { position, setPosition } = usePanelStore();
   const { pushToast } = usePanelToast();
-  const { runtime } = useRuntime();
+  const { runtime, config, setConfig } = useRuntime();
   return (
     <TooltipProvider timeout={100} delay={100}>
       <Tooltip>
         <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "rounded-full",
+              config.loop && "bg-accent text-primary",
+            )}
+            onClick={() => {
+              setConfig({ ...config, loop: !config.loop });
+              pushToast({
+                type: "info",
+                message: !config.loop
+                  ? "Switched to loop mode."
+                  : "Switched to step mode.",
+              });
+            }}
+          >
             <Repeat />
           </Button>
         </TooltipTrigger>

@@ -31,16 +31,6 @@ async function next(ctx: ContextType) {
   });
 
   if (action) {
-    // const action = validateAction({
-    //   ctx: {
-    //     config: ctx.config,
-    //     logger: ctx.logger,
-    //   },
-    //   flows: ctx.flows,
-    //   map: ctx.map(),
-    //   action: ctx.nextAction,
-    // });
-
     const flow = getFlow(ctx, action.flow);
     const flowItem = getFlowItem(ctx, action.flow);
     ctx.logger.debug({
@@ -71,6 +61,10 @@ async function next(ctx: ContextType) {
         action,
         context: ctx,
       });
+
+      if (ctx.config.loop) {
+        await next(ctx);
+      }
     } catch (error) {
       ctx.logger.error({
         event: "Error executing flow handler",
