@@ -30,7 +30,7 @@
       "prettier --write \"**/*.{ts,tsx,md}\""
     ]
   },
-  "packageManager": "bun@1.4.0",
+  "packageManager": "bun@1.4.2",
   "workspaces": [
     "apps/*",
     "packages/*"
