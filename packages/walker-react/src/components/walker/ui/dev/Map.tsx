@@ -81,6 +81,18 @@ export function MapItemIcon({
           onClick={handleCollapse}
         ></div>
       );
+    case "link":
+      return (
+        <div
+          className={cn(
+            iconStyles,
+            "group-hover:bg-blue-300 bg-blue-200",
+            hasChildren && "hover:h-1.5 hover:cursor-pointer",
+            isCollapsed && "h-1.5",
+          )}
+          onClick={handleCollapse}
+        ></div>
+      );
   }
 }
 
