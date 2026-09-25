@@ -54,7 +54,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
             </span>
           </DialogDescription>
         </DialogHeader>
-        <div className="w-full h-full overflow-scroll flex flex-col">
+        <div className="w-full h-full overflow-scroll scrollbar-none flex flex-col">
           <MessageScrollerProvider autoScroll>
             {messages.length === 0 ? (
               <Empty className="h-full">

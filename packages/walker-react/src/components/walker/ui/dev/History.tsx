@@ -38,7 +38,7 @@ export function HistoryPanel({ isOpen, setIsOpen }: HistoryProps) {
         <div className=" flex w-full h-[60vh] border rounded-[12px]">
           <div
             className={cn(
-              "w-full p-3 overflow-scroll",
+              "w-full p-3 overflow-scroll scrollbar-none",
               selectedHistory && isMobile && "hidden",
             )}
           >

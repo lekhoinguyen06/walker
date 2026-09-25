@@ -177,14 +177,14 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
         <div className="flex w-full h-[60vh] border rounded-[12px]">
           <div
             className={cn(
-              "w-full p-3 overflow-scroll",
+              "w-full p-3 overflow-scroll scrollbar-none",
               selectedItem && isMobile && "hidden",
             )}
           >
             <MapItem map={map} />
           </div>
           {selectedItem && (
-            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll">
+            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll scrollbar-none">
               <Button
                 variant="ghost"
                 size="icon"
@@ -199,13 +199,15 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
                   return (
                     <div key={key}>
                       <div className="text-xs font-light">{key}</div>
-                      <div className="markdown-renderer max-h-60 overflow-y-scroll">
-                        <style>{themeCss}</style>
-                        <Markdown highlighter={highlightMarkdownCode}>
-                          {"```json\n" +
-                            JSON.stringify(value, null, 2) +
-                            "\n```"}
-                        </Markdown>
+                      <div className="w-full max-h-60 overflow-scroll scrollbar-none">
+                        <div className="w-fit markdown-renderer">
+                          <style>{themeCss}</style>
+                          <Markdown highlighter={highlightMarkdownCode}>
+                            {"```json\n" +
+                              JSON.stringify(value, null, 2) +
+                              "\n```"}
+                          </Markdown>
+                        </div>
                       </div>
                     </div>
                   );
