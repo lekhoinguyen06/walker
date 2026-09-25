@@ -1,5 +1,5 @@
 import { useRuntime } from "./useRuntime";
-import { usePanelToast } from "@/components/walker/ui/panel";
+import { usePanelToast } from "./usePanelToast";
 import { useObject } from "@ai-sdk/react";
 import { ActionSchema } from "walker-core";
 

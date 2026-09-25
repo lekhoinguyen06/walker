@@ -11,9 +11,12 @@ import { SelectPage } from "./features/select/page";
 import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
 import { ToastPage } from "./features/toast/page";
-import { PanelToastProvider, usePanelToast } from "walker-react/ui";
 import { type HookPropsType } from "walker-react/core";
-import { RuntimeProvider } from "walker-react";
+import {
+  PanelToastProvider,
+  RuntimeProvider,
+  usePanelToast,
+} from "walker-react";
 
 const router = createBrowserRouter([
   {

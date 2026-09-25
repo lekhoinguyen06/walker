@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { RefreshCcw } from "lucide-react";
 import { useRuntime } from "@/hooks/useRuntime";
-import { usePanelToast } from "../panel";
+import { usePanelToast } from "@/hooks";
 
 const defaultValue = `
 [

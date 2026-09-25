@@ -19,10 +19,10 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
-    "eslint": "^10.9.0",
+    "eslint": "^10.11.0",
     "husky": "^9.1.7",
-    "prettier": "^3.9.6",
-    "turbo": "^2.10.11",
+    "prettier": "^3.9.9",
+    "turbo": "^2.11.4",
     "@types/bun": "latest"
   },
   "lint-staged": {
@@ -36,9 +36,9 @@
     "packages/*"
   ],
   "dependencies": {
-    "lint-staged": "^17.3.0"
+    "lint-staged": "^17.5.1"
   },
   "peerDependencies": {
-    "typescript": "^7"
+    "typescript": "^7.0.2"
   }
 }

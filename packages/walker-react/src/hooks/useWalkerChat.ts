@@ -1,4 +1,4 @@
-import { usePanelToast } from "@/components/walker/ui/panel";
+import { usePanelToast } from "./usePanelToast";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
