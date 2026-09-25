@@ -386,7 +386,7 @@ export function PanelInput({
       id="walk-input"
       placeholder="Let's take a walk"
       className={cn(
-        "w-full min-h-none h-8 py-1 rounded-[16px] bg-background text-foreground resize-none shrink-0",
+        "w-full min-h-none h-8 py-1 rounded-[16px] bg-background text-black resize-none shrink-0 scrollbar-none",
         isExpanding && "h-16 rounded-[16px]",
       )}
       value={input}
@@ -750,10 +750,10 @@ function ConciergeSuggest() {
   const { setInput } = useWalkerInput();
   return (
     <div
-      className="w-full rounded-[16px] flex flex-col p-1.5 gap-1.5 bg-white border border-red-500 hover:cursor-pointer"
+      className="w-full rounded-[24px] flex flex-col p-1.5 gap-1.5 bg-background hover:cursor-pointer"
       onClick={() => setInput("Take user to Concierge")}
     >
-      <div className="w-full h-8 flex gap-3 items-center rounded-full p-1 pl-3 bg-red-50">
+      <div className="w-full h-8 flex gap-3 items-center rounded-full p-1 pl-3 bg-red-50 dark:bg-red-950">
         <img
           src="https://vstaffs.com/concierge-logo.svg"
           alt="Concierge"
@@ -766,7 +766,7 @@ function ConciergeSuggest() {
           W
         </div>
       </div>
-      <div className="w-full text-xs">
+      <div className="w-full p-1.5 text-xs text-black dark:text-white">
         Try out Concierge! It is a managed Walker Server to help you create
         enterprise-grade Walker Apps. We are on a mission to building the world
         for those who believe how agent interact with their app matters.
@@ -851,7 +851,7 @@ const panelToastVariants = cva(
           "bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-50",
         warn: "bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-50",
         error: "bg-red-50 text-destructive dark:bg-red-950",
-        plain: "bg-white dark:bg-white",
+        plain: "bg-white dark:bg-black",
       },
     },
     defaultVariants: {
@@ -882,13 +882,13 @@ export function PanelToast() {
           transition={{ duration: 0.4, type: "spring" }}
           className={cn(panelToastVariants({ type: toast.type }))}
         >
-          <div className="w-full flex items-center p-1.5 min-h-8">
+          <div className="w-full flex items-center mb-1.5 min-h-8">
             {toast.render ? (
               toast.render
             ) : (
               <span
                 className={cn(
-                  "text-sm",
+                  "text-sm px-6",
                   toast.type === "walking" ? "shimmer" : "",
                 )}
               >
