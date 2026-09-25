@@ -26,12 +26,18 @@ import {
   useMemo,
   useRef,
   useState,
+  type Dispatch,
   type ReactNode,
   type RefObject,
+  type SetStateAction,
 } from "react";
 import { useCountdown, useInterval, useOnClickOutside } from "usehooks-ts";
 import { AnimatePresence, motion } from "motion/react";
-import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
+import {
+  useHotkey,
+  useHotkeySequence,
+  useKeyHold,
+} from "@tanstack/react-hotkeys";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
@@ -70,6 +76,9 @@ function togglePanelPosition(position: PanelPosition): PanelPosition {
   return PANEL_POSITIONS[(index + 1) % PANEL_POSITIONS.length] as PanelPosition;
 }
 
+type PanelTabType = "user" | "dev";
+type DevTabType = "chat" | "input" | "map" | "stack" | "history";
+
 type PanelStoreType = {
   url: string;
 
@@ -79,6 +88,17 @@ type PanelStoreType = {
   position: VariantProps<typeof panelVariants>["position"];
   style: VariantProps<typeof panelContentVariants>["style"];
   isHidden: boolean;
+
+  // Tabs
+  tab?: PanelTabType;
+  openTab: () => void;
+  closeTab: () => void;
+  switchTab: (tab: PanelTabType) => void;
+
+  // Developeent tabs
+  devTab?: DevTabType;
+  openDevTab: (devTab: DevTabType) => void;
+  closeDevTab: () => void;
 
   setPosition: (
     position: VariantProps<typeof panelVariants>["position"],
@@ -104,6 +124,17 @@ const usePanelStore = create<PanelStoreType>((set) => ({
     set({ style }),
   isHidden: false,
   setIsHidden: (isHidden: boolean) => set({ isHidden }),
+
+  tab: undefined,
+  switchTab: (tab: "user" | "dev") => set({ tab }),
+  openTab: () => set({ tab: "user" }),
+  closeTab: () => set({ tab: undefined }),
+  setTab: (tab: "user" | "dev") => set({ tab }),
+
+  devTab: undefined,
+  closeDevTab: () => set({ devTab: undefined }),
+  openDevTab: (devTab?: "chat" | "input" | "map" | "stack" | "history") =>
+    set({ devTab: devTab, isHidden: true }),
 }));
 
 const panelVariants = cva(
@@ -150,18 +181,16 @@ export function Panel({
   hidden,
   className,
 }: PanelProps): ReactNode {
-  const {
-    position: positionState,
-    isHidden: hiddenState,
-    setIsHidden,
-    setStore,
-  } = usePanelStore();
+  const positionState = usePanelStore((state) => state.position);
+  const isHiddenState = usePanelStore((state) => state.isHidden);
+  const setIsHidden = usePanelStore((state) => state.setIsHidden);
+  const setStore = usePanelStore((state) => state.setStore);
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setStore({ position, url, isHidden: hidden });
-  }, [position, url, hidden, setStore]);
+  }, []);
 
   function handleClickOutside() {
     setIsHidden(true);
@@ -182,7 +211,7 @@ export function Panel({
       <AnimatePresence>
         <motion.div
           initial={{ y: 0 }}
-          animate={{ y: hiddenState ? "calc(100% + 24px)" : 0 }}
+          animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
           exit={{ y: 0 }}
           transition={{
             duration: 0.2,
@@ -202,15 +231,17 @@ export function Panel({
 }
 
 export function PanelContent({ className }: { className?: string }) {
-  const { isHidden, setIsHidden, url, style } = usePanelStore();
+  const {
+    isHidden,
+    setIsHidden,
+    url,
+    style,
+    tab,
+    openTab,
+    closeTab,
+    switchTab,
+  } = usePanelStore();
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<"menu" | "dev">("menu");
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isInputOpen, setIsInputOpen] = useState(false);
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const [isStackOpen, setIsStackOpen] = useState(false);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
   const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
@@ -228,16 +259,6 @@ export function PanelContent({ className }: { className?: string }) {
   });
 
   useHotkey(
-    "Control+M",
-    () => {
-      setIsPopupOpen((prev) => !prev);
-    },
-    {
-      enabled: !isHidden,
-    },
-  );
-
-  useHotkey(
     "Control+W",
     () => {
       handleSubmit();
@@ -248,12 +269,22 @@ export function PanelContent({ className }: { className?: string }) {
   );
 
   useHotkey(
-    "Control+D",
+    "Control+M",
     () => {
-      if (selectedTab === "dev") {
-        setSelectedTab("menu");
+      tab ? closeTab() : openTab();
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "Tab",
+    () => {
+      if (tab === "dev") {
+        switchTab("user");
       } else {
-        setSelectedTab("dev");
+        switchTab("dev");
       }
     },
     {
@@ -293,42 +324,11 @@ export function PanelContent({ className }: { className?: string }) {
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
-      <ChatPanel isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-      <InputPanel isOpen={isInputOpen} setIsOpen={setIsInputOpen} />
-      <MapPanel isOpen={isMapOpen} setIsOpen={setIsMapOpen} />
-      <StackPanel isOpen={isStackOpen} setIsOpen={setIsStackOpen} />
-      <HistoryPanel isOpen={isHistoryOpen} setIsOpen={setIsHistoryOpen} />
-
       <PanelPopup
-        isOpen={isPopupOpen}
-        selectedTab={selectedTab}
+        selectedTab={tab}
         tabs={{
-          menu: <UserMenu onDev={() => setSelectedTab("dev")} />,
-          dev: (
-            <DevMenu
-              onReturn={() => setSelectedTab("menu")}
-              onChatClick={() => {
-                setIsChatOpen(true);
-                setIsHidden(true);
-              }}
-              onInputClick={() => {
-                setIsInputOpen(true);
-                setIsHidden(true);
-              }}
-              onMapClick={() => {
-                setIsHidden(true);
-                setIsMapOpen(true);
-              }}
-              onStackClick={() => {
-                setIsHidden(true);
-                setIsStackOpen(true);
-              }}
-              onHistoryClick={() => {
-                setIsHidden(true);
-                setIsHistoryOpen(true);
-              }}
-            />
-          ),
+          user: <UserMenu onDev={() => switchTab("dev")} />,
+          dev: <DevMenu onReturn={() => switchTab("user")} />,
         }}
       ></PanelPopup>
       <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
@@ -337,7 +337,7 @@ export function PanelContent({ className }: { className?: string }) {
           variant="ghost"
           size="icon"
           className={cn("rounded-full", isMenuHold && "bg-accent")}
-          onClick={() => setIsPopupOpen((prev) => !prev)}
+          onClick={() => (tab ? closeTab() : openTab())}
         >
           <Menu />
         </Button>
@@ -431,23 +431,22 @@ function PanelTag() {
 }
 
 type PanelPopupProps = {
-  isOpen?: boolean;
-  selectedTab: string;
-  tabs: { [key: string]: React.ReactNode };
+  selectedTab?: PanelTabType;
+  tabs: { [key in PanelTabType]: React.ReactNode };
   children?: React.ReactNode;
 };
 
-function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
+function PanelPopup({ selectedTab, tabs }: PanelPopupProps) {
   return (
     <motion.div
       initial={{ marginBottom: -6 }}
       animate={{
-        marginBottom: isOpen ? 0 : -6,
+        marginBottom: selectedTab ? 0 : -6,
       }}
       transition={{ duration: 0.2 }}
     >
       <AnimatePresence>
-        {isOpen && (
+        {selectedTab && (
           <motion.div
             className={cn("w-full flex items-center overflow-hidden")}
             key={selectedTab}
@@ -470,134 +469,178 @@ function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
 
 type DevMenuProps = {
   onReturn: () => void;
-  onChatClick: () => void;
-  onInputClick: () => void;
-  onMapClick: () => void;
-  onStackClick: () => void;
-  onHistoryClick: () => void;
 };
 
-export function DevMenu({
-  onReturn,
-  onChatClick,
-  onInputClick,
-  onMapClick,
-  onStackClick,
-  onHistoryClick,
-}: DevMenuProps) {
+export function DevMenu({ onReturn }: DevMenuProps) {
+  const tab = usePanelStore((state) => state.tab);
+  const isHidden = usePanelStore((state) => state.isHidden);
+  const devTab = usePanelStore((state) => state.devTab);
+  const openDevTab = usePanelStore((state) => state.openDevTab);
+  const closeDevTab = usePanelStore((state) => state.closeDevTab);
+
+  useHotkeySequence(
+    ["C"],
+    () => {
+      devTab ? closeDevTab() : openDevTab("chat");
+    },
+    {
+      enabled: !isHidden && tab === "dev",
+    },
+  );
+
+  useHotkeySequence(
+    ["M"],
+    () => {
+      devTab ? closeDevTab() : openDevTab("map");
+    },
+    {
+      enabled: !isHidden && tab === "dev",
+    },
+  );
+
+  useHotkeySequence(
+    ["H"],
+    () => {
+      devTab ? closeDevTab() : openDevTab("history");
+    },
+    {
+      enabled: !isHidden && tab === "dev",
+    },
+  );
+
+  useHotkeySequence(
+    ["S"],
+    () => {
+      devTab ? closeDevTab() : openDevTab("stack");
+    },
+    {
+      enabled: !isHidden && tab === "dev",
+    },
+  );
+
   return (
-    <TooltipProvider timeout={100} delay={100}>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onReturn}
-          >
-            <ChevronLeft />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Return to menu</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onChatClick}
-          >
-            <MessageCircle />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open chat panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onInputClick}
-          >
-            <Brackets />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open manual input panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onMapClick}
-          >
-            <Map />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open map panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onStackClick}
-          >
-            <Layers />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open stack panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            onClick={onHistoryClick}
-          >
-            <History />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open history panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <ListCheck />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Open test panel</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <MousePointer />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Enable interactive inspection</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <>
+      <ChatPanel isOpen={devTab === "chat"} setIsOpen={() => closeDevTab()} />
+      <InputPanel isOpen={devTab === "input"} setIsOpen={() => closeDevTab()} />
+      <MapPanel isOpen={devTab === "map"} setIsOpen={() => closeDevTab()} />
+      <StackPanel isOpen={devTab === "stack"} setIsOpen={() => closeDevTab()} />
+      <HistoryPanel
+        isOpen={devTab === "history"}
+        setIsOpen={() => closeDevTab()}
+      />
+      <TooltipProvider delay={400}>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={onReturn}
+            >
+              <ChevronLeft />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Return to menu</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => openDevTab("chat")}
+            >
+              <MessageCircle />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open chat panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => openDevTab("input")}
+            >
+              <Brackets />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open manual input panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => openDevTab("map")}
+            >
+              <Map />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open map panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => openDevTab("stack")}
+            >
+              <Layers />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open stack panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => openDevTab("history")}
+            >
+              <History />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open history panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <ListCheck />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Open test panel</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <MousePointer />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Enable interactive inspection</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </>
   );
 }
 
@@ -610,7 +653,7 @@ export function UserMenu({ onDev }: MenuProps) {
   const { pushToast } = usePanelToast();
   const { runtime, config, setConfig } = useRuntime();
   return (
-    <TooltipProvider timeout={100} delay={100}>
+    <TooltipProvider delay={400}>
       <Tooltip>
         <TooltipTrigger>
           <Button
