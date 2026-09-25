@@ -743,7 +743,37 @@ export function UserMenu({ onDev }: MenuProps) {
 type SuggestType = {
   url: string;
   alt: string;
+  render?: ReactNode;
 };
+
+function ConciergeSuggest() {
+  const { setInput } = useWalkerInput();
+  return (
+    <div
+      className="w-full rounded-[16px] flex flex-col p-1.5 gap-1.5 bg-white border border-red-500 hover:cursor-pointer"
+      onClick={() => setInput("Take user to Concierge")}
+    >
+      <div className="w-full h-8 flex gap-3 items-center rounded-full p-1 pl-3 bg-red-50">
+        <img
+          src="https://vstaffs.com/concierge-logo.svg"
+          alt="Concierge"
+          className="h-4"
+        />
+        <span className="w-full text-red-500 text-sm font-semibold">
+          For apps that matters.
+        </span>
+        <div className="size-6 flex items-center justify-center aspect-square bg-red-500 text-white text-xs font-brand rounded-full">
+          W
+        </div>
+      </div>
+      <div className="w-full text-xs">
+        Try out Concierge! It is a managed Walker Server to help you create
+        enterprise-grade Walker Apps. We are on a mission to building the world
+        for those who believe how agent interact with their app matters.
+      </div>
+    </div>
+  );
+}
 
 type SuggestBuffer = SuggestType[];
 
@@ -751,18 +781,22 @@ const suggestions: SuggestBuffer = [
   {
     url: "https://i.pinimg.com/1200x/a4/36/60/a43660b58cc3bc73a74891b5d3057fba.jpg",
     alt: "Suggest",
+    render: <ConciergeSuggest />,
   },
   {
     url: "https://i.pinimg.com/736x/0e/d9/8c/0ed98cb79189661757777d66eca52437.jpg",
     alt: "Suggest",
+    render: <ConciergeSuggest />,
   },
   {
     url: "https://i.pinimg.com/originals/fe/63/ae/fe63ae16020f4e852b818dc3d1452e26.gif",
     alt: "Suggest",
+    render: <ConciergeSuggest />,
   },
   {
     url: "https://i.pinimg.com/originals/0d/bb/34/0dbb3414f38ec6a65d10d88225d71cb2.gif",
     alt: "Suggest",
+    render: <ConciergeSuggest />,
   },
 ];
 
@@ -770,6 +804,7 @@ export function PanelSuggest() {
   const [count, setCount] = useState<number>(0);
   const [delay, setDelay] = useState<number>(10000);
   const [isPlaying, setPlaying] = useState<boolean>(true);
+  const { pushToast } = usePanelToast();
 
   useInterval(
     () => {
@@ -783,7 +818,17 @@ export function PanelSuggest() {
   );
 
   return (
-    <div className="w-full h-8 flex items-center justify-center rounded-full bg-muted overflow-hidden">
+    <div
+      className="w-full h-8 flex items-center justify-center rounded-full bg-muted overflow-hidden"
+      onClick={() => {
+        pushToast({
+          type: "plain",
+          message: "",
+          render: suggestions[count]?.render,
+          duration: 10,
+        });
+      }}
+    >
       {suggestions[count] && (
         <img
           src={suggestions[count].url}
@@ -806,10 +851,11 @@ const panelToastVariants = cva(
           "bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-50",
         warn: "bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-50",
         error: "bg-red-50 text-destructive dark:bg-red-950",
+        plain: "bg-white dark:bg-white",
       },
     },
     defaultVariants: {
-      type: "info",
+      type: "plain",
     },
   },
 );
@@ -836,15 +882,19 @@ export function PanelToast() {
           transition={{ duration: 0.4, type: "spring" }}
           className={cn(panelToastVariants({ type: toast.type }))}
         >
-          <div className="w-full flex items-center px-6 min-h-8">
-            <span
-              className={cn(
-                "text-sm",
-                toast.type === "walking" ? "shimmer" : "",
-              )}
-            >
-              {toast.message}
-            </span>
+          <div className="w-full flex items-center p-1.5 min-h-8">
+            {toast.render ? (
+              toast.render
+            ) : (
+              <span
+                className={cn(
+                  "text-sm",
+                  toast.type === "walking" ? "shimmer" : "",
+                )}
+              >
+                {toast.message}
+              </span>
+            )}
           </div>
         </motion.div>
       )}
@@ -856,6 +906,7 @@ type PanelToastItemType = {
   type: VariantProps<typeof panelToastVariants>["type"];
   message: string;
   duration?: number;
+  render?: ReactNode;
 };
 
 type PanelToastContextType = {

@@ -1,4 +1,4 @@
-import type { ItemType, MapType } from "walker-core";
+import type { ItemType, MapItemType, MapType } from "walker-core";
 import {
   Dialog,
   DialogContent,
@@ -99,7 +99,7 @@ export function MapItemIcon({
 export function MapItemContent({
   item,
 }: {
-  item: ItemType & { children?: MapType };
+  item: MapItemType & { children?: MapType };
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { selectedItem, setSelectedItem } = useSelectedItemStore();
