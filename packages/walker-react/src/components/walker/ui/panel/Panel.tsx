@@ -750,26 +750,24 @@ function ConciergeSuggest() {
   const { setInput } = useWalkerInput();
   return (
     <div
-      className="w-full rounded-[24px] flex flex-col p-1.5 gap-1.5 bg-background hover:cursor-pointer"
-      onClick={() => setInput("Take user to Concierge")}
+      className="w-full rounded-[24px] flex flex-col p-1.5 gap-1.5 group bg-background hover:bg-red-50 dark:hover:bg-red-950 hover:cursor-pointer"
+      onClick={() => setInput("Let's go to Concierge")}
     >
-      <div className="w-full h-8 flex gap-3 items-center rounded-full p-1 pl-3 bg-red-50 dark:bg-red-950">
+      <div className="w-full p-1.5 text-red-500 bg-background rounded-[16px]">
+        We are on a mission to building the world for those who care. Try out
+        Concierge! It is a managed Walker Server to help you create
+        enterprise-grade Walker Apps.
+      </div>
+      <div className="w-full h-8 flex gap-3 items-center rounded-full p-1 px-3">
         <img
           src="https://vstaffs.com/concierge-logo.svg"
           alt="Concierge"
           className="h-4"
         />
-        <span className="w-full text-red-500 text-sm font-semibold">
+        <span className="w-full text-red-500 font-semibold">
           For apps that matters.
         </span>
-        <div className="size-6 flex items-center justify-center aspect-square bg-red-500 text-white text-xs font-brand rounded-full">
-          W
-        </div>
-      </div>
-      <div className="w-full p-1.5 text-xs text-black dark:text-white">
-        Try out Concierge! It is a managed Walker Server to help you create
-        enterprise-grade Walker Apps. We are on a mission to building the world
-        for those who believe how agent interact with their app matters.
+        <span className="text-xs font-brand text-nowrap">by W</span>
       </div>
     </div>
   );
