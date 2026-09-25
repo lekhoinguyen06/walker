@@ -785,7 +785,7 @@ export function PanelToast() {
             opacity: 1,
           }}
           exit={{ y: "100%", height: 0, opacity: 0 }}
-          transition={{ duration: 1, type: "spring" }}
+          transition={{ duration: 0.4, type: "spring" }}
           className={cn(panelToastVariants({ type: toast.type }))}
         >
           <div className="w-full flex items-center px-6 min-h-8">
@@ -829,30 +829,20 @@ export function PanelToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<PanelToastItemType | null>(null);
   const [duration, setDuration] = useState<number>(3);
 
-  const [count, { startCountdown, resetCountdown }] = useCountdown({
-    countStart: duration,
-    intervalMs: 1000,
-  });
-
   const pushToast = (toast: PanelToastItemType | null) => {
+    setDuration(toast?.duration ?? 3);
     setToast(toast);
   };
 
   useEffect(() => {
     if (!toast) return;
 
-    const nextDuration = toast.duration ?? 3;
-
-    setDuration(nextDuration);
-    resetCountdown();
-    startCountdown();
-  }, [toast]);
-
-  useEffect(() => {
-    if (count === 0 && toast) {
+    const timer = setTimeout(() => {
       setToast(null);
-    }
-  }, [count, toast]);
+    }, duration * 1000);
+
+    return () => clearTimeout(timer);
+  }, [toast, duration]);
 
   return (
     <PanelToastContext.Provider value={{ toast, pushToast }}>
