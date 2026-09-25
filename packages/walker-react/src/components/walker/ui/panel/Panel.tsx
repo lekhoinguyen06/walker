@@ -439,27 +439,32 @@ type PanelPopupProps = {
 
 function PanelPopup({ isOpen = false, selectedTab, tabs }: PanelPopupProps) {
   return (
-    <div className={cn(isOpen ? "" : "-mb-1.5")}>
+    <motion.div
+      initial={{ marginBottom: -6 }}
+      animate={{
+        marginBottom: isOpen ? 0 : -6,
+      }}
+      transition={{ duration: 0.2 }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            className={cn("w-full flex items-center overflow-hidden")}
             key={selectedTab}
-            className="w-full flex items-center"
-            initial={{ y: "100%", height: 0, opacity: 0, scaleY: 0.8 }}
+            initial={{ y: "100%", height: 0, opacity: 0 }}
             animate={{
               y: 0,
               height: "auto",
               opacity: 1,
-              scaleY: 1,
             }}
-            exit={{ y: "-100%", height: 0, opacity: 0, scaleY: 0.8 }}
+            exit={{ y: "-100%", height: 0, opacity: 0 }}
             transition={{ duration: 0.2, type: "keyframes" }}
           >
             {tabs[selectedTab]}
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 
