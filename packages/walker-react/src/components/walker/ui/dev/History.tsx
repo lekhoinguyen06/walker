@@ -14,6 +14,7 @@ import { GalleryHorizontalEnd, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRuntime } from "@/hooks/useRuntime";
 import { useScreenSize } from "@/shared/hooks/useScreenSize";
+import { Details } from "./Details";
 
 export type HistoryProps = {
   isOpen: boolean;
@@ -59,7 +60,7 @@ export function HistoryPanel({ isOpen, setIsOpen }: HistoryProps) {
             ))}
           </div>
           {selectedHistory && (
-            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll">
+            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll scrollbar-none">
               <Button
                 variant="ghost"
                 size="icon"
@@ -68,31 +69,7 @@ export function HistoryPanel({ isOpen, setIsOpen }: HistoryProps) {
               >
                 <X />
               </Button>
-              <div className="font-brand">Details</div>
-              {Object.entries(selectedHistory).map(([key, value]) => {
-                if (key === "flow" || key === "action" || key === "map") {
-                  return (
-                    <div key={key}>
-                      <div className="text-xs font-light">{key}</div>
-                      <div className="markdown-renderer max-h-60 overflow-y-scroll">
-                        <style>{themeCss}</style>
-                        <Markdown highlighter={highlightMarkdownCode}>
-                          {"```json\n" +
-                            JSON.stringify(value, null, 2) +
-                            "\n```"}
-                        </Markdown>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={key}>
-                      <div className="text-xs font-light">{key}</div>
-                      <div className="text-sm">{String(value)}</div>
-                    </div>
-                  );
-                }
-              })}
+              <Details item={selectedHistory} />
             </div>
           )}
         </div>

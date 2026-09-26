@@ -15,6 +15,7 @@ import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { Markdown } from "@tanstack/markdown/react";
 import { useRuntime } from "@/hooks/useRuntime";
 import { useScreenSize } from "@/shared/hooks/useScreenSize";
+import { Details } from "./Details";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;
@@ -193,33 +194,7 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
               >
                 <X />
               </Button>
-              <div className="font-brand">Details</div>
-              {Object.entries(selectedItem).map(([key, value]) => {
-                if (key === "children") {
-                  return (
-                    <div key={key}>
-                      <div className="text-xs font-light">{key}</div>
-                      <div className="w-full max-h-60 overflow-scroll scrollbar-none">
-                        <div className="w-fit markdown-renderer">
-                          <style>{themeCss}</style>
-                          <Markdown highlighter={highlightMarkdownCode}>
-                            {"```json\n" +
-                              JSON.stringify(value, null, 2) +
-                              "\n```"}
-                          </Markdown>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={key}>
-                      <div className="text-xs font-light">{key}</div>
-                      <div className="text-sm">{String(value)}</div>
-                    </div>
-                  );
-                }
-              })}
+              <Details item={selectedItem} />
             </div>
           )}
         </div>

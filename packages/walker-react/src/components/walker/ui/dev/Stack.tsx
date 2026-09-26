@@ -14,6 +14,7 @@ import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { Markdown } from "@tanstack/markdown/react";
 import { useRuntime } from "@/hooks/useRuntime";
 import { useScreenSize } from "@/shared/hooks/useScreenSize";
+import { Details } from "./Details";
 
 export type DialogProps = {
   isOpen: boolean;
@@ -68,31 +69,7 @@ export function StackPanel({ isOpen, setIsOpen }: DialogProps) {
                 >
                   <X />
                 </Button>
-                <div className="font-brand">Details</div>
-                {Object.entries(selectedFlow).map(([key, value]) => {
-                  if (key === "schema") {
-                    return (
-                      <div key={key}>
-                        <div className="text-xs font-light">{key}</div>
-                        <div className="markdown-renderer max-h-60 overflow-y-scroll">
-                          <style>{themeCss}</style>
-                          <Markdown highlighter={highlightMarkdownCode}>
-                            {"```json\n" +
-                              JSON.stringify(value, null, 2) +
-                              "\n```"}
-                          </Markdown>
-                        </div>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div key={key}>
-                        <div className="text-xs font-light">{key}</div>
-                        <div className="text-sm">{String(value)}</div>
-                      </div>
-                    );
-                  }
-                })}
+                <Details item={selectedFlow} />
               </div>
             )}
           </div>
