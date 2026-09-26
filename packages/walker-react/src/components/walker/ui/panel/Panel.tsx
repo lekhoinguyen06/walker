@@ -81,33 +81,26 @@ export function Panel({
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
-    <motion.div
-      layout
-      ref={ref}
-      transition={{
-        duration: 0.2,
-        ease: "anticipate",
-      }}
-      className={cn(panelVariants({ position: positionState, className }))}
-    >
-      <AnimatePresence>
-        <motion.div
-          initial={{ y: 0 }}
-          animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
-          exit={{ y: 0 }}
-          transition={{
-            duration: 0.2,
-            ease: "anticipate",
-          }}
-        >
-          {/* Absolute componnents */}
-          <PanelTag />
+    <AnimatePresence>
+      <motion.div
+        layout
+        ref={ref}
+        initial={{ y: 0 }}
+        animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
+        exit={{ y: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: "anticipate",
+        }}
+        className={cn(panelVariants({ position: positionState, className }))}
+      >
+        {/* Absolute componnents */}
+        <PanelTag />
 
-          {/* Flex-col components */}
-          <PanelToast />
-          <PanelContent />
-        </motion.div>
-      </AnimatePresence>
-    </motion.div>
+        {/* Flex-col components */}
+        <PanelToast />
+        <PanelContent />
+      </motion.div>
+    </AnimatePresence>
   );
 }
