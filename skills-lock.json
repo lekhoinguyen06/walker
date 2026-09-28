@@ -73,6 +73,12 @@
       "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
       "computedHash": "bce096b49db40761adb1d5348f064c303fc152e4e50fc3fd81b79df8b6cf137f"
     },
+    "opentui": {
+      "source": "anomalyco/opentui",
+      "sourceType": "github",
+      "skillPath": "packages/web/src/content/SKILL.md",
+      "computedHash": "7bac9b52d5f0885d921cfa39360869cd97a173cf63758a666404c238a635f09f"
+    },
     "prototype": {
       "source": "mattpocock/skills",
       "sourceType": "github",
