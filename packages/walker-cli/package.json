@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "bun run --watch src/index.tsx",
-    "dev:server": "bun run --hot src/app.tsx",
+    "dev:server": "bun run --hot src/app.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
