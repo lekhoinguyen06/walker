@@ -30,7 +30,7 @@ export function StackPanel({ isOpen, setIsOpen }: DialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-none sm:max-w-none max-h-none w-[80vw] flex flex-col">
+      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="font-brand">Stack</DialogTitle>
           <DialogDescription>

@@ -44,7 +44,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
   const isBusy = status === "submitted" || status === "streaming";
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-none sm:max-w-none max-h-none w-[80vw] h-[80vh] flex flex-col">
+      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="font-brand">Chat</DialogTitle>
           <DialogDescription>

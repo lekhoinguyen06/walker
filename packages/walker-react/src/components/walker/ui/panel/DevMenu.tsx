@@ -112,7 +112,7 @@ export function DevMenu({ onReturn }: DevMenuProps) {
           <p>Open chat panel</p>
         </TooltipContent>
       </Tooltip>
-      <Tooltip>
+      {/*<Tooltip>
         <TooltipTrigger>
           <Button
             variant="ghost"
@@ -126,7 +126,7 @@ export function DevMenu({ onReturn }: DevMenuProps) {
         <TooltipContent>
           <p>Open manual input panel</p>
         </TooltipContent>
-      </Tooltip>
+      </Tooltip>*/}
       <Tooltip>
         <TooltipTrigger>
           <Button
