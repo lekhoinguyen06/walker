@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
 import { usePanel } from "@/hooks";
+import { ChatPanel } from "../dev/Chat";
+import { InputPanel } from "../dev/Input";
+import { MapPanel } from "../dev/Map";
+import { StackPanel } from "../dev/Stack";
+import { HistoryPanel } from "../dev/History";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);
@@ -64,6 +69,8 @@ export function Panel({
   const {
     position: positionState,
     isHidden: isHiddenState,
+    devTab,
+    closeDevTab,
     setIsHidden,
     setStore,
   } = usePanel();
@@ -93,6 +100,24 @@ export function Panel({
           }}
           className={cn(panelVariants({ position: positionState, className }))}
         >
+          <ChatPanel
+            isOpen={devTab === "chat"}
+            setIsOpen={() => closeDevTab()}
+          />
+          <InputPanel
+            isOpen={devTab === "input"}
+            setIsOpen={() => closeDevTab()}
+          />
+          <MapPanel isOpen={devTab === "map"} setIsOpen={() => closeDevTab()} />
+          <StackPanel
+            isOpen={devTab === "stack"}
+            setIsOpen={() => closeDevTab()}
+          />
+          <HistoryPanel
+            isOpen={devTab === "history"}
+            setIsOpen={() => closeDevTab()}
+          />
+
           {/* Absolute componnents */}
           <PanelTag />
 

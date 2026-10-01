@@ -81,127 +81,117 @@ export function DevMenu({ onReturn }: DevMenuProps) {
   );
 
   return (
-    <>
-      <ChatPanel isOpen={devTab === "chat"} setIsOpen={() => closeDevTab()} />
-      <InputPanel isOpen={devTab === "input"} setIsOpen={() => closeDevTab()} />
-      <MapPanel isOpen={devTab === "map"} setIsOpen={() => closeDevTab()} />
-      <StackPanel isOpen={devTab === "stack"} setIsOpen={() => closeDevTab()} />
-      <HistoryPanel
-        isOpen={devTab === "history"}
-        setIsOpen={() => closeDevTab()}
-      />
-      <TooltipProvider delay={400}>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={onReturn}
-            >
-              <ChevronLeft />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Return to menu</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={() => openDevTab("chat")}
-            >
-              <MessageCircle />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open chat panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={() => openDevTab("input")}
-            >
-              <Brackets />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open manual input panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={() => openDevTab("map")}
-            >
-              <Map />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open map panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={() => openDevTab("stack")}
-            >
-              <Layers />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open stack panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              onClick={() => openDevTab("history")}
-            >
-              <History />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open history panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <ListCheck />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Open test panel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <MousePointer />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Enable interactive inspection</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </>
+    <TooltipProvider delay={400}>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={onReturn}
+          >
+            <ChevronLeft />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Return to menu</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => openDevTab("chat")}
+          >
+            <MessageCircle />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open chat panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => openDevTab("input")}
+          >
+            <Brackets />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open manual input panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => openDevTab("map")}
+          >
+            <Map />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open map panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => openDevTab("stack")}
+          >
+            <Layers />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open stack panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => openDevTab("history")}
+          >
+            <History />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open history panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <ListCheck />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Open test panel</p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <MousePointer />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Enable interactive inspection</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
