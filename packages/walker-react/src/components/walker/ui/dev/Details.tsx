@@ -13,7 +13,7 @@ export function Details({ item }: DetailsProps) {
         <div key={key}>
           <div className="text-xs font-light">{key}</div>
           <div className="w-full max-h-60 overflow-scroll scrollbar-none">
-            <div className="w-fit markdown-renderer">
+            <div className="w-fit min-w-full markdown-renderer">
               <style>{themeCss}</style>
               <Markdown highlighter={highlightMarkdownCode}>
                 {"```json\n" + JSON.stringify(value, null, 2) + "\n```"}

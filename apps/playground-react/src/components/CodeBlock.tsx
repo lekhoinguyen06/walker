@@ -48,7 +48,7 @@ export function CodeContent({ raw }: CodeContentProps) {
           isExpanded ? "max-h-full" : "max-h-120",
         )}
       >
-        <div className="markdown-renderer w-fit">
+        <div className="markdown-renderer w-fit min-w-full">
           <style>{themeCss}</style>
           <Markdown highlighter={highlightMarkdownCode}>{source}</Markdown>
         </div>

@@ -11,8 +11,6 @@ import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { Markdown } from "@tanstack/markdown/react";
 import { useRuntime } from "@/hooks/useRuntime";
 import { useScreenSize } from "@/shared/hooks/useScreenSize";
 import { Details } from "./Details";
