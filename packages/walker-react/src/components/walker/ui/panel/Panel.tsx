@@ -104,10 +104,10 @@ export function Panel({
             isOpen={devTab === "chat"}
             setIsOpen={() => closeDevTab()}
           />
-          <InputPanel
+          {/*<InputPanel
             isOpen={devTab === "input"}
             setIsOpen={() => closeDevTab()}
-          />
+          />*/}
           <MapPanel isOpen={devTab === "map"} setIsOpen={() => closeDevTab()} />
           <StackPanel
             isOpen={devTab === "stack"}
