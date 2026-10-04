@@ -48,7 +48,7 @@ describe("/walk", () => {
         state: null,
         children: {
           "button-1": mockItem({
-            id: "bu-1",
+            id: "button-1",
             type: "button",
             description: "My button, click to get started.",
             refId: null,
