@@ -1,4 +1,4 @@
-import type z from "zod";
+import z from "zod";
 import type { ActionType } from "../action";
 import type { ContextType } from "../context";
 
@@ -13,9 +13,12 @@ export interface FlowType<T = any> {
   }) => Promise<void>;
 }
 
-export interface FlowItemType extends Pick<
-  FlowType,
-  "command" | "description" | "schema"
-> {}
+export const FlowItemSchema = z.object({
+  command: z.string(),
+  description: z.string(),
+  schema: z.any(),
+});
+
+export type FlowItemType = z.infer<typeof FlowItemSchema>;
 
 export type FlowRegistry = Map<string, FlowType>;

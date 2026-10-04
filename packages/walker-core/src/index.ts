@@ -8,6 +8,7 @@ export * from "./history";
 export * from "./context";
 export * from "./adapter";
 export * from "./shared/utils/logger";
+export * from "./api";
 
 // Element exports
 export * from "./walker-element";
