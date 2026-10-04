@@ -1,11 +1,13 @@
 import z from "zod";
-import { HistorySchema } from "../history";
-import { FlowItemSchema } from "../flow";
-import { MapSchema } from "../map";
-import { ActionSchema } from "../action";
+import {
+  HistorySchema,
+  FlowItemSchema,
+  MapSchema,
+  ActionSchema,
+} from "walker-core";
 
 export const WalkRequestBodySchema = z.object({
-  history: HistorySchema,
+  history: z.array(HistorySchema),
   flows: z.array(FlowItemSchema),
   map: MapSchema,
   skills: z.array(z.string()),
