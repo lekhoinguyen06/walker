@@ -17,6 +17,7 @@
     "@opentui/core": "^0.5.12",
     "@opentui/react": "^0.5.12",
     "hono": "^4.13.10",
+    "itty-router": "^5.0.24",
     "react": "^19.2.8",
     "zustand": "^5.0.15"
   },

@@ -1,6 +1,6 @@
 import { useWalk, useWalkerInput } from "@/hooks";
 import { useOnClickOutside } from "usehooks-ts";
-import { useMemo, useRef, type RefObject } from "react";
+import { useMemo, useRef, type ReactNode, type RefObject } from "react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { usePanelToast } from "@/hooks";
 import { generateWalkPrompt } from "@/utils/prompt";
@@ -32,7 +32,11 @@ export const panelContentVariants = cva(
   },
 );
 
-export function PanelContent({ className }: { className?: string }) {
+type PanelContentProps = {
+  className?: string;
+};
+
+export function PanelContent({ className }: PanelContentProps) {
   const {
     isHidden,
     setIsHidden,
