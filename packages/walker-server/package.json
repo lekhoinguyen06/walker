@@ -1,0 +1,33 @@
+{
+  "name": "walker-server",
+  "version": "0.1.0",
+  "description": "Walker Server library.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
+  "module": "index.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "bunup --watch",
+    "build": "bunup"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bunup": "^0.16.32"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "ai": "^7.0.127",
+    "itty-router": "^5.0.24",
+    "zod": "^4.6.5"
+  }
+}

@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { pushLog } from "./store";
 import { logger } from "hono/logger";
-import { walker } from "./server";
+import { walker } from "walker-server";
 
 const app = new Hono();
 
