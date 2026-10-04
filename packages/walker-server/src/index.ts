@@ -10,7 +10,7 @@ const or = createOpenRouter({
 
 export const ai = or.chat("openai/gpt-oss-20b", {
   provider: {
-    sort: "throughput",
+    only: ["groq"],
   },
 });
 
@@ -49,7 +49,7 @@ router.post("/api/walker/walk", withContent, async (req: WalkRequestType) => {
     }),
     prompt: JSON.stringify(body.data),
     maxOutputTokens: 10000,
-    reasoning: "minimal",
+    reasoning: "low",
     toolChoice: "none",
     temperature: 0.2,
   });
