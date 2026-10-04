@@ -1,6 +1,25 @@
-import type { WalkerElementProps } from "walker-core";
+import {
+  ObservedAttributes,
+  type ItemType,
+  type ObservedAttributesType,
+} from "walker-core";
 import { useScope } from "@/hooks/useScope";
 import slugify from "slugify";
+
+export interface WalkerElementProps<T = unknown> extends ItemType {
+  children?: T;
+}
+
+export class WalkerElement extends HTMLElement {
+  constructor(props: WalkerElementProps) {
+    super();
+  }
+
+  static observedAttributes: readonly ObservedAttributesType[] =
+    ObservedAttributes;
+}
+
+customElements.define("walker-element", WalkerElement);
 
 declare module "react" {
   namespace JSX {
