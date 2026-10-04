@@ -31,7 +31,7 @@ function App() {
   const handleSelect = useCallback(
     (_index: number, option: { value?: string } | null) => {
       if (option?.value === "local" && !server.current) {
-        server.current = Bun.serve({ fetch: app.fetch, port: 3000 });
+        server.current = Bun.serve({ fetch: app.fetch, port: 6767 });
         setServerRunning(true);
       } else if (option?.value === "exit") {
         shutdown();

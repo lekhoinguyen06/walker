@@ -28,6 +28,7 @@
   "dependencies": {
     "ai": "^7.0.127",
     "itty-router": "^5.0.24",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "walker-core": "workspace:*"
   }
 }
