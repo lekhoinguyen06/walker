@@ -1,5 +1,6 @@
 import z from "zod";
 import { createDocument } from "zod-openapi";
+import { MessageResponseSchema } from "./shared/dto/res.dto";
 
 export const openapiDocument = createDocument({
   openapi: "3.1.0",
@@ -15,8 +16,11 @@ export const openapiDocument = createDocument({
             description: "200 OK",
             content: {
               "application/json": {
-                schema: z.string(),
-                example: "Hello, Walkers!",
+                schema: MessageResponseSchema,
+                example: {
+                  status: 200,
+                  message: "Hello, Walkers!",
+                },
               },
             },
           },
