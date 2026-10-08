@@ -13,6 +13,7 @@ router.get("/api/walker/health", () => {
     message: `Hello, Walkers!`,
   };
 });
+
 router.post("/api/walker/walk", withContent, handler.walk);
 
 export type WalkerServerType = {
