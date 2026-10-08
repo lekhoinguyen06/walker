@@ -78,6 +78,7 @@ describe("/walk", () => {
       prompt: "Let's go, I am new here. Show me around.",
     };
 
+    console.log("Request body:", body);
     const result = await api.post("/walk", body);
     console.log(result);
 

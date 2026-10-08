@@ -1,5 +1,9 @@
 import type { IRequestStrict } from "itty-router";
-import { WalkRequestBodySchema, type WalkRequestBodyType } from "./walk.dto";
+import {
+  WalkRequestBodySchema,
+  type WalkRequestBodyDTO,
+  type WalkResponseBodyDTO,
+} from "./walk.dto";
 import { generateText, Output } from "ai";
 import { ActionSchema } from "walker-core";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
@@ -15,7 +19,7 @@ const ai = or.chat("openai/gpt-oss-20b", {
 });
 
 type WalkRequestType = {
-  content: WalkRequestBodyType | undefined;
+  content: WalkRequestBodyDTO | undefined;
 } & IRequestStrict;
 
 export const walkController = async (req: WalkRequestType) => {
@@ -41,5 +45,13 @@ export const walkController = async (req: WalkRequestType) => {
     temperature: 0.2,
   });
 
-  return result;
+  const action = ActionSchema.parse(result.output);
+
+  return {
+    action,
+    metadata: {
+      timestamp: new Date(),
+      usage: result.usage,
+    },
+  } satisfies WalkResponseBodyDTO;
 };

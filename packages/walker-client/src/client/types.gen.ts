@@ -15,8 +15,126 @@ export type GetApiWalkerHealthResponses = {
   /**
    * 200 OK
    */
-  200: string;
+  200: {
+    status: number;
+    message: string;
+  };
 };
 
 export type GetApiWalkerHealthResponse =
   GetApiWalkerHealthResponses[keyof GetApiWalkerHealthResponses];
+
+export type PostApiWalkerWalkData = {
+  body?: {
+    history: Array<{
+      prompt: string;
+      flow: Array<{
+        command: string;
+        description: string;
+        schema: unknown;
+      }>;
+      action: Array<{
+        flow: string;
+        message: string;
+        targetId: string;
+        prompt: string;
+        end: boolean;
+        [key: string]: unknown;
+      }>;
+      map: Array<{
+        [key: string]: {
+          id: string;
+          type: string;
+          description: string;
+          state: string | null;
+          scope: boolean;
+          refId: string | null;
+          content: boolean;
+          raw: boolean;
+          children?: {
+            [key: string]: {
+              id: string;
+              type: string;
+              description: string;
+              state: string | null;
+              scope: boolean;
+              refId: string | null;
+              content: boolean;
+              raw: boolean;
+            };
+          };
+          isInActiveScope?: boolean;
+          contentValue?: string;
+          rawValue?: string;
+        };
+      }>;
+      logs: Array<{
+        type: "user" | "system";
+        message: string;
+        timestamp: number;
+      }>;
+    }>;
+    flows: Array<{
+      command: string;
+      description: string;
+      schema: unknown;
+    }>;
+    map: {
+      [key: string]: {
+        id: string;
+        type: string;
+        description: string;
+        state: string | null;
+        scope: boolean;
+        refId: string | null;
+        content: boolean;
+        raw: boolean;
+        children?: {
+          [key: string]: {
+            id: string;
+            type: string;
+            description: string;
+            state: string | null;
+            scope: boolean;
+            refId: string | null;
+            content: boolean;
+            raw: boolean;
+          };
+        };
+        isInActiveScope?: boolean;
+        contentValue?: string;
+        rawValue?: string;
+      };
+    };
+    skills: Array<string>;
+    prompt: string;
+  };
+  path?: never;
+  query?: never;
+  url: "/api/walker/walk";
+};
+
+export type PostApiWalkerWalkResponses = {
+  /**
+   * 200 OK
+   */
+  200: {
+    action: {
+      flow: string;
+      message: string;
+      targetId: string;
+      prompt: string;
+      end: boolean;
+      [key: string]: unknown;
+    };
+    metadata: {
+      timestamp: string;
+      usage: {
+        [key: string]: unknown;
+      };
+    };
+  };
+};
+
+export type PostApiWalkerWalkResponse =
+  PostApiWalkerWalkResponses[keyof PostApiWalkerWalkResponses];

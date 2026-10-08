@@ -34,6 +34,414 @@
           }
         }
       }
+    },
+    "/api/walker/walk": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {},
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "history": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "prompt": {
+                          "type": "string"
+                        },
+                        "flow": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "command": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "schema": {}
+                            },
+                            "required": ["command", "description", "schema"]
+                          }
+                        },
+                        "action": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "flow": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "targetId": {
+                                "type": "string"
+                              },
+                              "prompt": {
+                                "type": "string"
+                              },
+                              "end": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "flow",
+                              "message",
+                              "targetId",
+                              "prompt",
+                              "end"
+                            ],
+                            "additionalProperties": {}
+                          }
+                        },
+                        "map": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "state": {
+                                  "type": ["string", "null"]
+                                },
+                                "scope": {
+                                  "type": "boolean"
+                                },
+                                "refId": {
+                                  "type": ["string", "null"]
+                                },
+                                "content": {
+                                  "type": "boolean"
+                                },
+                                "raw": {
+                                  "type": "boolean"
+                                },
+                                "children": {
+                                  "type": "object",
+                                  "propertyNames": {
+                                    "type": "string"
+                                  },
+                                  "additionalProperties": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "type": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "state": {
+                                        "type": ["string", "null"]
+                                      },
+                                      "scope": {
+                                        "type": "boolean"
+                                      },
+                                      "refId": {
+                                        "type": ["string", "null"]
+                                      },
+                                      "content": {
+                                        "type": "boolean"
+                                      },
+                                      "raw": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "type",
+                                      "description",
+                                      "state",
+                                      "scope",
+                                      "refId",
+                                      "content",
+                                      "raw"
+                                    ]
+                                  }
+                                },
+                                "isInActiveScope": {
+                                  "type": "boolean"
+                                },
+                                "contentValue": {
+                                  "type": "string"
+                                },
+                                "rawValue": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "type",
+                                "description",
+                                "state",
+                                "scope",
+                                "refId",
+                                "content",
+                                "raw"
+                              ]
+                            }
+                          }
+                        },
+                        "logs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": ["user", "system"]
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "timestamp": {
+                                "type": "number"
+                              }
+                            },
+                            "required": ["type", "message", "timestamp"]
+                          }
+                        }
+                      },
+                      "required": ["prompt", "flow", "action", "map", "logs"]
+                    }
+                  },
+                  "flows": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "command": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "schema": {}
+                      },
+                      "required": ["command", "description", "schema"]
+                    }
+                  },
+                  "map": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": ["string", "null"]
+                        },
+                        "scope": {
+                          "type": "boolean"
+                        },
+                        "refId": {
+                          "type": ["string", "null"]
+                        },
+                        "content": {
+                          "type": "boolean"
+                        },
+                        "raw": {
+                          "type": "boolean"
+                        },
+                        "children": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": ["string", "null"]
+                              },
+                              "scope": {
+                                "type": "boolean"
+                              },
+                              "refId": {
+                                "type": ["string", "null"]
+                              },
+                              "content": {
+                                "type": "boolean"
+                              },
+                              "raw": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "type",
+                              "description",
+                              "state",
+                              "scope",
+                              "refId",
+                              "content",
+                              "raw"
+                            ]
+                          }
+                        },
+                        "isInActiveScope": {
+                          "type": "boolean"
+                        },
+                        "contentValue": {
+                          "type": "string"
+                        },
+                        "rawValue": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "description",
+                        "state",
+                        "scope",
+                        "refId",
+                        "content",
+                        "raw"
+                      ]
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "prompt": {
+                    "type": "string"
+                  }
+                },
+                "required": ["history", "flows", "map", "skills", "prompt"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "action": {
+                    "flow": "click",
+                    "message": "Clicking the start button to begin the tour.",
+                    "targetId": "button-1",
+                    "prompt": "Let's go, I am new here. Show me around.",
+                    "end": false
+                  },
+                  "metadata": {
+                    "timestamp": "2026-10-08T04:45:52.799Z",
+                    "usage": {
+                      "inputTokens": 1005,
+                      "inputTokenDetails": {
+                        "noCacheTokens": 1005,
+                        "cacheReadTokens": 0,
+                        "cacheWriteTokens": 0
+                      },
+                      "outputTokens": 293,
+                      "outputTokenDetails": {
+                        "textTokens": 54,
+                        "reasoningTokens": 239
+                      },
+                      "totalTokens": 1298
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "object",
+                      "properties": {
+                        "flow": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "targetId": {
+                          "type": "string"
+                        },
+                        "prompt": {
+                          "type": "string"
+                        },
+                        "end": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "flow",
+                        "message",
+                        "targetId",
+                        "prompt",
+                        "end"
+                      ],
+                      "additionalProperties": {}
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "timestamp": {
+                          "type": "string"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["timestamp", "usage"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["action", "metadata"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
