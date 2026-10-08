@@ -17,7 +17,9 @@
   "scripts": {
     "dev": "bunup --watch",
     "build": "bunup",
-    "test": "vitest"
+    "test": "vitest",
+    "gen": "bun run ./scripts/generate.ts",
+    "doc": "bunx @scalar/cli document serve walker-server.openapi.json"
   },
   "devDependencies": {
     "@hono/node-server": "^2.1.3",
