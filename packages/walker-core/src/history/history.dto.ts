@@ -11,9 +11,9 @@ export const LogItemSchema = z.object({
 
 export const HistorySchema = z.object({
   prompt: z.string(),
-  flow: z.array(FlowItemSchema),
-  action: z.array(ActionSchema),
-  map: z.array(MapSchema),
+  flow: FlowItemSchema,
+  action: ActionSchema,
+  map: MapSchema,
   logs: z.array(LogItemSchema),
 });
 

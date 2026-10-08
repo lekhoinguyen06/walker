@@ -16,7 +16,7 @@ export interface FlowType<T = any> {
 export const FlowItemSchema = z.object({
   command: z.string(),
   description: z.string(),
-  schema: z.any(),
+  schema: z.unknown(),
 });
 
 export type FlowItemType = z.infer<typeof FlowItemSchema>;

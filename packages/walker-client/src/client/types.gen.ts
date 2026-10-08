@@ -28,20 +28,20 @@ export type PostApiWalkerWalkData = {
   body?: {
     history: Array<{
       prompt: string;
-      flow: Array<{
+      flow: {
         command: string;
         description: string;
         schema: unknown;
-      }>;
-      action: Array<{
+      };
+      action: {
         flow: string;
         message: string;
         targetId: string;
         prompt: string;
         end: boolean;
         [key: string]: unknown;
-      }>;
-      map: Array<{
+      };
+      map: {
         [key: string]: {
           id: string;
           type: string;
@@ -67,7 +67,7 @@ export type PostApiWalkerWalkData = {
           contentValue?: string;
           rawValue?: string;
         };
-      }>;
+      };
       logs: Array<{
         type: "user" | "system";
         message: string;

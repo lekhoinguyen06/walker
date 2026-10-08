@@ -1,13 +1,31 @@
 {
   "name": "walker-client",
+  "version": "0.1.0",
+  "description": "Walker Client library. It includes generated SDK and HTTP client.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
   "module": "index.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.js",
+      "require": "./dist/client/index.cjs"
+    }
+  },
   "scripts": {
-    "gen-api": "openapi-ts"
+    "gen-api": "openapi-ts",
+    "build": "bunup"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "0.0.0-next-20260824173136",
     "@types/bun": "latest",
+    "bunup": "^0.16.32",
     "walker-server": "workspace:*"
   },
   "peerDependencies": {
