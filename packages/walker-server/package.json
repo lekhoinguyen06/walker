@@ -18,7 +18,7 @@
     "dev": "bunup --watch",
     "build": "bunup",
     "test": "vitest",
-    "gen": "bun run ./scripts/generate.ts"
+    "gen-api": "bun run ./scripts/generate.ts"
   },
   "devDependencies": {
     "@hono/node-server": "^2.1.3",

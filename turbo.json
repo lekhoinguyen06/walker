@@ -15,6 +15,11 @@
       "dependsOn": ["^gen-doc"],
       "inputs": ["$TURBO_DEFAULT$"],
       "outputs": ["typedoc.json"]
+    },
+    "gen-api": {
+      "dependsOn": ["^gen-api"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": ["*.openapi.json", "src/client/**"]
     }
   },
   "ui": "tui"

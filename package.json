@@ -5,6 +5,7 @@
     "build": "turbo run build",
     "docs": "cd ./docs && mint dev",
     "gen-doc": "turbo run gen-doc",
+    "gen-api": "turbo run gen-api",
     "dev": "turbo run dev",
     "dev:react": "turbo run dev --filter=playground-react...",
     "dev:cli": "turbo run dev --filter=\"./packages/walker-cli\"...",
