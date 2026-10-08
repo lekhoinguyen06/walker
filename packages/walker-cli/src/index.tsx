@@ -5,6 +5,7 @@ import { createRoot, useKeyboard } from "@opentui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import app from "./app";
 import { pushLog, useLogStore } from "./store";
+import { secrets } from "bun";
 
 // function App() {
 //   const server = useRef<ReturnType<typeof Bun.serve>>(null);
@@ -166,6 +167,69 @@ function Local() {
   );
 }
 
+function Config() {
+  const [focus, setFocus] = useState<"openrouter">("openrouter");
+  const [ORvalue, setORvalue] = useState<string>("");
+  const [ORstoredKey, setORstoredKey] = useState<string | null>(null);
+
+  const saveORkey = useCallback(async (val: string) => {
+    await secrets.set({
+      service: "walker-cli",
+      name: "openrouter-api-key",
+      value: val,
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchStoredValue = async () => {
+      const key = await secrets.get({
+        service: "walker-cli",
+        name: "openrouter-api-key",
+      });
+      setORstoredKey(key || null);
+    };
+    fetchStoredValue();
+  }, [saveORkey]);
+
+  return (
+    <box
+      style={{
+        width: "100%",
+        flexGrow: 1,
+        flexDirection: "column",
+      }}
+    >
+      <box
+        style={{
+          width: "100%",
+          flexDirection: "column",
+          gap: 1,
+          padding: 1,
+        }}
+      >
+        <text>OpenRouter</text>
+        <text>Value: {ORstoredKey ? "***" : ""}</text>
+        <input
+          focused={focus === "openrouter"}
+          placeholder="Enter OpenRouter API key"
+          value={ORvalue}
+          onInput={(v) => setORvalue(v)}
+          style={
+            {
+              // focusedBackgroundColor: "FFFFFF",
+              // focusedTextColor: "000000",
+            }
+          }
+          onSubmit={() => {
+            setORvalue("");
+            saveORkey(ORvalue);
+          }}
+        />
+      </box>
+    </box>
+  );
+}
+
 function App() {
   const [tab, setTab] = useState<string | null>(null);
   return (
@@ -179,6 +243,7 @@ function App() {
     >
       {tab === null && <Home />}
       {tab === "local" && <Local />}
+      {tab === "config" && <Config />}
       <box
         style={{
           width: "100%",
