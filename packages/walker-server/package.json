@@ -39,6 +39,7 @@
     "axios": "^1.20.0",
     "itty-router": "^5.0.24",
     "walker-core": "workspace:*",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "zod-openapi": "^6.0.2"
   }
 }
