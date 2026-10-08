@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { createCliRenderer } from "@opentui/core";
 import { createRoot, useKeyboard } from "@opentui/react";
 import { useCallback, useRef, useState } from "react";
