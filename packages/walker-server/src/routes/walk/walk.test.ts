@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, beforeAll, afterAll } from "vitest";
 import { clickFlow, mockItem, type MapType } from "walker-core";
 import type { WalkRequestBodyType } from "./walk.dto";
 import z from "zod";
-import skill from "./walker-skill.md?raw";
+import skill from "../../walker-skill.md?raw";
 import { Hono } from "hono";
-import { walker } from ".";
 import { fetcher } from "itty-fetcher";
 import { serve, type ServerType } from "@hono/node-server";
+import { walker } from "../..";
 
 describe("/walk", () => {
   const server = new Hono();
