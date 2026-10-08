@@ -12,9 +12,22 @@
             "description": "200 OK",
             "content": {
               "application/json": {
-                "example": "Hello, Walkers!",
+                "example": {
+                  "status": 200,
+                  "message": "Hello, Walkers!"
+                },
                 "schema": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "message"],
+                  "additionalProperties": false
                 }
               }
             }
