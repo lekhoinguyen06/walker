@@ -53,152 +53,143 @@
                           "type": "string"
                         },
                         "flow": {
-                          "type": "array",
-                          "items": {
+                          "type": "object",
+                          "properties": {
+                            "command": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "schema": {}
+                          },
+                          "required": ["command", "description", "schema"]
+                        },
+                        "action": {
+                          "type": "object",
+                          "properties": {
+                            "flow": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "targetId": {
+                              "type": "string"
+                            },
+                            "prompt": {
+                              "type": "string"
+                            },
+                            "end": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "flow",
+                            "message",
+                            "targetId",
+                            "prompt",
+                            "end"
+                          ],
+                          "additionalProperties": {}
+                        },
+                        "map": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
                             "type": "object",
                             "properties": {
-                              "command": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
                                 "type": "string"
                               },
                               "description": {
                                 "type": "string"
                               },
-                              "schema": {}
-                            },
-                            "required": ["command", "description", "schema"]
-                          }
-                        },
-                        "action": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "flow": {
-                                "type": "string"
+                              "state": {
+                                "type": ["string", "null"]
                               },
-                              "message": {
-                                "type": "string"
-                              },
-                              "targetId": {
-                                "type": "string"
-                              },
-                              "prompt": {
-                                "type": "string"
-                              },
-                              "end": {
+                              "scope": {
                                 "type": "boolean"
+                              },
+                              "refId": {
+                                "type": ["string", "null"]
+                              },
+                              "content": {
+                                "type": "boolean"
+                              },
+                              "raw": {
+                                "type": "boolean"
+                              },
+                              "children": {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "state": {
+                                      "type": ["string", "null"]
+                                    },
+                                    "scope": {
+                                      "type": "boolean"
+                                    },
+                                    "refId": {
+                                      "type": ["string", "null"]
+                                    },
+                                    "content": {
+                                      "type": "boolean"
+                                    },
+                                    "raw": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "type",
+                                    "description",
+                                    "state",
+                                    "scope",
+                                    "refId",
+                                    "content",
+                                    "raw"
+                                  ]
+                                }
+                              },
+                              "isInActiveScope": {
+                                "type": "boolean"
+                              },
+                              "contentValue": {
+                                "type": "string"
+                              },
+                              "rawValue": {
+                                "type": "string"
                               }
                             },
                             "required": [
-                              "flow",
-                              "message",
-                              "targetId",
-                              "prompt",
-                              "end"
-                            ],
-                            "additionalProperties": {}
-                          }
-                        },
-                        "map": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "propertyNames": {
-                              "type": "string"
-                            },
-                            "additionalProperties": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                },
-                                "state": {
-                                  "type": ["string", "null"]
-                                },
-                                "scope": {
-                                  "type": "boolean"
-                                },
-                                "refId": {
-                                  "type": ["string", "null"]
-                                },
-                                "content": {
-                                  "type": "boolean"
-                                },
-                                "raw": {
-                                  "type": "boolean"
-                                },
-                                "children": {
-                                  "type": "object",
-                                  "propertyNames": {
-                                    "type": "string"
-                                  },
-                                  "additionalProperties": {
-                                    "type": "object",
-                                    "properties": {
-                                      "id": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      },
-                                      "description": {
-                                        "type": "string"
-                                      },
-                                      "state": {
-                                        "type": ["string", "null"]
-                                      },
-                                      "scope": {
-                                        "type": "boolean"
-                                      },
-                                      "refId": {
-                                        "type": ["string", "null"]
-                                      },
-                                      "content": {
-                                        "type": "boolean"
-                                      },
-                                      "raw": {
-                                        "type": "boolean"
-                                      }
-                                    },
-                                    "required": [
-                                      "id",
-                                      "type",
-                                      "description",
-                                      "state",
-                                      "scope",
-                                      "refId",
-                                      "content",
-                                      "raw"
-                                    ]
-                                  }
-                                },
-                                "isInActiveScope": {
-                                  "type": "boolean"
-                                },
-                                "contentValue": {
-                                  "type": "string"
-                                },
-                                "rawValue": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "id",
-                                "type",
-                                "description",
-                                "state",
-                                "scope",
-                                "refId",
-                                "content",
-                                "raw"
-                              ]
-                            }
+                              "id",
+                              "type",
+                              "description",
+                              "state",
+                              "scope",
+                              "refId",
+                              "content",
+                              "raw"
+                            ]
                           }
                         },
                         "logs": {
@@ -368,7 +359,7 @@
                     "end": false
                   },
                   "metadata": {
-                    "timestamp": "2026-10-08T05:01:14.947Z",
+                    "timestamp": "2026-10-08T06:08:10.656Z",
                     "usage": {
                       "inputTokens": 1005,
                       "inputTokenDetails": {

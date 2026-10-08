@@ -1,9 +1,8 @@
-import { useWalk, useWalkerInput } from "@/hooks";
+import { useRuntime, useWalk, useWalkerInput } from "@/hooks";
 import { useOnClickOutside } from "usehooks-ts";
-import { useMemo, useRef, type ReactNode, type RefObject } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { usePanelToast } from "@/hooks";
-import { generateWalkPrompt } from "@/utils/prompt";
 import { cn } from "cn";
 import { PanelPopup } from "./PanelPopup";
 import { UserMenu } from "./UserMenu";
@@ -50,10 +49,10 @@ export function PanelContent({ className }: PanelContentProps) {
 
   const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
-  const { submit, isLoading, actionsInQueueCount, isWalking, runtime, walk } =
-    useWalk({
-      url,
-    });
+  const { actionsInQueueCount, runtime, walk, isWalking } = useRuntime();
+  const { mutate, isPending } = useWalk({
+    url,
+  });
   function handleClickOutside() {
     setIsHidden(true);
   }
@@ -101,7 +100,8 @@ export function PanelContent({ className }: PanelContentProps) {
   const { pushToast } = usePanelToast();
 
   const handleSubmit = () => {
-    if (actionsInQueueCount === 0 && !isLoading && !isWalking) {
+    console.log("PanelContent handleSubmit");
+    if (actionsInQueueCount === 0 && !isPending && !isWalking) {
       if (input.trim() === "") {
         pushToast({
           type: "info",
@@ -109,10 +109,7 @@ export function PanelContent({ className }: PanelContentProps) {
         });
         return;
       }
-      submit({
-        input,
-        prompt: generateWalkPrompt(runtime, input),
-      });
+      mutate();
     } else {
       pushToast({
         type: "info",
@@ -155,7 +152,7 @@ export function PanelContent({ className }: PanelContentProps) {
             size="icon"
             className={cn(
               "rounded-full",
-              isLoading && "bg-accent text-black",
+              isPending && "bg-accent text-black",
               isWalking && "bg-red-500 text-white",
             )}
             onClick={handleSubmit}
