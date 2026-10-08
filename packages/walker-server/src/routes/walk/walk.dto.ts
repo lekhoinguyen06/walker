@@ -18,9 +18,9 @@ export const WalkResponseBodySchema = z.object({
   action: ActionSchema,
   metadata: z.object({
     timestamp: z.date(),
-    usage: z.record(z.string(), z.number()),
+    usage: z.record(z.string(), z.any()),
   }),
 });
 
-export type WalkRequestBodyType = z.infer<typeof WalkRequestBodySchema>;
-export type WalkResponseBodyType = z.infer<typeof WalkResponseBodySchema>;
+export type WalkRequestBodyDTO = z.infer<typeof WalkRequestBodySchema>;
+export type WalkResponseBodyDTO = z.infer<typeof WalkResponseBodySchema>;
