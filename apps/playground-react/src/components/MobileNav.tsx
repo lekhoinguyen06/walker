@@ -11,18 +11,26 @@ import { PanelRight } from "lucide-react";
 import ReactLogo from "../assets/react.svg?react";
 import VueLogo from "../assets/vuedotjs.svg?react";
 import SvelteLogo from "../assets/svelte.svg?react";
-import { Item, Link } from "walker-react";
+import { Item, Link, useScope } from "walker-react";
 import { useState } from "react";
 
 export function MobileNav() {
+  const { state, setActiveId, resetActiveId } = useScope("mobile-nav-trigger");
   const [isOpen, setisOpen] = useState<boolean>(false);
   return (
-    <Sheet open={isOpen} onOpenChange={setisOpen}>
+    <Sheet
+      open={isOpen}
+      onOpenChange={(open) => {
+        setisOpen(open);
+        open ? setActiveId("mobile-nav-trigger") : resetActiveId();
+      }}
+    >
       <SheetTrigger>
         <Item
           id="mobile-nav-trigger"
           description="This is the mobile navigation trigger, click it to open the mobile navigation menu."
-          scope={isOpen}
+          scope={state}
+          flows={JSON.stringify(["click"])}
         >
           <Button
             variant="ghost"

@@ -69,7 +69,7 @@ type ActionSchemaType = {
 
 \`action.flow\` must match \`flow.command\` of a flow in \`WalkRequestBodyType\`
 \`action.message\` is a short sentence that describes the action taken by the agent.
-\`action.targetId\` is a id of an \`Item\` in \`Map\`. Never use an imaginary id. If the action is not targeting any item, use an empty string.
+\`action.targetId\`: is a field that Action Generator Agent should choose. Never imagine an id, select an appropriate id from any \`Item\` in the \`Map\` record provided. The targeted \`Item\` must also provide the Flows it accepts in its \`item.flows\` field. If the targeted \`Item\` does not provide any flows, do not target it.
 \`action.end\` is a boolean value state whether the walk should be ended. Consider History and user's prompt to see if the walk should be ended.
 
 ## Flow
@@ -89,8 +89,9 @@ type ItemType = {
   id: string;
   type: string;
   description: string;
+  flows: string;
   state: string | null;
-  scope: boolean;
+  scope: "actrive" | "hidden" | "inherited";
   refId: string | null;
   content: boolean;
   raw: boolean;
@@ -100,4 +101,5 @@ type ItemType = {
 \`item.id\` is the unique identifier of the item, and ID does not has to have the correct meaning, refer to the \`item.description\` to understand its purpose.
 \`item.type\` is the type of the item, only meant for user's understanding. It can be any string.
 \`item.description\` is a short description of the item describing what an Item is used for.
+\`item.flows\`: is a JSON list of Flow commands that the Item acceepts.
 `;

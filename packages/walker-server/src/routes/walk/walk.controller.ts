@@ -97,6 +97,7 @@ export const walkController = async (req: WalkRequestType) => {
               ? flowAgent.usage.outputTokens + walkAgent.usage.outputTokens
               : undefined,
         },
+        requestBody: body.data,
       },
     } satisfies WalkResponseBodyDTO;
   } catch (error) {
