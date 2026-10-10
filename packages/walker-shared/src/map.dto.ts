@@ -1,11 +1,13 @@
 import z from "zod";
 
+export const ScopeSchema = z.literal(["active", "hidden", "inherit"]);
+
 export const ItemSchema = z.object({
   id: z.string(),
   type: z.string(),
   description: z.string(),
   state: z.string().nullable(),
-  scope: z.literal(["active", "hidden", "inherit"]),
+  scope: ScopeSchema,
   flows: z.array(z.string()),
   refId: z.string().nullable(),
   content: z.boolean(),
@@ -26,6 +28,7 @@ export const MapSchema = z.record(z.string(), MapItemSchema);
 export type ItemType = z.infer<typeof ItemSchema>;
 export type MapItemType = z.infer<typeof MapItemSchema>;
 export type MapType = z.infer<typeof MapSchema>;
+export type ScopeType = z.infer<typeof ScopeSchema>;
 
 export const ObservedAttributes = [
   "id",
