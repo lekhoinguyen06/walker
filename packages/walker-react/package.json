@@ -13,16 +13,16 @@
       "require": "./dist/index.cjs"
     },
     "./ui": {
-      "types": "./dist/components/walker/ui/index.d.ts",
-      "import": "./dist/components/walker/ui/index.js",
-      "require": "./dist/components/walker/ui/index.cjs"
+      "types": "./dist/walker/ui/index.d.ts",
+      "import": "./dist/walker/ui/index.js",
+      "require": "./dist/walker/ui/index.cjs"
     },
     "./core": {
       "types": "./dist/core/index.d.ts",
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs"
     },
-    "./ui/index.css": "./dist/components/walker/ui/index.css"
+    "./ui/index.css": "./dist/walker/ui/index.css"
   },
   "scripts": {
     "build": "bunup",
