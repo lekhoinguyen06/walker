@@ -1,5 +1,5 @@
 import { MapItemSchema, type ContextType, type MapType } from "walker-shared";
-import { type ObservedAttributesType } from "../walker-element";
+import { type ObservedAttributesType } from "walker-shared";
 
 function uniqueGuard(
   ctx: ContextType,
@@ -48,9 +48,9 @@ function checkScope({
   const parentEl = el.parentElement?.closest(`walker-element`);
   const parentId = parentEl ? getAttr(parentEl, "id") : null;
   if (refId) {
-    return document.getElementById(refId)?.closest("walker-element[scope]")
-      ? true
-      : false;
+    return Boolean(
+      document.getElementById(refId)?.closest("walker-element[scope=active]"),
+    );
   }
 
   // For Items in reference context where there ancestor is in the active scope
@@ -58,7 +58,7 @@ function checkScope({
   if (parentId && registry[parentId]?.isInActiveScope) {
     return true;
   }
-  return el.closest("walker-element[scope]") ? true : false;
+  return el.closest("walker-element[scope=active]") ? true : false;
 }
 
 export function map(ctx: ContextType): MapType {
@@ -106,7 +106,8 @@ export function map(ctx: ContextType): MapType {
       id: getAttr(el, "id"),
       type: getAttr(el, "type"),
       description: getAttr(el, "description"),
-      scope: getAttr(el, "scope") === "",
+      flows: JSON.parse(getAttr(el, "flows") || "[]"),
+      scope: getAttr(el, "scope"),
       state: getAttr(el, "state"),
       refId: getAttr(el, "refId"),
       raw: isRawEnabled,
@@ -133,6 +134,7 @@ export function map(ctx: ContextType): MapType {
       id: item.id,
       type: item.type,
       description: item.description,
+      flows: item.flows,
       scope: item.scope,
       isInActiveScope: checkScope({
         el,
@@ -147,10 +149,10 @@ export function map(ctx: ContextType): MapType {
       ...(item.content && { contentValue: el.textContent.trim() }),
     };
 
-    if (item.scope === true) {
+    if (item.scope === "active") {
       if (seenScope) {
         throw new Error(
-          `Found multiple <walker-element> elements with arttribute scope when generating map. Only one <walker-element> element can have scope.`,
+          `Found multiple <walker-element> elements with arttribute scope "active" when generating map. Only one <walker-element> element can have an active scope.`,
         );
       }
       seenScope = true;
