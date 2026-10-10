@@ -29,12 +29,11 @@ export const walkController = async (req: WalkRequestType) => {
     const body = WalkRequestBodySchema.safeParse(req.content);
 
     if (!body.success) {
-      throw new StatusError(400, JSON.stringify(body.error.message));
-      // throw new StatusError(400, {
-      //   status: 400,
-      //   message: "Invalid request body",
-      //   error: body.error.message,
-      // });
+      throw new StatusError(400, {
+        status: 400,
+        message: "Invalid request body",
+        error: body.error.message,
+      } satisfies ErrorResponseDTO);
     }
 
     const flowAgent = await generateText({
@@ -86,7 +85,16 @@ export const walkController = async (req: WalkRequestType) => {
       action,
       metadata: {
         timestamp: new Date(),
-        usage: walkAgent.usage,
+        usage: {
+          inputTokens:
+            flowAgent.usage.inputTokens && walkAgent.usage.inputTokens
+              ? flowAgent.usage.inputTokens + walkAgent.usage.inputTokens
+              : undefined,
+          outputTokens:
+            flowAgent.usage.outputTokens && walkAgent.usage.outputTokens
+              ? flowAgent.usage.outputTokens + walkAgent.usage.outputTokens
+              : undefined,
+        },
       },
     } satisfies WalkResponseBodyDTO;
   } catch (error) {
