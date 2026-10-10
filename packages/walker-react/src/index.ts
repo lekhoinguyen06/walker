@@ -1,2 +1,2 @@
-export * from "./components/walker/item";
-export * from "./hooks";
+export * from "./walker/item";
+export * from "./walker/hooks";
