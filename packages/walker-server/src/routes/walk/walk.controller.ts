@@ -9,6 +9,7 @@ import { ActionSchema } from "walker-core";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
 import z from "zod";
+import { walkerSkill } from "walker-skill";
 
 const or = createOpenRouter({
   apiKey: process.env.OPEN_ROUTER_API_KEY,
@@ -71,6 +72,7 @@ export const walkController = async (req: WalkRequestType) => {
       }),
       prompt: JSON.stringify({
         ...body.data,
+        skill: [walkerSkill],
         role: "Action Generator",
       }),
       maxOutputTokens: 10000,
