@@ -11,13 +11,13 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 import {
-  LoggerLevel,
   getLogger,
   webFlows,
   webHooks,
-  type ContextType,
   type RuntimeType,
   runtime,
+  type ContextType,
+  LoggerLevel,
 } from "walker-core";
 import { App, type ElementProps } from "@/walker/item";
 import { useScope } from "./useScope";
@@ -81,7 +81,7 @@ function RuntimeProviderContent({
     isLoading: false,
     gap: 200,
     verbose: false,
-    url: undefined,
+    url: "",
     ...userConfig.config,
   });
 

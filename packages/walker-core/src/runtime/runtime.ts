@@ -1,9 +1,13 @@
-import z from "zod";
-import { ActionSchema, type ActionType } from "../action";
-import type { ContextType } from "../context";
-import type { FlowItemType, FlowType } from "../flow";
-import type { HistoryType } from "../history";
-import { map, type MapType } from "../map";
+import {
+  ActionListSchema,
+  type ActionType,
+  type ContextType,
+  type FlowItemType,
+  type FlowType,
+  type HistoryType,
+  type MapType,
+} from "walker-shared";
+import { map } from "../map";
 
 function getFlow(ctx: ContextType, command: string): FlowType | undefined {
   return ctx.flows.get(command);
@@ -94,7 +98,7 @@ export function addActions(ctx: ContextType, inputActions: ActionType[]): void {
 
 export function addRawActions(ctx: ContextType, inputActions: string): void {
   const input = JSON.parse(inputActions);
-  const result = z.array(ActionSchema).safeParse(input);
+  const result = ActionListSchema.safeParse(input);
   if (!result.success) {
     ctx.logger.error({
       event: "Error parsing actions",

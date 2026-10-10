@@ -1,4 +1,4 @@
-import type { HookFactoryType } from "./hook.dto";
+import type { WebHooksType } from "walker-shared";
 import { message } from "./message";
 import { mouse } from "./mouse";
 import { scroll } from "./scroll";
@@ -11,9 +11,3 @@ export const webHooks: WebHooksType = {
   onScroll: scroll,
   onMouse: mouse,
 };
-
-export interface WebHooksType {
-  onScroll?: HookFactoryType;
-  onMessage?: HookFactoryType;
-  onMouse?: HookFactoryType;
-}

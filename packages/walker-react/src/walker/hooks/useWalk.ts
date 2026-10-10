@@ -1,11 +1,11 @@
 import { useRuntime } from "./useRuntime";
 import { usePanelToast } from "./usePanelToast";
-import { ActionSchema } from "walker-core";
 import { useMutation } from "@tanstack/react-query";
 import { useWalkerInput } from "./useWalkerInput";
 import { postApiWalkerWalk } from "walker-client";
 import { createClient } from "walker-client/client";
 import { useMemo } from "react";
+import { ActionSchema } from "walker-core";
 
 export type UseWalkProps = {
   url: string;

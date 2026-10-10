@@ -11,6 +11,8 @@ export const ItemSchema = z.object({
   raw: z.boolean(),
 });
 
+export const ItemListSchema = z.array(ItemSchema);
+
 export const MapItemSchema = ItemSchema.extend({
   children: z.record(z.string(), ItemSchema).optional(),
   isInActiveScope: z.boolean().optional(),
@@ -23,3 +25,16 @@ export const MapSchema = z.record(z.string(), MapItemSchema);
 export type ItemType = z.infer<typeof ItemSchema>;
 export type MapItemType = z.infer<typeof MapItemSchema>;
 export type MapType = z.infer<typeof MapSchema>;
+
+export const ObservedAttributes = [
+  "id",
+  "type",
+  "description",
+  "scope",
+  "state",
+  "refId",
+  "content",
+  "raw",
+] as const;
+
+export type ObservedAttributesType = (typeof ObservedAttributes)[number];

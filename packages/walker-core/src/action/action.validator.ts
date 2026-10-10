@@ -1,7 +1,11 @@
-import { ActionSchema, type ActionType } from "../action";
-import { type ContextType } from "../context";
-import type { FlowRegistry } from "../flow";
-import { type MapType, flattenMap } from "../map";
+import {
+  ActionSchema,
+  type ActionType,
+  type ContextType,
+  type FlowRegistry,
+  type MapType,
+} from "walker-shared";
+import { flattenMap } from "../map";
 
 function isActionTargetInMap({
   map,

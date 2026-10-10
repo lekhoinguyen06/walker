@@ -1,7 +1,5 @@
-import { registry } from "zod";
-import type { ContextType } from "../context/context.dto";
+import { MapItemSchema, type ContextType, type MapType } from "walker-shared";
 import { type ObservedAttributesType } from "../walker-element";
-import { MapItemSchema, type MapType } from "./map.dto";
 
 function uniqueGuard(
   ctx: ContextType,

@@ -1,9 +1,6 @@
+import { createFlowBodySchema } from "walker-shared";
+import { createFlow, type CreateFlowProps } from "../flow.helpers";
 import { wait } from "../../shared/utils/wait";
-import {
-  createFlow,
-  createFlowBodySchema,
-  type CreateFlowProps,
-} from "../flow.helpers";
 
 export const clickFlow: CreateFlowProps<unknown> = createFlow({
   command: "click",

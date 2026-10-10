@@ -1,8 +1,5 @@
-import {
-  createFlow,
-  createFlowBodySchema,
-  type CreateFlowProps,
-} from "../flow.helpers";
+import { createFlowBodySchema } from "walker-shared";
+import { createFlow, type CreateFlowProps } from "../flow.helpers";
 
 export const noneFlow: CreateFlowProps<unknown> = createFlow({
   command: "none",

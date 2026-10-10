@@ -1,4 +1,4 @@
-import type { FlowRegistry } from "../flow.dto";
+import type { FlowRegistry } from "walker-types";
 import { clickFlow } from "./click.flow";
 import { inputFlow } from "./input.flow";
 
