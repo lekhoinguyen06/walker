@@ -6,38 +6,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useWalkerInput } from "./useWalkerInput";
 import { postApiWalkerWalk } from "walker-client";
 import { createClient } from "walker-client/client";
-import { skill } from "./walker-skill";
 import { useMemo } from "react";
 
 export type UseWalkProps = {
   url: string;
   noWalk?: boolean;
 };
-
-// export function useWalk({ url, noWalk = false }: UseWalkProps) {
-//   const runtime = useRuntime();
-//   const { pushToast } = usePanelToast();
-//   const query = useObject({
-//     api: url + "/walk",
-//     schema: ActionSchema.loose(),
-//     onFinish: async (result) => {
-//       runtime.runtime.addActions([ActionSchema.parse(result.object)]);
-//       if (!noWalk) {
-//         runtime.walk();
-//       }
-//     },
-//     onError: (error) => {
-//       pushToast({
-//         type: "error",
-//         message: error.message,
-//       });
-//     },
-//   });
-//   return {
-//     ...query,
-//     ...runtime,
-//   };
-// }
 
 export function useWalk({ url, noWalk = false }: UseWalkProps) {
   const walkerClient = useMemo(() => createClient({ baseUrl: url }), [url]);
@@ -53,7 +27,7 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
           history: runtime.listHistory(),
           map: runtime.map(),
           prompt: input,
-          skills: [skill],
+          skills: [],
         },
       }),
     onSuccess: ({ data }) => {

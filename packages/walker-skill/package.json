@@ -1,0 +1,28 @@
+{
+  "name": "walker-skill",
+  "version": "0.1.0",
+  "description": "Walker Skill library.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
+  "module": "index.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bunup": "^0.16.32"
+  },
+  "scripts": {
+    "build": "bun run ./scripts/generate.ts && bunup",
+    "dev": "concurrently \"bun --watch ./scripts/generate.ts\" \"bunup --watch\""
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  }
+}
