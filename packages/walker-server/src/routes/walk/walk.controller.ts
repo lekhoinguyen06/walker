@@ -8,6 +8,7 @@ import { generateText, Output } from "ai";
 import { ActionSchema } from "walker-core";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
+import z from "zod";
 
 const or = createOpenRouter({
   apiKey: process.env.OPEN_ROUTER_API_KEY,
@@ -36,32 +37,63 @@ export const walkController = async (req: WalkRequestType) => {
       // });
     }
 
-    const result = await generateText({
+    const flowAgent = await generateText({
       model: ai,
       output: Output.object({
-        schema: ActionSchema,
+        schema: z.object({
+          selectedFlowCommand: z.string(),
+        }),
       }),
-      prompt: JSON.stringify(body.data),
+      prompt: JSON.stringify({
+        ...body.data,
+        role: "Flow Picker",
+      }),
       maxOutputTokens: 10000,
       reasoning: "low",
       toolChoice: "none",
       temperature: 0.2,
     });
 
-    const action = ActionSchema.parse(result.output);
+    const flowSchema = body.data.flows.find(
+      (f) => f.command == flowAgent.output.selectedFlowCommand,
+    )?.schema as string | undefined;
+
+    if (!flowSchema) {
+      throw new StatusError(
+        400,
+        `No flow schema found for the given command: ${flowAgent.output}`,
+      );
+    }
+
+    const walkAgent = await generateText({
+      model: ai,
+      output: Output.object({
+        schema: z.fromJSONSchema(flowSchema),
+      }),
+      prompt: JSON.stringify({
+        ...body.data,
+        role: "Action Generator",
+      }),
+      maxOutputTokens: 10000,
+      reasoning: "low",
+      toolChoice: "none",
+      temperature: 0.2,
+    });
+
+    const action = ActionSchema.parse(walkAgent.output);
 
     return {
       action,
       metadata: {
         timestamp: new Date(),
-        usage: result.usage,
+        usage: walkAgent.usage,
       },
     } satisfies WalkResponseBodyDTO;
   } catch (error) {
-    return {
+    throw new StatusError(500, {
       status: 500,
-      error: error instanceof Error ? error.message : "Unknown error",
       message: "Internal server error",
-    } satisfies ErrorResponseDTO;
+      error: (error as Error).message,
+    } satisfies ErrorResponseDTO);
   }
 };
