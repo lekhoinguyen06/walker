@@ -20,6 +20,13 @@ The motto for Walker is: "Walk the web, walk the Earth."
 - Map: a record consist of Items to show the map of the Walker Client
 - Item: an object that represent an interactable entity on Walker Client
 
+## Roles
+
+There are 2 roles for Walker Agent:
+
+- `Flow Picker` Agent: pick the right Flow for the Walker Client to perform
+- `Action Generator` Agent: pick the right Action for the Walker Client to perform
+
 ## Request Body
 
 ```ts
@@ -31,6 +38,20 @@ type WalkRequestBodyType = {
   prompt: string;
 });
 ```
+
+## History
+
+```ts
+type HistoryType = {
+  prompt: string;
+  flow: FlowItemType,
+  action: ActionType,
+  map: MapType,
+  logs: z.array(LogItemSchema),
+}
+```
+
+History objects are the Actions executed. Latter walks must take history into account to determine the next Action. If the history is empty, it means this is the first walk.
 
 ## Action
 
@@ -46,7 +67,7 @@ type ActionSchemaType = {
 
 `action.flow` must match `flow.command` of a flow in `WalkRequestBodyType`
 `action.message` is a short sentence that describes the action taken by the agent.
-`action.targetId` is a id of an `Item` in `Map`.
+`action.targetId` is a id of an `Item` in `Map`. Never use an imaginary id. If the action is not targeting any item, use an empty string.
 `action.end` is a boolean value state whether the walk should be ended. Consider History and user's prompt to see if the walk should be ended.
 
 ## Flow
@@ -73,3 +94,7 @@ type ItemType = {
   raw: boolean;
 };
 ```
+
+`item.id` is the unique identifier of the item, and ID does not has to have the correct meaning, refer to the `item.description` to understand its purpose.
+`item.type` is the type of the item, only meant for user's understanding. It can be any string.
+`item.description` is a short description of the item describing what an Item is used for.
