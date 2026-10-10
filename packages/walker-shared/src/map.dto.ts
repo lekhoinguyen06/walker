@@ -8,7 +8,7 @@ export const ItemSchema = z.object({
   description: z.string(),
   state: z.string().nullable(),
   scope: ScopeSchema,
-  flows: z.array(z.string()),
+  flows: z.string(),
   refId: z.string().nullable(),
   content: z.boolean(),
   raw: z.boolean(),

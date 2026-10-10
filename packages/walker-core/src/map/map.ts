@@ -106,7 +106,7 @@ export function map(ctx: ContextType): MapType {
       id: getAttr(el, "id"),
       type: getAttr(el, "type"),
       description: getAttr(el, "description"),
-      flows: JSON.parse(getAttr(el, "flows") || "[]"),
+      flows: getAttr(el, "flows"),
       scope: getAttr(el, "scope"),
       state: getAttr(el, "state"),
       refId: getAttr(el, "refId"),
@@ -161,7 +161,7 @@ export function map(ctx: ContextType): MapType {
 
   if (seenScope === false) {
     throw new Error(
-      `There must be exactly one <walker-element> element with attribute scope. ${all.length} found.`,
+      `There must be exactly one <walker-element> element with attribute scope.`,
     );
   }
 

@@ -37,17 +37,17 @@ export type ElementProps = Required<
   };
 
 export function Base(props: ElementProps) {
-  const { active } = useScope(props.id);
+  const { state } = useScope(props.id);
   return (
     <walker-element
       id={slugify(props.id)}
       description={props.description}
-      flows={props.flows ?? []}
+      flows={props.flows ?? ""}
       type={props.type ?? "item"}
       refId={props.refId ?? null}
       raw={false}
       content={false}
-      scope={active ? "active" : "inherit"}
+      scope={state}
       state={props.state ?? ""}
     >
       {props.children}

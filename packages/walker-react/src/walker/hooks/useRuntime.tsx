@@ -75,7 +75,7 @@ function RuntimeProviderContent({
   config: RuntimeProviderProps & { app: ElementProps };
   children: React.ReactNode;
 }) {
-  const { setDefaultActiveId } = useScope(userConfig.app.id);
+  const { state, setDefaultActiveId } = useScope(userConfig.app.id);
   const [config, setconfig] = useState<ContextType["config"]>({
     loop: false,
     isLoading: false,
