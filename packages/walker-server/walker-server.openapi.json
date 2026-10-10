@@ -114,7 +114,11 @@
                                 "type": ["string", "null"]
                               },
                               "scope": {
-                                "type": "boolean"
+                                "type": "string",
+                                "enum": ["active", "hidden", "inherit"]
+                              },
+                              "flows": {
+                                "type": "string"
                               },
                               "refId": {
                                 "type": ["string", "null"]
@@ -146,7 +150,11 @@
                                       "type": ["string", "null"]
                                     },
                                     "scope": {
-                                      "type": "boolean"
+                                      "type": "string",
+                                      "enum": ["active", "hidden", "inherit"]
+                                    },
+                                    "flows": {
+                                      "type": "string"
                                     },
                                     "refId": {
                                       "type": ["string", "null"]
@@ -164,6 +172,7 @@
                                     "description",
                                     "state",
                                     "scope",
+                                    "flows",
                                     "refId",
                                     "content",
                                     "raw"
@@ -186,6 +195,7 @@
                               "description",
                               "state",
                               "scope",
+                              "flows",
                               "refId",
                               "content",
                               "raw"
@@ -252,7 +262,11 @@
                           "type": ["string", "null"]
                         },
                         "scope": {
-                          "type": "boolean"
+                          "type": "string",
+                          "enum": ["active", "hidden", "inherit"]
+                        },
+                        "flows": {
+                          "type": "string"
                         },
                         "refId": {
                           "type": ["string", "null"]
@@ -284,7 +298,11 @@
                                 "type": ["string", "null"]
                               },
                               "scope": {
-                                "type": "boolean"
+                                "type": "string",
+                                "enum": ["active", "hidden", "inherit"]
+                              },
+                              "flows": {
+                                "type": "string"
                               },
                               "refId": {
                                 "type": ["string", "null"]
@@ -302,6 +320,7 @@
                               "description",
                               "state",
                               "scope",
+                              "flows",
                               "refId",
                               "content",
                               "raw"
@@ -324,6 +343,7 @@
                         "description",
                         "state",
                         "scope",
+                        "flows",
                         "refId",
                         "content",
                         "raw"
@@ -359,7 +379,7 @@
                     "end": false
                   },
                   "metadata": {
-                    "timestamp": "2026-10-08T06:08:10.656Z",
+                    "timestamp": "2026-10-10T10:58:24.733Z",
                     "usage": {
                       "inputTokens": 1005,
                       "inputTokenDetails": {

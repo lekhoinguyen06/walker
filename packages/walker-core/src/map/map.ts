@@ -151,7 +151,7 @@ export function map(ctx: ContextType): MapType {
 
     if (item.scope === "active") {
       if (seenScope) {
-        throw new Error(
+        ctx.logger.warn(
           `Found multiple <walker-element> elements with arttribute scope "active" when generating map. Only one <walker-element> element can have an active scope.`,
         );
       }
@@ -161,7 +161,7 @@ export function map(ctx: ContextType): MapType {
 
   if (seenScope === false) {
     throw new Error(
-      `There must be exactly one <walker-element> element with attribute scope.`,
+      `There must be exactly one <walker-element> element with attribute scope. None found.`,
     );
   }
 

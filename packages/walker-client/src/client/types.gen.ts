@@ -47,7 +47,8 @@ export type PostApiWalkerWalkData = {
           type: string;
           description: string;
           state: string | null;
-          scope: boolean;
+          scope: "active" | "hidden" | "inherit";
+          flows: string;
           refId: string | null;
           content: boolean;
           raw: boolean;
@@ -57,7 +58,8 @@ export type PostApiWalkerWalkData = {
               type: string;
               description: string;
               state: string | null;
-              scope: boolean;
+              scope: "active" | "hidden" | "inherit";
+              flows: string;
               refId: string | null;
               content: boolean;
               raw: boolean;
@@ -85,7 +87,8 @@ export type PostApiWalkerWalkData = {
         type: string;
         description: string;
         state: string | null;
-        scope: boolean;
+        scope: "active" | "hidden" | "inherit";
+        flows: string;
         refId: string | null;
         content: boolean;
         raw: boolean;
@@ -95,7 +98,8 @@ export type PostApiWalkerWalkData = {
             type: string;
             description: string;
             state: string | null;
-            scope: boolean;
+            scope: "active" | "hidden" | "inherit";
+            flows: string;
             refId: string | null;
             content: boolean;
             raw: boolean;

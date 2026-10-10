@@ -9,13 +9,14 @@ export default function Header() {
   return (
     <Page
       id="navigation"
-      description="This is the navigation header for the Walker Playground, you can navigate to different frameworks or go back to the home page."
+      description="This is the navigation header for the Walker Playground."
     >
       <header className="fixed z-50 top-0 left-1/2 transform -translate-x-1/2 flex w-full p-3 max-w-4xl rounded-[12px] justify-between items-center">
         <div className=" flex w-full p-3 max-w-4xl rounded-[12px] justify-between items-center backdrop-blur-sm bg-white/20 dark:bg-black/20">
           <Link
             id="navigation-button-home"
             description="This is the Walker logo, click it to go back to the home page."
+            flows={JSON.stringify(["click"])}
           >
             <a href="/">
               <img
@@ -34,7 +35,7 @@ export default function Header() {
             <div className="invisible md:visible flex gap-3">
               <Link
                 id="navigation-button-react"
-                description="This is the React logo, click it to go to the Walker Playground for React."
+                description="This is the React logo, click it to go to the Walker Playground for React. Note: We are currently at the React playground."
               >
                 <a href="https://react.walker.vstaffs.com">
                   <Button variant="ghost" size="lg" className="rounded-none">
@@ -44,7 +45,7 @@ export default function Header() {
               </Link>
               <Link
                 id="navigation-button-vue"
-                description="This is the Vue logo, click it to go to the Walker Playground for Vue."
+                description="This is the Vue logo, click it to go to the Walker Playground for Vue. Note: Not implemented yet, but will be available soon."
               >
                 <a href="https://vue.walker.vstaffs.com">
                   <Button variant="ghost" size="lg" className="rounded-none">
@@ -54,7 +55,7 @@ export default function Header() {
               </Link>
               <Link
                 id="navigation-button-svelte"
-                description="This is the Svelte logo, click it to go to the Walker Playground for Svelte."
+                description="This is the Svelte logo, click it to go to the Walker Playground for Svelte. Note: Not implemented yet, but will be available soon."
               >
                 <a href="https://svelte.walker.vstaffs.com">
                   <Button variant="ghost" size="lg" className="rounded-none">
