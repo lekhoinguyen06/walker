@@ -1,6 +1,6 @@
 import z from "zod";
-import type { ActionType } from "../action";
-import type { ContextType } from "../context";
+import { ActionSchema, type ActionType } from "./action.dto";
+import type { ContextType } from "./context.dto";
 
 export interface FlowType<T = any> {
   command: string;
@@ -22,3 +22,17 @@ export const FlowItemSchema = z.object({
 export type FlowItemType = z.infer<typeof FlowItemSchema>;
 
 export type FlowRegistry = Map<string, FlowType>;
+
+export type CreateFlowBodySchemaProps<T> = {
+  flow: string;
+  schema?: T;
+};
+
+export function createFlowBodySchema<T extends z.ZodType>(
+  props: CreateFlowBodySchemaProps<T>,
+) {
+  return ActionSchema.extend({
+    flow: z.literal(props.flow),
+    ...(props.schema ? { body: props.schema } : {}),
+  });
+}

@@ -1,7 +1,11 @@
-import z from "zod";
-import { ItemSchema, type MapItemType, type MapType } from "./map.dto";
-import type { ContextType } from "../context";
-import { getLogger, LoggerLevel } from "../shared/utils/logger";
+import {
+  ItemListSchema,
+  LoggerLevel,
+  type ContextType,
+  type MapItemType,
+  type MapType,
+} from "walker-shared";
+import { getLogger } from "../shared/utils/logger";
 
 export function flattenMap(map: MapType): MapItemType[] {
   const result = Object.values(map).flatMap(({ children, ...item }) => [
@@ -9,7 +13,7 @@ export function flattenMap(map: MapType): MapItemType[] {
     ...(children ? flattenMap(children) : []),
   ]);
 
-  z.array(ItemSchema).parse(result);
+  ItemListSchema.parse(result);
 
   return result;
 }
@@ -56,7 +60,7 @@ export function mockCtx(): ContextType {
       isLoading: false,
       verbose: false,
       loop: false,
-      url: undefined,
+      url: "",
     },
     logger: getLogger(LoggerLevel.TRACE),
   };

@@ -1,10 +1,7 @@
 import z from "zod";
 import { wait } from "../../shared/utils/wait";
-import {
-  createFlow,
-  createFlowBodySchema,
-  type CreateFlowProps,
-} from "../flow.helpers";
+import { createFlowBodySchema } from "walker-shared";
+import { createFlow, type CreateFlowProps } from "../flow.helpers";
 
 type InputFlowSchemaType = z.ZodObject<
   {

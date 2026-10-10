@@ -1,0 +1,31 @@
+{
+  "name": "walker-shared",
+  "version": "0.1.0",
+  "description": "Walker shared library.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
+  "module": "index.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "bunup",
+    "dev": "bunup --watch"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bunup": "^0.16.32"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  }
+}

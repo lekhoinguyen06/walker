@@ -1,7 +1,7 @@
-import { ActionSchema, type ActionType } from "../action";
-import { MapSchema, type MapType } from "../map";
-import { FlowItemSchema, type FlowItemType } from "../flow";
 import z from "zod";
+import { FlowItemSchema } from "./flow.dto";
+import { ActionSchema } from "./action.dto";
+import { MapSchema } from "./map.dto";
 
 export const LogItemSchema = z.object({
   type: z.literal(["user", "system"]),

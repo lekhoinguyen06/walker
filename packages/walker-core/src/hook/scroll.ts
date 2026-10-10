@@ -1,4 +1,4 @@
-import type { HookPropsType } from "./hook.dto";
+import type { HookPropsType } from "walker-shared";
 
 export async function scroll(props: HookPropsType): Promise<void> {
   const walker = document.getElementById(props.action.targetId);

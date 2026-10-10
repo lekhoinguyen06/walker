@@ -1,3 +1,3 @@
-import type { ADEType } from "./ade.dto";
+import type { ADEType } from "walker-shared";
 
 export function createADE({ description }: ADEType) {}

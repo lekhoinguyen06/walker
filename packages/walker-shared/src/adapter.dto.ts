@@ -1,5 +1,5 @@
-import type { ActionType } from "../action";
-import type { HistoryType, LogItemType } from "../history";
+import type { ActionType } from "./action.dto";
+import type { HistoryType, LogItemType } from "./history.dto";
 
 // --- Action Store Adapter ---
 export interface ActionStoreAdapterType {
