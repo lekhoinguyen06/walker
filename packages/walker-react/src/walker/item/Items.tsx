@@ -42,11 +42,12 @@ export function Base(props: ElementProps) {
     <walker-element
       id={slugify(props.id)}
       description={props.description}
+      flows={props.flows ?? []}
       type={props.type ?? "item"}
       refId={props.refId ?? null}
       raw={false}
       content={false}
-      scope={active}
+      scope={active ? "active" : "inherit"}
       state={props.state ?? ""}
     >
       {props.children}
