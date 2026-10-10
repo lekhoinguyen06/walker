@@ -16,7 +16,7 @@ import { Item, useScope } from "walker-react";
 import { useState } from "react";
 
 export function DialogDemo() {
-  const { active, setActiveId, resetActiveId } = useScope("dialog-demo");
+  const { state, setActiveId, resetActiveId } = useScope("dialog-demo");
   const [name, setName] = useState("Pedro Duarte");
   const [username, setUsername] = useState("@peduarte");
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,12 @@ export function DialogDemo() {
     <Item
       id="dialog-demo"
       description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
-      scope={active}
+      scope={state}
+      state={
+        isOpen
+          ? "Dialog is open"
+          : "Dialog is closed, click the dialog-trigger to open it"
+      }
     >
       <Dialog
         open={isOpen}
@@ -38,7 +43,11 @@ export function DialogDemo() {
         }}
       >
         <form>
-          <Item id="dialog-trigger" description="Click to open the dialog">
+          <Item
+            id="dialog-trigger-open"
+            description="Click to open the dialog"
+            flows={["click"]}
+          >
             <DialogTrigger
               render={<Button variant="outline">Open Dialog</Button>}
             />
@@ -47,7 +56,7 @@ export function DialogDemo() {
             <Item
               id="dialog-content"
               description="The content of the dialog"
-              refId="dialog-trigger"
+              refId="dialog-trigger-open"
             >
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
@@ -60,9 +69,10 @@ export function DialogDemo() {
                 <Field>
                   <Label htmlFor="name-1">Name</Label>
                   <Item
-                    id="name-input"
+                    id="name-input-field"
                     description="The input for the name"
                     state={name}
+                    flows={["input"]}
                   >
                     <Input
                       id="name-1"
@@ -75,9 +85,10 @@ export function DialogDemo() {
                 <Field>
                   <Label htmlFor="username-1">Username</Label>
                   <Item
-                    id="username-input"
+                    id="username-input-field"
                     description="The input for the username"
                     state={username}
+                    flows={["input"]}
                   >
                     <Input
                       id="username-1"
@@ -91,15 +102,17 @@ export function DialogDemo() {
               <DialogFooter>
                 <Item
                   id="dialog-trigger-close"
-                  description="Click to close the dialog without saving changes"
+                  description="Click to close the dialog"
+                  flows={["click"]}
                 >
                   <DialogClose
                     render={<Button variant="outline">Cancel</Button>}
                   />
                 </Item>
                 <Item
-                  id="dialog-save"
+                  id="dialog-submit-button"
                   description="Click to save changes and close the dialog"
+                  flows={["click"]}
                 >
                   <Button type="submit" onClick={() => setIsOpen(false)}>
                     Save changes

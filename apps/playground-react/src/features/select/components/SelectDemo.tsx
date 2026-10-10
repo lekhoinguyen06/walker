@@ -42,6 +42,7 @@ export function SelectDemo() {
               <Item
                 id={`select-item-${item.value}`}
                 description={`This is a select item. Click to select: ${item.label}.`}
+                flows={["click"]}
               >
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}

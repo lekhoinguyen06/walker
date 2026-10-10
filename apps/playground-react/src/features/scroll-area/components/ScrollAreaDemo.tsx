@@ -26,7 +26,11 @@ export function ScrollAreaDemo() {
             <h4 className="mb-4 text-sm leading-none font-medium">Tags</h4>
             {tags.map((tag) => (
               <React.Fragment key={tag}>
-                <Item id={tag} description={`Version: ${tag}`}>
+                <Item
+                  id={tag}
+                  description={`Version: ${tag}, click to select this version.`}
+                  flows={["click"]}
+                >
                   <div
                     className="text-sm"
                     onClick={() => setselectedVersion(tag)}
