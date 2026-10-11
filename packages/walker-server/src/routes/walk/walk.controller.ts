@@ -15,7 +15,7 @@ const or = createOpenRouter({
   apiKey: process.env.OPEN_ROUTER_API_KEY,
 });
 
-const ai = or.chat("openai/gpt-oss-20b", {
+const ai = or.chat("openai/gpt-oss-120b", {
   provider: {
     only: ["groq"],
   },

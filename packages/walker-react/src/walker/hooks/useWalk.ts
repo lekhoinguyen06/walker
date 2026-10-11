@@ -24,17 +24,12 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
         body: {
           flows: runtime.listFlows(),
           history: runtime.listHistory(),
-          map: (() => {
-            const map = runtime.map();
-            console.log("useWalk map", map);
-            return map;
-          })(),
+          map: runtime.map(),
           prompt: input,
           skills: [],
         },
       }),
     onSuccess: ({ data }) => {
-      console.log("useWalk onSuccess", data);
       if (!data?.action) return;
       runtime.addActions([ActionSchema.parse(data.action)]);
       if (!noWalk) walk();
