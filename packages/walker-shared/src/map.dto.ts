@@ -16,8 +16,20 @@ export const ItemSchema = z.object({
 
 export const ItemListSchema = z.array(ItemSchema);
 
-export const MapItemSchema = ItemSchema.extend({
-  children: z.record(z.string(), ItemSchema).optional(),
+export interface MapItemType extends ItemType {
+  children?: Record<string, MapItemType>;
+  isInActiveScope?: boolean;
+  contentValue?: string;
+  rawValue?: string;
+}
+
+export const MapItemSchema: z.ZodType<MapItemType> = ItemSchema.extend({
+  children: z
+    .record(
+      z.string(),
+      z.lazy(() => MapItemSchema),
+    )
+    .optional(),
   isInActiveScope: z.boolean().optional(),
   contentValue: z.string().optional(),
   rawValue: z.string().optional(),
@@ -26,7 +38,6 @@ export const MapItemSchema = ItemSchema.extend({
 export const MapSchema = z.record(z.string(), MapItemSchema);
 
 export type ItemType = z.infer<typeof ItemSchema>;
-export type MapItemType = z.infer<typeof MapItemSchema>;
 export type MapType = z.infer<typeof MapSchema>;
 export type ScopeType = z.infer<typeof ScopeSchema>;
 
