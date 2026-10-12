@@ -44,7 +44,7 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
   const isBusy = status === "submitted" || status === "streaming";
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col">
+      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col rounded-none">
         <DialogHeader>
           <DialogTitle className="font-brand">Chat</DialogTitle>
           <DialogDescription>
@@ -147,8 +147,8 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
           <div className="w-full flex items-center gap-1.5">
             <Button
               variant="ghost"
-              size="icon"
-              className="rounded-full hover:bg-primary hover:text-white"
+              size="icon-lg"
+              className="rounded-none hover:bg-primary hover:text-white"
               onClick={() => {
                 setInput("");
                 setMessages([]);
@@ -159,16 +159,16 @@ export function ChatPanel({ isOpen, setIsOpen }: ChatProps) {
             <Input
               placeholder="Type your message..."
               type="text"
-              className="rounded-full w-full"
+              className="rounded-none w-full"
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
             <Button
               type="submit"
               variant="ghost"
-              size="icon"
+              size="icon-lg"
               disabled={isBusy}
-              className="rounded-full hover:bg-primary hover:text-white"
+              className="rounded-none hover:bg-primary hover:text-white"
             >
               <ArrowUpIcon />
             </Button>
