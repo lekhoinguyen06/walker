@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { AnimatePresence } from "motion/react";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useId, type ReactNode } from "react";
 import * as motion from "motion/react-client";
 import { cn } from "@/lib/utils";
 import { usePanel, usePanelToast } from "@/walker/hooks";
@@ -44,6 +44,7 @@ export function PanelToast() {
     <AnimatePresence>
       {toast && (
         <motion.div
+          key={`panel-toast-${toast.type}-${toast.message}`}
           initial={{ y: "100%", height: 0, opacity: 0 }}
           animate={{
             y: 0,
