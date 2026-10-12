@@ -1,4 +1,8 @@
-import { panelVariants, type DevTabType, type PanelTabType } from "@/walker/ui";
+import {
+  panelVariants,
+  type PanelModalType,
+  type PanelTabType,
+} from "@/walker/ui";
 import type { panelContentVariants } from "@/walker/ui/panel/PanelContent";
 import type { VariantProps } from "class-variance-authority";
 import { create } from "zustand";
@@ -12,23 +16,18 @@ export type PanelStoreType = {
   position: VariantProps<typeof panelVariants>["position"];
   style: VariantProps<typeof panelContentVariants>["style"];
   isHidden: boolean;
-
-  // Tabs
-  tab?: PanelTabType;
-  openTab: () => void;
-  closeTab: () => void;
-  switchTab: (tab: PanelTabType) => void;
-
-  // Developeent tabs
-  devTab?: DevTabType;
-  openDevTab: (devTab: DevTabType) => void;
-  closeDevTab: () => void;
-
+  setIsHidden: (isHidden: boolean) => void;
   setPosition: (
     position: VariantProps<typeof panelVariants>["position"],
   ) => void;
-  setStyle: (style: VariantProps<typeof panelContentVariants>["style"]) => void;
-  setIsHidden: (isHidden: boolean) => void;
+
+  // Tabs
+  tab: PanelTabType;
+  setTab: (tab: PanelTabType) => void;
+
+  // Modals
+  modal: PanelModalType;
+  setModal: (modal: PanelModalType) => void;
 
   // Constructor
   setStore: (state: Partial<PanelStoreType>) => void;
@@ -49,14 +48,9 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
   isHidden: false,
   setIsHidden: (isHidden: boolean) => set({ isHidden }),
 
-  tab: undefined,
-  switchTab: (tab: "user" | "dev") => set({ tab }),
-  openTab: () => set({ tab: "user" }),
-  closeTab: () => set({ tab: undefined }),
-  setTab: (tab: "user" | "dev") => set({ tab }),
+  tab: null,
+  setTab: (tab: PanelTabType) => set({ tab }),
 
-  devTab: undefined,
-  closeDevTab: () => set({ devTab: undefined }),
-  openDevTab: (devTab?: "chat" | "input" | "map" | "stack" | "history") =>
-    set({ devTab: devTab, isHidden: true }),
+  modal: null,
+  setModal: (modal: PanelModalType) => set({ modal }),
 }));

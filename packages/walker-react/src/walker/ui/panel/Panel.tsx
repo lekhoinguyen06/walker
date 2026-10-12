@@ -11,9 +11,7 @@ import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
 import { usePanel } from "@/walker/hooks";
 import { ChatPanel } from "../dev/Chat";
-import { InputPanel } from "../dev/Input";
 import { MapPanel } from "../dev/Map";
-import { StackPanel } from "../dev/Stack";
 import { HistoryPanel } from "../dev/History";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
@@ -21,8 +19,8 @@ export function togglePanelPosition(position: PanelPosition): PanelPosition {
   return PANEL_POSITIONS[(index + 1) % PANEL_POSITIONS.length] as PanelPosition;
 }
 
-export type PanelTabType = "user" | "dev";
-export type DevTabType = "chat" | "input" | "map" | "stack" | "history";
+export type PanelTabType = "default" | null;
+export type PanelModalType = "chat" | "map" | "history" | null;
 
 export const PANEL_POSITION = {
   LEFT: "left",
@@ -69,10 +67,10 @@ export function Panel({
   const {
     position: positionState,
     isHidden: isHiddenState,
-    devTab,
-    closeDevTab,
+    modal,
     setIsHidden,
     setStore,
+    setModal,
   } = usePanel();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -101,21 +99,13 @@ export function Panel({
           className={cn(panelVariants({ position: positionState, className }))}
         >
           <ChatPanel
-            isOpen={devTab === "chat"}
-            setIsOpen={() => closeDevTab()}
+            isOpen={modal === "chat"}
+            setIsOpen={() => setModal(null)}
           />
-          {/*<InputPanel
-            isOpen={devTab === "input"}
-            setIsOpen={() => closeDevTab()}
-          />*/}
-          <MapPanel isOpen={devTab === "map"} setIsOpen={() => closeDevTab()} />
-          <StackPanel
-            isOpen={devTab === "stack"}
-            setIsOpen={() => closeDevTab()}
-          />
+          <MapPanel isOpen={modal === "map"} setIsOpen={() => setModal(null)} />
           <HistoryPanel
-            isOpen={devTab === "history"}
-            setIsOpen={() => closeDevTab()}
+            isOpen={modal === "history"}
+            setIsOpen={() => setModal(null)}
           />
 
           {/* Absolute componnents */}

@@ -18,6 +18,7 @@ import { Menu } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
+import { PanelMenu } from "./PanelMenu";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -40,16 +41,7 @@ type PanelContentProps = {
 };
 
 export function PanelContent({ className }: PanelContentProps) {
-  const {
-    isHidden,
-    setIsHidden,
-    url,
-    style,
-    tab,
-    openTab,
-    closeTab,
-    switchTab,
-  } = usePanel();
+  const { isHidden, setIsHidden, url, style, tab, setTab } = usePanel();
 
   const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
@@ -78,23 +70,9 @@ export function PanelContent({ className }: PanelContentProps) {
   );
 
   useHotkey(
-    "Control+M",
-    () => {
-      tab ? closeTab() : openTab();
-    },
-    {
-      enabled: !isHidden,
-    },
-  );
-
-  useHotkey(
     "Tab",
     () => {
-      if (tab === "dev") {
-        switchTab("user");
-      } else {
-        switchTab("dev");
-      }
+      tab ? setTab(null) : setTab("default");
     },
     {
       enabled: !isHidden,
@@ -132,20 +110,19 @@ export function PanelContent({ className }: PanelContentProps) {
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
+      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
       <PanelPopup
         selectedTab={tab}
         tabs={{
-          user: <UserMenu onDev={() => switchTab("dev")} />,
-          dev: <DevMenu onReturn={() => switchTab("user")} />,
+          default: <PanelMenu />,
         }}
       ></PanelPopup>
-      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
       <div className="w-full flex gap-1.5">
         <Button
           variant="ghost"
           size="icon"
           className={cn("rounded-full", isMenuHold && "bg-accent")}
-          onClick={() => (tab ? closeTab() : openTab())}
+          onClick={() => (tab ? setTab(null) : setTab("default"))}
         >
           <Menu />
         </Button>
