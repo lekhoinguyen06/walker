@@ -81,7 +81,7 @@ export function CodeContent({ raw }: CodeContentProps) {
                 runtime.addRawActions(raw.content.trim());
                 pushToast({
                   type: "info",
-                  message: "Walk loaded. Press key Ctrl + W to start the walk.",
+                  message: "Walk loaded. Enter to start the walk.",
                 });
               } catch (error) {
                 console.error(error);

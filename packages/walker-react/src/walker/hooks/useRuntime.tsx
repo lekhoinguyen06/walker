@@ -42,6 +42,7 @@ type RuntimeProviderProps = Partial<ContextType>;
 type RuntimeContextType = {
   runtime: RuntimeType;
   walk: () => void;
+  walkAsync: () => Promise<void>;
   actionsInQueueCount: number;
   isWalking: boolean;
   config: ContextType["config"];
@@ -130,7 +131,11 @@ function RuntimeProviderContent({
     });
   }, [adapter, config, webHooks, webFlows]);
 
-  const { mutate: walk, isPending: isWalking } = useMutation({
+  const {
+    mutate: walk,
+    mutateAsync: walkAsync,
+    isPending: isWalking,
+  } = useMutation({
     mutationFn: async () => {
       await runtimeClient.next();
     },
@@ -141,6 +146,7 @@ function RuntimeProviderContent({
       value={{
         runtime: runtimeClient,
         walk,
+        walkAsync,
         isWalking,
         actionsInQueueCount: actions.length,
         config,

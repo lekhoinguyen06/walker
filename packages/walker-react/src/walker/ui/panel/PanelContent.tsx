@@ -14,8 +14,6 @@ import {
 } from "@tanstack/react-hotkeys";
 import { cn } from "cn";
 import { PanelPopup } from "./PanelPopup";
-import { UserMenu } from "./UserMenu";
-import { DevMenu } from "./DevMenu";
 import { PanelInput } from "./PanelInput";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
@@ -63,7 +61,7 @@ export function PanelContent({ className }: PanelContentProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { actionsInQueueCount, walk, isWalking, setConfig, config, runtime } =
     useRuntime();
-  const { mutate, isPending } = useWalk({
+  const { mutate, isPending, start, isLooping } = useWalk({
     url,
   });
   function handleClickOutside() {
@@ -192,7 +190,7 @@ export function PanelContent({ className }: PanelContentProps) {
         });
         return;
       }
-      mutate();
+      start();
     } else {
       pushToast({
         type: "info",
@@ -234,7 +232,10 @@ export function PanelContent({ className }: PanelContentProps) {
             size="icon"
             className={cn(
               "rounded-full",
-              isPending && "bg-accent text-foreground animate-pulse",
+              (isPending || isLooping) &&
+                !isWalking &&
+                "bg-gray-200 text-black",
+              isLooping && "animate-pulse",
               isWalking && "bg-red-500 text-white",
             )}
             onClick={handleSubmit}
