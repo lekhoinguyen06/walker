@@ -1,4 +1,36 @@
 ---
-title: 'Setup'
-description: 'Devtools, MCP, skills.'
+title: "Setup"
+description: "Walker CLI and agent skills."
 ---
+
+### Walker CLI
+
+You can use the CLI to run a local development Walker Server.
+
+#### Installation
+
+```shellscript
+npm i -g walker-cli
+```
+
+#### Usage
+
+You can use the terminal UI to perform any operation:
+
+```shellscript
+npm run walker-cli
+```
+
+Store LLM API key:
+
+```shellscript
+npm run walker-cli config openrouter <YOUR_API_KEY>
+```
+
+Note: we only support OpenRouter for now, more to come!
+
+Start local development server:
+
+```shellscript
+npm run walker-cli local
+```
