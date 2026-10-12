@@ -156,7 +156,7 @@ export function PanelContent({ className }: PanelContentProps) {
             size="icon"
             className={cn(
               "rounded-full",
-              isPending && "bg-accent text-black",
+              isPending && "bg-accent text-foreground animate-pulse",
               isWalking && "bg-red-500 text-white",
             )}
             onClick={handleSubmit}
