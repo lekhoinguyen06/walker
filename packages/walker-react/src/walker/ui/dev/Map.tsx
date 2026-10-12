@@ -165,14 +165,14 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col">
+      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col rounded-none">
         <DialogHeader>
           <DialogTitle className="font-brand">Map</DialogTitle>
           <DialogDescription>
             <span className="text-xs">View your app's current landscape.</span>
           </DialogDescription>
         </DialogHeader>
-        <div className="flex w-full h-[60vh] border rounded-[12px]">
+        <div className="flex w-full h-full border rounded-none">
           <div
             className={cn(
               "w-full p-3 overflow-scroll scrollbar-none",
