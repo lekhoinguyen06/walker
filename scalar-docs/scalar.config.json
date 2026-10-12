@@ -1,0 +1,60 @@
+{
+  "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
+  "scalar": "2.0.0",
+  "info": {
+    "title": "Walker"
+  },
+  "siteConfig": {
+    "logo": {
+      "lightMode": "assets/logo-light.svg",
+      "darkMode": "assets/logo-dark.svg"
+    }
+  },
+  "navigation": {
+    "header": [
+      {
+        "type": "link",
+        "title": "Documentation",
+        "to": "/introduction",
+        "align": "start"
+      },
+      {
+        "type": "link",
+        "title": "API Reference",
+        "to": "/api-reference",
+        "align": "start"
+      },
+      {
+        "type": "link",
+        "title": "Support",
+        "to": "https://scalar.com",
+        "style": "button",
+        "newTab": true,
+        "align": "end"
+      }
+    ],
+    "routes": {
+      "/": {
+        "type": "group",
+        "title": "Documentation",
+        "children": {
+          "/introduction": {
+            "type": "page",
+            "title": "Getting Started",
+            "filepath": "docs/introduction.md"
+          },
+          "/components": {
+            "type": "page",
+            "title": "Components",
+            "filepath": "docs/components.md"
+          }
+        }
+      },
+      "/api-reference": {
+        "type": "openapi",
+        "title": "API Reference",
+        "url": "https://registry.scalar.com/@scalar/apis/galaxy?format=json"
+      }
+    }
+  }
+}
