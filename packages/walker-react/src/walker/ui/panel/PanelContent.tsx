@@ -7,7 +7,11 @@ import {
 } from "@/walker/hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { useMemo, useRef, type RefObject } from "react";
-import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
+import {
+  useHotkey,
+  useHotkeySequence,
+  useKeyHold,
+} from "@tanstack/react-hotkeys";
 import { cn } from "cn";
 import { PanelPopup } from "./PanelPopup";
 import { UserMenu } from "./UserMenu";
@@ -19,6 +23,7 @@ import { PanelSuggest } from "./PanelSuggest";
 import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
 import { PanelMenu } from "./PanelMenu";
+import { togglePanelPosition } from "./Panel";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -41,11 +46,23 @@ type PanelContentProps = {
 };
 
 export function PanelContent({ className }: PanelContentProps) {
-  const { isHidden, setIsHidden, url, style, tab, setTab } = usePanel();
+  const {
+    isHidden,
+    setIsHidden,
+    url,
+    style,
+    tab,
+    setTab,
+    modal,
+    setModal,
+    position,
+    setPosition,
+  } = usePanel();
 
   const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
-  const { actionsInQueueCount, runtime, walk, isWalking } = useRuntime();
+  const { actionsInQueueCount, walk, isWalking, setConfig, config, runtime } =
+    useRuntime();
   const { mutate, isPending } = useWalk({
     url,
   });
@@ -55,14 +72,25 @@ export function PanelContent({ className }: PanelContentProps) {
 
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
-  useHotkey("Control+P", () => {
-    setIsHidden(!isHidden);
+  useHotkey("W", () => {
+    isHidden ? setIsHidden(false) : setIsHidden(true);
   });
 
   useHotkey(
-    "Control+W",
+    "Enter",
     () => {
       handleSubmit();
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "Space",
+    () => {
+      const inputElement = document.getElementById("walk-input");
+      inputElement?.focus();
     },
     {
       enabled: !isHidden,
@@ -73,6 +101,79 @@ export function PanelContent({ className }: PanelContentProps) {
     "Tab",
     () => {
       tab ? setTab(null) : setTab("default");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "L",
+    () => {
+      setConfig({ ...config, loop: !config.loop });
+      pushToast({
+        type: "info",
+        message: !config.loop
+          ? "Switched to loop mode."
+          : "Switched to step mode.",
+      });
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "M",
+    () => {
+      modal == "map" ? setModal(null) : setModal("map");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "C",
+    () => {
+      modal == "chat" ? setModal(null) : setModal("chat");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "H",
+    () => {
+      modal == "history" ? setModal(null) : setModal("history");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "P",
+    () => {
+      if (position) {
+        setPosition(togglePanelPosition(position));
+      }
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "Control+H",
+    () => {
+      runtime.clear();
+      pushToast({
+        type: "success",
+        message: "Cleared walk history.",
+        duration: 1,
+      });
     },
     {
       enabled: !isHidden,
