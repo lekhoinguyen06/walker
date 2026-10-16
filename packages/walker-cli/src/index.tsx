@@ -2,7 +2,7 @@
 
 import { createCliRenderer } from "@opentui/core";
 import { createRoot } from "@opentui/react";
-import App from "./App";
+import App from "./components/App";
 import program from "./program";
 
 program.parse(process.argv);

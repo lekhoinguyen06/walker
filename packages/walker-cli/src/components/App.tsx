@@ -3,7 +3,7 @@ import Home from "./Home";
 import Local from "./Local";
 import Config from "./Config";
 import { secrets } from "bun";
-import { isTab, useTabStore } from "./store";
+import { isTab, useTabStore } from "../stores/tab.store";
 
 function App() {
   const tab = useTabStore((state) => state.tab);

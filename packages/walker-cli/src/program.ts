@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { setTab } from "./store";
+import { setTab } from "./stores/tab.store";
 
 const program = new Command();
 

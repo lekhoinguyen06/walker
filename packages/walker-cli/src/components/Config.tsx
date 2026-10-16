@@ -1,7 +1,7 @@
 import { secrets } from "bun";
 import { useCallback, useEffect, useState } from "react";
-import { mask } from "./utils";
-import { pushLog } from "./store";
+import { mask } from "../utils";
+import { pushLog } from "../stores/log.store";
 
 function Config() {
   const [provider, setProvider] = useState<"openrouter">("openrouter");
