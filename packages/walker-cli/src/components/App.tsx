@@ -3,11 +3,38 @@ import Home from "./Home";
 import Local from "./Local";
 import Config from "./Config";
 import { secrets } from "bun";
-import { isTab, useTabStore } from "../stores/tab.store";
+import { setTab, TABS, useTabStore } from "../stores/tab.store";
+import { type FocusTree } from "../stores/focus.store";
+import { useFocus } from "../hooks/useFocus";
+import { pushLog, useLogStore } from "../stores/log.store";
+
+const focusTree: FocusTree = {
+  id: "navigation",
+  children: [
+    {
+      id: "home-tab-button",
+      onClick: () => {
+        setTab("home");
+      },
+    },
+    {
+      id: "local-tab-button",
+      onClick: () => {
+        setTab("local");
+      },
+    },
+    {
+      id: "config-tab-button",
+      onClick: () => {
+        setTab("config");
+      },
+    },
+  ],
+};
 
 function App() {
   const tab = useTabStore((state) => state.tab);
-  const setTab = useTabStore((state) => state.setTab);
+  const { focusedId } = useFocus(focusTree);
 
   useEffect(() => {
     const load = async () => {
@@ -33,43 +60,30 @@ function App() {
       {tab === "local" && <Local />}
       {tab === "config" && <Config />}
       <box
+        focused={focusedId === "navigation"}
         style={{
           width: "100%",
           flexShrink: 0,
+          flexDirection: "row",
+          backgroundColor: focusedId === "navigation" ? "808080" : undefined,
         }}
       >
-        <tab-select
-          focused
-          onSelect={(_index: number, option: { value?: string } | null) => {
-            setTab(isTab(option?.value));
-          }}
-          showDescription={false}
-          style={{
-            width: "100%",
-            flexDirection: "column",
-            selectedTextColor: "000000",
-            selectedDescriptionColor: "FFFFFF",
-            focusedBackgroundColor: "000000",
-            selectedBackgroundColor: "FFFFFF",
-          }}
-          options={[
-            {
-              name: "Login",
-              description: "Authenticate with remote Walker Server",
-              value: "login",
-            },
-            {
-              name: "Local",
-              description: "Start local Walker Server",
-              value: "local",
-            },
-            {
-              name: "Config",
-              description: "Configure Walker CLI settings",
-              value: "config",
-            },
-          ]}
-        ></tab-select>
+        {TABS.map((name) => {
+          return (
+            <box
+              focused={focusedId === name + "-tab-button"}
+              key={name}
+              style={{
+                minWidth: 10,
+                paddingX: 1,
+                backgroundColor:
+                  focusedId === name + "-tab-button" ? "808080" : undefined,
+              }}
+            >
+              <text>{name}</text>
+            </box>
+          );
+        })}
       </box>
     </box>
   );

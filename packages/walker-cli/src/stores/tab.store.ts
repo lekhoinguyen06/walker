@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const TABS = ["home", "local", "config"] as const;
+export const TABS = ["home", "local", "config"] as const;
 
 type TabType = (typeof TABS)[number];
 
