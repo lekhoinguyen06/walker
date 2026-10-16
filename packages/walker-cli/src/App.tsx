@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Home from "./Home";
 import Local from "./Local";
 import Config from "./Config";
 import { secrets } from "bun";
+import { isTab, useTabStore } from "./store";
 
 function App() {
-  const [tab, setTab] = useState<string | null>(null);
+  const tab = useTabStore((state) => state.tab);
+  const setTab = useTabStore((state) => state.setTab);
 
   useEffect(() => {
     const load = async () => {
@@ -17,6 +19,7 @@ function App() {
     };
     load();
   }, []);
+
   return (
     <box
       style={{
@@ -26,7 +29,7 @@ function App() {
         justifyContent: "flex-end",
       }}
     >
-      {tab === null && <Home />}
+      {tab === "home" && <Home />}
       {tab === "local" && <Local />}
       {tab === "config" && <Config />}
       <box
@@ -38,7 +41,7 @@ function App() {
         <tab-select
           focused
           onSelect={(_index: number, option: { value?: string } | null) => {
-            setTab(option?.value || null);
+            setTab(isTab(option?.value));
           }}
           showDescription={false}
           style={{
