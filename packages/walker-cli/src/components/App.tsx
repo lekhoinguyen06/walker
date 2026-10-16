@@ -6,31 +6,62 @@ import { secrets } from "bun";
 import { setTab, TABS, useTabStore } from "../stores/tab.store";
 import { type FocusTree } from "../stores/focus.store";
 import { useFocus } from "../hooks/useFocus";
-import { pushLog, useLogStore } from "../stores/log.store";
+
+const focusIds = {
+  navigation: {
+    value: "navigation",
+    children: {
+      homeTabButton: {
+        value: "home-tab-button",
+      },
+      localTabButton: {
+        value: "local-tab-button",
+      },
+      configTabButton: {
+        value: "config-tab-button",
+      },
+    },
+  },
+} as const;
 
 const focusTree: FocusTree = {
-  id: "navigation",
+  id: focusIds.navigation.value,
   children: [
     {
-      id: "home-tab-button",
+      id: focusIds.navigation.children.homeTabButton.value,
       onClick: () => {
         setTab("home");
       },
     },
     {
-      id: "local-tab-button",
+      id: focusIds.navigation.children.localTabButton.value,
       onClick: () => {
         setTab("local");
       },
     },
     {
-      id: "config-tab-button",
+      id: focusIds.navigation.children.configTabButton.value,
       onClick: () => {
         setTab("config");
       },
     },
   ],
 };
+
+function getFoucusStyle({
+  focusedId,
+  id,
+  selected,
+}: {
+  focusedId: string | null;
+  id: string;
+  selected?: boolean;
+}) {
+  if (selected) {
+    return { backgroundColor: "606060" };
+  }
+  return focusedId === id ? { backgroundColor: "202020" } : {};
+}
 
 function App() {
   const tab = useTabStore((state) => state.tab);
@@ -65,22 +96,25 @@ function App() {
           width: "100%",
           flexShrink: 0,
           flexDirection: "row",
-          backgroundColor: focusedId === "navigation" ? "808080" : undefined,
+          ...getFoucusStyle({ focusedId, id: "navigation" }),
         }}
       >
-        {TABS.map((name) => {
+        {TABS.map(({ value, label }) => {
           return (
             <box
-              focused={focusedId === name + "-tab-button"}
-              key={name}
+              focused={focusedId === value + "-tab-button"}
+              key={value}
               style={{
                 minWidth: 10,
                 paddingX: 1,
-                backgroundColor:
-                  focusedId === name + "-tab-button" ? "808080" : undefined,
+                ...getFoucusStyle({
+                  focusedId,
+                  id: value + "-tab-button",
+                  selected: tab === value,
+                }),
               }}
             >
-              <text>{name}</text>
+              <text>{label}</text>
             </box>
           );
         })}

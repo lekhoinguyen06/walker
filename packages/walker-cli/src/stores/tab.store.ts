@@ -1,8 +1,17 @@
 import { create } from "zustand";
 
-export const TABS = ["home", "local", "config"] as const;
+type TabOption = {
+  value: string;
+  label: string;
+};
 
-type TabType = (typeof TABS)[number];
+export const TABS: TabOption[] = [
+  { value: "home", label: "Home" },
+  { value: "local", label: "Local" },
+  { value: "config", label: "Config" },
+] as const;
+
+type TabType = (typeof TABS)[number]["value"];
 
 type TabStoreType = {
   tab: TabType;
@@ -15,7 +24,7 @@ export const useTabStore = create<TabStoreType>((set) => ({
 }));
 
 export function isTab(tab?: string): TabType {
-  return TABS.includes(tab as TabType) ? (tab as TabType) : "home";
+  return TABS.some((t) => t.value === tab) ? (tab as TabType) : "home";
 }
 
 export function setTab(tab?: TabType) {
