@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { pushLog } from "./store";
 import { logger } from "hono/logger";
 import { walker } from "walker-server";
 import { cors } from "hono/cors";
+import { pushLog } from "./stores/log.store";
 
 const app = new Hono();
 

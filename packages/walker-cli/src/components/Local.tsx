@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { pushLog, useLogStore } from "./store";
-import app from "./server";
+import { pushLog, useLogStore } from "../stores/log.store";
+import app from "../server";
 
 function Local() {
   const server = useRef<ReturnType<typeof Bun.serve>>(null);
