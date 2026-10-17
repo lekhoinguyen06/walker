@@ -1,15 +1,15 @@
-import { useEffect } from "react";
 import Home from "./Home";
 import Local from "./Local";
-import Config from "./Config";
-import { secrets } from "bun";
-import { setTab, TABS, useTabStore } from "../stores/tab.store";
+import Config, { configTree } from "./Config";
+import { setTab, TABS, useTabStore, type TabType } from "../stores/tab.store";
 import { type FocusTree } from "../stores/focus.store";
-import { useFocus } from "../hooks/useFocus";
 import { Select } from "./ui/Select";
 import { FocusProvider } from "./ui/Focus";
+import { useFocusId } from "../hooks/useFocus";
+import { getFoucusStyle } from "../style";
+import { useMemo } from "react";
 
-const focusIds = {
+const navFocusIds = {
   navigation: {
     value: "navigation",
     children: {
@@ -26,23 +26,23 @@ const focusIds = {
   },
 } as const;
 
-export const focusTree: FocusTree = {
-  id: focusIds.navigation.value,
+export const navTree: FocusTree = {
+  id: navFocusIds.navigation.value,
   children: [
     {
-      id: focusIds.navigation.children.homeTabButton.value,
+      id: navFocusIds.navigation.children.homeTabButton.value,
       onClick: () => {
         setTab("home");
       },
     },
     {
-      id: focusIds.navigation.children.localTabButton.value,
+      id: navFocusIds.navigation.children.localTabButton.value,
       onClick: () => {
         setTab("local");
       },
     },
     {
-      id: focusIds.navigation.children.configTabButton.value,
+      id: navFocusIds.navigation.children.configTabButton.value,
       onClick: () => {
         setTab("config");
       },
@@ -50,72 +50,58 @@ export const focusTree: FocusTree = {
   ],
 };
 
-export function getFoucusStyle({
-  focusedId,
-  id,
-  selected,
-}: {
-  focusedId: string | null;
-  id: string;
-  selected?: boolean;
-}) {
-  if (selected) {
-    return { backgroundColor: "606060" };
-  }
-  return focusedId === id ? { backgroundColor: "202020" } : {};
+function router(tab: TabType): FocusTree {
+  return {
+    id: "walker",
+    children: [
+      navTree,
+      ...(tab === "config" && configTree ? [configTree] : []),
+    ],
+  };
 }
 
 function App() {
   const tab = useTabStore((state) => state.tab);
-
+  const tree = useMemo(() => router(tab), [tab]);
+  const { focusedId } = useFocusId();
   return (
-    <FocusProvider tree={focusTree}>
+    <FocusProvider tree={tree}>
       <box
         style={{
           width: "100%",
           height: "100%",
           flexDirection: "column",
           justifyContent: "flex-end",
+          ...getFoucusStyle({ focusedId, id: "walker" }),
         }}
       >
-        {tab === "home" && <Home />}
-        {tab === "local" && <Local />}
-        {tab === "config" && <Config />}
-        {/*<box
-          focused={focusedId === "navigation"}
+        <scrollbox>
+          {tab === "home" && <Home />}
+          {tab === "local" && <Local />}
+          {tab === "config" && <Config />}
+        </scrollbox>
+        <box
           style={{
+            height: 1,
             width: "100%",
-            flexShrink: 0,
-            flexDirection: "row",
-            ...getFoucusStyle({ focusedId, id: "navigation" }),
+            backgroundColor: "FFFFFF",
+            paddingX: 1,
           }}
         >
-          {TABS.map(({ value, label }) => {
-            return (
-              <box
-                focused={focusedId === value + "-tab-button"}
-                key={value}
-                style={{
-                  minWidth: 10,
-                  paddingX: 1,
-                  ...getFoucusStyle({
-                    focusedId,
-                    id: value + "-tab-button",
-                    selected: tab === value,
-                  }),
-                }}
-              >
-                <text>{label}</text>
-              </box>
-            );
-          })}
-        </box>*/}
+          <text
+            style={{
+              fg: "000000",
+            }}
+          >
+            Focused: {focusedId}
+          </text>
+        </box>
         <Select
           id="navigation"
           options={TABS}
           selected={tab}
           onSelectChange={(value) => {
-            setTab(value);
+            // setTab(value);
           }}
         />
       </box>

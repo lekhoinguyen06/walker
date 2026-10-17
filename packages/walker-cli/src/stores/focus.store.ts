@@ -26,7 +26,16 @@ type FocusStore = {
 
 export const useFocusStore = create<FocusStore>((set, get) => ({
   tree: null,
-  setTree: (tree: FocusTree) => set({ tree, currentFocusId: tree.id }),
+  setTree: (tree) => {
+    const { currentFocusId } = get();
+    const stillExists = currentFocusId && findNodeById(tree, currentFocusId);
+    set({
+      tree,
+      currentFocusId: stillExists
+        ? currentFocusId
+        : (tree.children?.[0]?.id ?? tree.id),
+    });
+  },
   currentFocusId: null,
   setFocusId: (id: string) => {
     const tree = get().tree;
