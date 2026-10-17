@@ -4,9 +4,10 @@ import { createWalker } from "walker-server";
 import { cors } from "hono/cors";
 import { pushLog } from "./stores/log.store";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { getProviderENV } from "./stores/config.store";
 
 const or = createOpenRouter({
-  apiKey: process.env.OPEN_ROUTER_API_KEY,
+  apiKey: getProviderENV("openrouter"),
 });
 
 const ai = or.chat("openai/gpt-oss-120b", {
