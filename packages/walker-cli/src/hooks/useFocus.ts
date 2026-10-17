@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { pushLog } from "../stores/log.store";
 
 export function useFocus(focusTree: FocusTree) {
-  const focusedId = useFocusStore((state) => state.currentFocusId);
   const setFocusTree = useFocusStore((state) => state.setTree);
   const changeFocus = useFocusStore((state) => state.changeFocus);
   const clickCurrentFocus = useFocusStore((state) => state.clickCurrentFocus);
@@ -46,7 +45,10 @@ export function useFocus(focusTree: FocusTree) {
   useEffect(() => {
     setFocusTree(focusTree);
   }, [focusTree]);
+}
 
+export function useFocusId() {
+  const focusedId = useFocusStore((state) => state.currentFocusId);
   return {
     focusedId,
   };
