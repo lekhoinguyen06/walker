@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { mask } from "../utils";
 import { useConfig } from "../hooks/useConfig";
 import {
   getProviderConfig,
+  getSecret,
   setSelectedProvider,
   supportedProviders,
   type SupportedProviderType,
@@ -29,17 +30,21 @@ export const configTree: FocusTree = {
 };
 
 function ProviderForm({ provider }: { provider: SupportedProviderType }) {
-  const {
-    getProviderConfig,
-    setApiKey,
-    setModelId,
-    selectedProvider,
-    setSelectedProvider,
-  } = useConfig();
+  const { setApiKey, setProviderConfig, selectedProvider } = useConfig();
   const providerConfig = getProviderConfig(provider);
   const { focusedId } = useFocusId();
   const [keyInput, setKeyInput] = useState("");
   const [idInput, setIdInput] = useState("");
+  const [apiValue, setApiValue] = useState<string | null>(null);
+
+  const fetchApiKey = async () => {
+    const key = await getSecret(`${provider}-api-key`);
+    setApiValue(mask(key));
+  };
+
+  useEffect(() => {
+    fetchApiKey();
+  }, [provider]);
   return (
     <box
       focused={focusedId === providerConfig.value}
@@ -61,7 +66,7 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
           paddingX: 1,
         }}
       >
-        <text>API Key: {mask(providerConfig.apiKey)}</text>
+        <text>API Key: {apiValue}</text>
         <input
           focused={focusedId === `${provider}-api-key-input`}
           placeholder={`Enter ${providerConfig.label} API key`}
@@ -73,9 +78,10 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
               // focusedTextColor: "000000",
             }
           }
-          onSubmit={() => {
+          onSubmit={async () => {
             setKeyInput("");
-            setApiKey(provider, keyInput);
+            await setApiKey(provider, keyInput);
+            await fetchApiKey();
           }}
         />
         <text>Model ID: {providerConfig.modelId}</text>
@@ -92,7 +98,12 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
           }
           onSubmit={() => {
             setIdInput("");
-            setModelId(provider, idInput);
+            setProviderConfig({
+              provider,
+              config: {
+                modelId: idInput,
+              },
+            });
           }}
         />
         <box
