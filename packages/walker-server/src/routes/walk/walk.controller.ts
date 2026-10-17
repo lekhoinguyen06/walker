@@ -4,30 +4,21 @@ import {
   type WalkRequestBodyDTO,
   type WalkResponseBodyDTO,
 } from "./walk.dto";
-import { generateText, Output } from "ai";
+import { generateText, Output, type LanguageModel } from "ai";
 import { ActionSchema } from "walker-core";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
 import z from "zod";
 import { walkerSkill } from "walker-skill";
 
-const or = createOpenRouter({
-  apiKey: process.env.OPEN_ROUTER_API_KEY,
-});
-
-const ai = or.chat("openai/gpt-oss-120b", {
-  provider: {
-    only: ["groq"],
-  },
-});
-
 type WalkRequestType = {
   content: WalkRequestBodyDTO | undefined;
+  ai: LanguageModel;
 } & IRequestStrict;
 
 export const walkController = async (req: WalkRequestType) => {
   try {
     const body = WalkRequestBodySchema.safeParse(req.content);
+    const ai = req.ai;
 
     if (!body.success) {
       throw new StatusError(400, {
@@ -97,7 +88,7 @@ export const walkController = async (req: WalkRequestType) => {
               ? flowAgent.usage.outputTokens + walkAgent.usage.outputTokens
               : undefined,
         },
-        requestBody: body.data,
+        // requestBody: body.data,
       },
     } satisfies WalkResponseBodyDTO;
   } catch (error) {
