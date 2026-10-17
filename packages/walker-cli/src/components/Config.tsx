@@ -3,6 +3,7 @@ import { mask } from "../utils";
 import { useConfig } from "../hooks/useConfig";
 import {
   getProviderConfig,
+  setSelectedProvider,
   supportedProviders,
   type SupportedProviderType,
 } from "../stores/config.store";
@@ -14,12 +15,27 @@ export const configTree: FocusTree = {
   id: "config",
   children: supportedProviders.map((p) => ({
     id: getProviderConfig(p).value,
-    children: [{ id: `${p}-api-key-input` }, { id: `${p}-model-id-input` }],
+    children: [
+      { id: `${p}-api-key-input` },
+      { id: `${p}-model-id-input` },
+      {
+        id: `${p}-select-provider-button`,
+        onClick: () => {
+          setSelectedProvider(p);
+        },
+      },
+    ],
   })),
 };
 
 function ProviderForm({ provider }: { provider: SupportedProviderType }) {
-  const { getProviderConfig, setApiKey, setModelId } = useConfig();
+  const {
+    getProviderConfig,
+    setApiKey,
+    setModelId,
+    selectedProvider,
+    setSelectedProvider,
+  } = useConfig();
   const providerConfig = getProviderConfig(provider);
   const { focusedId } = useFocusId();
   const [keyInput, setKeyInput] = useState("");
@@ -79,6 +95,23 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
             setModelId(provider, idInput);
           }}
         />
+        <box
+          focused={focusedId === `${provider}-select-provider-button`}
+          style={{
+            padding: 1,
+            ...getFoucusStyle({
+              focusedId,
+              id: `${provider}-select-provider-button`,
+              selected: selectedProvider === provider,
+            }),
+          }}
+        >
+          <text
+          // style={{ fg: selectedProvider === provider ? "000000" : undefined }}
+          >
+            {selectedProvider === provider ? "Selected" : "Switch"}
+          </text>
+        </box>
       </box>
     </box>
   );
