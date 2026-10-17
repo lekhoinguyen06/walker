@@ -5,7 +5,6 @@ type ProviderConfigType = {
   value: string;
   apiKey: string | null;
   modelId: string | null;
-  selected: boolean;
 };
 
 export const supportedProviders = [
@@ -49,26 +48,25 @@ const baseProviderConfig: Record<SupportedProviderType, ProviderConfigType> = {
     value: "openrouter",
     apiKey: null,
     modelId: null,
-    selected: false,
   },
   bedrock: {
     label: "AWS Bedrock",
     value: "bedrock",
     apiKey: null,
     modelId: null,
-    selected: false,
   },
   "openai-compatible": {
     label: "OpenAI Compatible",
     value: "openai-compatible",
     apiKey: null,
     modelId: null,
-    selected: false,
   },
 };
 
 type ConfigStoreType = {
   providers: Record<SupportedProviderType, ProviderConfigType>;
+  selectedProvider: SupportedProviderType | null;
+  setSelectedProvider: (provider: SupportedProviderType) => void;
   getProviderConfig: (provider: SupportedProviderType) => ProviderConfigType;
   fetchApiKeys: () => Promise<void>;
   setApiKey: (provider: SupportedProviderType, apiKey: string) => Promise<void>;
@@ -80,12 +78,32 @@ type ConfigStoreType = {
 
 export const useConfigStore = create<ConfigStoreType>((set, get) => ({
   providers: baseProviderConfig,
+  selectedProvider: null,
+
+  setSelectedProvider: async (provider) => {
+    await Bun.secrets.set({
+      service: "walker-cli",
+      name: "selected-provider",
+      value: provider,
+    });
+
+    set({ selectedProvider: provider });
+  },
 
   getProviderConfig: (provider) => {
     return get().providers[provider];
   },
 
   fetchApiKeys: async () => {
+    const selectedProvider = await Bun.secrets.get({
+      service: "walker-cli",
+      name: "selected-provider",
+    });
+
+    if (selectedProvider) {
+      set({ selectedProvider: selectedProvider as SupportedProviderType });
+    }
+
     const apiKeys = await Promise.all(
       supportedProviders.map(async (provider) => {
         const key = await Bun.secrets.get({
@@ -163,4 +181,8 @@ export function getProviderConfig(
 ): ProviderConfigType {
   const config = useConfigStore.getState().getProviderConfig(provider);
   return config;
+}
+
+export function setSelectedProvider(provider: SupportedProviderType): void {
+  useConfigStore.getState().setSelectedProvider(provider);
 }
