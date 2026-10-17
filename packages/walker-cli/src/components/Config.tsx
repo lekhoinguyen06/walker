@@ -72,12 +72,9 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
           placeholder={`Enter ${providerConfig.label} API key`}
           value={keyInput}
           onInput={(v) => setKeyInput(v)}
-          style={
-            {
-              // focusedBackgroundColor: "FFFFFF",
-              // focusedTextColor: "000000",
-            }
-          }
+          style={{
+            focusedBackgroundColor: "202020",
+          }}
           onSubmit={async () => {
             setKeyInput("");
             await setApiKey(provider, keyInput);
@@ -90,12 +87,9 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
           placeholder={`Enter model ID`}
           value={idInput}
           onInput={(v) => setIdInput(v)}
-          style={
-            {
-              // focusedBackgroundColor: "FFFFFF",
-              // focusedTextColor: "000000",
-            }
-          }
+          style={{
+            focusedBackgroundColor: "202020",
+          }}
           onSubmit={() => {
             setIdInput("");
             setProviderConfig({

@@ -21,6 +21,7 @@ export function Select({
     <box
       focused={focusedId === id}
       style={{
+        height: orientation === "horizontal" ? 1 : options.length,
         width: "100%",
         flexDirection: orientation === "horizontal" ? "row" : "column",
         ...getFoucusStyle({ focusedId, id }),
