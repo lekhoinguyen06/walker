@@ -67,17 +67,6 @@ function App() {
   const tab = useTabStore((state) => state.tab);
   const { focusedId } = useFocus(focusTree);
 
-  useEffect(() => {
-    const load = async () => {
-      const key = await secrets.get({
-        service: "walker-cli",
-        name: "openrouter-api-key",
-      });
-      if (key) process.env.OPENROUTER_API_KEY = key;
-    };
-    load();
-  }, []);
-
   return (
     <box
       style={{
