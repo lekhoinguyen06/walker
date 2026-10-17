@@ -1,8 +1,21 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import { walker } from "walker-server";
+import { createWalker } from "walker-server";
 import { cors } from "hono/cors";
 import { pushLog } from "./stores/log.store";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+
+const or = createOpenRouter({
+  apiKey: process.env.OPEN_ROUTER_API_KEY,
+});
+
+const ai = or.chat("openai/gpt-oss-120b", {
+  provider: {
+    only: ["groq"],
+  },
+});
+
+const walker = createWalker({ ai });
 
 const app = new Hono();
 
