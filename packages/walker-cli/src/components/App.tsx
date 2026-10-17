@@ -6,25 +6,27 @@ import { secrets } from "bun";
 import { setTab, TABS, useTabStore } from "../stores/tab.store";
 import { type FocusTree } from "../stores/focus.store";
 import { useFocus } from "../hooks/useFocus";
+import { Select } from "./ui/Select";
+import { FocusProvider } from "./ui/Focus";
 
 const focusIds = {
   navigation: {
     value: "navigation",
     children: {
       homeTabButton: {
-        value: "home-tab-button",
+        value: "navigation-home-select-button",
       },
       localTabButton: {
-        value: "local-tab-button",
+        value: "navigation-local-select-button",
       },
       configTabButton: {
-        value: "config-tab-button",
+        value: "navigation-config-select-button",
       },
     },
   },
 } as const;
 
-const focusTree: FocusTree = {
+export const focusTree: FocusTree = {
   id: focusIds.navigation.value,
   children: [
     {
@@ -48,7 +50,7 @@ const focusTree: FocusTree = {
   ],
 };
 
-function getFoucusStyle({
+export function getFoucusStyle({
   focusedId,
   id,
   selected,
@@ -65,50 +67,59 @@ function getFoucusStyle({
 
 function App() {
   const tab = useTabStore((state) => state.tab);
-  const { focusedId } = useFocus(focusTree);
 
   return (
-    <box
-      style={{
-        width: "100%",
-        height: "100%",
-        flexDirection: "column",
-        justifyContent: "flex-end",
-      }}
-    >
-      {tab === "home" && <Home />}
-      {tab === "local" && <Local />}
-      {tab === "config" && <Config />}
+    <FocusProvider tree={focusTree}>
       <box
-        focused={focusedId === "navigation"}
         style={{
           width: "100%",
-          flexShrink: 0,
-          flexDirection: "row",
-          ...getFoucusStyle({ focusedId, id: "navigation" }),
+          height: "100%",
+          flexDirection: "column",
+          justifyContent: "flex-end",
         }}
       >
-        {TABS.map(({ value, label }) => {
-          return (
-            <box
-              focused={focusedId === value + "-tab-button"}
-              key={value}
-              style={{
-                minWidth: 10,
-                paddingX: 1,
-                ...getFoucusStyle({
-                  focusedId,
-                  id: value + "-tab-button",
-                  selected: tab === value,
-                }),
-              }}
-            >
-              <text>{label}</text>
-            </box>
-          );
-        })}
+        {tab === "home" && <Home />}
+        {tab === "local" && <Local />}
+        {tab === "config" && <Config />}
+        {/*<box
+          focused={focusedId === "navigation"}
+          style={{
+            width: "100%",
+            flexShrink: 0,
+            flexDirection: "row",
+            ...getFoucusStyle({ focusedId, id: "navigation" }),
+          }}
+        >
+          {TABS.map(({ value, label }) => {
+            return (
+              <box
+                focused={focusedId === value + "-tab-button"}
+                key={value}
+                style={{
+                  minWidth: 10,
+                  paddingX: 1,
+                  ...getFoucusStyle({
+                    focusedId,
+                    id: value + "-tab-button",
+                    selected: tab === value,
+                  }),
+                }}
+              >
+                <text>{label}</text>
+              </box>
+            );
+          })}
+        </box>*/}
+        <Select
+          id="navigation"
+          options={TABS}
+          selected={tab}
+          onSelectChange={(value) => {
+            setTab(value);
+          }}
+        />
       </box>
-    </box>
+    </FocusProvider>
   );
 }
 
