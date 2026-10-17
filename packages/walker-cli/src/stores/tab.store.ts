@@ -5,13 +5,13 @@ type TabOption = {
   label: string;
 };
 
-export const TABS: TabOption[] = [
+export const TABS = [
   { value: "home", label: "Home" },
   { value: "local", label: "Local" },
   { value: "config", label: "Config" },
-] as const;
+] as const satisfies TabOption[];
 
-type TabType = (typeof TABS)[number]["value"];
+export type TabType = (typeof TABS)[number]["value"];
 
 type TabStoreType = {
   tab: TabType;

@@ -7,10 +7,10 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { getProviderENV } from "./stores/config.store";
 
 const or = createOpenRouter({
-  apiKey: getProviderENV("openrouter"),
+  apiKey: getProviderENV("openrouter").apiKey,
 });
 
-const ai = or.chat("openai/gpt-oss-120b", {
+const ai = or.chat(getProviderENV("openrouter").modelId, {
   provider: {
     only: ["groq"],
   },

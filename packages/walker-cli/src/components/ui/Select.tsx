@@ -1,5 +1,5 @@
-import { useFocus, useFocusId } from "../../hooks/useFocus";
-import { focusTree, getFoucusStyle } from "../App";
+import { useFocusId } from "../../hooks/useFocus";
+import { getFoucusStyle } from "../../style";
 
 type SelectProps = {
   id: string;

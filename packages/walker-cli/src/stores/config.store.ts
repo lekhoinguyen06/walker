@@ -8,23 +8,40 @@ type ProviderConfigType = {
   selected: boolean;
 };
 
-const supportedProviders = [
+export const supportedProviders = [
   "openrouter",
   "bedrock",
   "openai-compatible",
 ] as const;
 
-export function getProviderENV(
-  provider: SupportedProviderType,
-): string | undefined {
-  return process.env[`${provider.toUpperCase()}_API_KEY`];
+export function getProviderENV(provider: SupportedProviderType): {
+  apiKey?: string;
+  modelId?: string;
+} {
+  return {
+    apiKey: process.env[`${provider.toUpperCase()}_API_KEY`],
+    modelId: process.env[`${provider.toUpperCase()}_MODEL_ID`],
+  };
 }
 
-function setProviderENV(provider: SupportedProviderType, apiKey: string): void {
-  process.env[`${provider.toUpperCase()}_API_KEY`] = apiKey;
+function setProviderENV({
+  provider,
+  modelId,
+  apiKey,
+}: {
+  provider: SupportedProviderType;
+  apiKey?: string;
+  modelId?: string;
+}): void {
+  if (apiKey)
+    process.env[`${provider.toUpperCase().replace(/-/g, "_")}_API_KEY`] =
+      apiKey;
+  if (modelId)
+    process.env[`${provider.toUpperCase().replace(/-/g, "_")}_MODEL_ID`] =
+      modelId;
 }
 
-type SupportedProviderType = (typeof supportedProviders)[number];
+export type SupportedProviderType = (typeof supportedProviders)[number];
 
 const baseProviderConfig: Record<SupportedProviderType, ProviderConfigType> = {
   openrouter: {
@@ -52,13 +69,21 @@ const baseProviderConfig: Record<SupportedProviderType, ProviderConfigType> = {
 
 type ConfigStoreType = {
   providers: Record<SupportedProviderType, ProviderConfigType>;
+  getProviderConfig: (provider: SupportedProviderType) => ProviderConfigType;
   fetchApiKeys: () => Promise<void>;
   setApiKey: (provider: SupportedProviderType, apiKey: string) => Promise<void>;
-  setModelId: (provider: SupportedProviderType, modelId: string) => void;
+  setModelId: (
+    provider: SupportedProviderType,
+    modelId: string,
+  ) => Promise<void>;
 };
 
-export const useConfigStore = create<ConfigStoreType>((set) => ({
+export const useConfigStore = create<ConfigStoreType>((set, get) => ({
   providers: baseProviderConfig,
+
+  getProviderConfig: (provider) => {
+    return get().providers[provider];
+  },
 
   fetchApiKeys: async () => {
     const apiKeys = await Promise.all(
@@ -67,16 +92,23 @@ export const useConfigStore = create<ConfigStoreType>((set) => ({
           service: "walker-cli",
           name: `${provider}-api-key`,
         });
-        return { provider, apiKey: key };
+
+        const id = await Bun.secrets.get({
+          service: "walker-cli",
+          name: `${provider}-model-id`,
+        });
+
+        return { provider, apiKey: key, modelId: id };
       }),
     );
 
     set((state) => {
       const updatedProviders = { ...state.providers };
-      apiKeys.forEach(({ provider, apiKey }) => {
+      apiKeys.forEach(({ provider, apiKey, modelId }) => {
         updatedProviders[provider] = {
           ...updatedProviders[provider],
           apiKey,
+          modelId,
         };
       });
       return { providers: updatedProviders };
@@ -90,7 +122,10 @@ export const useConfigStore = create<ConfigStoreType>((set) => ({
       value: apiKey,
     });
 
-    setProviderENV(provider, apiKey);
+    setProviderENV({
+      provider,
+      apiKey,
+    });
 
     set((state) => ({
       providers: {
@@ -103,7 +138,14 @@ export const useConfigStore = create<ConfigStoreType>((set) => ({
     }));
   },
 
-  setModelId: (provider, modelId) =>
+  setModelId: async (provider, modelId) => {
+    await Bun.secrets.set({
+      service: "walker-cli",
+      name: `${provider}-model-id`,
+      value: modelId,
+    });
+
+    setProviderENV({ provider, modelId });
     set((state) => ({
       providers: {
         ...state.providers,
@@ -112,5 +154,13 @@ export const useConfigStore = create<ConfigStoreType>((set) => ({
           modelId,
         },
       },
-    })),
+    }));
+  },
 }));
+
+export function getProviderConfig(
+  provider: SupportedProviderType,
+): ProviderConfigType {
+  const config = useConfigStore.getState().getProviderConfig(provider);
+  return config;
+}

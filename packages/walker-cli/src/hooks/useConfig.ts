@@ -3,6 +3,7 @@ import { useConfigStore } from "../stores/config.store";
 
 export function useConfig() {
   const providers = useConfigStore((state) => state.providers);
+  const getProviderConfig = useConfigStore((state) => state.getProviderConfig);
   const fetchApiKeys = useConfigStore((state) => state.fetchApiKeys);
   const setApiKey = useConfigStore((state) => state.setApiKey);
   const setModelId = useConfigStore((state) => state.setModelId);
@@ -13,6 +14,7 @@ export function useConfig() {
 
   return {
     providers,
+    getProviderConfig,
     setApiKey,
     setModelId,
   };

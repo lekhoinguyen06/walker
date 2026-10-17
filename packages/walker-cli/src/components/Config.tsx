@@ -1,35 +1,56 @@
 import { useState } from "react";
 import { mask } from "../utils";
 import { useConfig } from "../hooks/useConfig";
+import {
+  getProviderConfig,
+  supportedProviders,
+  type SupportedProviderType,
+} from "../stores/config.store";
+import { useFocusId } from "../hooks/useFocus";
+import type { FocusTree } from "../stores/focus.store";
+import { getFoucusStyle } from "../style";
 
-function Config() {
-  const [focus, setFocus] = useState<"openrouter">("openrouter");
-  const { providers, setApiKey, setModelId } = useConfig();
-  const [ORinput, setORinput] = useState("");
+export const configTree: FocusTree = {
+  id: "config",
+  children: supportedProviders.map((p) => ({
+    id: getProviderConfig(p).value,
+    children: [{ id: `${p}-api-key-input` }, { id: `${p}-model-id-input` }],
+  })),
+};
 
+function ProviderForm({ provider }: { provider: SupportedProviderType }) {
+  const { getProviderConfig, setApiKey, setModelId } = useConfig();
+  const providerConfig = getProviderConfig(provider);
+  const { focusedId } = useFocusId();
+  const [keyInput, setKeyInput] = useState("");
+  const [idInput, setIdInput] = useState("");
   return (
     <box
+      focused={focusedId === providerConfig.value}
       style={{
         width: "100%",
-        flexGrow: 1,
         flexDirection: "column",
+        gap: 1,
+        padding: 1,
+        ...getFoucusStyle({
+          focusedId,
+          id: providerConfig.value,
+        }),
       }}
     >
+      <text>{providerConfig.label}</text>
       <box
         style={{
-          width: "100%",
-          flexDirection: "column",
           gap: 1,
-          padding: 1,
+          paddingX: 1,
         }}
       >
-        <text>OpenRouter</text>
-        <text>Value: {mask(providers.openrouter.apiKey)}</text>
+        <text>API Key: {mask(providerConfig.apiKey)}</text>
         <input
-          focused={focus === "openrouter"}
-          placeholder="Enter OpenRouter API key"
-          value={ORinput}
-          onInput={(v) => setORinput(v)}
+          focused={focusedId === `${provider}-api-key-input`}
+          placeholder={`Enter ${providerConfig.label} API key`}
+          value={keyInput}
+          onInput={(v) => setKeyInput(v)}
           style={
             {
               // focusedBackgroundColor: "FFFFFF",
@@ -37,11 +58,48 @@ function Config() {
             }
           }
           onSubmit={() => {
-            setORinput("");
-            setApiKey("openrouter", ORinput);
+            setKeyInput("");
+            setApiKey(provider, keyInput);
+          }}
+        />
+        <text>Model ID: {providerConfig.modelId}</text>
+        <input
+          focused={focusedId === `${provider}-model-id-input`}
+          placeholder={`Enter model ID`}
+          value={idInput}
+          onInput={(v) => setIdInput(v)}
+          style={
+            {
+              // focusedBackgroundColor: "FFFFFF",
+              // focusedTextColor: "000000",
+            }
+          }
+          onSubmit={() => {
+            setIdInput("");
+            setModelId(provider, idInput);
           }}
         />
       </box>
+    </box>
+  );
+}
+
+function Config() {
+  const { focusedId } = useFocusId();
+  return (
+    <box
+      style={{
+        flexGrow: 1,
+        flexDirection: "column",
+        ...getFoucusStyle({
+          focusedId,
+          id: "config",
+        }),
+      }}
+    >
+      <ProviderForm provider="openrouter" />
+      <ProviderForm provider="bedrock" />
+      <ProviderForm provider="openai-compatible" />
     </box>
   );
 }
