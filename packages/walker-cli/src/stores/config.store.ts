@@ -191,11 +191,11 @@ export async function setSecret(name: string, value: string): Promise<void> {
   });
 }
 
-export function getProviderConfig(provider: SupportedProviderType) {
+export function getProviderConfig<P extends SupportedProviderType>(
+  provider: P,
+): ProvidersType[P] {
   const state = useConfigStore.getState();
-  if (!state.providers) {
-    throw new Error("Providers not initialized");
-  }
+
   return state.providers[provider];
 }
 
