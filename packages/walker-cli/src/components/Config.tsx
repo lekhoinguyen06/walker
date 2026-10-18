@@ -11,6 +11,7 @@ import {
 import { useFocusId } from "../hooks/useFocus";
 import type { FocusTree } from "../stores/focus.store";
 import { getFoucusStyle } from "../style";
+import { InputField } from "./ui/InputField";
 
 export const configTree: FocusTree = {
   id: "config",
@@ -33,13 +34,15 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
   const { setApiKey, setProviderConfig, selectedProvider } = useConfig();
   const providerConfig = getProviderConfig(provider);
   const { focusedId } = useFocusId();
-  const [keyInput, setKeyInput] = useState("");
-  const [idInput, setIdInput] = useState("");
-  const [apiValue, setApiValue] = useState<string | null>(null);
+  const [apiKeyInputValue, setApiKeyInputValue] = useState("");
+  const [modelIdInput, setModelIdInput] = useState("");
+  const [currentApiKeyValue, setCurrentApiKeyValue] = useState<string | null>(
+    null,
+  );
 
   const fetchApiKey = async () => {
     const key = await getSecret(`${provider}-api-key`);
-    setApiValue(mask(key));
+    setCurrentApiKeyValue(mask(key));
   };
 
   useEffect(() => {
@@ -66,7 +69,46 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
           paddingX: 1,
         }}
       >
-        <text>API Key: {apiValue}</text>
+        <InputField
+          focusedId={focusedId}
+          id={`${provider}-api-key-input`}
+          title="API Key"
+          placeholder={`Enter ${providerConfig.label} API key`}
+          value={apiKeyInputValue}
+          currentValue={currentApiKeyValue || ""}
+          onInput={(v) => setApiKeyInputValue(v)}
+          onSubmit={async () => {
+            if (apiKeyInputValue.length === 0) {
+              return;
+            }
+            setApiKeyInputValue("");
+            await setApiKey(provider, apiKeyInputValue);
+            await fetchApiKey();
+          }}
+          sensitive
+        />
+        <InputField
+          focusedId={focusedId}
+          id={`${provider}-model-id-input`}
+          title="Model ID"
+          placeholder={`Enter model ID`}
+          value={modelIdInput}
+          currentValue={providerConfig.modelId || ""}
+          onInput={(v) => setModelIdInput(v)}
+          onSubmit={() => {
+            if (modelIdInput.length === 0) {
+              return;
+            }
+            setModelIdInput("");
+            setProviderConfig({
+              provider,
+              config: {
+                modelId: modelIdInput,
+              },
+            });
+          }}
+        />
+        {/*<text>API Key: {apiValue}</text>
         <input
           focused={focusedId === `${provider}-api-key-input`}
           placeholder={`Enter ${providerConfig.label} API key`}
@@ -99,7 +141,7 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
               },
             });
           }}
-        />
+        />*/}
         <box
           focused={focusedId === `${provider}-select-provider-button`}
           style={{
