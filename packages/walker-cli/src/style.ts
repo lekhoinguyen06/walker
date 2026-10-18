@@ -7,8 +7,7 @@ export function getFoucusStyle({
   id: string;
   selected?: boolean;
 }) {
-  if (selected) {
-    return { backgroundColor: "606060" };
-  }
-  return focusedId === id ? { backgroundColor: "202020" } : {};
+  return focusedId === id
+    ? { backgroundColor: "606060" }
+    : { backgroundColor: selected ? "A0A0A0" : undefined };
 }
