@@ -9,7 +9,7 @@ import { useFocusId } from "../hooks/useFocus";
 import { getFoucusStyle } from "../style";
 import { useMemo } from "react";
 
-const navFocusIds = {
+export const navFocusIds = {
   navigation: {
     value: "navigation",
     children: {
