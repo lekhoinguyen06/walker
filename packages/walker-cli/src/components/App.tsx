@@ -4,10 +4,11 @@ import Config, { configTree } from "./Config";
 import { setTab, TABS, useTabStore, type TabType } from "../stores/tab.store";
 import { type FocusTree } from "../stores/focus.store";
 import { Select } from "./ui/Select";
-import { FocusProvider } from "./ui/Focus";
+import { FocusProvider } from "./providers/FocusProvider";
 import { useFocusId } from "../hooks/useFocus";
 import { getFoucusStyle } from "../style";
 import { useMemo } from "react";
+import { ConfigProvider } from "./providers/ConfigProvider";
 
 export const navFocusIds = {
   navigation: {
@@ -66,45 +67,40 @@ function App() {
   const { focusedId } = useFocusId();
   return (
     <FocusProvider tree={tree}>
-      <box
-        style={{
-          width: "100%",
-          height: "100%",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          ...getFoucusStyle({ focusedId, id: "walker" }),
-        }}
-      >
-        <scrollbox>
-          {tab === "home" && <Home />}
-          {tab === "local" && <Local />}
-          {tab === "config" && <Config />}
-        </scrollbox>
+      <ConfigProvider>
         <box
           style={{
-            height: 1,
             width: "100%",
-            backgroundColor: "FFFFFF",
-            paddingX: 1,
+            height: "100%",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            ...getFoucusStyle({ focusedId, id: "walker" }),
           }}
         >
-          <text
+          <scrollbox>
+            {tab === "home" && <Home />}
+            {tab === "local" && <Local />}
+            {tab === "config" && <Config />}
+          </scrollbox>
+          <box
             style={{
-              fg: "000000",
+              height: 1,
+              width: "100%",
+              backgroundColor: "FFFFFF",
+              paddingX: 1,
             }}
           >
-            Focused: {focusedId}
-          </text>
+            <text
+              style={{
+                fg: "000000",
+              }}
+            >
+              Focused: {focusedId}
+            </text>
+          </box>
+          <Select id="navigation" options={TABS} selected={tab} />
         </box>
-        <Select
-          id="navigation"
-          options={TABS}
-          selected={tab}
-          onSelectChange={(value) => {
-            // setTab(value);
-          }}
-        />
-      </box>
+      </ConfigProvider>
     </FocusProvider>
   );
 }

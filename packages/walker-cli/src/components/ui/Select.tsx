@@ -5,7 +5,7 @@ type SelectProps = {
   id: string;
   options: { label: string; value: string }[];
   selected: string;
-  onSelectChange: (value: string) => void;
+  onSelectChange?: (value: string) => void;
   orientation?: "horizontal" | "vertical";
 };
 

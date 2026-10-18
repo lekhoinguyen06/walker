@@ -199,8 +199,8 @@ export function getProviderConfig(provider: SupportedProviderType) {
   return state.providers[provider];
 }
 
-export function getSelectedProvider() {
-  return useConfigStore.getState().getSelectedProvider();
+export async function getSelectedProvider() {
+  return await useConfigStore.getState().getSelectedProvider();
 }
 
 export function setSelectedProvider(provider: SupportedProviderType) {
