@@ -10,37 +10,58 @@ import { getProviderConfig, getSelectedProvider } from "./stores/config.store";
 
 async function getAI() {
   const selectedProvider = await getSelectedProvider();
+
   if (!selectedProvider.providerKey || !selectedProvider.apiKey) {
     throw new Error("No provider selected or API key missing");
-  }
-  const provider = getProviderConfig(selectedProvider.providerKey);
-  if (!provider.modelId) {
-    return null;
   }
 
   switch (selectedProvider.providerKey) {
     case "openrouter": {
+      const provider = getProviderConfig("openrouter");
+
+      if (!provider.modelId) {
+        throw new Error(
+          "Missing required coonfiguration for OpenRouter provider",
+        );
+      }
+
       const or = createOpenRouter({
         apiKey: selectedProvider.apiKey,
       });
 
-      const ai = or.chat(provider.modelId, {
+      return or.chat(provider.modelId, {
         provider: {
           sort: "latency",
         },
       });
-      return ai;
     }
+
     case "bedrock": {
+      const provider = getProviderConfig("bedrock");
+
+      if (!provider.modelId) {
+        throw new Error(
+          "Missing required coonfiguration for AWS Bedrock provider",
+        );
+      }
+
       const br = createAmazonBedrock({
         apiKey: selectedProvider.apiKey,
-        region: provider.region || "us-east-1",
+        region: provider.region ?? "us-east-1",
       });
 
-      const ai = br(provider.modelId);
-      return ai;
+      return br(provider.modelId);
     }
+
     case "openai-compatible": {
+      const provider = getProviderConfig("openai-compatible");
+
+      if (!provider.modelId || !provider.providerName || !provider.baseURL) {
+        throw new Error(
+          "Missing required coonfiguration for OpenAI-compatible provider",
+        );
+      }
+
       const oai = createOpenAICompatible({
         name: provider.providerName,
         apiKey: selectedProvider.apiKey,
@@ -48,8 +69,7 @@ async function getAI() {
         includeUsage: true,
       });
 
-      const ai = oai(provider.modelId);
-      return ai;
+      return oai(provider.modelId);
     }
   }
 }
