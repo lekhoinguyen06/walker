@@ -1,35 +1,35 @@
 import { Command } from "commander";
 import { setTab } from "./stores/tab.store";
-import { renderer } from "./index";
 
-const program = new Command();
+export function initializeProgram() {
+  const program = new Command();
 
-program
-  .command("home", { isDefault: true })
-  .description("Starting Walker CLI at home tab")
-  .action(() => {
-    setTab("home");
-  });
+  program
+    .name("walker")
+    .description("Walker CLI - A command line interface for Walker")
+    .version("0.1.0")
+    .option("-d, --debug", "Run Walker CLI with console logs panel");
 
-program
-  .command("local")
-  .description("Start a local Walker Server")
-  .action(() => {
-    setTab("local");
-  });
+  program
+    .command("home", { isDefault: true })
+    .description("Starting Walker CLI at home tab")
+    .action(() => {
+      setTab("home");
+    });
 
-program
-  .command("config")
-  .description("Open the configuration settings for Walker CLI")
-  .action(() => {
-    setTab("config");
-  });
+  program
+    .command("local")
+    .description("Start a local Walker Server")
+    .action(() => {
+      setTab("local");
+    });
 
-program
-  .command("debug")
-  .description("Run Walker CLI with console logs panel")
-  .action(() => {
-    renderer.console.show();
-  });
+  program
+    .command("config")
+    .description("Open the configuration settings for Walker CLI")
+    .action(() => {
+      setTab("config");
+    });
 
-export default program;
+  return program;
+}
