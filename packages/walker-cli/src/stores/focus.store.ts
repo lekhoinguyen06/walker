@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { addToast } from "./toast.store";
 
 export type FocusNode = {
   id: string;
@@ -53,7 +54,20 @@ export const useFocusStore = create<FocusStore>((set, get) => ({
 
     const currentNode = findNodeById(tree, currentFocusId);
     if (currentNode && currentNode.onClick) {
-      currentNode.onClick();
+      try {
+        currentNode.onClick();
+      } catch (error) {
+        addToast({
+          type: "error",
+          message: (error as Error).message,
+          duration: 2000,
+        });
+        console.error(
+          "Error executing onClick for node:",
+          currentNode.id,
+          error,
+        );
+      }
     }
   },
 

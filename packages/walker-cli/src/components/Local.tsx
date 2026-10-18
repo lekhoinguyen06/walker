@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { pushLog, useLogStore } from "../stores/log.store";
 import { startServer } from "../server";
+import { addToast } from "../stores/toast.store";
 
 function Local() {
   const server = useRef<ReturnType<typeof Bun.serve>>(null);
@@ -9,10 +10,21 @@ function Local() {
 
   const handleStartServer = async () => {
     if (!serverRunning) {
-      const app = await startServer();
-      server.current = Bun.serve({ fetch: app.fetch, port: 6767 });
-      setServerRunning(true);
-      pushLog(`Walker Server is running on port ${server.current?.port}`);
+      try {
+        const app = await startServer();
+        server.current = Bun.serve({ fetch: app.fetch, port: 6767 });
+        setServerRunning(true);
+        pushLog(`Walker Server is running on port ${server.current?.port}`);
+      } catch (error) {
+        addToast({
+          type: "error",
+          message: (error as Error).message,
+          duration: 2000,
+        });
+        pushLog(`Error starting server: ${error}`);
+        console.error("Error starting server:", error);
+        return;
+      }
     }
   };
 
