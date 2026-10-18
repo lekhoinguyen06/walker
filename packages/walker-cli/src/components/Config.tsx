@@ -12,6 +12,9 @@ import { useFocusId } from "../hooks/useFocus";
 import type { FocusTree } from "../stores/focus.store";
 import { getFoucusStyle } from "../style";
 import { InputField } from "./ui/InputField";
+import { OpenRouterProviderForm } from "./forms/OpenRouterProviderForm";
+import { BedrockProviderForm } from "./forms/BedrockProviderForm";
+import { OpenAICompatibleProviderForm } from "./forms/OpenAICompatibleProviderForm";
 
 export const configTree: FocusTree = {
   id: "config",
@@ -144,9 +147,9 @@ function Config() {
         }),
       }}
     >
-      <ProviderForm provider="openrouter" />
-      <ProviderForm provider="bedrock" />
-      <ProviderForm provider="openai-compatible" />
+      <OpenRouterProviderForm />
+      <BedrockProviderForm />
+      <OpenAICompatibleProviderForm />
     </box>
   );
 }
