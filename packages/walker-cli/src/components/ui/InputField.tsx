@@ -32,7 +32,8 @@ export function InputField({
         value={value}
         onInput={(v) => onInput(v)}
         style={{
-          focusedBackgroundColor: "202020",
+          placeholderColor: "A0A0A0",
+          focusedBackgroundColor: "606060",
         }}
         onSubmit={onSubmit}
       />
