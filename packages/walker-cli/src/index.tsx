@@ -3,7 +3,10 @@
 import { ConsolePosition, createCliRenderer } from "@opentui/core";
 import { createRoot } from "@opentui/react";
 import App from "./components/App";
-import program from "./program";
+import { initializeProgram } from "./program";
+
+const program = initializeProgram();
+program.parse(process.argv);
 
 export const renderer = await createCliRenderer({
   consoleOptions: {
@@ -12,6 +15,8 @@ export const renderer = await createCliRenderer({
   },
 });
 
-program.parse(process.argv);
+if (program.opts().debug) {
+  renderer.console.show();
+}
 
 createRoot(renderer).render(<App />);
