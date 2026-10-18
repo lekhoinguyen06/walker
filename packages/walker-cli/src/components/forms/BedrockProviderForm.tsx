@@ -33,7 +33,7 @@ export function BedrockProviderForm() {
   const provider: SupportedProviderType = "bedrock";
   const { setApiKey, setProviderConfig, selectedProvider } = useConfig();
   const providerConfig = getProviderConfig(provider);
-  const { focusedId } = useFocusId();
+  const { focusedId, setFocusId, clickCurrentFocus } = useFocusId();
   const [apiKeyInputValue, setApiKeyInputValue] = useState("");
   const [modelIdInputValue, setModelIdInputValue] = useState("");
   const [regionInputValue, setRegionInputValue] = useState("");
@@ -140,6 +140,10 @@ export function BedrockProviderForm() {
               id: `${provider}-select-provider-button`,
               selected: selectedProvider === provider,
             }),
+          }}
+          onMouseDown={(e) => {
+            setFocusId(`${provider}-select-provider-button`);
+            clickCurrentFocus();
           }}
         >
           <text

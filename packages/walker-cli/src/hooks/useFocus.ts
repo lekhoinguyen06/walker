@@ -64,7 +64,12 @@ export function useFocus(focusTree: FocusTree) {
 
 export function useFocusId() {
   const focusedId = useFocusStore((state) => state.currentFocusId);
+  const setFocusId = useFocusStore((state) => state.setFocusId);
+  const clickCurrentFocus = useFocusStore((state) => state.clickCurrentFocus);
+
   return {
     focusedId,
+    setFocusId,
+    clickCurrentFocus,
   };
 }
