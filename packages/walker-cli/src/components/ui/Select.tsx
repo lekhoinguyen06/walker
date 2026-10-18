@@ -16,7 +16,7 @@ export function Select({
   onSelectChange,
   orientation = "horizontal",
 }: SelectProps) {
-  const { focusedId } = useFocusId();
+  const { focusedId, setFocusId, clickCurrentFocus } = useFocusId();
   return (
     <box
       focused={focusedId === id}
@@ -40,6 +40,10 @@ export function Select({
                 id: id + "-" + value + "-select-button",
                 selected: selected === value,
               }),
+            }}
+            onMouseDown={(e) => {
+              setFocusId(id + "-" + value + "-select-button");
+              clickCurrentFocus();
             }}
           >
             <text>{label}</text>

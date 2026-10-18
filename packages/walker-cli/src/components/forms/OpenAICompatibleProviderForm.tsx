@@ -33,7 +33,8 @@ export const openaicompatibleTree: FocusTree = {
 export function OpenAICompatibleProviderForm() {
   const { setApiKey, setProviderConfig, selectedProvider } = useConfig();
   const providerConfig = getProviderConfig(provider);
-  const { focusedId } = useFocusId();
+  const { focusedId, setFocusId, clickCurrentFocus } = useFocusId();
+
   const [apiKeyInputValue, setApiKeyInputValue] = useState("");
   const [modelIdInputValue, setModelIdInputValue] = useState("");
   const [providerNameInputValue, setProviderNameInputValue] = useState("");
@@ -162,6 +163,10 @@ export function OpenAICompatibleProviderForm() {
               id: `${provider}-select-provider-button`,
               selected: selectedProvider === provider,
             }),
+          }}
+          onMouseDown={(e) => {
+            setFocusId(`${provider}-select-provider-button`);
+            clickCurrentFocus();
           }}
         >
           <text
