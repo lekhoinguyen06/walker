@@ -54,8 +54,8 @@ function router(tab: TabType): FocusTree {
   return {
     id: "walker",
     children: [
-      navTree,
       ...(tab === "config" && configTree ? [configTree] : []),
+      navTree,
     ],
   };
 }
