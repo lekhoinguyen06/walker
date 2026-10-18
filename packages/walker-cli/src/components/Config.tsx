@@ -108,44 +108,11 @@ function ProviderForm({ provider }: { provider: SupportedProviderType }) {
             });
           }}
         />
-        {/*<text>API Key: {apiValue}</text>
-        <input
-          focused={focusedId === `${provider}-api-key-input`}
-          placeholder={`Enter ${providerConfig.label} API key`}
-          value={keyInput}
-          onInput={(v) => setKeyInput(v)}
-          style={{
-            focusedBackgroundColor: "202020",
-          }}
-          onSubmit={async () => {
-            setKeyInput("");
-            await setApiKey(provider, keyInput);
-            await fetchApiKey();
-          }}
-        />
-        <text>Model ID: {providerConfig.modelId}</text>
-        <input
-          focused={focusedId === `${provider}-model-id-input`}
-          placeholder={`Enter model ID`}
-          value={idInput}
-          onInput={(v) => setIdInput(v)}
-          style={{
-            focusedBackgroundColor: "202020",
-          }}
-          onSubmit={() => {
-            setIdInput("");
-            setProviderConfig({
-              provider,
-              config: {
-                modelId: idInput,
-              },
-            });
-          }}
-        />*/}
         <box
           focused={focusedId === `${provider}-select-provider-button`}
           style={{
             padding: 1,
+
             ...getFoucusStyle({
               focusedId,
               id: `${provider}-select-provider-button`,
