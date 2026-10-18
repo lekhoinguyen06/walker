@@ -9,6 +9,7 @@ import { useFocusId } from "../hooks/useFocus";
 import { getFoucusStyle } from "../style";
 import { useMemo } from "react";
 import { ConfigProvider } from "./providers/ConfigProvider";
+import { useToastStore } from "../stores/toast.store";
 
 export const navFocusIds = {
   navigation: {
@@ -65,6 +66,7 @@ function App() {
   const tab = useTabStore((state) => state.tab);
   const tree = useMemo(() => router(tab), [tab]);
   const { focusedId } = useFocusId();
+  const toast = useToastStore((state) => state.toast);
   return (
     <FocusProvider tree={tree}>
       <ConfigProvider>
@@ -82,22 +84,40 @@ function App() {
             {tab === "local" && <Local />}
             {tab === "config" && <Config />}
           </scrollbox>
-          <box
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "FFFFFF",
-              paddingX: 1,
-            }}
-          >
-            <text
+          {toast ? (
+            <box
               style={{
-                fg: "000000",
+                height: 1,
+                width: "100%",
+                backgroundColor:
+                  toast.type === "success"
+                    ? "#b9f8cf"
+                    : toast.type === "error"
+                      ? "#fb2c36"
+                      : "#bedbff",
+                paddingX: 1,
               }}
             >
-              Focused: {focusedId}
-            </text>
-          </box>
+              <text>{toast.message}</text>
+            </box>
+          ) : (
+            <box
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "FFFFFF",
+                paddingX: 1,
+              }}
+            >
+              <text
+                style={{
+                  fg: "000000",
+                }}
+              >
+                Focused: {focusedId}
+              </text>
+            </box>
+          )}
           <Select id="navigation" options={TABS} selected={tab} />
         </box>
       </ConfigProvider>

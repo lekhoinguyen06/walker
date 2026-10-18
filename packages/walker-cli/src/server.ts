@@ -7,6 +7,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { getProviderConfig, getSelectedProvider } from "./stores/config.store";
+import { addToast } from "./stores/toast.store";
 
 async function getAI() {
   const selectedProvider = await getSelectedProvider();
@@ -20,6 +21,12 @@ async function getAI() {
       const provider = getProviderConfig("openrouter");
 
       if (!provider.modelId) {
+        // addToast({
+        //   type: "error",
+        //   message: "Missing required coonfiguration for OpenRouter provider",
+        //   duration: 5000,
+        // });
+        // return;
         throw new Error(
           "Missing required coonfiguration for OpenRouter provider",
         );
@@ -40,6 +47,12 @@ async function getAI() {
       const provider = getProviderConfig("bedrock");
 
       if (!provider.modelId) {
+        // addToast({
+        //   type: "error",
+        //   message: "Missing required coonfiguration for AWS Bedrock provider",
+        //   duration: 5000,
+        // });
+        // return;
         throw new Error(
           "Missing required coonfiguration for AWS Bedrock provider",
         );
@@ -57,6 +70,13 @@ async function getAI() {
       const provider = getProviderConfig("openai-compatible");
 
       if (!provider.modelId || !provider.providerName || !provider.baseURL) {
+        // addToast({
+        //   type: "error",
+        //   message:
+        //     "Missing required coonfiguration for OpenAI-compatible provider",
+        //   duration: 5000,
+        // });
+        // return;
         throw new Error(
           "Missing required coonfiguration for OpenAI-compatible provider",
         );
