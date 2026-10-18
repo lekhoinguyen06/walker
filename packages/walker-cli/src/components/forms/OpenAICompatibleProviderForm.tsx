@@ -4,14 +4,33 @@ import { useFocusId } from "../../hooks/useFocus";
 import {
   getProviderConfig,
   getSecret,
+  setSelectedProvider,
   type SupportedProviderType,
 } from "../../stores/config.store";
 import { mask } from "../../utils";
 import { getFoucusStyle } from "../../style";
 import { InputField } from "../ui/InputField";
+import type { FocusTree } from "../../stores/focus.store";
+
+const provider: SupportedProviderType = "openai-compatible";
+
+export const openaicompatibleTree: FocusTree = {
+  id: provider,
+  children: [
+    { id: `${provider}-api-key-input` },
+    { id: `${provider}-model-id-input` },
+    { id: `${provider}-provider-name-input` },
+    { id: `${provider}-base-url-input` },
+    {
+      id: `${provider}-select-provider-button`,
+      onClick: () => {
+        setSelectedProvider(provider);
+      },
+    },
+  ],
+};
 
 export function OpenAICompatibleProviderForm() {
-  const provider: SupportedProviderType = "openai-compatible";
   const { setApiKey, setProviderConfig, selectedProvider } = useConfig();
   const providerConfig = getProviderConfig(provider);
   const { focusedId } = useFocusId();

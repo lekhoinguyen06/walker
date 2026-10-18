@@ -4,11 +4,30 @@ import { useFocusId } from "../../hooks/useFocus";
 import {
   getProviderConfig,
   getSecret,
+  setSelectedProvider,
   type SupportedProviderType,
 } from "../../stores/config.store";
 import { mask } from "../../utils";
 import { getFoucusStyle } from "../../style";
 import { InputField } from "../ui/InputField";
+import type { FocusTree } from "../../stores/focus.store";
+
+const provider: SupportedProviderType = "bedrock";
+
+export const bedrockTree: FocusTree = {
+  id: provider,
+  children: [
+    { id: `${provider}-api-key-input` },
+    { id: `${provider}-model-id-input` },
+    { id: `${provider}-region-input` },
+    {
+      id: `${provider}-select-provider-button`,
+      onClick: () => {
+        setSelectedProvider(provider);
+      },
+    },
+  ],
+};
 
 export function BedrockProviderForm() {
   const provider: SupportedProviderType = "bedrock";
