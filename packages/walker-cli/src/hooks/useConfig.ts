@@ -10,12 +10,6 @@ export function useConfig() {
   const setApiKey = useConfigStore((state) => state.setApiKey);
   const setProviderConfig = useConfigStore((state) => state.setProviderConfig);
 
-  const hydrate = useConfigStore((state) => state.hydrate);
-
-  useEffect(() => {
-    hydrate();
-  }, [hydrate]);
-
   return {
     providers,
     selectedProvider,

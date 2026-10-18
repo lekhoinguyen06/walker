@@ -11,7 +11,7 @@ import { getProviderConfig, getSelectedProvider } from "./stores/config.store";
 async function getAI() {
   const selectedProvider = await getSelectedProvider();
   if (!selectedProvider.providerKey || !selectedProvider.apiKey) {
-    return null;
+    throw new Error("No provider selected or API key missing");
   }
   const provider = getProviderConfig(selectedProvider.providerKey);
   if (!provider.modelId) {
@@ -26,7 +26,7 @@ async function getAI() {
 
       const ai = or.chat(provider.modelId, {
         provider: {
-          only: ["groq"],
+          sort: "latency",
         },
       });
       return ai;
@@ -54,43 +54,45 @@ async function getAI() {
   }
 }
 
-const ai = await getAI();
-
-const walker = ai ? createWalker({ ai }) : null;
-
-const app = new Hono();
-
 export const customLogger = (message: string, ...rest: string[]) => {
   pushLog(message);
 };
 
-const combine = (...parts: RegExp[]) =>
-  new RegExp(parts.map((p) => p.source).join(""));
+export async function startServer() {
+  const ai = await getAI();
 
-const localhostOrigin = combine(
-  // starts with 'http:' or 'https:'
-  /^https?:\/\//,
-  // host is 'localhost' or '127.0.0.1'
-  /(localhost|127\.0\.0\.1)/,
-  // any port (any number)
-  /(:\d+)?/,
-  // nothing may follow
-  /$/,
-);
+  const walker = createWalker({ ai: ai ?? undefined });
 
-const isLocalOrigin = (origin: string) => localhostOrigin.test(origin);
+  const app = new Hono();
 
-app.use(
-  "/api/walker/*",
-  cors({ origin: (origin) => (isLocalOrigin(origin) ? origin : null) }),
-);
+  const combine = (...parts: RegExp[]) =>
+    new RegExp(parts.map((p) => p.source).join(""));
 
-app.use(logger(customLogger));
+  const localhostOrigin = combine(
+    // starts with 'http:' or 'https:'
+    /^https?:\/\//,
+    // host is 'localhost' or '127.0.0.1'
+    /(localhost|127\.0\.0\.1)/,
+    // any port (any number)
+    /(:\d+)?/,
+    // nothing may follow
+    /$/,
+  );
 
-app.all("/api/walker/*", (c) => walker && walker.handler(c.req.raw));
+  const isLocalOrigin = (origin: string) => localhostOrigin.test(origin);
 
-app.get("/", (c) => {
-  return c.text("Hello Bun!");
-});
+  app.use(
+    "/api/walker/*",
+    cors({ origin: (origin) => (isLocalOrigin(origin) ? origin : null) }),
+  );
 
-export default app;
+  app.use(logger(customLogger));
+
+  app.all("/api/walker/*", (c) => walker && walker.handler(c.req.raw));
+
+  app.get("/", (c) => {
+    return c.text("Hello Bun!");
+  });
+
+  return app;
+}
