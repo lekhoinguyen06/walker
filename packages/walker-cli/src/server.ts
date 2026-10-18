@@ -33,8 +33,8 @@ async function getAI() {
     }
     case "bedrock": {
       const br = createAmazonBedrock({
-        apiKey: provider.apiKey,
-        region: "us-east-1",
+        apiKey: selectedProvider.apiKey,
+        region: provider.region || "us-east-1",
       });
 
       const ai = br(provider.modelId);
@@ -42,10 +42,10 @@ async function getAI() {
     }
     case "openai-compatible": {
       const oai = createOpenAICompatible({
-        name: "providerName",
+        name: provider.providerName,
         apiKey: selectedProvider.apiKey,
-        baseURL: "https://api.provider.com/v1",
-        includeUsage: true, // Include usage information in streaming responses
+        baseURL: provider.baseURL,
+        includeUsage: true,
       });
 
       const ai = oai(provider.modelId);
