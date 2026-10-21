@@ -4,7 +4,7 @@ export const inputActionJSON: string = JSON.stringify(
   [
     createAction({
       flow: "input",
-      targetId: "input",
+      targetId: "input-field",
       message: "Let's type in 'Hello World!'",
       body: {
         input: "Hello World!",
