@@ -5,6 +5,7 @@ export const PANEL_DIALOG_REGISTRY = {
   history: "history",
   chat: "chat",
   map: "map",
+  help: "help",
 } as const;
 
 type PanelDialogType = keyof typeof PANEL_DIALOG_REGISTRY;

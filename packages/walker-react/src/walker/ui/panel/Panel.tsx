@@ -104,8 +104,8 @@ export function Panel({
             <PanelTag />
 
             {/* Flex-col components */}
-            <PanelToast />
             <PanelDialogContainter />
+            <PanelToast />
             <PanelContent />
           </motion.div>
         </motion.div>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePanel, usePanelToast, useRuntime } from "@/walker/hooks";
 import {
+  CircleQuestionMark,
   Footprints,
   History,
   Map,
@@ -87,6 +88,14 @@ export function PanelMenu() {
         }
       >
         <History />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={() => (dialog == "help" ? closeDialog() : openDialog("help"))}
+      >
+        <CircleQuestionMark />
       </Button>
     </>
   );

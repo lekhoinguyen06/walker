@@ -180,6 +180,16 @@ export function PanelContent({ className }: PanelContentProps) {
     },
   );
 
+  useHotkey(
+    "Control+/",
+    () => {
+      dialog == "help" ? closeDialog() : openDialog("help");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
   const { pushToast } = usePanelToast();
 
   const handleSubmit = () => {

@@ -11,15 +11,9 @@ import {
   usePanelDialog,
 } from "@/walker/hooks/usePanelDialog";
 
-export type HistoryProps = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();
   const { runtime } = useRuntime();
-  const { isMobile } = useScreenSize();
   const [selectedHistory, setSelectedHistory] = useState<
     HistoryType | undefined
   >(undefined);

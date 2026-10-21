@@ -5,6 +5,7 @@ import { MapDialog } from "../dev/Map";
 import { HistoryDialog } from "../dev/History";
 import { ChatDialog } from "../dev/Chat";
 import { cn } from "@/lib/utils";
+import { PanelHelp } from "./PanelHelp";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
@@ -14,6 +15,7 @@ export function PanelDialogContainter() {
         {dialog == "map" && <MapDialog />}
         {dialog == "history" && <HistoryDialog />}
         {dialog == "chat" && <ChatDialog />}
+        {dialog == "help" && <PanelHelp />}
       </AnimatePresence>
     </div>
   );
