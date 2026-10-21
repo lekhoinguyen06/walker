@@ -13,6 +13,8 @@ import { usePanel } from "@/walker/hooks";
 import { ChatPanel } from "../dev/Chat";
 import { MapPanel } from "../dev/Map";
 import { HistoryPanel } from "../dev/History";
+import { PanelDialogProvider } from "@/walker/hooks/usePanelDialog";
+import { PanelDialogContainter } from "./PanelDialog";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);
@@ -86,36 +88,44 @@ export function Panel({
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
-    <AnimatePresence>
-      <motion.div layout ref={ref}>
-        <motion.div
-          initial={{ y: 0 }}
-          animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
-          exit={{ y: 0 }}
-          transition={{
-            duration: 0.2,
-            ease: "anticipate",
-          }}
-          className={cn(panelVariants({ position: positionState, className }))}
-        >
-          <ChatPanel
-            isOpen={modal === "chat"}
-            setIsOpen={() => setModal(null)}
-          />
-          <MapPanel isOpen={modal === "map"} setIsOpen={() => setModal(null)} />
-          <HistoryPanel
-            isOpen={modal === "history"}
-            setIsOpen={() => setModal(null)}
-          />
+    <PanelDialogProvider>
+      <AnimatePresence>
+        <motion.div layout ref={ref}>
+          <motion.div
+            initial={{ y: 0 }}
+            animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
+            exit={{ y: 0 }}
+            transition={{
+              duration: 0.2,
+              ease: "anticipate",
+            }}
+            className={cn(
+              panelVariants({ position: positionState, className }),
+            )}
+          >
+            <ChatPanel
+              isOpen={modal === "chat"}
+              setIsOpen={() => setModal(null)}
+            />
+            <MapPanel
+              isOpen={modal === "map"}
+              setIsOpen={() => setModal(null)}
+            />
+            <HistoryPanel
+              isOpen={modal === "history"}
+              setIsOpen={() => setModal(null)}
+            />
 
-          {/* Absolute componnents */}
-          <PanelTag />
+            {/* Absolute componnents */}
+            <PanelTag />
 
-          {/* Flex-col components */}
-          <PanelToast />
-          <PanelContent />
+            {/* Flex-col components */}
+            <PanelDialogContainter />
+            <PanelToast />
+            <PanelContent />
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </PanelDialogProvider>
   );
 }

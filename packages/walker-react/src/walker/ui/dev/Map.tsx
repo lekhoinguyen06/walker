@@ -13,6 +13,11 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useRuntime, useScreenSize } from "@/walker/hooks";
 import { Details } from "./Details";
+import { PanelDialog } from "../panel/PanelDialog";
+import {
+  PANEL_DIALOG_REGISTRY,
+  usePanelDialog,
+} from "@/walker/hooks/usePanelDialog";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;
@@ -197,5 +202,55 @@ export function MapPanel({ isOpen, setIsOpen }: MapProps) {
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function MapDialog() {
+  const { runtime } = useRuntime();
+  const [map, setMap] = useState<MapType>({});
+  const { selectedItem, setSelectedItem } = useSelectedItemStore();
+  const { closeDialog } = usePanelDialog();
+
+  useEffect(() => {
+    setMap(runtime.map());
+  }, [runtime]);
+  return (
+    <PanelDialog dialog={PANEL_DIALOG_REGISTRY.map}>
+      <div className="size-full p-1.5">
+        <div className="w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
+          <div className="w-full p-3">
+            <div className="font-brand">Map</div>
+            <div className="text-xs">View your app's current landscape.</div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-3 right-3"
+              onClick={closeDialog}
+            >
+              <X />
+            </Button>
+          </div>
+          <div className="flex size-full overflow-hidden">
+            <div className="relative w-full p-3 pb-24 overflow-scroll scrollbar-none">
+              {selectedItem ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-1.5 right-1.5"
+                    onClick={() => setSelectedItem(null)}
+                  >
+                    <X />
+                  </Button>
+                  <Details item={selectedItem} />
+                </>
+              ) : (
+                <MapItem map={map} />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </PanelDialog>
   );
 }
