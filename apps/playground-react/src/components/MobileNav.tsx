@@ -50,6 +50,7 @@ export function MobileNav() {
           <Link
             id="mobile-nav-button-react"
             description="This is the React logo, click it to go to the Walker Playground for React."
+            refId="mobile-nav-trigger"
           >
             <a href="https://react.walker.vstaffs.com">
               <Button
@@ -65,6 +66,7 @@ export function MobileNav() {
           <Link
             id="mobile-nav-button-vue"
             description="This is the Vue logo, click it to go to the Walker Playground for Vue."
+            refId="mobile-nav-trigger"
           >
             <a href="https://vue.walker.vstaffs.com">
               <Button
@@ -80,6 +82,7 @@ export function MobileNav() {
           <Link
             id="mobile-nav-button-svelte"
             description="This is the Svelte logo, click it to go to the Walker Playground for Svelte."
+            refId="mobile-nav-trigger"
           >
             <a href="https://svelte.walker.vstaffs.com">
               <Button
