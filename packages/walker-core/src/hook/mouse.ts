@@ -6,17 +6,12 @@ export async function mouse(props: HookPropsType): Promise<void> {
   const walker = document.getElementById(props.action.targetId);
   const targetEl = walker?.firstElementChild;
 
-  if (targetEl) {
-    const rect = targetEl.getBoundingClientRect();
-
-    const centerX = rect.x + rect.width / 2 + window.scrollX;
-    const centerY = rect.y + rect.height / 2 + window.scrollY;
-
-    setX(centerX);
-    setY(centerY);
-  } else {
+  if (!targetEl) {
     throw new Error("Item not found");
   }
 
-  return;
+  const rect = targetEl.getBoundingClientRect();
+
+  setX(rect.left + rect.width / 2);
+  setY(rect.top + rect.height / 2);
 }
