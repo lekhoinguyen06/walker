@@ -136,7 +136,7 @@ export function PanelContent({ className }: PanelContentProps) {
   useHotkey(
     "C",
     () => {
-      modal == "chat" ? setModal(null) : setModal("chat");
+      dialog == "chat" ? closeDialog() : openDialog("chat");
     },
     {
       enabled: !isHidden,

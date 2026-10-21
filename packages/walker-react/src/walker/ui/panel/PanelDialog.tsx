@@ -3,6 +3,7 @@ import * as motion from "motion/react-client";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { MapDialog } from "../dev/Map";
 import { HistoryDialog } from "../dev/History";
+import { ChatDialog } from "../dev/Chat";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
@@ -10,6 +11,7 @@ export function PanelDialogContainter() {
     <AnimatePresence>
       {dialog == "map" && <MapDialog />}
       {dialog == "history" && <HistoryDialog />}
+      {dialog == "chat" && <ChatDialog />}
     </AnimatePresence>
   );
 }

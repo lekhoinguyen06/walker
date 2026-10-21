@@ -62,11 +62,19 @@ export function PanelMenu() {
       >
         <Trash />
       </Button>
-      <Button
+      {/*<Button
         variant="ghost"
         size="icon"
         className="rounded-full"
         onClick={() => (modal == "chat" ? setModal(null) : setModal("chat"))}
+      >
+        <MessageCircle />
+      </Button>*/}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={() => (dialog == "chat" ? closeDialog() : openDialog("chat"))}
       >
         <MessageCircle />
       </Button>
