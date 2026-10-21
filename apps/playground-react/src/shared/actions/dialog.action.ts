@@ -4,14 +4,14 @@ export const dialogActionJSON = JSON.stringify(
   [
     createAction({
       flow: "click",
-      targetId: "dialog-trigger",
+      targetId: "dialog-trigger-open",
       message: "Let's see what we have here...",
       prompt: "Demo example.",
       end: false,
     }),
     createAction({
       flow: "input",
-      targetId: "name-input",
+      targetId: "name-input-field",
       body: {
         input: "Walker Jr.",
       },
@@ -21,7 +21,7 @@ export const dialogActionJSON = JSON.stringify(
     }),
     createAction({
       flow: "input",
-      targetId: "username-input",
+      targetId: "username-input-field",
       body: {
         input: "@walker",
       },
@@ -31,7 +31,7 @@ export const dialogActionJSON = JSON.stringify(
     }),
     createAction({
       flow: "click",
-      targetId: "dialog-save",
+      targetId: "dialog-submit-button",
       message: "Nice! Let's save it!",
       prompt: "Demo example.",
       end: true,
