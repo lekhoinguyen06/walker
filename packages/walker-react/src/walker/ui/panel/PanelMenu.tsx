@@ -12,12 +12,14 @@ import {
 } from "lucide-react";
 import { togglePanelPosition } from "./Panel";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
+import { useConfig } from "@/walker/hooks/useConfig";
 
 export function PanelMenu() {
   const { modal, setModal, position, setPosition } = usePanel();
   const { openDialog, closeDialog, dialog } = usePanelDialog();
   const { pushToast } = usePanelToast();
-  const { runtime, config, setConfig } = useRuntime();
+  const { runtime } = useRuntime();
+  const { config, updateConfig } = useConfig();
   return (
     <>
       <Button
@@ -25,7 +27,7 @@ export function PanelMenu() {
         size="icon"
         className={cn("rounded-full", config.loop && "bg-accent text-primary")}
         onClick={() => {
-          setConfig({ ...config, loop: !config.loop });
+          updateConfig({ ...config, loop: !config.loop });
           pushToast({
             type: "info",
             message: !config.loop

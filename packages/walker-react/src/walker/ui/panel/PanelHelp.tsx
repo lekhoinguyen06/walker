@@ -47,6 +47,10 @@ export function PanelHelp() {
               <span>Toggle step or loop mode</span>
             </div>
             <div className="flex items-center gap-3">
+              <Kbd>Control</Kbd>+<Kbd>C</Kbd>
+              <span>Stop the current looping walk</span>
+            </div>
+            <div className="flex items-center gap-3">
               <Kbd>H</Kbd>
               <span>Open history dialog</span>
             </div>

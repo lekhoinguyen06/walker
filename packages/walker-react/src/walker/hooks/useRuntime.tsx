@@ -26,6 +26,7 @@ import {
   useHistoryStore,
   useMouseStore,
 } from "@/walker/stores/adapters";
+import { useConfig } from "./useConfig";
 
 // --------------------------------- Runtime Hook ---------------------------------
 export function useRuntime() {
@@ -46,7 +47,7 @@ type RuntimeContextType = {
   actionsInQueueCount: number;
   isWalking: boolean;
   config: ContextType["config"];
-  setConfig: React.Dispatch<React.SetStateAction<ContextType["config"]>>;
+  setConfig: (config: ContextType["config"]) => void;
 };
 
 const RuntimeContext = createContext<RuntimeContextType | undefined>(undefined);
@@ -77,14 +78,19 @@ function RuntimeProviderContent({
   children: React.ReactNode;
 }) {
   const { state, setDefaultActiveId } = useScope(userConfig.app.id);
-  const [config, setconfig] = useState<ContextType["config"]>({
-    loop: false,
-    isLoading: false,
-    gap: 200,
-    verbose: false,
-    url: "",
-    ...userConfig.config,
-  });
+  // const [config, setconfig] = useState<ContextType["config"]>({
+  //   loop: false,
+  //   isLoading: false,
+  //   gap: 200,
+  //   verbose: false,
+  //   url: "",
+  //   ...userConfig.config,
+  // });
+  const { config, setConfig, updateConfig } = useConfig();
+
+  useEffect(() => {
+    updateConfig({ ...userConfig.config });
+  }, [userConfig.config]);
 
   useEffect(() => {
     setDefaultActiveId(userConfig.app.id);
@@ -150,7 +156,7 @@ function RuntimeProviderContent({
         isWalking,
         actionsInQueueCount: actions.length,
         config,
-        setConfig: setconfig,
+        setConfig,
       }}
     >
       <App {...userConfig.app}>{children}</App>

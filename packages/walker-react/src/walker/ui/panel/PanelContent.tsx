@@ -63,7 +63,7 @@ export function PanelContent({ className }: PanelContentProps) {
   const { actionsInQueueCount, walk, isWalking, setConfig, config, runtime } =
     useRuntime();
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { mutate, isPending, start, isLooping } = useWalk({
+  const { mutate, isPending, start, isLooping, stop } = useWalk({
     url,
   });
   function handleClickOutside() {
@@ -96,6 +96,12 @@ export function PanelContent({ className }: PanelContentProps) {
       enabled: !isHidden,
     },
   );
+
+  useHotkey("Control+C", () => {
+    if (isLooping) {
+      stop();
+    }
+  });
 
   useHotkey(
     "Tab",

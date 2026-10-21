@@ -6,6 +6,7 @@ import { postApiWalkerWalk } from "walker-client";
 import { createClient } from "walker-client/client";
 import { useEffect, useMemo, useRef } from "react";
 import { ActionSchema } from "walker-core";
+import { useConfig } from "./useConfig";
 
 export type UseWalkProps = {
   url: string;
@@ -15,8 +16,9 @@ export type UseWalkProps = {
 export function useWalk({ url, noWalk = false }: UseWalkProps) {
   const walkerClient = useMemo(() => createClient({ baseUrl: url }), [url]);
   const { input } = useWalkerInput();
-  const { runtime, walk, walkAsync, config } = useRuntime();
+  const { runtime, walk, walkAsync } = useRuntime();
   const { pushToast } = usePanelToast();
+  const { config } = useConfig();
 
   const runningRef = useRef(false);
 
@@ -47,11 +49,12 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
     runningRef.current = true;
     try {
       while (runningRef.current) {
-        console.log("Running walker...");
+        if (input.trim() === "") break;
         const { data } = await mutation.mutateAsync();
         if (!data?.action) break;
 
-        runtime.addActions([ActionSchema.parse(data.action)]);
+        if (runningRef.current)
+          runtime.addActions([ActionSchema.parse(data.action)]);
         if (!noWalk) await walkAsync();
 
         if (!config.loop) break;
@@ -69,17 +72,35 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
     }
   };
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    const lastHistoryItem = runtime.listHistory()[0];
+    if (
+      config.loop &&
+      lastHistoryItem &&
+      lastHistoryItem.action.end === false &&
+      lastHistoryItem.logs[0]?.message === "EXECUTED_ACTION" &&
+      // Only start the loop if the last action was executed less than 5 seconds ago
+      lastHistoryItem.logs[0]?.timestamp &&
+      Date.now() - lastHistoryItem.logs[0].timestamp < 5000
+    ) {
+      start();
+    }
+    return () => {
       runningRef.current = false;
-    },
-    [],
-  );
+    };
+  }, []);
 
   return {
     ...mutation,
     start,
-    stop: () => (runningRef.current = false),
+    stop: () => {
+      runningRef.current = false;
+      mutation.reset();
+      pushToast({
+        type: "info",
+        message: "Stopped walker.",
+      });
+    },
     isLooping: runningRef.current,
   };
 }

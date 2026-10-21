@@ -58,7 +58,13 @@ async function next(ctx: ContextType) {
         flow: flowItem,
         map: map(ctx),
         prompt: action.prompt,
-        logs: [],
+        logs: [
+          {
+            type: "system",
+            message: `EXECUTED_ACTION`,
+            timestamp: Date.now(),
+          },
+        ],
       });
 
       await flow.handler({
