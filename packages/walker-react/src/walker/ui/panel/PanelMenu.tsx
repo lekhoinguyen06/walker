@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePanel, usePanelToast, useRuntime } from "@/walker/hooks";
 import {
+  Footprints,
   History,
   Map,
   MessageCircle,
   PanelBottom,
-  Repeat,
-  Trash,
+  RefreshCcw,
 } from "lucide-react";
 import { togglePanelPosition } from "./Panel";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
@@ -33,7 +33,7 @@ export function PanelMenu() {
           });
         }}
       >
-        <Repeat />
+        <Footprints />
       </Button>
       <Button
         variant="ghost"
@@ -60,16 +60,8 @@ export function PanelMenu() {
           });
         }}
       >
-        <Trash />
+        <RefreshCcw />
       </Button>
-      {/*<Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={() => (modal == "chat" ? setModal(null) : setModal("chat"))}
-      >
-        <MessageCircle />
-      </Button>*/}
       <Button
         variant="ghost"
         size="icon"
@@ -78,14 +70,6 @@ export function PanelMenu() {
       >
         <MessageCircle />
       </Button>
-      {/*<Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={() => (modal == "map" ? setModal(null) : setModal("map"))}
-      >
-        <Map />
-      </Button>*/}
       <Button
         variant="ghost"
         size="icon"
@@ -94,16 +78,6 @@ export function PanelMenu() {
       >
         <Map />
       </Button>
-      {/*<Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={() =>
-          modal == "history" ? setModal(null) : setModal("history")
-        }
-      >
-        <History />
-      </Button>*/}
       <Button
         variant="ghost"
         size="icon"
