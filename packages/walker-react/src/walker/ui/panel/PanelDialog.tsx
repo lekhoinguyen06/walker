@@ -2,10 +2,16 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { MapDialog } from "../dev/Map";
+import { HistoryDialog } from "../dev/History";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
-  return <AnimatePresence>{dialog == "map" && <MapDialog />}</AnimatePresence>;
+  return (
+    <AnimatePresence>
+      {dialog == "map" && <MapDialog />}
+      {dialog == "history" && <HistoryDialog />}
+    </AnimatePresence>
+  );
 }
 
 export function PanelDialog({
