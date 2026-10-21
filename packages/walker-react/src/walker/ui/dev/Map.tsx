@@ -1,17 +1,10 @@
 import type { ItemType, MapItemType, MapType } from "walker-core";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useRuntime, useScreenSize } from "@/walker/hooks";
+import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
 import {
@@ -156,55 +149,6 @@ export type MapProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export function MapPanel({ isOpen, setIsOpen }: MapProps) {
-  const { runtime } = useRuntime();
-  const [map, setMap] = useState<MapType>({});
-  const { selectedItem, setSelectedItem } = useSelectedItemStore();
-  const { isMobile } = useScreenSize();
-
-  useEffect(() => {
-    if (isOpen) {
-      setMap(runtime.map());
-    }
-  }, [isOpen, runtime]);
-
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-none! max-h-none! w-full h-[80dvh] flex flex-col rounded-none">
-        <DialogHeader>
-          <DialogTitle className="font-brand">Map</DialogTitle>
-          <DialogDescription>
-            <span className="text-xs">View your app's current landscape.</span>
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex w-full h-full border rounded-none">
-          <div
-            className={cn(
-              "w-full p-3 overflow-scroll scrollbar-none",
-              selectedItem && isMobile && "hidden",
-            )}
-          >
-            <MapItem map={map} />
-          </div>
-          {selectedItem && (
-            <div className="relative w-full sm:min-w-[40vw] min-w-full flex flex-col p-3 gap-3 sm:border-l overflow-scroll scrollbar-none">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-1.5 right-1.5"
-                onClick={() => setSelectedItem(null)}
-              >
-                <X />
-              </Button>
-              <Details item={selectedItem} />
-            </div>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 export function MapDialog() {
   const { runtime } = useRuntime();
   const [map, setMap] = useState<MapType>({});
@@ -217,8 +161,8 @@ export function MapDialog() {
   return (
     <PanelDialog dialog={PANEL_DIALOG_REGISTRY.map}>
       <div className="size-full p-1.5">
-        <div className="w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
-          <div className="w-full p-3">
+        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
+          <div className="relative w-full p-3">
             <div className="font-brand">Map</div>
             <div className="text-xs">View your app's current landscape.</div>
             <Button
@@ -231,7 +175,7 @@ export function MapDialog() {
             </Button>
           </div>
           <div className="flex size-full overflow-hidden">
-            <div className="relative w-full p-3 pb-24 overflow-scroll scrollbar-none">
+            <div className="relative w-full p-3 overflow-scroll scrollbar-none">
               {selectedItem ? (
                 <>
                   <Button

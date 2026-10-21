@@ -10,9 +10,6 @@ import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
 import { usePanel } from "@/walker/hooks";
-import { ChatPanel } from "../dev/Chat";
-import { MapPanel } from "../dev/Map";
-import { HistoryPanel } from "../dev/History";
 import { PanelDialogProvider } from "@/walker/hooks/usePanelDialog";
 import { PanelDialogContainter } from "./PanelDialog";
 
@@ -103,25 +100,12 @@ export function Panel({
               panelVariants({ position: positionState, className }),
             )}
           >
-            <ChatPanel
-              isOpen={modal === "chat"}
-              setIsOpen={() => setModal(null)}
-            />
-            <MapPanel
-              isOpen={modal === "map"}
-              setIsOpen={() => setModal(null)}
-            />
-            <HistoryPanel
-              isOpen={modal === "history"}
-              setIsOpen={() => setModal(null)}
-            />
-
             {/* Absolute componnents */}
             <PanelTag />
 
             {/* Flex-col components */}
-            <PanelDialogContainter />
             <PanelToast />
+            <PanelDialogContainter />
             <PanelContent />
           </motion.div>
         </motion.div>

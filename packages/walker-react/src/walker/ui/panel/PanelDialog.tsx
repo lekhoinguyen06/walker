@@ -4,15 +4,18 @@ import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { MapDialog } from "../dev/Map";
 import { HistoryDialog } from "../dev/History";
 import { ChatDialog } from "../dev/Chat";
+import { cn } from "@/lib/utils";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
   return (
-    <AnimatePresence>
-      {dialog == "map" && <MapDialog />}
-      {dialog == "history" && <HistoryDialog />}
-      {dialog == "chat" && <ChatDialog />}
-    </AnimatePresence>
+    <div className={cn(dialog && "mb-1.5")}>
+      <AnimatePresence>
+        {dialog == "map" && <MapDialog />}
+        {dialog == "history" && <HistoryDialog />}
+        {dialog == "chat" && <ChatDialog />}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -33,7 +36,7 @@ export function PanelDialog({
         opacity: 1,
       }}
       exit={{ y: "100%", height: 0, opacity: 0 }}
-      transition={{ duration: 0.4, type: "spring" }}
+      transition={{ duration: 0.2, type: "keyframes" }}
       className={"flex flex-col bg-primary rounded-[24px] overflow-hidden"}
     >
       {children}
