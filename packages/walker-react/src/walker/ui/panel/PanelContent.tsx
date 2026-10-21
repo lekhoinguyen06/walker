@@ -22,6 +22,7 @@ import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
 import { PanelMenu } from "./PanelMenu";
 import { togglePanelPosition } from "./Panel";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -61,6 +62,7 @@ export function PanelContent({ className }: PanelContentProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { actionsInQueueCount, walk, isWalking, setConfig, config, runtime } =
     useRuntime();
+  const { dialog, openDialog, closeDialog } = usePanelDialog();
   const { mutate, isPending, start, isLooping } = useWalk({
     url,
   });
@@ -124,7 +126,7 @@ export function PanelContent({ className }: PanelContentProps) {
   useHotkey(
     "M",
     () => {
-      modal == "map" ? setModal(null) : setModal("map");
+      dialog == "map" ? closeDialog() : openDialog("map");
     },
     {
       enabled: !isHidden,

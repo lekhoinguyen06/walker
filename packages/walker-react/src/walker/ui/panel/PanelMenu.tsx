@@ -10,9 +10,11 @@ import {
   Trash,
 } from "lucide-react";
 import { togglePanelPosition } from "./Panel";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 export function PanelMenu() {
   const { modal, setModal, position, setPosition } = usePanel();
+  const { openDialog, closeDialog, dialog } = usePanelDialog();
   const { pushToast } = usePanelToast();
   const { runtime, config, setConfig } = useRuntime();
   return (
@@ -68,11 +70,19 @@ export function PanelMenu() {
       >
         <MessageCircle />
       </Button>
-      <Button
+      {/*<Button
         variant="ghost"
         size="icon"
         className="rounded-full"
         onClick={() => (modal == "map" ? setModal(null) : setModal("map"))}
+      >
+        <Map />
+      </Button>*/}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={() => (dialog == "map" ? closeDialog() : openDialog("map"))}
       >
         <Map />
       </Button>
