@@ -31,13 +31,12 @@ export function PanelDialog({
   return (
     <motion.div
       key={dialog}
-      initial={{ y: "100%", height: 0, opacity: 0 }}
+      initial={{ height: 0, opacity: 0 }}
       animate={{
-        y: 0,
         height: "auto",
         opacity: 1,
       }}
-      exit={{ y: "100%", height: 0, opacity: 0 }}
+      exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.2, type: "keyframes" }}
       className={"flex flex-col bg-primary rounded-[24px] overflow-hidden"}
     >
