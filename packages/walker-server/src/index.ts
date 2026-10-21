@@ -13,7 +13,7 @@ import { generateText, Output, type LanguageModel } from "ai";
 import { withAI } from "./middlewares/ai.middleware";
 import z from "zod";
 
-const router = AutoRouter();
+const router: ReturnType<typeof AutoRouter> = AutoRouter();
 
 type WalkerServerType = {
   handler: typeof router.fetch;
