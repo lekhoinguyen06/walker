@@ -86,12 +86,22 @@ export function PanelMenu() {
       >
         <Map />
       </Button>
-      <Button
+      {/*<Button
         variant="ghost"
         size="icon"
         className="rounded-full"
         onClick={() =>
           modal == "history" ? setModal(null) : setModal("history")
+        }
+      >
+        <History />
+      </Button>*/}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={() =>
+          dialog == "history" ? closeDialog() : openDialog("history")
         }
       >
         <History />

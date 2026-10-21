@@ -146,7 +146,7 @@ export function PanelContent({ className }: PanelContentProps) {
   useHotkey(
     "H",
     () => {
-      modal == "history" ? setModal(null) : setModal("history");
+      dialog == "history" ? closeDialog() : openDialog("history");
     },
     {
       enabled: !isHidden,
