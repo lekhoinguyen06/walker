@@ -2,6 +2,7 @@ import type { FlowRegistry } from "walker-shared";
 import { clickFlow } from "./click.flow";
 import { inputFlow } from "./input.flow";
 import { noneFlow } from "./none.flow";
+import { mouseReturn } from "../../hook/mouseReturn";
 
 export * from "./click.flow";
 export * from "./input.flow";

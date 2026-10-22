@@ -48,18 +48,7 @@ export const inputFlow: CreateFlowProps<InputFlowBody> =
           element.dispatchEvent(new Event("input", { bubbles: true }));
         }
 
-        // Move mouse back to container
-        if (!props.context.config.loop || props.action.end) {
-          console.log("Moving mouse back to container");
-          await props.context.hooks.onMouse?.({
-            ...props,
-            action: {
-              ...props.action,
-              targetId: "mouse-container",
-            },
-          });
-          await wait(gap > 1000 ? gap : 1000);
-        }
+        await props.context.hooks.onMouseReturn?.(props);
       }
     },
   });

@@ -22,17 +22,7 @@ export const clickFlow: CreateFlowProps<unknown> = createFlow({
       await wait(gap > 1000 ? gap : 1000);
       element.click();
 
-      // Move mouse back to container
-      if (!props.context.config.loop || props.action.end) {
-        await props.context.hooks.onMouse?.({
-          ...props,
-          action: {
-            ...props.action,
-            targetId: "mouse-container",
-          },
-        });
-        await wait(gap > 1000 ? gap : 1000);
-      }
+      await props.context.hooks.onMouseReturn?.(props);
     }
   },
 });

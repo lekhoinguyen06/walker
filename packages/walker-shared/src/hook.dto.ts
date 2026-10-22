@@ -14,4 +14,5 @@ export interface WebHooksType {
   onScroll?: HookFactoryType;
   onMessage?: HookFactoryType;
   onMouse?: HookFactoryType;
+  onMouseReturn?: HookFactoryType;
 }

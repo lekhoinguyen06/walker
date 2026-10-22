@@ -15,16 +15,6 @@ export const noneFlow: CreateFlowProps<unknown> = createFlow({
     await wait(gap);
     await props.context.hooks.onMessage?.(props);
     await wait(gap);
-    // Move mouse back to container
-    if (!props.context.config.loop || props.action.end) {
-      await props.context.hooks.onMouse?.({
-        ...props,
-        action: {
-          ...props.action,
-          targetId: "mouse-container",
-        },
-      });
-      await wait(gap > 1000 ? gap : 1000);
-    }
+    await props.context.hooks.onMouseReturn?.(props);
   },
 });
