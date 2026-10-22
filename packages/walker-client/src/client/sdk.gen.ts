@@ -11,6 +11,7 @@ import { client } from "./client.gen";
 import type {
   GetApiWalkerHealthData,
   GetApiWalkerHealthResponses,
+  PostApiWalkerChatData,
   PostApiWalkerWalkData,
   PostApiWalkerWalkResponses,
 } from "./types.gen";
@@ -51,6 +52,18 @@ export const postApiWalkerWalk = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     url: "/api/walker/walk",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options?.headers,
+    },
+  });
+
+export const postApiWalkerChat = <ThrowOnError extends boolean = false>(
+  options?: Options<PostApiWalkerChatData, ThrowOnError>,
+): RequestResult<unknown, unknown, ThrowOnError> =>
+  (options?.client ?? client).post<unknown, unknown, ThrowOnError>({
+    url: "/api/walker/chat",
     ...options,
     headers: {
       "Content-Type": "application/json",

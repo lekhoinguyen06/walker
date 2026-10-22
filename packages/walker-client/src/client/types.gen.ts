@@ -4,6 +4,24 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
+export type Schema0 = {
+  id: string;
+  type: string;
+  description: string;
+  state: string | null;
+  scope: "active" | "hidden" | "inherit";
+  flows: string;
+  refId: string | null;
+  content: boolean;
+  raw: boolean;
+  children?: {
+    [key: string]: Schema0;
+  };
+  isInActiveScope?: boolean;
+  contentValue?: string;
+  rawValue?: string;
+};
+
 export type GetApiWalkerHealthData = {
   body?: never;
   path?: never;
@@ -42,33 +60,7 @@ export type PostApiWalkerWalkData = {
         [key: string]: unknown;
       };
       map: {
-        [key: string]: {
-          id: string;
-          type: string;
-          description: string;
-          state: string | null;
-          scope: "active" | "hidden" | "inherit";
-          flows: string;
-          refId: string | null;
-          content: boolean;
-          raw: boolean;
-          children?: {
-            [key: string]: {
-              id: string;
-              type: string;
-              description: string;
-              state: string | null;
-              scope: "active" | "hidden" | "inherit";
-              flows: string;
-              refId: string | null;
-              content: boolean;
-              raw: boolean;
-            };
-          };
-          isInActiveScope?: boolean;
-          contentValue?: string;
-          rawValue?: string;
-        };
+        [key: string]: Schema0;
       };
       logs: Array<{
         type: "user" | "system";
@@ -82,33 +74,7 @@ export type PostApiWalkerWalkData = {
       schema: unknown;
     }>;
     map: {
-      [key: string]: {
-        id: string;
-        type: string;
-        description: string;
-        state: string | null;
-        scope: "active" | "hidden" | "inherit";
-        flows: string;
-        refId: string | null;
-        content: boolean;
-        raw: boolean;
-        children?: {
-          [key: string]: {
-            id: string;
-            type: string;
-            description: string;
-            state: string | null;
-            scope: "active" | "hidden" | "inherit";
-            flows: string;
-            refId: string | null;
-            content: boolean;
-            raw: boolean;
-          };
-        };
-        isInActiveScope?: boolean;
-        contentValue?: string;
-        rawValue?: string;
-      };
+      [key: string]: Schema0;
     };
     skills: Array<string>;
     prompt: string;
@@ -142,3 +108,15 @@ export type PostApiWalkerWalkResponses = {
 
 export type PostApiWalkerWalkResponse =
   PostApiWalkerWalkResponses[keyof PostApiWalkerWalkResponses];
+
+export type PostApiWalkerChatData = {
+  body?: {
+    messages: Array<{
+      role: "user" | "assistant" | "system";
+      content: string;
+    }>;
+  };
+  path?: never;
+  query?: never;
+  url: "/api/walker/chat";
+};

@@ -9,6 +9,7 @@ import {
   type WalkRequestBodyDTO,
   type WalkResponseBodyDTO,
 } from "./routes/walk/walk.dto";
+import { ChatRequestBodySchema } from "./routes/chat/chat.dto";
 
 export const openapiDocument = createDocument({
   openapi: "3.1.0",
@@ -82,6 +83,26 @@ export const openapiDocument = createDocument({
             },
           },
         },
+      },
+    },
+    "/api/walker/chat": {
+      post: {
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: ChatRequestBodySchema,
+              example: {
+                messages: [
+                  {
+                    role: "user",
+                    content: "Hello, Walker! Give me a random positive quote.",
+                  },
+                ],
+              },
+            },
+          },
+        },
+        responses: {},
       },
     },
   },

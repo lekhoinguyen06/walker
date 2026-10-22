@@ -61,6 +61,7 @@ export function createWalker(props: WalkerServerProps): WalkerServerType {
     });
 
   ai && router.post("/api/walker/walk", withContent, withAI(ai), handler.walk);
+  ai && router.post("/api/walker/chat", withContent, withAI(ai), handler.chat);
   router.get("/api/walker/specs", handler.specs);
   router.get("/api/walker/docs", handler.docs);
 
