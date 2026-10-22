@@ -22,7 +22,7 @@
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs"
     },
-    "./ui/index.css": "./dist/walker/ui/index.css"
+    "./index.css": "./dist/index.css"
   },
   "scripts": {
     "build": "bunup",

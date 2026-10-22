@@ -1,5 +1,5 @@
 import "./index.css";
-import "walker-react/ui/index.css";
+import "walker-react/index.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

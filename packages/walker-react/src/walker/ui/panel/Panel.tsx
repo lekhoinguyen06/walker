@@ -1,7 +1,5 @@
 import "@/styles/globals.css";
-
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelContent } from "./PanelContent";
 import { useEffect, useRef, type ReactNode, type RefObject } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import * as motion from "motion/react-client";
