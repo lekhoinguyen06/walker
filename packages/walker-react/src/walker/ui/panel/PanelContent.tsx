@@ -46,7 +46,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
 
   const ref = useRef<HTMLDivElement>(null);
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { handleSubmit, isPending, isLooping, isWalking, stop } =
+  const { handleSubmit, isPending, isLooping, isWalking, handleStop } =
     usePanelWalk();
   const { runtime } = useRuntime();
   function handleClickOutside() {
@@ -81,7 +81,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
   );
 
   useHotkey("Control+C", () => {
-    stop();
+    handleStop();
   });
 
   useHotkey(

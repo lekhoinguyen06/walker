@@ -96,9 +96,25 @@ export function useWalk({ noWalk = false }: UseWalkProps) {
   const isPending = mutation.isPending;
   const actionsInQueueCount = runtime.countActionsInQueued();
 
+  const handleStop = () => {
+    runningRef.current = false;
+    runtime.clearActions();
+    mutation.reset();
+    runtime.addActions([
+      {
+        prompt: "",
+        message: "Stopped walker.",
+        end: true,
+        flow: "none",
+        targetId: "",
+      },
+    ]);
+    walk();
+  };
+
   const handleSubmit = () => {
     if (isLooping || isWalking || isPending) {
-      stop();
+      handleStop();
       return;
     }
     if (actionsInQueueCount === 0 && !isPending && !isWalking) {
@@ -122,21 +138,7 @@ export function useWalk({ noWalk = false }: UseWalkProps) {
   return {
     ...mutation,
     start,
-    stop: () => {
-      runningRef.current = false;
-      mutation.reset();
-      runtime.clearActions();
-      runtime.addActions([
-        {
-          prompt: "",
-          message: "Stopped walker.",
-          end: true,
-          flow: "none",
-          targetId: "",
-        },
-      ]);
-      walk();
-    },
+    handleStop,
     isLooping,
     isPending,
     isWalking,
