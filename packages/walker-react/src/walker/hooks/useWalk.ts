@@ -106,6 +106,7 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
           targetId: "",
         },
       ]);
+      walk();
     },
     isLooping: runningRef.current,
   };

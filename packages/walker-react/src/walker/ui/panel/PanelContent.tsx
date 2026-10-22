@@ -16,7 +16,7 @@ import { cn } from "cn";
 import { PanelPopup } from "./PanelPopup";
 import { PanelInput } from "./PanelInput";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
@@ -197,7 +197,10 @@ export function PanelContent({ className }: PanelContentProps) {
   const { pushToast } = usePanelToast();
 
   const handleSubmit = () => {
-    console.log("PanelContent handleSubmit");
+    if (isLooping || isWalking || isPending) {
+      stop();
+      return;
+    }
     if (actionsInQueueCount === 0 && !isPending && !isWalking) {
       if (input.trim() === "") {
         pushToast({
@@ -242,23 +245,34 @@ export function PanelContent({ className }: PanelContentProps) {
           <Menu />
         </Button>
         <PanelSuggest />
-        <Mouse>
-          <Button
-            variant="ghost"
-            size="icon"
+        <Button
+          variant="ghost"
+          size="icon"
+          className={"rounded-full relative"}
+          onClick={handleSubmit}
+        >
+          <div
             className={cn(
-              "rounded-full",
-              (isPending || isLooping) &&
-                !isWalking &&
-                "bg-gray-200 text-black",
-              isLooping && "animate-pulse",
-              isWalking && "bg-red-500 text-white",
+              !(isWalking || isPending || isLooping) ? "hidden" : "flex",
+              "absolute inset-0 m-auto size-6 aspect-square rounded-full items-center justify-center",
             )}
-            onClick={handleSubmit}
           >
-            <span className="font-brand">W</span>
-          </Button>
-        </Mouse>
+            <Pause />
+          </div>
+          <Mouse>
+            <div
+              className={cn(
+                "relative size-6 aspect-square flex items-center justify-center rounded-full",
+                (isPending || isLooping) &&
+                  !isWalking &&
+                  "bg-red-200 text-white",
+                isWalking && "bg-red-500 text-white",
+              )}
+            >
+              <div className="font-brand text-lg">W</div>
+            </div>
+          </Mouse>
+        </Button>
       </div>
     </div>
   );
