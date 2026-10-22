@@ -1,14 +1,5 @@
 import { createContext, useContext, useState } from "react";
-
-// Dialogs provided by Walker
-export const PANEL_DIALOG_REGISTRY = {
-  history: "history",
-  chat: "chat",
-  map: "map",
-  help: "help",
-} as const;
-
-type PanelDialogType = keyof typeof PANEL_DIALOG_REGISTRY;
+import type { PanelDialogType } from "../constants/panel.const";
 
 export function PanelDialogProvider({
   children,

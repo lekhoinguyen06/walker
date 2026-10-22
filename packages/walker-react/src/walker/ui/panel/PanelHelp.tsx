@@ -1,7 +1,4 @@
-import {
-  PANEL_DIALOG_REGISTRY,
-  usePanelDialog,
-} from "@/walker/hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { PanelDialog } from "./PanelDialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -10,7 +7,7 @@ import { Kbd } from "@/components/ui/kbd";
 export function PanelHelp() {
   const { closeDialog } = usePanelDialog();
   return (
-    <PanelDialog dialog={PANEL_DIALOG_REGISTRY.help}>
+    <PanelDialog dialog={"help"}>
       <div className="size-full p-1.5">
         <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
           <div className="w-full p-3">

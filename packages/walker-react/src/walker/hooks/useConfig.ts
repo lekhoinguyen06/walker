@@ -1,6 +1,4 @@
-import type { ContextType } from "walker-core";
-import { useConfigStore } from "../stores/adapters";
-import { useEffect } from "react";
+import { useConfigStore } from "@/walker/stores/adapters";
 
 export function useConfig() {
   const config = useConfigStore((state) => state.config);

@@ -7,10 +7,7 @@ import { X } from "lucide-react";
 import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
-import {
-  PANEL_DIALOG_REGISTRY,
-  usePanelDialog,
-} from "@/walker/hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;
@@ -159,7 +156,7 @@ export function MapDialog() {
     setMap(runtime.map());
   }, [runtime]);
   return (
-    <PanelDialog dialog={PANEL_DIALOG_REGISTRY.map}>
+    <PanelDialog dialog={"map"}>
       <div className="size-full p-1.5">
         <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
           <div className="relative w-full p-3">

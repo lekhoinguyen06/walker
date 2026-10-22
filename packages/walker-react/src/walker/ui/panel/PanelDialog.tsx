@@ -6,6 +6,7 @@ import { HistoryDialog } from "../dev/History";
 import { ChatDialog } from "../dev/Chat";
 import { cn } from "@/lib/utils";
 import { PanelHelp } from "./PanelHelp";
+import type { PanelDialogType } from "@/walker/constants/panel.const";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
@@ -25,7 +26,7 @@ export function PanelDialog({
   dialog,
   children,
 }: {
-  dialog: string;
+  dialog: PanelDialogType;
   children: React.ReactNode;
 }) {
   return (

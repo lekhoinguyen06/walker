@@ -1,15 +1,12 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import type { HistoryType } from "walker-core";
 import { cn } from "@/lib/utils";
 import { GalleryHorizontalEnd, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRuntime, useScreenSize } from "@/walker/hooks";
+import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
-import {
-  PANEL_DIALOG_REGISTRY,
-  usePanelDialog,
-} from "@/walker/hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();
@@ -18,7 +15,7 @@ export function HistoryDialog() {
     HistoryType | undefined
   >(undefined);
   return (
-    <PanelDialog dialog={PANEL_DIALOG_REGISTRY.history}>
+    <PanelDialog dialog={"history"}>
       <div className="size-full p-1.5">
         <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
           <div className="w-full p-3">

@@ -27,10 +27,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { useWalkerChat } from "@/walker/hooks/useWalkerChat";
-import {
-  PANEL_DIALOG_REGISTRY,
-  usePanelDialog,
-} from "@/walker/hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks";
 import { PanelDialog } from "../panel/PanelDialog";
 
 const streamingExtensions = [streamingMarkdownExtension()];
@@ -41,7 +38,7 @@ export function ChatDialog() {
   const [input, setInput] = useState("");
   const isBusy = status === "submitted" || status === "streaming";
   return (
-    <PanelDialog dialog={PANEL_DIALOG_REGISTRY.chat}>
+    <PanelDialog dialog={"chat"}>
       <div className="size-full p-1.5">
         <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
           <div className="w-full p-3">
