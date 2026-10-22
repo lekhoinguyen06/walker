@@ -96,10 +96,16 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
     stop: () => {
       runningRef.current = false;
       mutation.reset();
-      pushToast({
-        type: "info",
-        message: "Stopped walker.",
-      });
+      runtime.clearActions();
+      runtime.addActions([
+        {
+          prompt: "",
+          message: "Stopped walker.",
+          end: true,
+          flow: "none",
+          targetId: "",
+        },
+      ]);
     },
     isLooping: runningRef.current,
   };

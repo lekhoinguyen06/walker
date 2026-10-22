@@ -98,9 +98,7 @@ export function PanelContent({ className }: PanelContentProps) {
   );
 
   useHotkey("Control+C", () => {
-    if (isLooping) {
-      stop();
-    }
+    stop();
   });
 
   useHotkey(

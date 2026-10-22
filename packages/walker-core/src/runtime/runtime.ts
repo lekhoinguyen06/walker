@@ -138,6 +138,11 @@ export function clear(ctx: ContextType): void {
   ctx.logger.trace("Runtime canceled: history and action stores cleared.");
 }
 
+export function clearActions(ctx: ContextType): void {
+  ctx.adapter.actionStore.clear();
+  ctx.logger.trace("Action store cleared.");
+}
+
 export interface RuntimeType {
   next: () => Promise<void>;
   map: () => MapType;
@@ -147,6 +152,7 @@ export interface RuntimeType {
   listHistory: () => HistoryType[];
   listFlows: () => FlowItemType[];
   listActions: () => ActionType[];
+  clearActions: () => void;
   clear: () => void;
 }
 
@@ -160,6 +166,7 @@ export function runtime(ctx: ContextType): RuntimeType {
     listHistory: () => listHistory(ctx),
     listFlows: () => listFlows(ctx),
     listActions: () => listActions(ctx),
+    clearActions: () => clearActions(ctx),
     clear: () => clear(ctx),
   };
 }
