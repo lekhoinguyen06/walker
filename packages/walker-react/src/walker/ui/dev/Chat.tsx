@@ -40,8 +40,8 @@ export function ChatDialog() {
   return (
     <PanelDialog dialog={"chat"}>
       <div className="size-full p-1.5">
-        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
-          <div className="w-full p-3">
+        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px]">
+          <div className="relative w-full p-3">
             <div className="font-brand">Chat</div>
             <div className="text-xs">
               Chat and see how the walk suggestion feature works. Walker will
@@ -56,95 +56,87 @@ export function ChatDialog() {
               <X />
             </Button>
           </div>
-          <div className="flex w-full h-full border rounded-none">
-            <div className="relative w-full flex flex-col p-3 gap-3 overflow-scroll scrollbar-none">
-              <div className="w-full h-full overflow-scroll scrollbar-none flex flex-col">
-                <MessageScrollerProvider autoScroll>
-                  {messages.length === 0 ? (
-                    <Empty className="h-full">
-                      <EmptyHeader>
-                        <EmptyMedia variant="icon">
-                          <MessageCircleDashedIcon />
-                        </EmptyMedia>
-                        <EmptyTitle>Morning, Walkers!</EmptyTitle>
-                        <EmptyDescription>
-                          What are we working on today? Press send to start a
-                          new conversation
-                        </EmptyDescription>
-                      </EmptyHeader>
-                    </Empty>
-                  ) : (
-                    <MessageScroller>
-                      <MessageScrollerViewport>
-                        <MessageScrollerContent
-                          aria-busy={isBusy}
-                          className="p-(--card-spacing)"
-                        >
-                          {messages.map((message) => {
-                            if (message.role === "assistant") {
-                              return (
-                                <Message align="start" key={message.id}>
-                                  <MessageContent>
-                                    <Bubble variant="ghost">
-                                      <BubbleContent>
-                                        {message.parts
-                                          .filter(
-                                            (part) => part.type === "text",
-                                          )
-                                          .map((part, index) => {
-                                            return (
-                                              <div
-                                                key={index}
-                                                className="markdown-renderer typeset"
+          <div className="flex size-full overflow-hidden">
+            <div className="flex flex-col size-full p-3 gap-3 overflow-scroll scrollbar-none">
+              <MessageScrollerProvider autoScroll>
+                {messages.length === 0 ? (
+                  <Empty className="h-full">
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <MessageCircleDashedIcon />
+                      </EmptyMedia>
+                      <EmptyTitle>Morning, Walkers!</EmptyTitle>
+                      <EmptyDescription>
+                        What are we working on today? Press send to start a new
+                        conversation
+                      </EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
+                ) : (
+                  <MessageScroller>
+                    <MessageScrollerViewport>
+                      <MessageScrollerContent
+                        aria-busy={isBusy}
+                        className="p-(--card-spacing)"
+                      >
+                        {messages.map((message) => {
+                          if (message.role === "assistant") {
+                            return (
+                              <Message align="start" key={message.id}>
+                                <MessageContent>
+                                  <Bubble variant="ghost">
+                                    <BubbleContent>
+                                      {message.parts
+                                        .filter((part) => part.type === "text")
+                                        .map((part, index) => {
+                                          return (
+                                            <div
+                                              key={index}
+                                              className="markdown-renderer typeset"
+                                            >
+                                              <style>{themeCss}</style>
+                                              <Markdown
+                                                extensions={streamingExtensions}
+                                                highlighter={
+                                                  highlightMarkdownCode
+                                                }
                                               >
-                                                <style>{themeCss}</style>
-                                                <Markdown
-                                                  extensions={
-                                                    streamingExtensions
-                                                  }
-                                                  highlighter={
-                                                    highlightMarkdownCode
-                                                  }
-                                                >
-                                                  {String(part.text)}
-                                                </Markdown>
-                                              </div>
-                                            );
-                                          })}
-                                      </BubbleContent>
-                                    </Bubble>
-                                  </MessageContent>
-                                </Message>
-                              );
-                            } else if (message.role === "user") {
-                              return (
-                                <Message align="end" key={message.id}>
-                                  <MessageContent>
-                                    <Bubble variant="outline">
-                                      <BubbleContent>
-                                        {message.parts
-                                          .filter(
-                                            (part) => part.type === "text",
-                                          )
-                                          .map((part, index) => (
-                                            <div key={index}>
-                                              {String(part.text)}
+                                                {String(part.text)}
+                                              </Markdown>
                                             </div>
-                                          ))}
-                                      </BubbleContent>
-                                    </Bubble>
-                                  </MessageContent>
-                                </Message>
-                              );
-                            }
-                          })}
-                        </MessageScrollerContent>
-                      </MessageScrollerViewport>
-                      <MessageScrollerButton />
-                    </MessageScroller>
-                  )}
-                </MessageScrollerProvider>
-              </div>
+                                          );
+                                        })}
+                                    </BubbleContent>
+                                  </Bubble>
+                                </MessageContent>
+                              </Message>
+                            );
+                          } else if (message.role === "user") {
+                            return (
+                              <Message align="end" key={message.id}>
+                                <MessageContent>
+                                  <Bubble variant="outline">
+                                    <BubbleContent>
+                                      {message.parts
+                                        .filter((part) => part.type === "text")
+                                        .map((part, index) => (
+                                          <div key={index}>
+                                            {String(part.text)}
+                                          </div>
+                                        ))}
+                                    </BubbleContent>
+                                  </Bubble>
+                                </MessageContent>
+                              </Message>
+                            );
+                          }
+                        })}
+                      </MessageScrollerContent>
+                    </MessageScrollerViewport>
+                    <MessageScrollerButton />
+                  </MessageScroller>
+                )}
+              </MessageScrollerProvider>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();

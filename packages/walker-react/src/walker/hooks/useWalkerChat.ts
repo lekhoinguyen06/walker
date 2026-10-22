@@ -1,13 +1,15 @@
 import { usePanelToast } from "./usePanelToast";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { useConfig } from "./useConfig";
 
 export function useWalkerChat() {
+  const { config } = useConfig();
   const { pushToast } = usePanelToast();
   return useChat({
     // messages: initialMessages,
     transport: new DefaultChatTransport({
-      api: `${process.env.VITE_CHAT_API_URL}/chat`,
+      api: `${config.url}/api/walker/chat`,
       prepareSendMessagesRequest: ({ messages }) => {
         const msgs = messages.map((message) => ({
           role: message.role,
