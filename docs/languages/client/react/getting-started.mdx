@@ -8,3 +8,226 @@ description: "These are the frontend libraries built by the community to help yo
 ```bash
 npm install walker-react
 ```
+
+#### Setup
+
+You can refer to The Walker React Playground's setup to get started using Walker Panel.
+
+<CodeGroup>
+
+```typescript main.tsx
+import "./index.css";
+import "walker-react/index.css";
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import AppLayout from "./AppLayout";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
+import { Components } from "./components/Components";
+import { InputPage } from "./features/input/page";
+import { SelectPage } from "./features/select/page";
+import { DialogPage } from "./features/dialog/page";
+import { ScrollAreaPage } from "./features/scroll-area/page";
+import { ToastPage } from "./features/toast/page";
+import { type HookPropsType } from "walker-react/core";
+import {
+  PanelToastProvider,
+  RuntimeProvider,
+  usePanelToast,
+} from "walker-react";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        index: true,
+        element: <Components />,
+      },
+      {
+        path: "input",
+        element: <InputPage />,
+      },
+	// ...
+    ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" />,
+  },
+]);
+
+function Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <StrictMode>
+      <PanelToastProvider>{children}</PanelToastProvider>
+    </StrictMode>
+  );
+}
+
+function App() {
+  const { pushToast } = usePanelToast();
+
+  const messageHook = async function message(
+    props: HookPropsType,
+  ): Promise<void> {
+    pushToast({
+      type: "walking",
+      message: props.action.message,
+    });
+  };
+
+  return (
+    <RuntimeProvider
+      config={{
+        app: {
+          id: "playground-react",
+          description: "The Walker library's playground for React",
+        },
+        hooks: {
+          onMessage: messageHook,
+        },
+      }}
+    >
+      <RouterProvider router={router} />
+    </RuntimeProvider>
+  );
+}
+
+createRoot(document.getElementById("root")!).render(
+  <Provider>
+    <App />
+  </Provider>,
+);
+```
+
+```typescript AppLayout.tsx
+import { Outlet } from "react-router";
+import Header from "./components/Header";
+import { Toaster } from "./components/ui/toast";
+import { Item } from "walker-react";
+import {
+  Panel,
+  PanelContent,
+  PanelInput,
+  PanelMenu,
+  PanelPopup,
+} from "walker-react/ui";
+
+function AppLayout() {
+  return (
+    <div className="w-full min-h-dvh justify-center flex flex-col lg:gap-24 md:gap-12 gap-6 lg:p-24 md:p-12 p-6 items-center overflow-y-scroll scrollbar-none">
+      <Header />
+      <Outlet />
+      <Item
+        id="toast-container"
+        description="The container for toast notifications. It is recommended to place this at the root of your application."
+      >
+        <Toaster />
+      </Item>
+      <Panel url={process.env.VITE_WALK_API_URL}>
+        <PanelContent>
+          <PanelInput />
+          <PanelPopup
+            tabs={{
+              default: <PanelMenu />,
+            }}
+          />
+        </PanelContent>
+      </Panel>
+    </div>
+  );
+}
+
+export default AppLayout;
+```
+
+```typescript InputDemo.tsx
+import { Input } from "@/components/ui/input";
+import { Item } from "walker-react";
+import { useState } from "react";
+
+export function InputDemo() {
+  const [input, setInput] = useState("");
+  return (
+    <Item
+      id="input-field"
+      description="This is example input for the Walker Playground, try the input flow!"
+      flows={["input"]}
+    >
+      <Input
+        placeholder="Enter text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+    </Item>
+  );
+}
+```
+
+```typescript SelectDemo.tsx
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Item } from "walker-react";
+import { useState } from "react";
+
+const items = [
+  { label: "Select a fruit", value: null },
+  { label: "Apple", value: "apple" },
+  { label: "Banana", value: "banana" },
+  { label: "Blueberry", value: "blueberry" },
+  { label: "Grapes", value: "grapes" },
+  { label: "Pineapple", value: "pineapple" },
+];
+
+export function SelectDemo() {
+  const [value, setValue] = useState<string | null>(null);
+  return (
+    <Item
+      id="select"
+      description="This is example select for the Walker Playground."
+    >
+      <Select items={items} value={value} onValueChange={(v) => setValue(v)}>
+        <Item
+          id="select-trigger"
+          description="This is the select trigger. Click to open the select dropdown."
+        >
+          <SelectTrigger className="w-full max-w-48">
+            <SelectValue />
+          </SelectTrigger>
+        </Item>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Fruits</SelectLabel>
+            {items.map((item) => (
+              <Item
+                id={`select-item-${item.value}`}
+                description={`This is a select item. Click to select: ${item.label}.`}
+                flows={["click"]}
+              >
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              </Item>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </Item>
+  );
+}
+```
+
+</CodeGroup>
+
+### Build your own
+
+You can also build your own panel by refer to how we created the Walker Panel [here](https://github.com/lekhoinguyen06/walker/tree/main/packages/walker-react/src/walker/ui/panel).

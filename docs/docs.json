@@ -24,8 +24,7 @@
           {
             "group": "Concepts",
             "pages": [
-              "guides/fundamentals",
-              "guides/features"
+              "guides/fundamentals"
             ]
           }
         ]
