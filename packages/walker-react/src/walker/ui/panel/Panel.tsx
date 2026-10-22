@@ -9,9 +9,10 @@ import { AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
-import { usePanel } from "@/walker/hooks";
+import { usePanel, WalkProvider } from "@/walker/hooks";
 import { PanelDialogProvider } from "@/walker/hooks/usePanelDialog";
 import { PanelDialogContainter } from "./PanelDialog";
+import { useConfig } from "@/walker/hooks/useConfig";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);
@@ -55,6 +56,7 @@ export type PanelProps = VariantProps<typeof panelVariants> & {
   hidden?: boolean;
   url: string;
   className?: string;
+  children?: ReactNode;
 };
 
 export function Panel({
@@ -62,19 +64,20 @@ export function Panel({
   url,
   hidden,
   className,
+  children,
 }: PanelProps): ReactNode {
   const {
     position: positionState,
     isHidden: isHiddenState,
-    modal,
     setIsHidden,
     setStore,
-    setModal,
   } = usePanel();
+  const { updateConfig } = useConfig();
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    updateConfig({ url });
     setStore({ position, url, isHidden: hidden });
   }, []);
 
@@ -85,31 +88,33 @@ export function Panel({
   useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
-    <PanelDialogProvider>
-      <AnimatePresence>
-        <motion.div layout ref={ref}>
-          <motion.div
-            initial={{ y: 0 }}
-            animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
-            exit={{ y: 0 }}
-            transition={{
-              duration: 0.2,
-              ease: "anticipate",
-            }}
-            className={cn(
-              panelVariants({ position: positionState, className }),
-            )}
-          >
-            {/* Absolute componnents */}
-            <PanelTag />
+    <WalkProvider>
+      <PanelDialogProvider>
+        <AnimatePresence>
+          <motion.div layout ref={ref}>
+            <motion.div
+              initial={{ y: 0 }}
+              animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
+              exit={{ y: 0 }}
+              transition={{
+                duration: 0.2,
+                ease: "anticipate",
+              }}
+              className={cn(
+                panelVariants({ position: positionState, className }),
+              )}
+            >
+              {/* Absolute componnents */}
+              <PanelTag />
 
-            {/* Flex-col components */}
-            <PanelDialogContainter />
-            <PanelToast />
-            <PanelContent />
+              {/* Flex-col components */}
+              <PanelDialogContainter />
+              <PanelToast />
+              {children}
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
-    </PanelDialogProvider>
+        </AnimatePresence>
+      </PanelDialogProvider>
+    </WalkProvider>
   );
 }

@@ -4,21 +4,23 @@ import { useMutation } from "@tanstack/react-query";
 import { useWalkerInput } from "./useWalkerInput";
 import { postApiWalkerWalk } from "walker-client";
 import { createClient } from "walker-client/client";
-import { useEffect, useMemo, useRef } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef } from "react";
 import { ActionSchema } from "walker-core";
 import { useConfig } from "./useConfig";
 
 export type UseWalkProps = {
-  url: string;
   noWalk?: boolean;
 };
 
-export function useWalk({ url, noWalk = false }: UseWalkProps) {
-  const walkerClient = useMemo(() => createClient({ baseUrl: url }), [url]);
-  const { input } = useWalkerInput();
-  const { runtime, walk, walkAsync } = useRuntime();
-  const { pushToast } = usePanelToast();
+export function useWalk({ noWalk = false }: UseWalkProps) {
   const { config } = useConfig();
+  const walkerClient = useMemo(
+    () => createClient({ baseUrl: config.url }),
+    [config.url],
+  );
+  const { input } = useWalkerInput();
+  const { runtime, walk, walkAsync, isWalking } = useRuntime();
+  const { pushToast } = usePanelToast();
 
   const runningRef = useRef(false);
 
@@ -90,6 +92,33 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
     };
   }, []);
 
+  const isLooping = runningRef.current;
+  const isPending = mutation.isPending;
+  const actionsInQueueCount = runtime.countActionsInQueued();
+
+  const handleSubmit = () => {
+    if (isLooping || isWalking || isPending) {
+      stop();
+      return;
+    }
+    if (actionsInQueueCount === 0 && !isPending && !isWalking) {
+      if (input.trim() === "") {
+        pushToast({
+          type: "info",
+          message: "Input is empty, please instruct Walker.",
+        });
+        return;
+      }
+      start();
+    } else {
+      pushToast({
+        type: "info",
+        message: "Manual walk",
+      });
+      walk();
+    }
+  };
+
   return {
     ...mutation,
     start,
@@ -108,6 +137,24 @@ export function useWalk({ url, noWalk = false }: UseWalkProps) {
       ]);
       walk();
     },
-    isLooping: runningRef.current,
+    isLooping,
+    isPending,
+    isWalking,
+    handleSubmit,
   };
+}
+
+const WalkContext = createContext<ReturnType<typeof useWalk> | null>(null);
+
+export function usePanelWalk() {
+  const context = useContext(WalkContext);
+  if (!context) {
+    throw new Error("usePanelWalk must be used within a WalkProvider");
+  }
+  return context;
+}
+
+export function WalkProvider({ children }: { children: React.ReactNode }) {
+  const walk = useWalk({});
+  return <WalkContext.Provider value={walk}>{children}</WalkContext.Provider>;
 }

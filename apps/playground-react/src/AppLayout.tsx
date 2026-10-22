@@ -2,7 +2,13 @@ import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
 import { Item } from "walker-react";
-import { Panel } from "walker-react/ui";
+import {
+  Panel,
+  PanelContent,
+  PanelInput,
+  PanelMenu,
+  PanelPopup,
+} from "walker-react/ui";
 
 function AppLayout() {
   return (
@@ -15,7 +21,16 @@ function AppLayout() {
       >
         <Toaster />
       </Item>
-      <Panel url={process.env.VITE_WALK_API_URL} />
+      <Panel url={process.env.VITE_WALK_API_URL}>
+        <PanelContent>
+          <PanelInput />
+          <PanelPopup
+            tabs={{
+              default: <PanelMenu />,
+            }}
+          />
+        </PanelContent>
+      </Panel>
     </div>
   );
 }

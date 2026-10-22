@@ -1,28 +1,22 @@
 import {
   usePanel,
   usePanelToast,
+  usePanelWalk,
   useRuntime,
   useWalk,
-  useWalkerInput,
 } from "@/walker/hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { useMemo, useRef, type RefObject } from "react";
-import {
-  useHotkey,
-  useHotkeySequence,
-  useKeyHold,
-} from "@tanstack/react-hotkeys";
+import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { cn } from "cn";
-import { PanelPopup } from "./PanelPopup";
-import { PanelInput } from "./PanelInput";
 import { Button } from "@/components/ui/button";
 import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
-import { PanelMenu } from "./PanelMenu";
 import { togglePanelPosition } from "./Panel";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
+import { useConfig } from "@/walker/hooks/useConfig";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -42,30 +36,19 @@ export const panelContentVariants = cva(
 
 type PanelContentProps = {
   className?: string;
+  children?: React.ReactNode;
 };
 
-export function PanelContent({ className }: PanelContentProps) {
-  const {
-    isHidden,
-    setIsHidden,
-    url,
-    style,
-    tab,
-    setTab,
-    modal,
-    setModal,
-    position,
-    setPosition,
-  } = usePanel();
+export function PanelContent({ className, children }: PanelContentProps) {
+  const { isHidden, setIsHidden, style, tab, setTab, position, setPosition } =
+    usePanel();
+  const { config, setConfig } = useConfig();
 
-  const { input, setInput } = useWalkerInput();
   const ref = useRef<HTMLDivElement>(null);
-  const { actionsInQueueCount, walk, isWalking, setConfig, config, runtime } =
-    useRuntime();
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { mutate, isPending, start, isLooping, stop } = useWalk({
-    url,
-  });
+  const { handleSubmit, isPending, isLooping, isWalking, stop } =
+    usePanelWalk();
+  const { runtime } = useRuntime();
   function handleClickOutside() {
     setIsHidden(true);
   }
@@ -196,29 +179,6 @@ export function PanelContent({ className }: PanelContentProps) {
 
   const { pushToast } = usePanelToast();
 
-  const handleSubmit = () => {
-    if (isLooping || isWalking || isPending) {
-      stop();
-      return;
-    }
-    if (actionsInQueueCount === 0 && !isPending && !isWalking) {
-      if (input.trim() === "") {
-        pushToast({
-          type: "info",
-          message: "Input is empty, please instruct Walker.",
-        });
-        return;
-      }
-      start();
-    } else {
-      pushToast({
-        type: "info",
-        message: "Manual walk",
-      });
-      walk();
-    }
-  };
-
   const isCtrlHold = useKeyHold("Control");
   const isMHold = useKeyHold("M");
   const isMenuHold = useMemo(
@@ -228,13 +188,7 @@ export function PanelContent({ className }: PanelContentProps) {
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
-      <PanelInput input={input} setInput={setInput} onSubmit={handleSubmit} />
-      <PanelPopup
-        selectedTab={tab}
-        tabs={{
-          default: <PanelMenu />,
-        }}
-      ></PanelPopup>
+      {children}
       <div className="w-full flex gap-1.5">
         <Button
           variant="ghost"

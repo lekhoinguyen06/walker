@@ -1,15 +1,15 @@
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import { cn } from "@/lib/utils";
-import type { PanelTabType } from "./Panel";
+import { usePanel } from "@/walker/hooks";
 
 type PanelPopupProps = {
-  selectedTab?: PanelTabType;
   tabs: { [key in "default"]: React.ReactNode };
-  children?: React.ReactNode;
+  className?: string;
 };
 
-export function PanelPopup({ selectedTab, tabs }: PanelPopupProps) {
+export function PanelPopup({ tabs, className }: PanelPopupProps) {
+  const { tab: selectedTab } = usePanel();
   return (
     <motion.div
       initial={{ marginBottom: -6 }}
@@ -22,7 +22,7 @@ export function PanelPopup({ selectedTab, tabs }: PanelPopupProps) {
       <AnimatePresence>
         {selectedTab && (
           <motion.div
-            className={cn("w-full flex items-center")}
+            className={cn("w-full flex items-center", className)}
             key={selectedTab}
             initial={{ y: -32, height: 0, opacity: 0 }}
             animate={{
