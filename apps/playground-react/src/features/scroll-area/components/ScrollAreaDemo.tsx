@@ -29,7 +29,7 @@ export function ScrollAreaDemo() {
                 <Item
                   id={tag}
                   description={`Version: ${tag}, click to select this version.`}
-                  flows={JSON.stringify(["click"])}
+                  flows={["click"]}
                 >
                   <div
                     className="text-sm"

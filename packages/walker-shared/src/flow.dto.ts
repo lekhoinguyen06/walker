@@ -23,6 +23,8 @@ export type FlowItemType = z.infer<typeof FlowItemSchema>;
 
 export type FlowRegistry = Map<string, FlowType>;
 
+export type WebFlows = "click" | "input" | "none";
+
 export type CreateFlowBodySchemaProps<T> = {
   flow: string;
   schema?: T;

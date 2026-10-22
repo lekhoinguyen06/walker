@@ -20,7 +20,7 @@ export function ToastDemo() {
     <Item
       id="toast-trigger"
       description="Click the button below to show a toast notification."
-      flows={JSON.stringify(["click"])}
+      flows={["click"]}
     >
       <Button variant="outline" onClick={showToast}>
         Show Toast

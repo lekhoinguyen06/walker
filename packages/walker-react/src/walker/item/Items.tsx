@@ -32,7 +32,9 @@ declare module "react" {
 export type ElementProps = Required<
   Pick<WalkerElementProps, "id" | "description">
 > &
-  Partial<WalkerElementProps> & {
+  Partial<Omit<WalkerElementProps, "state" | "flows">> & {
+    state?: any;
+    flows?: string[];
     children?: React.ReactNode;
   };
 
@@ -42,13 +44,13 @@ export function Base(props: ElementProps) {
     <walker-element
       id={slugify(props.id)}
       description={props.description}
-      flows={props.flows ?? ""}
+      flows={JSON.stringify(props.flows ?? "")}
       type={props.type ?? "item"}
       refId={props.refId ?? null}
       raw={false}
       content={false}
       scope={state}
-      state={props.state ?? ""}
+      state={JSON.stringify(props.state ?? "")}
     >
       {props.children}
     </walker-element>

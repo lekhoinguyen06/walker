@@ -46,7 +46,7 @@ export function DialogDemo() {
           <Item
             id="dialog-trigger-open"
             description="Click to open the dialog"
-            flows={JSON.stringify(["click"])}
+            flows={["click"]}
           >
             <DialogTrigger
               render={<Button variant="outline">Open Dialog</Button>}
@@ -72,7 +72,7 @@ export function DialogDemo() {
                     id="name-input-field"
                     description="The input for the name"
                     state={name}
-                    flows={JSON.stringify(["input"])}
+                    flows={["input"]}
                   >
                     <Input
                       id="name-1"
@@ -88,7 +88,7 @@ export function DialogDemo() {
                     id="username-input-field"
                     description="The input for the username"
                     state={username}
-                    flows={JSON.stringify(["input"])}
+                    flows={["input"]}
                   >
                     <Input
                       id="username-1"
@@ -103,7 +103,7 @@ export function DialogDemo() {
                 <Item
                   id="dialog-trigger-close"
                   description="Click to close the dialog"
-                  flows={JSON.stringify(["click"])}
+                  flows={["click"]}
                 >
                   <DialogClose
                     render={<Button variant="outline">Cancel</Button>}
@@ -112,7 +112,7 @@ export function DialogDemo() {
                 <Item
                   id="dialog-submit-button"
                   description="Click to save changes and close the dialog"
-                  flows={JSON.stringify(["click"])}
+                  flows={["click"]}
                 >
                   <Button type="submit" onClick={() => setIsOpen(false)}>
                     Save changes
