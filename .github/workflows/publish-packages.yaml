@@ -3,6 +3,12 @@ name: Publish package to npmjs
 on:
   release:
     types: [published]
+    workflow_dispatch:
+      inputs:
+        release_tag:
+          description: "Package release tag, e.g. walker-core@0.1.1"
+          required: true
+          type: string
 
 jobs:
   build:
@@ -22,6 +28,8 @@ jobs:
       - name: Validate release tag
         id: package
         run: bun run .github/scripts/resolve-release-package.ts >> "$GITHUB_OUTPUT"
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
 
       - name: Build package and workspace dependencies
         run: bunx turbo run build --filter="${{ steps.package.outputs.name }}..."
