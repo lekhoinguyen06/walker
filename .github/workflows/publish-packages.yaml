@@ -30,4 +30,4 @@ jobs:
         working-directory: packages/${{ steps.package.outputs.name }}
         run: bun publish --no-git-checks --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
