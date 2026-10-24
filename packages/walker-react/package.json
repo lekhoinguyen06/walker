@@ -1,6 +1,6 @@
 {
   "name": "walker-react",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Walker library adapter for React framework",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -24,6 +24,9 @@
     },
     "./index.css": "./dist/index.css"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "bunup",
     "dev": "bunup --watch",
