@@ -6,8 +6,42 @@ description: 'These are the TypeScript libraries built by the community to help 
 ## Installation
 
 ```bash
-npm install @walker/ts
+npm install walker-ts
 ```
 
+### Create Server instance
 
+The `createWalker` method accept any AI-SDK-compatible model, with type `LanguageModel`.
 
+```typescript
+import { anthropic } from "@ai-sdk/anthropic";
+import { createWalker } from "walker-ts"
+
+const ai = anthropic("claude-sonnet-5-5");
+const walker = createWalker({ ai });
+```
+
+### Integrate
+
+<CodeGroup>
+
+```typescript Hono
+import { Hono } from "hono";
+import { walker } from "./walker";
+
+const app = new Hono();
+app.all("/api/walker/*", (c) => walker.handler(c.req.raw));
+```
+
+```typescript Express
+import express from "express";
+import { toNodeHandler } from "better-auth/node";
+import { walker } from "./walker";
+
+const app = express();
+const port = 3000;
+app.all("/api/walker/*", toNodeHandler(walker));
+app.use(express.json());
+```
+
+</CodeGroup>

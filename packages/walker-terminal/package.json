@@ -1,22 +1,39 @@
 {
-  "name": "walker-cli",
+  "name": "walker-terminal",
+  "version": "0.1.2",
+  "description": "Walker Terminal CLI.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
   "module": "src/index.tsx",
   "type": "module",
-  "private": true,
   "bin": {
-    "walker": "src/index.tsx"
+    "walker": "dist/index.js"
   },
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "bun run --watch src/index.tsx",
     "dev:server": "bun run --hot src/app.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "bunup"
   },
   "devDependencies": {
     "@types/bun": "1.3.14",
     "@types/react": "^19.3.0",
+    "bunup": "^0.16.32",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "walker-server": "workspace:^",
     "@ai-sdk/amazon-bedrock": "^5.0.118",
     "@ai-sdk/openai-compatible": "^3.0.71",
     "@openrouter/ai-sdk-provider": "^3.1.0",
@@ -26,7 +43,6 @@
     "hono": "^4.13.10",
     "itty-router": "^5.0.24",
     "react": "^19.2.8",
-    "walker-server": "workspace:*",
     "zod": "^4.6.7",
     "zustand": "^5.0.15"
   },

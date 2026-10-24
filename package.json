@@ -8,7 +8,7 @@
     "gen-api": "turbo run gen-api",
     "dev": "turbo run dev",
     "dev:react": "turbo run dev --filter=playground-react...",
-    "dev:cli": "turbo run dev --filter=\"./packages/walker-cli\"...",
+    "dev:terminal": "turbo run dev --filter=\"./packages/walker-terminal\"...",
     "dev:landing": "turbo run dev --filter=landing...",
     "build:react": "turbo run build --filter=playground-react...",
     "build:landing": "turbo run build --filter=landing...",

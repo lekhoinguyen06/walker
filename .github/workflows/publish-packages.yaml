@@ -1,7 +1,15 @@
-name: Publish Package to npmjs
+name: Publish package to npmjs
+
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Package release tag, e.g. walker-core@0.1.1"
+        required: true
+        type: string
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,11 +17,27 @@ jobs:
     permissions:
       contents: read
       id-token: write
+
     steps:
       - uses: actions/checkout@v7
+
       - uses: oven-sh/setup-bun@v2
+
       - run: bun install
-      - run: bun run build:packages
-      - run: bun publish --recursive --no-git-checks --provenance --access public
+
+      - name: Validate release tag
+        id: package
+        run: bun run .github/scripts/resolve-release-package.ts >> "$GITHUB_OUTPUT"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+
+      - name: Build package and workspace dependencies
+        run: |
+          echo "Resolved package: ${{ steps.package.outputs.name }}, running build with command 'bunx turbo run build --filter=${{ steps.package.outputs.name }}...'"
+          bunx turbo run build --filter="${{ steps.package.outputs.name }}..."
+
+      - name: Publish package
+        working-directory: packages/${{ steps.package.outputs.name }}
+        run: bun publish --no-git-checks --provenance --access public
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -156,8 +156,8 @@ export const useConfigStore = create<ConfigStoreType>((set, get) => ({
 }));
 
 const dir = process.env.XDG_CONFIG_HOME
-  ? join(process.env.XDG_CONFIG_HOME, "walker-cli")
-  : join(homedir(), ".config", "walker-cli");
+  ? join(process.env.XDG_CONFIG_HOME, "walker-terminal")
+  : join(homedir(), ".config", "walker-terminal");
 const file = Bun.file(join(dir, "config.json"));
 
 export async function loadConfig(): Promise<ConfigType> {
@@ -178,14 +178,14 @@ async function saveState(state: ConfigType): Promise<void> {
 
 export async function getSecret(name: string): Promise<string | null> {
   return await Bun.secrets.get({
-    service: "walker-cli",
+    service: "walker-terminal",
     name,
   });
 }
 
 export async function setSecret(name: string, value: string): Promise<void> {
   await Bun.secrets.set({
-    service: "walker-cli",
+    service: "walker-terminal",
     name,
     value,
   });
