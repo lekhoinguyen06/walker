@@ -1,6 +1,6 @@
 {
   "name": "walker-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Walker Server library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -14,6 +14,9 @@
       "require": "./dist/index.cjs"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "bunup --watch",
     "build": "bunup",
