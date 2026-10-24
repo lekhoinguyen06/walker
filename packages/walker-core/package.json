@@ -36,9 +36,9 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "walker-shared": "workspace:^",
     "@types/object-hash": "^3.0.6",
     "chalk": "^6.0.0",
-    "walker-shared": "workspace:*",
     "zod": "^4.6.5"
   }
 }

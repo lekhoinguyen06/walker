@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "walker-react": "workspace:^",
     "@ai-sdk/react": "^4.0.34",
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/geist": "^5.2.8",
     "@monaco-editor/react": "^4.7.0",
-    "walker-react": "workspace:*",
     "@shadcn/helpers": "^0.2.0",
     "@shadcn/react": "^0.2.1",
     "@tailwindcss/vite": "^4.2.0",

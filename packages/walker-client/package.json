@@ -1,6 +1,6 @@
 {
   "name": "walker-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Walker Client library. It includes generated SDK and HTTP client.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -26,10 +26,10 @@
     "build": "bunup"
   },
   "devDependencies": {
+    "walker-server": "workspace:^",
     "@hey-api/openapi-ts": "0.0.0-next-20260824173136",
     "@types/bun": "latest",
-    "bunup": "^0.16.32",
-    "walker-server": "workspace:*"
+    "bunup": "^0.16.32"
   },
   "peerDependencies": {
     "typescript": "^7"

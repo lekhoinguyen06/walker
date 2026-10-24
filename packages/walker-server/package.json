@@ -1,6 +1,6 @@
 {
   "name": "walker-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Walker Server library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -37,13 +37,13 @@
     "typescript": "^7"
   },
   "dependencies": {
+    "walker-core": "workspace:^",
+    "walker-skill": "workspace:^",
     "@openrouter/ai-sdk-provider": "^3.1.0",
     "@types/supertest": "^7.2.1",
     "ai": "^7.0.127",
     "axios": "^1.20.0",
     "itty-router": "^5.0.24",
-    "walker-core": "workspace:*",
-    "walker-skill": "workspace:*",
     "zod": "^4.6.5",
     "zod-openapi": "^6.0.2"
   }

@@ -1,6 +1,6 @@
 {
   "name": "walker-terminal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Walker Terminal CLI.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -33,6 +33,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "walker-server": "workspace:^",
     "@ai-sdk/amazon-bedrock": "^5.0.118",
     "@ai-sdk/openai-compatible": "^3.0.71",
     "@openrouter/ai-sdk-provider": "^3.1.0",
@@ -42,7 +43,6 @@
     "hono": "^4.13.10",
     "itty-router": "^5.0.24",
     "react": "^19.2.8",
-    "walker-server": "workspace:*",
     "zod": "^4.6.7",
     "zustand": "^5.0.15"
   },
