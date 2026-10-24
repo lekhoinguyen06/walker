@@ -1,8 +1,11 @@
 {
-  "name": "walker-cli",
+  "name": "walker-terminal",
+  "version": "0.1.0",
+  "description": "Walker Terminal CLI.",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
   "module": "src/index.tsx",
   "type": "module",
-  "private": true,
   "bin": {
     "walker": "src/index.tsx"
   },
