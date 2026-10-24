@@ -14,71 +14,77 @@ type SuggestType = {
   body: WalkerUINodeType;
 };
 
-const conciergeSuggest: SuggestType = {
-  prompt: "Let's go to Concierge",
-  thumbnail: {
-    type: "img",
-    attributes: {
-      class: "size-full object-cover",
-      url: "https://i.pinimg.com/1200x/a4/36/60/a43660b58cc3bc73a74891b5d3057fba.jpg",
-      alt: "Suggest",
-    },
-  },
-  body: {
-    type: "div",
-    attributes: {
-      class:
-        "w-full rounded-[24px] flex flex-col p-1.5 gap-1.5 bg-red-50 dark:bg-red-950 hover:cursor-pointer",
-    },
-    children: [
-      {
-        type: "div",
-        attributes: {
-          class: "w-full p-1.5 text-red-500 bg-background rounded-[16px]",
-        },
-        children: [
-          {
-            type: "raw",
-            attributes: {
-              value:
-                "We are on a mission to building the world for those who care. Try out Concierge! It is a managed Walker Server to help you create enterprise-grade Walker Apps.",
-            },
-          },
-        ],
+function conciergeSuggest({
+  thumbnailUrl,
+}: {
+  thumbnailUrl: string;
+}): SuggestType {
+  return {
+    prompt: "Let's go to Concierge",
+    thumbnail: {
+      type: "img",
+      attributes: {
+        class:
+          "size-full object-fit p-1.5 hover:cursor-pointer hover:scale-120 transition-all duration-200 bg-primary",
+        url: thumbnailUrl,
+        alt: "Suggest",
       },
-      {
-        type: "div",
-        attributes: {
-          class: "w-full h-8 flex gap-3 items-center rounded-full p-1 px-3",
-        },
-        children: [
-          {
-            type: "img",
-            attributes: {
-              class: "h-4",
-              url: "https://vstaffs.com/concierge-logo.svg",
-              alt: "Concierge",
-            },
+    },
+    body: {
+      type: "div",
+      attributes: {
+        class:
+          "w-full flex flex-col rounded-[24px] p-1.5 gap-1.5 bg-red-50 dark:bg-red-950 hover:cursor-pointer",
+      },
+      children: [
+        {
+          type: "div",
+          attributes: {
+            class: "w-full p-1.5 text-red-500 bg-background rounded-[16px]",
           },
-          {
-            type: "div",
-            attributes: {
-              class: "w-full text-red-500 font-semibold",
-            },
-            children: [
-              {
-                type: "raw",
-                attributes: {
-                  value: "For apps that matters.",
-                },
+          children: [
+            {
+              type: "raw",
+              attributes: {
+                value: "Creating enterprise-grade Walker Apps with Concierge.",
               },
-            ],
+            },
+          ],
+        },
+        {
+          type: "div",
+          attributes: {
+            class: "w-full h-8 flex gap-3 items-center rounded-full p-1 px-3",
           },
-        ],
-      },
-    ],
-  },
-};
+          children: [
+            {
+              type: "img",
+              attributes: {
+                class: "h-4",
+                url: "https://vstaffs.com/concierge-logo.svg",
+                alt: "Concierge",
+              },
+            },
+            {
+              type: "div",
+              attributes: {
+                class: "w-full text-red-500 font-semibold",
+              },
+              children: [
+                {
+                  type: "raw",
+                  attributes: {
+                    value: "For apps that matters.",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  };
+}
 
 function render(node: WalkerUINodeType) {
   switch (node.type) {
@@ -95,7 +101,7 @@ function render(node: WalkerUINodeType) {
         />
       );
     case "raw":
-      return <div>{node.attributes?.value}</div>;
+      return <span {...node.attributes}>{node.attributes?.value}</span>;
     default:
       return null;
   }
@@ -110,7 +116,13 @@ function SuggestThumbnail({ thumbnail }: SuggestType) {
   return render(thumbnail);
 }
 
-const suggestionList: SuggestType[] = [conciergeSuggest];
+const suggestionList: SuggestType[] = [
+  conciergeSuggest({ thumbnailUrl: "/frame-01.svg" }),
+  conciergeSuggest({ thumbnailUrl: "/frame-02.svg" }),
+  conciergeSuggest({ thumbnailUrl: "/frame-03.svg" }),
+  conciergeSuggest({ thumbnailUrl: "/frame-04.svg" }),
+  conciergeSuggest({ thumbnailUrl: "/frame-05.svg" }),
+];
 
 export function PanelSuggest() {
   const [count, setCount] = useState<number>(0);

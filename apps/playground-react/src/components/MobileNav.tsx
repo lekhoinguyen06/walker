@@ -30,7 +30,7 @@ export function MobileNav() {
           id="mobile-nav-trigger"
           description="This is the mobile navigation trigger, click it to open the mobile navigation menu."
           scope={state}
-          flows={JSON.stringify(["click"])}
+          flows={["click"]}
         >
           <Button
             variant="ghost"

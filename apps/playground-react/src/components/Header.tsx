@@ -16,7 +16,7 @@ export default function Header() {
           <Link
             id="navigation-button-home"
             description="This is the Walker logo, click it to go back to the home page."
-            flows={JSON.stringify(["click"])}
+            flows={["click"]}
           >
             <a href="/">
               <img

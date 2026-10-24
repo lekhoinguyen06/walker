@@ -55,7 +55,7 @@ export function PanelToast() {
           transition={{ duration: 0.4, type: "spring" }}
           className={cn(panelToastVariants({ type: toast.type }))}
         >
-          <div className="w-full flex items-center mb-1.5 min-h-8">
+          <div className="w-full min-w-full flex flex-col items-stretch justify-center mb-1.5 min-h-8">
             {toast.render ? (
               toast.render
             ) : (
