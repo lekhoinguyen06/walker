@@ -117,11 +117,11 @@ function SuggestThumbnail({ thumbnail }: SuggestType) {
 }
 
 const suggestionList: SuggestType[] = [
-  conciergeSuggest({ thumbnailUrl: "/frame-01.svg" }),
-  conciergeSuggest({ thumbnailUrl: "/frame-02.svg" }),
-  conciergeSuggest({ thumbnailUrl: "/frame-03.svg" }),
-  conciergeSuggest({ thumbnailUrl: "/frame-04.svg" }),
-  conciergeSuggest({ thumbnailUrl: "/frame-05.svg" }),
+  conciergeSuggest({ thumbnailUrl: "https://walker.vstaffs.com/frame-01.svg" }),
+  conciergeSuggest({ thumbnailUrl: "https://walker.vstaffs.com/frame-02.svg" }),
+  conciergeSuggest({ thumbnailUrl: "https://walker.vstaffs.com/frame-03.svg" }),
+  conciergeSuggest({ thumbnailUrl: "https://walker.vstaffs.com/frame-04.svg" }),
+  conciergeSuggest({ thumbnailUrl: "https://walker.vstaffs.com/frame-05.svg" }),
 ];
 
 export function PanelSuggest() {
