@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "docs": "cd ./docs && mint dev",
+    "bake": "cd ./banhmi && bun run index.ts",
     "gen-doc": "turbo run gen-doc",
     "gen-api": "turbo run gen-api",
     "dev": "turbo run dev",
@@ -38,6 +39,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "banhmi": "^0.1.1",
     "lint-staged": "^17.5.1"
   },
   "peerDependencies": {
