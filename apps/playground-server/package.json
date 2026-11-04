@@ -11,7 +11,7 @@
     "agents": "^0.33.0",
     "ai": "^7.0.162",
     "hono": "^4.13.16",
-    "walker-server": "^0.1.2",
+    "walker-server": "workspace:^",
     "workers-ai-provider": "^4.0.1"
   },
   "devDependencies": {
