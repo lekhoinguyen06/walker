@@ -7,10 +7,10 @@ export function envFactory(mode: string) {
     return {
       "process.env.VITE_APP_ENV": JSON.stringify("production"),
       "process.env.VITE_CHAT_API_URL": JSON.stringify(
-        "https://api.vstaffs.com/api/concierge",
+        "https://playground-server.khoinguyenbenz.workers.dev",
       ),
       "process.env.VITE_WALK_API_URL": JSON.stringify(
-        "https://api.vstaffs.com/api/concierge",
+        "https://playground-server.khoinguyenbenz.workers.dev",
       ),
     };
   } else if (mode === "development" || mode === "test") {
