@@ -9,6 +9,7 @@
       "concept_map",
       "concept_client",
       "concept_server",
+      "concept_flow",
       "concept_item"
     ]
   ]

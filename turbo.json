@@ -11,6 +11,10 @@
       "cache": false,
       "persistent": true
     },
+    "bake": {
+      "cache": false,
+      "persistent": true
+    },
     "gen-doc": {
       "dependsOn": ["^gen-doc"],
       "inputs": ["$TURBO_DEFAULT$"],

@@ -22,7 +22,7 @@
     "bunup": "^0.16.32"
   },
   "scripts": {
-    "build": "bun run ./src/index.ts && bunup"
+    "bake": "bun run ./src/index.ts && bunup"
   },
   "peerDependencies": {
     "typescript": "^7"

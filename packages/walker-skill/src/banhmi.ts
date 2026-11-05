@@ -8,7 +8,7 @@ const domains = [
   "concept_client",
   "concept_server",
   "concept_item",
-  "concept_item",
+  "concept_flow",
   "concept_history",
   "concept_action",
   "concept_map",
