@@ -1,7 +1,7 @@
 import { defineConfig } from "bunup";
 
 export default defineConfig({
-  entry: "./index.ts",
+  entry: "./src/generated/index.ts",
   name: "node",
   format: ["esm", "cjs"],
   target: "node",

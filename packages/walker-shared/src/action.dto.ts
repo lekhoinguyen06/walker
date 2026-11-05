@@ -5,7 +5,7 @@ export const ActionSchema = z
     flow: z.string(),
     message: z.string(),
     targetId: z.string(),
-    prompt: z.string(),
+    next: z.string(),
   })
   .loose();
 
