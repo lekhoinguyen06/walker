@@ -5,6 +5,12 @@ PAGE("developer_preference", {});
 TEXT(`
 # Developer Preference
 
+## Commit conventions
+
+<task>(<scope>): <subject>
+
+eg. feat(skill): generate walk skill with banhmi
+
 ## Agent
 
 Response:
