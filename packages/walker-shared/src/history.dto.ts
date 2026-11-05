@@ -10,7 +10,6 @@ export const LogItemSchema = z.object({
 });
 
 export const HistorySchema = z.object({
-  prompt: z.string(),
   flow: FlowItemSchema,
   action: ActionSchema,
   map: MapSchema,

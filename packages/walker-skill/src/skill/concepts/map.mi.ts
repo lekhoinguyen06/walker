@@ -1,14 +1,17 @@
 import { CODE, PAGE, TEXT } from "../../banhmi";
 
-PAGE("concept_map", {
-  viewRefs: ["all"],
-});
+PAGE("concept_map", {});
 
-TEXT(`
+TEXT(
+  `
 # Map
 
 A record consist of Items to show the map of the Walker Client
-  `);
+  `,
+  {
+    viewRefs: ["all"],
+  },
+);
 
 CODE(
   `
@@ -17,5 +20,6 @@ export type MapType = z.infer<typeof MapSchema>;
   `,
   {
     language: "ts",
+    viewRefs: ["all"],
   },
 );

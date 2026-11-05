@@ -41,7 +41,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "banhmi": "^0.1.4",
+    "banhmi": "^0.1.5",
     "lint-staged": "^17.5.1"
   },
   "peerDependencies": {

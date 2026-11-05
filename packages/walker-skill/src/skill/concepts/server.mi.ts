@@ -1,11 +1,14 @@
 import { CODE, PAGE, TEXT } from "../../banhmi";
 
-PAGE("concept_server", {
-  viewRefs: ["all"],
-});
+PAGE("concept_server", {});
 
-TEXT(`
+TEXT(
+  `
 # Server
 
 Server is the backend application that hosts Walker.
-  `);
+  `,
+  {
+    viewRefs: ["all"],
+  },
+);

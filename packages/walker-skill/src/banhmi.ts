@@ -1,10 +1,12 @@
 import { getBanhMi } from "banhmi";
 
 const domains = [
+  "agent_preference",
   "agent_flow",
   "agent_walk",
   "about",
   "concept",
+  "concept_walk",
   "concept_client",
   "concept_server",
   "concept_item",

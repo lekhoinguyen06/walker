@@ -49,9 +49,6 @@
                     "items": {
                       "type": "object",
                       "properties": {
-                        "prompt": {
-                          "type": "string"
-                        },
                         "flow": {
                           "type": "object",
                           "properties": {
@@ -77,11 +74,11 @@
                             "targetId": {
                               "type": "string"
                             },
-                            "prompt": {
+                            "next": {
                               "type": "string"
                             }
                           },
-                          "required": ["flow", "message", "targetId", "prompt"],
+                          "required": ["flow", "message", "targetId", "next"],
                           "additionalProperties": {}
                         },
                         "map": {
@@ -113,7 +110,7 @@
                           }
                         }
                       },
-                      "required": ["prompt", "flow", "action", "map", "logs"]
+                      "required": ["flow", "action", "map", "logs"]
                     }
                   },
                   "flows": {
@@ -170,7 +167,7 @@
                     "end": false
                   },
                   "metadata": {
-                    "timestamp": "2026-11-05T03:53:19.608Z",
+                    "timestamp": "2026-11-05T07:51:18.108Z",
                     "usage": {
                       "inputTokens": 1005,
                       "inputTokenDetails": {
@@ -202,11 +199,11 @@
                         "targetId": {
                           "type": "string"
                         },
-                        "prompt": {
+                        "next": {
                           "type": "string"
                         }
                       },
-                      "required": ["flow", "message", "targetId", "prompt"],
+                      "required": ["flow", "message", "targetId", "next"],
                       "additionalProperties": {}
                     },
                     "metadata": {

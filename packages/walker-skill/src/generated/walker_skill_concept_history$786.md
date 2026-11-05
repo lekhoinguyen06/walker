@@ -17,3 +17,11 @@ export const HistorySchema = z.object({
 
 export type HistoryType = z.infer<typeof HistorySchema>;
 ```
+
+.flow: the flow executed.
+.action: the action executed.
+.map: the map of the time the action was executed.
+
+- History map will be the old map, if the user prompt requires stateful walks, you can refer to this history items maps to see what changes.
+  .logs: the logs of between the time the action was executed and the next walk, attached by Walker Client.
+  .

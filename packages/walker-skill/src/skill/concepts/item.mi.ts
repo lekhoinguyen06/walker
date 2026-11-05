@@ -1,14 +1,17 @@
 import { CODE, PAGE, TEXT } from "../../banhmi";
 
-PAGE("concept_item", {
-  viewRefs: ["all"],
-});
+PAGE("concept_item", {});
 
-TEXT(`
+TEXT(
+  `
 # Item
 
 An object that represent an interactable entity on Walker Client.
-  `);
+  `,
+  {
+    viewRefs: ["all"],
+  },
+);
 
 CODE(
   `
@@ -40,5 +43,6 @@ export const MapItemSchema: z.ZodType<MapItemType> = ItemSchema.extend({
   `,
   {
     language: "ts",
+    viewRefs: ["all"],
   },
 );

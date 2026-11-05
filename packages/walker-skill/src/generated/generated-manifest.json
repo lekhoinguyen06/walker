@@ -1,16 +1,19 @@
 {
   "files": [
     [
+      "agent_preference",
       "agent_walk",
       "agent_flow",
       "about",
       "concept_action",
       "concept_history",
       "concept_map",
+      "concept_walk",
       "concept_client",
       "concept_server",
       "concept_flow",
-      "concept_item"
+      "concept_item",
+      "all"
     ]
   ]
 }

@@ -28,6 +28,6 @@
     "typescript": "^7"
   },
   "dependencies": {
-    "banhmi": "^0.1.4"
+    "banhmi": "^0.1.5"
   }
 }

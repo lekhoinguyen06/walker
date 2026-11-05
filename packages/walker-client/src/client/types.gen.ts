@@ -45,7 +45,6 @@ export type GetApiWalkerHealthResponse =
 export type PostApiWalkerWalkData = {
   body?: {
     history: Array<{
-      prompt: string;
       flow: {
         command: string;
         description: string;
@@ -55,7 +54,7 @@ export type PostApiWalkerWalkData = {
         flow: string;
         message: string;
         targetId: string;
-        prompt: string;
+        next: string;
         [key: string]: unknown;
       };
       map: {
@@ -92,7 +91,7 @@ export type PostApiWalkerWalkResponses = {
       flow: string;
       message: string;
       targetId: string;
-      prompt: string;
+      next: string;
       [key: string]: unknown;
     };
     metadata: {

@@ -8,29 +8,7 @@ import { generateText, Output, type LanguageModel } from "ai";
 import { ActionSchema } from "walker-core";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
 import z from "zod";
-import {
-  walker_skill_about$407,
-  walker_skill_agent_flow$335,
-  walker_skill_agent_walk$239,
-  walker_skill_concept_client$181,
-  walker_skill_concept_server$196,
-  walker_skill_concept_action$519,
-  walker_skill_concept_history$429,
-  walker_skill_concept_item$849,
-  walker_skill_concept_map$328,
-} from "walker-skill";
-
-const walkerSkill = [
-  walker_skill_about$407,
-  walker_skill_agent_flow$335,
-  walker_skill_agent_walk$239,
-  walker_skill_concept_client$181,
-  walker_skill_concept_server$196,
-  walker_skill_concept_action$519,
-  walker_skill_concept_history$429,
-  walker_skill_concept_item$849,
-  walker_skill_concept_map$328,
-];
+import { walker_skill_all$4814 } from "walker-skill";
 
 type WalkRequestType = {
   content: WalkRequestBodyDTO | undefined;
@@ -45,7 +23,7 @@ export const walkController = async (req: WalkRequestType) => {
     if (!body.success) {
       throw new StatusError(400, {
         status: 400,
-        message: "Invalid request body",
+        message: JSON.parse(body.error.message),
         error: body.error.message,
       } satisfies ErrorResponseDTO);
     }
@@ -59,7 +37,7 @@ export const walkController = async (req: WalkRequestType) => {
       }),
       prompt: JSON.stringify({
         ...body.data,
-        skill: [walkerSkill],
+        skill: [walker_skill_all$4814],
         role: "Flow Picker",
       }),
       maxOutputTokens: 10000,
@@ -86,7 +64,7 @@ export const walkController = async (req: WalkRequestType) => {
       }),
       prompt: JSON.stringify({
         ...body.data,
-        skill: [walkerSkill],
+        skill: [walker_skill_all$4814],
         role: "Action Generator",
       }),
       maxOutputTokens: 10000,

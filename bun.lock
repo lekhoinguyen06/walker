@@ -5,7 +5,7 @@
     "": {
       "name": "walker",
       "dependencies": {
-        "banhmi": "^0.1.4",
+        "banhmi": "^0.1.5",
         "lint-staged": "^17.5.1",
       },
       "devDependencies": {
@@ -249,7 +249,7 @@
       "name": "walker-skill",
       "version": "0.1.1",
       "dependencies": {
-        "banhmi": "^0.1.4",
+        "banhmi": "^0.1.5",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -1196,7 +1196,7 @@
 
     "balanced-match": ["balanced-match@4.0.4", "", {}, "sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA=="],
 
-    "banhmi": ["banhmi@0.1.4", "", { "peerDependencies": { "typescript": "^7" } }, "sha512-0f1E4yX2ERU+8uFIlTh/kkGz6FRw8VsbehSvndMRr66mHv99f+dX4lLxM+x81nzoqPmKxo8JDBjsS8MKlI8wvQ=="],
+    "banhmi": ["banhmi@0.1.5", "", { "peerDependencies": { "typescript": "^7" } }, "sha512-G8DZ4kYisq0VMamWDwV1lewztzWsmlK+HSZMg3tLEe8m3UgvXL1nZPmaoiMTAfOLi3SRgbxsC3ps9lOJx1U2+Q=="],
 
     "baseline-browser-mapping": ["baseline-browser-mapping@2.11.26", "", { "bin": { "baseline-browser-mapping": "dist/cli.cjs" } }, "sha512-GLQdD3y6UF8iVuMJl5fHgE4jdn/ua7n+toKfLgNlg3BqQtOZjpy68T8Tup8/wGWZCDlm7KMg7tPb4MPn7oN0TQ=="],
 
