@@ -7,6 +7,7 @@ import { ChatDialog } from "../dev/Chat";
 import { cn } from "@/lib/utils";
 import { PanelHelp } from "./PanelHelp";
 import type { PanelDialogType } from "@/walker/constants/panel.const";
+import { InputDialog } from "../dev/Input";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();
@@ -17,6 +18,7 @@ export function PanelDialogContainter() {
         {dialog == "history" && <HistoryDialog />}
         {dialog == "chat" && <ChatDialog />}
         {dialog == "help" && <PanelHelp />}
+        {dialog == "input" && <InputDialog />}
       </AnimatePresence>
     </div>
   );

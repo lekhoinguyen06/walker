@@ -13,7 +13,7 @@ export function usePanelHotkeys() {
   const { handleSubmit } = usePanelWalk();
   const { runtime } = useRuntime();
 
-  useHotkey("W", () => {
+  useHotkey("Control+W", () => {
     isHidden ? setIsHidden(false) : setIsHidden(true);
   });
 
@@ -72,6 +72,16 @@ export function usePanelHotkeys() {
     "Control+H",
     () => {
       dialog == "history" ? closeDialog() : openDialog("history");
+    },
+    {
+      enabled: !isHidden,
+    },
+  );
+
+  useHotkey(
+    "Control+I",
+    () => {
+      dialog == "input" ? closeDialog() : openDialog("input");
     },
     {
       enabled: !isHidden,

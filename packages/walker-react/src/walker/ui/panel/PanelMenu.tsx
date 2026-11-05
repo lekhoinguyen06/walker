@@ -1,18 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { usePanel, usePanelToast, useRuntime } from "@/walker/hooks";
+import { usePanelToast, useRuntime } from "@/walker/hooks";
 import {
   CircleQuestionMark,
-  Footprints,
   History,
   Map,
   MessageCircle,
-  PanelBottom,
   RefreshCcw,
+  TextCursor,
 } from "lucide-react";
-import { togglePanelPosition } from "./Panel";
 import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
-import { useConfig } from "@/walker/hooks/useConfig";
 
 export function PanelMenu() {
   const { openDialog, closeDialog, dialog } = usePanelDialog();
@@ -23,7 +20,7 @@ export function PanelMenu() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className={cn("rounded-full")}
         onClick={() => {
           runtime.clear();
           pushToast({
@@ -38,7 +35,10 @@ export function PanelMenu() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className={cn(
+          "rounded-full",
+          dialog == "chat" && "bg-accent text-primary",
+        )}
         onClick={() => (dialog == "chat" ? closeDialog() : openDialog("chat"))}
       >
         <MessageCircle />
@@ -46,7 +46,10 @@ export function PanelMenu() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className={cn(
+          "rounded-full",
+          dialog == "map" && "bg-accent text-primary",
+        )}
         onClick={() => (dialog == "map" ? closeDialog() : openDialog("map"))}
       >
         <Map />
@@ -54,7 +57,10 @@ export function PanelMenu() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className={cn(
+          "rounded-full",
+          dialog == "history" && "bg-accent text-primary",
+        )}
         onClick={() =>
           dialog == "history" ? closeDialog() : openDialog("history")
         }
@@ -64,7 +70,23 @@ export function PanelMenu() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className={cn(
+          "rounded-full",
+          dialog == "input" && "bg-accent text-primary",
+        )}
+        onClick={() =>
+          dialog == "input" ? closeDialog() : openDialog("input")
+        }
+      >
+        <TextCursor />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn(
+          "rounded-full",
+          dialog == "help" && "bg-accent text-primary",
+        )}
         onClick={() => (dialog == "help" ? closeDialog() : openDialog("help"))}
       >
         <CircleQuestionMark />

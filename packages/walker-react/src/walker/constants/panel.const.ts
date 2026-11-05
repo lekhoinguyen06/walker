@@ -3,6 +3,7 @@ export const PANEL_DIALOG_REGISTRY = {
   history: "history",
   chat: "chat",
   map: "map",
+  input: "input",
   help: "help",
 } as const;
 

@@ -24,15 +24,15 @@ export function PanelHelp() {
           </div>
           <div className="flex flex-col size-full p-3 gap-3 overflow-hidden">
             <div className="flex items-center gap-3">
-              <Kbd>W</Kbd>
-              <span>Toggle Walker panel</span>
+              <Kbd>Control</Kbd>+<Kbd>W</Kbd>
+              <span>Toggle Panel</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>Enter</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>Enter</Kbd>
               <span>Walk</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>Space</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>Space</Kbd>
               <span>Focus input</span>
             </div>
             <div className="flex items-center gap-3">
@@ -40,31 +40,31 @@ export function PanelHelp() {
               <span>Open menu</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>L</Kbd>
-              <span>Toggle step or loop mode</span>
-            </div>
-            <div className="flex items-center gap-3">
               <Kbd>Control</Kbd>+<Kbd>C</Kbd>
               <span>Stop the current looping walk</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>H</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>H</Kbd>
               <span>Open history dialog</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>C</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>C</Kbd>
               <span>Open chat dialog</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>M</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>M</Kbd>
               <span>Open map dialog</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>Control</Kbd>+<Kbd>H</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>I</Kbd>
+              <span>Open input dialog</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Kbd>Alt</Kbd>+<Kbd>H</Kbd>
               <span>Clear walk history</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>Control</Kbd>+<Kbd>/</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>,</Kbd>
               <span>Open help</span>
             </div>
           </div>
