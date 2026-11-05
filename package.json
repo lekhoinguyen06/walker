@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "docs": "cd ./docs && mint dev",
-    "bake": "turbo run bake --filter=\"./packages/walker-skill\"",
+    "bake": "bun run ./banhmi/index.ts &&turbo run bake --filter=\"./packages/walker-skill\"",
     "gen-doc": "turbo run gen-doc",
     "gen-api": "turbo run gen-api",
     "dev": "turbo run dev",
@@ -41,7 +41,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "banhmi": "^0.1.1",
+    "banhmi": "^0.1.4",
     "lint-staged": "^17.5.1"
   },
   "peerDependencies": {
