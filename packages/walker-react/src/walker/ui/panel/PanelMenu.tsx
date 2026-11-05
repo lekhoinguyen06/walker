@@ -15,41 +15,11 @@ import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { useConfig } from "@/walker/hooks/useConfig";
 
 export function PanelMenu() {
-  const { modal, setModal, position, setPosition } = usePanel();
   const { openDialog, closeDialog, dialog } = usePanelDialog();
   const { pushToast } = usePanelToast();
   const { runtime } = useRuntime();
-  const { config, updateConfig } = useConfig();
   return (
     <>
-      <Button
-        variant="ghost"
-        size="icon"
-        className={cn("rounded-full", config.loop && "bg-accent text-primary")}
-        onClick={() => {
-          updateConfig({ ...config, loop: !config.loop });
-          pushToast({
-            type: "info",
-            message: !config.loop
-              ? "Switched to loop mode."
-              : "Switched to step mode.",
-          });
-        }}
-      >
-        <Footprints />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full"
-        onClick={() => {
-          if (position) {
-            setPosition(togglePanelPosition(position));
-          }
-        }}
-      >
-        <PanelBottom />
-      </Button>
       <Button
         variant="ghost"
         size="icon"

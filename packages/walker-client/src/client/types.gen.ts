@@ -56,7 +56,6 @@ export type PostApiWalkerWalkData = {
         message: string;
         targetId: string;
         prompt: string;
-        end: boolean;
         [key: string]: unknown;
       };
       map: {
@@ -94,7 +93,6 @@ export type PostApiWalkerWalkResponses = {
       message: string;
       targetId: string;
       prompt: string;
-      end: boolean;
       [key: string]: unknown;
     };
     metadata: {

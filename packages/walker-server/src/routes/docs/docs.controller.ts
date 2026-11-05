@@ -16,7 +16,7 @@ const html = `
       import { createApiReference } from 'https://cdn.jsdelivr.net/npm/@scalar/api-reference/esm.js'
       createApiReference('#app', {
         // The URL of the OpenAPI document
-        url: '${window.location.origin}/api/walker/specs',
+        url: 'http://localhost:6767/api/walker/specs',
       })
     </script>
   </body>

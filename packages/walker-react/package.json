@@ -22,7 +22,7 @@
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs"
     },
-    "./index.css": "./dist/index.css"
+    "./index.css": "./dist/walker/ui/index.css"
   },
   "files": [
     "dist"

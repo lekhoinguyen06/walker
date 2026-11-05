@@ -6,7 +6,6 @@ export const ActionSchema = z
     message: z.string(),
     targetId: z.string(),
     prompt: z.string(),
-    end: z.boolean(),
   })
   .loose();
 

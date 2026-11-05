@@ -248,6 +248,9 @@
     "packages/walker-skill": {
       "name": "walker-skill",
       "version": "0.1.1",
+      "dependencies": {
+        "banhmi": "^0.1.2",
+      },
       "devDependencies": {
         "@types/bun": "latest",
         "bunup": "^0.16.32",
@@ -2586,6 +2589,8 @@
     "walker-shared/@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
 
     "walker-skill/@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
+
+    "walker-skill/banhmi": ["banhmi@0.1.2", "", { "peerDependencies": { "typescript": "^7" } }, "sha512-SbwjJnvFDaGf5xIhestOD6rVs8sDz67gpLORj+GC6LBQVs8jkKt9HCvROqNVL2vKgbT0DdS2EkPBoSUbyciUfQ=="],
 
     "walker-terminal/@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
 

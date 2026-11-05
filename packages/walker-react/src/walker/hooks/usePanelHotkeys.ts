@@ -1,20 +1,16 @@
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
-import { useConfig } from "./useConfig";
 import { usePanel } from "./usePanel";
 import { usePanelDialog } from "./usePanelDialog";
 import { usePanelWalk } from "./useWalk";
 import { useRuntime } from "./useRuntime";
-import { togglePanelPosition } from "../ui";
 import { usePanelToast } from "./usePanelToast";
 import { useMemo } from "react";
 
 export function usePanelHotkeys() {
-  const { isHidden, setIsHidden, tab, setTab, position, setPosition } =
-    usePanel();
-  const { config, setConfig } = useConfig();
+  const { isHidden, setIsHidden, tab, setTab } = usePanel();
   const { pushToast } = usePanelToast();
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { handleSubmit, handleStop } = usePanelWalk();
+  const { handleSubmit } = usePanelWalk();
   const { runtime } = useRuntime();
 
   useHotkey("W", () => {
@@ -22,7 +18,7 @@ export function usePanelHotkeys() {
   });
 
   useHotkey(
-    "Enter",
+    "Control+Enter",
     () => {
       handleSubmit();
     },
@@ -32,7 +28,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "Space",
+    "Control+Space",
     () => {
       const inputElement = document.getElementById("walk-input");
       inputElement?.focus();
@@ -41,10 +37,6 @@ export function usePanelHotkeys() {
       enabled: !isHidden,
     },
   );
-
-  useHotkey("Control+C", () => {
-    handleStop();
-  });
 
   useHotkey(
     "Tab",
@@ -57,23 +49,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "L",
-    () => {
-      setConfig({ ...config, loop: !config.loop });
-      pushToast({
-        type: "info",
-        message: !config.loop
-          ? "Switched to loop mode."
-          : "Switched to step mode.",
-      });
-    },
-    {
-      enabled: !isHidden,
-    },
-  );
-
-  useHotkey(
-    "M",
+    "Control+M",
     () => {
       dialog == "map" ? closeDialog() : openDialog("map");
     },
@@ -83,7 +59,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "C",
+    "Control+C",
     () => {
       dialog == "chat" ? closeDialog() : openDialog("chat");
     },
@@ -93,7 +69,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "H",
+    "Control+H",
     () => {
       dialog == "history" ? closeDialog() : openDialog("history");
     },
@@ -103,19 +79,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "P",
-    () => {
-      if (position) {
-        setPosition(togglePanelPosition(position));
-      }
-    },
-    {
-      enabled: !isHidden,
-    },
-  );
-
-  useHotkey(
-    "Control+H",
+    "Alt+H",
     () => {
       runtime.clear();
       pushToast({
@@ -130,7 +94,7 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "Control+/",
+    "Control+,",
     () => {
       dialog == "help" ? closeDialog() : openDialog("help");
     },

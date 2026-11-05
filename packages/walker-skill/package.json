@@ -27,5 +27,8 @@
   },
   "peerDependencies": {
     "typescript": "^7"
+  },
+  "dependencies": {
+    "banhmi": "^0.1.2"
   }
 }

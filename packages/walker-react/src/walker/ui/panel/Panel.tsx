@@ -79,12 +79,6 @@ export function Panel({
     setStore({ position, url, isHidden: hidden });
   }, []);
 
-  function handleClickOutside() {
-    setIsHidden(true);
-  }
-
-  useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
-
   return (
     <WalkProvider>
       <PanelDialogProvider>

@@ -79,18 +79,9 @@
                             },
                             "prompt": {
                               "type": "string"
-                            },
-                            "end": {
-                              "type": "boolean"
                             }
                           },
-                          "required": [
-                            "flow",
-                            "message",
-                            "targetId",
-                            "prompt",
-                            "end"
-                          ],
+                          "required": ["flow", "message", "targetId", "prompt"],
                           "additionalProperties": {}
                         },
                         "map": {
@@ -179,7 +170,7 @@
                     "end": false
                   },
                   "metadata": {
-                    "timestamp": "2026-10-22T07:24:11.071Z",
+                    "timestamp": "2026-11-05T03:53:19.608Z",
                     "usage": {
                       "inputTokens": 1005,
                       "inputTokenDetails": {
@@ -213,18 +204,9 @@
                         },
                         "prompt": {
                           "type": "string"
-                        },
-                        "end": {
-                          "type": "boolean"
                         }
                       },
-                      "required": [
-                        "flow",
-                        "message",
-                        "targetId",
-                        "prompt",
-                        "end"
-                      ],
+                      "required": ["flow", "message", "targetId", "prompt"],
                       "additionalProperties": {}
                     },
                     "metadata": {

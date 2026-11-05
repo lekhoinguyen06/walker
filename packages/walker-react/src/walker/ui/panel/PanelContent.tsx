@@ -30,17 +30,10 @@ type PanelContentProps = {
 };
 
 export function PanelContent({ className, children }: PanelContentProps) {
-  const { setIsHidden, style, tab, setTab } = usePanel();
+  const { style, tab, setTab } = usePanel();
 
-  const ref = useRef<HTMLDivElement>(null);
-  const { handleSubmit, isPending, isLooping, isWalking } = usePanelWalk();
+  const { handleSubmit, isPending, isWalking } = usePanelWalk();
   const { isMenuHold } = usePanelHotkeys();
-
-  function handleClickOutside() {
-    setIsHidden(true);
-  }
-
-  useOnClickOutside(ref as RefObject<HTMLElement>, handleClickOutside);
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
@@ -59,11 +52,11 @@ export function PanelContent({ className, children }: PanelContentProps) {
           variant="ghost"
           size="icon"
           className={"rounded-full relative"}
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
         >
           <div
             className={cn(
-              !(isWalking || isPending || isLooping) ? "hidden" : "flex",
+              !(isWalking || isPending) ? "hidden" : "flex",
               "absolute inset-0 m-auto size-6 aspect-square rounded-full items-center justify-center",
             )}
           >
@@ -73,9 +66,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
             <div
               className={cn(
                 "relative size-6 aspect-square flex items-center justify-center rounded-full",
-                (isPending || isLooping) &&
-                  !isWalking &&
-                  "bg-red-200 text-white",
+                isPending && !isWalking && "bg-red-200 text-white",
                 isWalking && "bg-red-500 text-white",
               )}
             >
