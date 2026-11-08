@@ -6,7 +6,7 @@ export interface Action<F extends string> {
 }
 
 export interface Hook<F extends string> {
-  handler?: (action: Action<F>, ctx: Context<F>) => Promise<void> | void;
+  handler?: (action: Action<F>, ctx: Context<F>) => Promise<string | void>;
 }
 
 export interface Flow<F extends string> {
@@ -31,4 +31,11 @@ export interface Context<F extends string> {
     beforeHooks?: Hook<F>[];
     afterHooks?: Hook<F>[];
   };
+}
+
+export interface HistoryItem<F extends string> {
+  action: Action<F>;
+  map: Map;
+  logs: string[];
+  timestamp: number;
 }

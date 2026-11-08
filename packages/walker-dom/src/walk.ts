@@ -1,9 +1,13 @@
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
-import type { Action, Context } from "./type";
+import type { Action, Context, HistoryItem } from "./type";
 import { actionItemIdExist, idsUnique } from "./validators";
 
-export async function walk<F extends string>(ctx: Context<F>): Promise<void> {
+export async function walk<F extends string>(
+  ctx: Context<F>,
+): Promise<HistoryItem<F>> {
+  let logs: string[] = [];
+
   // Map
   const map = mapper();
 
@@ -22,4 +26,11 @@ export async function walk<F extends string>(ctx: Context<F>): Promise<void> {
 
   // Execute
   executeFlow(action, ctx);
+
+  return {
+    action,
+    map,
+    logs,
+    timestamp: Date.now(),
+  };
 }
