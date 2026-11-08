@@ -6,7 +6,6 @@ const config: any = defineConfig({
   dts: {
     inferTypes: true,
   },
-  minify: true,
   sourcemap: true,
   clean: true,
 });

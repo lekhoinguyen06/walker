@@ -161,18 +161,17 @@
     },
     "packages/walker-dom": {
       "name": "walker-dom",
-      "dependencies": {
-        "@nanostores/persistent": "^1.3.5",
-        "@nanostores/query": "^0.3.4",
-        "nanostores": "^1.5.5",
-        "walker-shared": "workspace:^",
-      },
+      "version": "0.1.0",
       "devDependencies": {
         "@types/bun": "latest",
         "bunup": "^0.16.32",
       },
       "peerDependencies": {
+        "@nanostores/persistent": "^1.3.5",
+        "@nanostores/query": "^0.3.4",
+        "nanostores": "^1.5.5",
         "typescript": "^7",
+        "walker-shared": "workspace:^",
         "zod": "^4.6.7",
       },
     },
@@ -180,11 +179,15 @@
       "name": "walker-react",
       "version": "0.1.0",
       "dependencies": {
-        "walker-dom": "workspace:^",
+        "@nanostores/persistent": "^1.3.5",
+        "@nanostores/query": "^0.3.4",
+        "nanostores": "^1.5.5",
         "walker-shared": "workspace:^",
+        "zod": "^4.6.7",
       },
       "devDependencies": {
         "@types/bun": "latest",
+        "bunup": "^0.16.32",
       },
       "peerDependencies": {
         "typescript": "^7",
