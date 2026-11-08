@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { usePanelToast, useRuntime } from "../../hooks";
+import { usePanelToast, useRuntime } from "@/walker/hooks";
 import {
   CircleQuestionMark,
   History,
@@ -9,7 +9,7 @@ import {
   RefreshCcw,
   TextCursor,
 } from "lucide-react";
-import { usePanelDialog } from "../../hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 export function PanelMenu() {
   const { openDialog, closeDialog, dialog } = usePanelDialog();

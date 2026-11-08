@@ -1,4 +1,4 @@
-# walker-react-panel
+# walker-react
 
 To install dependencies:
 

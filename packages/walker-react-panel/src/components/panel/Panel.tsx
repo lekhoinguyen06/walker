@@ -1,15 +1,16 @@
 import "@/styles/globals.css";
 import { cva, type VariantProps } from "class-variance-authority";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode, type RefObject } from "react";
+import { useOnClickOutside } from "usehooks-ts";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
-import { usePanel, WalkProvider } from "../../hooks";
-import { PanelDialogProvider } from "../../hooks/usePanelDialog";
+import { usePanel, WalkProvider } from "@/walker/hooks";
+import { PanelDialogProvider } from "@/walker/hooks/usePanelDialog";
 import { PanelDialogContainter } from "./PanelDialog";
-import { useConfig } from "../../hooks/useConfig";
+import { useConfig } from "@/walker/hooks/useConfig";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);

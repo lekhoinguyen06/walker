@@ -3,9 +3,10 @@ import type { HistoryType } from "walker-core";
 import { cn } from "@/lib/utils";
 import { GalleryHorizontalEnd, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRuntime, usePanelDialog } from "../../hooks";
+import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();

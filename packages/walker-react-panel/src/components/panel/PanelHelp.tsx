@@ -1,4 +1,4 @@
-import { usePanelDialog } from "../../hooks/usePanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { PanelDialog } from "./PanelDialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";

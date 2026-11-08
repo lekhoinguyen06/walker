@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   ArrowUpIcon,
   MessageCircleDashedIcon,
@@ -24,9 +23,11 @@ import {
 import { Message, MessageContent } from "@/components/ui/message";
 import { Bubble, BubbleContent } from "@/components/ui/bubble";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { useWalkerChat, usePanelDialog } from "../../hooks";
+import { useWalkerChat } from "@/walker/hooks/useWalkerChat";
+import { usePanelDialog } from "@/walker/hooks";
 import { PanelDialog } from "../panel/PanelDialog";
 
 const streamingExtensions = [streamingMarkdownExtension()];

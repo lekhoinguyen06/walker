@@ -1,9 +1,11 @@
-import { usePanel, usePanelHotkeys, usePanelWalk } from "../../hooks";
+import { usePanel, usePanelHotkeys, usePanelWalk } from "@/walker/hooks";
+import { useOnClickOutside } from "usehooks-ts";
+import { useRef, type RefObject } from "react";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
-import { Mouse } from "walker-react";
+import { Mouse } from "../../item";
 import { cva } from "class-variance-authority";
 
 export const panelContentVariants = cva(

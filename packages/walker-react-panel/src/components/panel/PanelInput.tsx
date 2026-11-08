@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { usePanelWalk, useWalkerInput } from "../../hooks";
+import { usePanelWalk, useWalk, useWalkerInput } from "@/walker/hooks";
 import { useEffect, useState } from "react";
 
 type PanelInputProps = {

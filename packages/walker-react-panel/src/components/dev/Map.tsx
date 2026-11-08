@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useRuntime, usePanelDialog } from "../../hooks";
+import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
+import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;

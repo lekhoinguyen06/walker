@@ -2,12 +2,11 @@
   "compilerOptions": {
     // Environment setup & latest features
     "lib": ["ESNext", "DOM"],
+    "types": ["node"],
     "target": "ESNext",
     "module": "Preserve",
     "moduleDetection": "force",
     "jsx": "react-jsx",
-    "allowJs": true,
-    "types": ["bun"],
 
     // Bundler mode
     "moduleResolution": "bundler",
@@ -27,8 +26,7 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
 
-    // Shadcn UI
-    "baseUrl": ".",
+    // Path
     "paths": {
       "@/*": ["./src/*"]
     }

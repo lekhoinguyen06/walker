@@ -10,7 +10,7 @@ import { Flower2, X } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { type FlowType } from "walker-core";
 import { Button } from "@/components/ui/button";
-import { useRuntime, useScreenSize } from "../../hooks";
+import { useRuntime, useScreenSize } from "@/walker/hooks";
 import { Details } from "./Details";
 
 export type DialogProps = {
