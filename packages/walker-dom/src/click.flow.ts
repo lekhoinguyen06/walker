@@ -1,9 +1,9 @@
 import { scrollHook } from "./scroll.hook";
 import type { Action, Context, Flow } from "./type";
 
-export async function click<F extends string>(
-  action: Action<F>,
-  ctx: Context<F>,
+export async function click(
+  action: Action,
+  ctx: Context,
 ): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
@@ -17,18 +17,18 @@ export async function click<F extends string>(
   }
 }
 
-export const clickFlow: Flow<string> = {
+export const clickFlow: Flow = {
   command: "click",
   beforeHooks: [
     {
-      handler: (action) => console.log("Before click hook", action),
+      handler: async (action) => console.log("Before click hook", action),
     },
     scrollHook,
   ],
   handler: click,
   afterHooks: [
     {
-      handler: (action) => console.log("After click hook", action),
+      handler: async (action) => console.log("After click hook", action),
     },
   ],
 };

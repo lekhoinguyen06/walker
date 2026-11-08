@@ -3,7 +3,7 @@ import { input } from "./input.flow";
 import { none } from "./none.flow";
 import type { Flow } from "./type";
 
-export const webFlows: Flow<string>[] = [
+export const webFlows: Flow[] = [
   clickFlow,
   {
     command: "input",
@@ -11,6 +11,6 @@ export const webFlows: Flow<string>[] = [
   },
   {
     command: "none",
-    handler: () => none(),
+    handler: async () => none(),
   },
 ];

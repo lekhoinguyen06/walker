@@ -3,9 +3,7 @@ import { mapper } from "./map";
 import type { Action, Context, HistoryItem } from "./type";
 import { actionItemIdExist, idsUnique } from "./validators";
 
-export async function walk<F extends string>(
-  ctx: Context<F>,
-): Promise<HistoryItem<F>> {
+export async function walk(ctx: Context): Promise<HistoryItem> {
   let logs: string[] = [];
 
   // Map
@@ -13,9 +11,9 @@ export async function walk<F extends string>(
 
   // Request
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const action: Action<F> = {
+  const action: Action = {
     itemId: "app_item1",
-    flowCommand: "click" as F,
+    flowCommand: "click",
     agentMessage: "Hello from walker!",
     body: {},
   };
@@ -25,7 +23,7 @@ export async function walk<F extends string>(
   actionItemIdExist(action, map);
 
   // Execute
-  executeFlow(action, ctx);
+  executeFlow(action, ctx, logs);
 
   return {
     action,

@@ -7,7 +7,7 @@ export function idsUnique(items: Item[]): void {
   }
 }
 
-export function actionItemIdExist(action: Action<string>, items: Item[]): void {
+export function actionItemIdExist(action: Action, items: Item[]): void {
   if (items.some((item) => item.id !== action.itemId)) {
     throw new Error(`Action itemId ${action.itemId} does not exist in items`);
   }

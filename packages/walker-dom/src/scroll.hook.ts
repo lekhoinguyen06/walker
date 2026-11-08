@@ -1,9 +1,9 @@
 import type { Action, Context, Hook } from "./type";
 
-export async function scroll<F extends string>(
-  action: Action<F>,
-  ctx: Context<F>,
-): Promise<void> {
+export async function scroll(
+  action: Action,
+  ctx: Context,
+): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
 
@@ -61,6 +61,6 @@ export async function scroll<F extends string>(
   }
 }
 
-export const scrollHook: Hook<string> = {
+export const scrollHook: Hook = {
   handler: scroll,
 };

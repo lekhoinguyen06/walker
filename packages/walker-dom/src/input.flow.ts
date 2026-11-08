@@ -10,18 +10,16 @@ const InputPropsSchema = z.object({
   input: z.string(),
 });
 
-function validate<F extends string>(
-  action: Action<F>,
-): action is Action<F> & {
+function validate(action: Action): action is Action & {
   body: InputProps;
 } {
   const result = InputPropsSchema.safeParse(action.body);
   return result.success;
 }
 
-export async function input<F extends string>(
-  action: Action<F>,
-  ctx: Context<F>,
+export async function input(
+  action: Action,
+  ctx: Context,
 ): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
@@ -47,7 +45,7 @@ export async function input<F extends string>(
   }
 }
 
-export const inputFlow: Flow<string> = {
+export const inputFlow: Flow = {
   command: "input",
   description:
     "Input text into an Item. Schema: " + InputPropsSchema.toJSONSchema(),

@@ -1,10 +1,10 @@
 import type { Action, Flow, Context } from "./type";
 
 // Helpers
-export async function executeFlow<F extends string>(
-  action: Action<F>,
-  ctx: Context<F>,
-  logs: string[] = [],
+export async function executeFlow(
+  action: Action,
+  ctx: Context,
+  logs: string[],
 ): Promise<void> {
   const flow = ctx.flows.find((flow) => flow.command === action.flowCommand);
   if (flow) {
@@ -32,6 +32,8 @@ export async function executeFlow<F extends string>(
       }),
     );
   } else {
-    console.warn(`No flow found for command: ${action.flowCommand}`);
+    logs.push(
+      "ERROR: No flow found for action.flowCommand: " + action.flowCommand,
+    );
   }
 }
