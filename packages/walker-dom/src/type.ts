@@ -1,41 +1,32 @@
-export interface Action {
-  itemId: string;
-  flowCommand: string;
-  agentMessage: string;
-  body: Record<string, unknown>;
-}
+import {
+  type ActionType,
+  type FlowType,
+  type HistoryType,
+  type ItemType,
+  type MapType,
+} from "walker-shared";
+
+export type Action = ActionType;
+export type Flow = FlowType;
+export type Item = ItemType;
+export type Map = MapType;
+export type HistoryItem = HistoryType;
 
 export interface Hook {
   handler?: (action: Action, ctx: Context) => Promise<string | void>;
 }
 
-export interface Flow {
-  command: string;
-  description?: string;
+export interface FlowWithHooksAndHandler extends Flow {
   beforeHooks?: Hook[];
   handler?: (action: Action, context: Context) => Promise<string | void>;
   afterHooks?: Hook[];
 }
 
-export interface Item {
-  id: string;
-  state?: string;
-}
-
-export type Map = Item[];
-
 export interface Context {
-  prompt: string;
+  userPrompt: string;
   flows: Flow[];
   globalHooks?: {
     beforeHooks?: Hook[];
     afterHooks?: Hook[];
   };
-}
-
-export interface HistoryItem {
-  action: Action;
-  map: Map;
-  logs: string[];
-  timestamp: number;
 }

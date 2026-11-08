@@ -26,9 +26,7 @@
     "bunup": "^0.16.32"
   },
   "peerDependencies": {
-    "typescript": "^7"
-  },
-  "dependencies": {
+    "typescript": "^7",
     "zod": "^4.6.5"
   }
 }
