@@ -1,0 +1,18 @@
+{
+  "name": "walker-dom",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bunup": "^0.16.32"
+  },
+  "peerDependencies": {
+    "typescript": "^7",
+    "zod": "^4.6.7"
+  },
+  "dependencies": {
+    "@nanostores/persistent": "^1.3.5",
+    "@nanostores/query": "^0.3.4",
+    "nanostores": "^1.5.5"
+  }
+}
