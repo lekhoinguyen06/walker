@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import { Item } from "./Items";
 import * as motion from "motion/react-client";
-import { useMouse } from "@/walker/hooks/useMouse";
+import { useMouse } from "./useMouse";
 
 export type MouseProps = {
   children?: React.ReactNode;

@@ -1,4 +1,4 @@
-import type { PanelToastItemType } from "@/walker/ui/panel/PanelToast";
+import type { PanelToastItemType } from "@/components/panel/PanelToast";
 import {
   createContext,
   useContext,

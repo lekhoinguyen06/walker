@@ -1,4 +1,4 @@
-import { usePanelStore } from "@/walker/stores/walker";
+import { usePanelStore } from "../stores/usePanelStore";
 
 export function usePanel() {
   const url = usePanelStore((state) => state.url);
