@@ -1,7 +1,10 @@
 import z from "zod";
 import { scrollHook } from "./scroll.hook";
-import type { ContextType, FlowWithHooksAndHandlerType } from "./type";
-import type { ActionType } from "walker-shared";
+import type {
+  ContextType,
+  FlowWithHooksAndHandlerType,
+  ActionType,
+} from "walker-shared";
 
 type InputProps = {
   input: string;

@@ -1,5 +1,4 @@
-import type { ActionType } from "walker-shared";
-import type { ContextType, HookType } from "./type";
+import type { ActionType, ContextType, HookType } from "walker-shared";
 
 export async function scroll(
   action: ActionType,

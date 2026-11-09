@@ -1,4 +1,4 @@
-import type { FlowWithHooksAndHandlerType } from "./type";
+import type { FlowWithHooksAndHandlerType } from "walker-shared";
 
 export async function none() {}
 

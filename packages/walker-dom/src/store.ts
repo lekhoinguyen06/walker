@@ -1,9 +1,8 @@
 import { persistentJSON } from "@nanostores/persistent";
 import { nanoquery } from "@nanostores/query";
-import type { ContextType } from "./type";
 import { walk } from "./walk";
 import { atom } from "nanostores";
-import type { ActionType, HistoryItemType } from "walker-shared";
+import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
 
 export const [createFetcherStore, createMutatorStore] = nanoquery({
   fetcher: (...keys) => fetch(keys.join("")).then((r) => r.json()),

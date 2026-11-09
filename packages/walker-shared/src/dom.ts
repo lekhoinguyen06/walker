@@ -1,4 +1,5 @@
-import { type ActionType, type FlowType } from "walker-shared";
+import type { ActionType } from "./action.dto";
+import type { FlowType } from "./flow.dto";
 
 export interface HookType {
   handler?: (action: ActionType, ctx: ContextType) => Promise<string | void>;
