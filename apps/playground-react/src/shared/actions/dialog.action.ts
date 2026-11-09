@@ -1,13 +1,13 @@
-import { createAction } from "walker-react/core";
+import { createAction } from "walker-dom";
 
 export const dialogActionJSON = JSON.stringify(
   [
     createAction({
-      flow: "click",
-      targetId: "dialog-trigger-open",
-      message: "Let's see what we have here...",
-      prompt: "Demo example.",
-      end: false,
+      flowCommand: "click",
+      itemId: "dialog-trigger-open",
+      agentMessage: "Let's see what we have here...",
+      userMessage: "Demo example.",
+      body: {},
     }),
     createAction({
       flow: "input",

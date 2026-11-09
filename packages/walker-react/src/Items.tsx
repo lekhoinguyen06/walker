@@ -1,10 +1,10 @@
-import type { Item } from "walker-dom";
+import type { ItemType } from "walker-shared";
 
 export function Item({
   id,
   state,
   children,
-}: Item & {
+}: ItemType & {
   children?: React.ReactNode;
 }) {
   return (

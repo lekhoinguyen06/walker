@@ -12,17 +12,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./ui": {
-      "types": "./dist/walker/ui/index.d.ts",
-      "import": "./dist/walker/ui/index.js",
-      "require": "./dist/walker/ui/index.cjs"
-    },
-    "./core": {
-      "types": "./dist/core/index.d.ts",
-      "import": "./dist/core/index.js",
-      "require": "./dist/core/index.cjs"
-    },
-    "./index.css": "./dist/walker/ui/index.css"
+    "./index.css": "./dist/index.css"
   },
   "files": [
     "dist"
