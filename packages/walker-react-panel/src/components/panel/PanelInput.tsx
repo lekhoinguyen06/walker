@@ -1,7 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import { usePanel, usePanelToast } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { panelFlowsFactory } from "@/lib/walker";
+import { panelFlowsFactory, panelMessageHookFactory } from "@/lib/walker";
 import { useEffect, useState } from "react";
 import { webFlows } from "walker-dom";
 import { useWalk } from "walker-react";
@@ -48,6 +48,13 @@ export function PanelInput({ className }: PanelInputProps) {
           flows: panelFlowsFactory({
             pushToast,
           }),
+          globalHooks: {
+            beforeHooks: [
+              panelMessageHookFactory({
+                pushToast,
+              }),
+            ],
+          },
         });
       }}
     />

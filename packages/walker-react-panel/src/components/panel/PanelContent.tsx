@@ -5,8 +5,8 @@ import { PanelSuggest } from "./PanelSuggest";
 import { cva } from "class-variance-authority";
 import { usePanel, usePanelHotkeys, usePanelToast } from "@/hooks";
 import { Mouse, useWalk } from "walker-react";
-import { webFlows } from "walker-dom";
-import { panelFlowsFactory } from "@/lib/walker";
+import { panelFlowsFactory, panelMessageHookFactory } from "@/lib/walker";
+import type { before } from "node:test";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -58,6 +58,13 @@ export function PanelContent({ className, children }: PanelContentProps) {
               flows: panelFlowsFactory({
                 pushToast,
               }),
+              globalHooks: {
+                beforeHooks: [
+                  panelMessageHookFactory({
+                    pushToast,
+                  }),
+                ],
+              },
             })
           }
         >
