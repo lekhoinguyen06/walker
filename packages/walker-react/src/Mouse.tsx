@@ -20,7 +20,10 @@ export function Mouse({ children }: MouseProps) {
   }, [targetX, targetY]);
 
   return (
-    <Item id="mouse-container" description="The container of Walker Mouse.">
+    <Item
+      id="walker-mouse-container"
+      description="The container of Walker Mouse."
+    >
       <div
         ref={containerRef}
         className="size-8 flex justify-center items-center z-999999"

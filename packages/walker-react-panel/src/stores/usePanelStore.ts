@@ -5,7 +5,7 @@ import {
   type panelContentVariants,
 } from "../components/panel";
 import type { VariantProps } from "class-variance-authority";
-import { webFlows, type Context } from "walker-dom";
+import type { ContextType } from "walker-shared";
 import { create } from "zustand";
 
 export type PanelStoreType = {
@@ -13,8 +13,8 @@ export type PanelStoreType = {
   setUrl: (url: string) => void;
 
   // Walker
-  context: Context;
-  setContext: (context: Context) => void;
+  context: ContextType;
+  setContext: (context: ContextType) => void;
   setUserPrompt: (userPrompt: string) => void;
 
   // Variants
@@ -45,9 +45,9 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
 
   context: {
     userPrompt: "",
-    flows: webFlows,
+    flows: [],
   },
-  setContext: (context: Context) => set({ context }),
+  setContext: (context: ContextType) => set({ context }),
   setUserPrompt: (userPrompt: string) =>
     set((state) => ({ context: { ...state.context, userPrompt } })),
 

@@ -3,12 +3,12 @@ import type {
   ContextType,
   FlowWithHooksAndHandlerType,
 } from "walker-shared";
-import { scrollHook } from "./scroll.hook";
 
 export async function click(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
+  console.log("[W][D]: Click Flow: ", action.itemId);
   const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
 
@@ -29,16 +29,5 @@ export async function click(
 
 export const clickFlow: FlowWithHooksAndHandlerType = {
   command: "click",
-  beforeHooks: [
-    {
-      handler: async (action) => console.log("Before click hook", action),
-    },
-    scrollHook,
-  ],
   handler: click,
-  afterHooks: [
-    {
-      handler: async (action) => console.log("After click hook", action),
-    },
-  ],
 };

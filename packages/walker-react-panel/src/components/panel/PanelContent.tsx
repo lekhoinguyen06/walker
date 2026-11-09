@@ -5,8 +5,7 @@ import { PanelSuggest } from "./PanelSuggest";
 import { cva } from "class-variance-authority";
 import { usePanel, usePanelHotkeys, usePanelToast } from "@/hooks";
 import { Mouse, useWalk } from "walker-react";
-import { panelFlowsFactory, panelMessageHookFactory } from "@/lib/walker";
-import type { before } from "node:test";
+import { panelContextFactory } from "@/lib/walker";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -53,19 +52,12 @@ export function PanelContent({ className, children }: PanelContentProps) {
           size="icon"
           className={"rounded-full relative"}
           onClick={() =>
-            mutate({
-              userPrompt: context.userPrompt,
-              flows: panelFlowsFactory({
+            mutate(
+              panelContextFactory({
+                userPrompt: context?.userPrompt ?? "",
                 pushToast,
               }),
-              globalHooks: {
-                beforeHooks: [
-                  panelMessageHookFactory({
-                    pushToast,
-                  }),
-                ],
-              },
-            })
+            )
           }
         >
           <div

@@ -1,9 +1,8 @@
 import { Textarea } from "@/components/ui/textarea";
 import { usePanel, usePanelToast } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { panelFlowsFactory, panelMessageHookFactory } from "@/lib/walker";
+import { panelContextFactory } from "@/lib/walker";
 import { useEffect, useState } from "react";
-import { webFlows } from "walker-dom";
 import { useWalk } from "walker-react";
 
 type PanelInputProps = {
@@ -43,19 +42,12 @@ export function PanelInput({ className }: PanelInputProps) {
         }
 
         e.preventDefault();
-        mutate({
-          userPrompt: context.userPrompt,
-          flows: panelFlowsFactory({
+        mutate(
+          panelContextFactory({
+            userPrompt: context?.userPrompt ?? "",
             pushToast,
           }),
-          globalHooks: {
-            beforeHooks: [
-              panelMessageHookFactory({
-                pushToast,
-              }),
-            ],
-          },
-        });
+        );
       }}
     />
   );

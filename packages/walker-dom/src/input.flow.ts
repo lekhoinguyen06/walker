@@ -1,5 +1,4 @@
 import z from "zod";
-import { scrollHook } from "./scroll.hook";
 import type {
   ContextType,
   FlowWithHooksAndHandlerType,
@@ -25,6 +24,7 @@ export async function input(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
+  console.log("[W][D]: Input Flow: ", action.itemId);
   const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
   const parsedAction = validate(action) ? action : null;
@@ -53,6 +53,5 @@ export const inputFlow: FlowWithHooksAndHandlerType = {
   command: "input",
   description:
     "Input text into an Item. Schema: " + InputPropsSchema.toJSONSchema(),
-  beforeHooks: [scrollHook],
   handler: input,
 };

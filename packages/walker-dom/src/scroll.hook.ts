@@ -4,6 +4,7 @@ export async function scroll(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
+  console.log("[W][D]: Scroll Hook: ", action.itemId);
   const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
 
@@ -57,7 +58,9 @@ export async function scroll(
       requestAnimationFrame(check);
     });
   } else {
-    console.warn(`Element with id walker-${action.itemId} not found`);
+    return (
+      "ERROR: No Item found for click flow with action.itemId: " + action.itemId
+    );
   }
 }
 

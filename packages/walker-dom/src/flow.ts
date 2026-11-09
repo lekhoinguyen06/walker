@@ -9,18 +9,16 @@ export async function executeFlow(
   const flow = ctx.flows.find((flow) => flow.command === action.flowCommand);
   console.log("[W][D]: Flow found for action.flowCommand: ", flow);
   if (flow) {
-    const gap = ctx.gapTimeMs ?? 100;
+    const gap = ctx.gapTimeMs ?? 1000;
     await ctx.globalHooks?.beforeHooks?.forEach(async (hook) => {
-      hook.handler?.(action, ctx).then((l) => {
-        l && logs.push(String(l));
-      });
+      const l = await hook.handler?.(action, ctx);
+      l && logs.push(String(l));
       await wait(gap);
     });
     await wait(gap);
     await flow.beforeHooks?.forEach(async (hook) => {
-      hook.handler?.(action, ctx).then((l) => {
-        l && logs.push(String(l));
-      });
+      const l = await hook.handler?.(action, ctx);
+      l && logs.push(String(l));
       await wait(gap);
     });
     await wait(1000);
@@ -29,16 +27,14 @@ export async function executeFlow(
     });
     await wait(gap);
     await flow.afterHooks?.forEach(async (hook) => {
-      hook.handler?.(action, ctx).then((l) => {
-        l && logs.push(String(l));
-      });
+      const l = await hook.handler?.(action, ctx);
+      l && logs.push(String(l));
       await wait(gap);
     });
     await wait(gap);
     await ctx.globalHooks?.afterHooks?.forEach(async (hook) => {
-      hook.handler?.(action, ctx).then((l) => {
-        l && logs.push(String(l));
-      });
+      const l = await hook.handler?.(action, ctx);
+      l && logs.push(String(l));
       await wait(gap);
     });
   } else {
