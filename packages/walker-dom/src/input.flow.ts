@@ -1,7 +1,7 @@
 import z from "zod";
 import { scrollHook } from "./scroll.hook";
-import type { ContextType } from "./type";
-import type { ActionType, FlowType } from "walker-shared";
+import type { ContextType, FlowWithHooksAndHandlerType } from "./type";
+import type { ActionType } from "walker-shared";
 
 type InputProps = {
   input: string;
@@ -22,7 +22,7 @@ export async function input(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
-  const el = document.getElementById("walker-" + action.itemId);
+  const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
   const parsedAction = validate(action) ? action : null;
   if (!parsedAction) {
@@ -46,7 +46,7 @@ export async function input(
   }
 }
 
-export const inputFlow: FlowType = {
+export const inputFlow: FlowWithHooksAndHandlerType = {
   command: "input",
   description:
     "Input text into an Item. Schema: " + InputPropsSchema.toJSONSchema(),

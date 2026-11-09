@@ -34,7 +34,7 @@ export function InputEditor({ isOpen, setIsOpen }: InputProps) {
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();
   const { pushToast } = usePanelToast();
-  const { push } = useAction();
+  const { pushActions } = useAction();
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
@@ -42,7 +42,7 @@ export function InputEditor({ isOpen, setIsOpen }: InputProps) {
 
   function showValue() {
     try {
-      push(editorRef.current.getValue());
+      pushActions(JSON.parse(editorRef.current.getValue()));
       pushToast({
         type: "success",
         message: SUCCESS_LOAD_ACTION_MSG,

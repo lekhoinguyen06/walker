@@ -3,5 +3,7 @@ import { $history } from "walker-dom";
 
 export function useHistory() {
   const history = useStore($history);
-  return history;
+  return {
+    history,
+  };
 }

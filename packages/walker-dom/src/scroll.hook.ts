@@ -5,7 +5,7 @@ export async function scroll(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
-  const el = document.getElementById("walker-" + action.itemId);
+  const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
 
   if (child instanceof HTMLElement) {

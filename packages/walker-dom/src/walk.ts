@@ -15,26 +15,27 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
 
   // Request
   let action: ActionType;
-  const historyWindowSize = ctx.historyWindowSize ?? 3;
-  if (actionsInQueue.length > historyWindowSize) {
+  if (actionsInQueue.length > 0) {
     action = actionsInQueue.shift()!;
   } else {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     action = {
-      itemId: "app_item1",
-      flowCommand: "click",
-      agentMessage: "Hello from walker!",
+      itemId: "",
+      flowCommand: "none",
+      agentMessage: "Hello from walker! What would you like to do?",
       userMessage: "Hello from user!",
       body: {},
     };
   }
 
+  console.log("[W][D]: Next Action: ", action);
+
   // Validate
-  idsUnique(map);
-  actionItemIdExist(action, map);
+  // idsUnique(map);
+  // actionItemIdExist(action, map);
 
   // Execute
-  executeFlow(action, ctx, logs);
+  await executeFlow(action, ctx, logs);
 
   return {
     action,

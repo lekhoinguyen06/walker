@@ -4,7 +4,7 @@ export interface HookType {
   handler?: (action: ActionType, ctx: ContextType) => Promise<string | void>;
 }
 
-export interface FlowWithHooksAndHandler extends FlowType {
+export interface FlowWithHooksAndHandlerType extends FlowType {
   beforeHooks?: HookType[];
   handler?: (
     action: ActionType,
@@ -15,10 +15,11 @@ export interface FlowWithHooksAndHandler extends FlowType {
 
 export interface ContextType {
   userPrompt: string;
-  flows: FlowType[];
+  flows: FlowWithHooksAndHandlerType[];
   globalHooks?: {
     beforeHooks?: HookType[];
     afterHooks?: HookType[];
   };
   historyWindowSize?: number;
+  gapTimeMs?: number;
 }

@@ -1,16 +1,22 @@
-import type { ActionType, FlowType } from "walker-shared";
+import type { ActionType } from "walker-shared";
 import { scrollHook } from "./scroll.hook";
-import type { ContextType } from "./type";
+import type { ContextType, FlowWithHooksAndHandlerType } from "./type";
 
 export async function click(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
-  const el = document.getElementById("walker-" + action.itemId);
+  const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
 
+  console.log(el);
+  console.log(child);
   if (child instanceof HTMLElement) {
-    child.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    console.log(
+      "[W][D]: Click flow executed for action.itemId: ",
+      action.itemId,
+    );
+    child.click();
   } else {
     return (
       "ERROR: No Item found for click flow with action.itemId: " + action.itemId
@@ -18,7 +24,7 @@ export async function click(
   }
 }
 
-export const clickFlow: FlowType = {
+export const clickFlow: FlowWithHooksAndHandlerType = {
   command: "click",
   beforeHooks: [
     {

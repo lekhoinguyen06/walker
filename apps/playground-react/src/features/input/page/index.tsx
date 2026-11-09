@@ -6,7 +6,7 @@ import { inputActionJSON } from "@/shared/actions/input.action";
 
 export function InputPage() {
   return (
-    <Page
+    <Item
       id="input-page"
       description="The page to demonstrate Walker behavior to input text"
     >
@@ -27,6 +27,6 @@ export function InputPage() {
           />
         </CodeWrapper>
       </div>
-    </Page>
+    </Item>
   );
 }

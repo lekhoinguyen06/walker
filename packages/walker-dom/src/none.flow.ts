@@ -1,8 +1,8 @@
-import type { FlowType } from "walker-shared";
+import type { FlowWithHooksAndHandlerType } from "./type";
 
 export async function none() {}
 
-export const noneFlow: FlowType = {
+export const noneFlow: FlowWithHooksAndHandlerType = {
   command: "none",
   handler: none,
 };

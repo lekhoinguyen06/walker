@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { GalleryHorizontalEnd, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
 import { usePanelDialog } from "@/hooks";
-import { mapper, type Item, type Map } from "walker-dom";
+import { mapper } from "walker-dom";
+import type { ItemType, MapType } from "walker-shared";
 
 export function MapDialog() {
   const { closeDialog } = usePanelDialog();
-  const [map, setMap] = useState<Map | undefined>(undefined);
-  const [selectedItem, setSelectedItem] = useState<Item | undefined>(undefined);
+  const [map, setMap] = useState<MapType | undefined>(undefined);
+  const [selectedItem, setSelectedItem] = useState<ItemType | undefined>(
+    undefined,
+  );
   const handleMap = () => {
     const map = mapper();
     setMap(map);
   };
+
+  useEffect(() => {
+    handleMap();
+  }, []);
   return (
     <PanelDialog dialog={"map"}>
       <div className="size-full p-1.5">
@@ -54,7 +61,6 @@ export function MapDialog() {
                       )}
                       onClick={() => setSelectedItem(i)}
                     >
-                      <GalleryHorizontalEnd size={12} />
                       <span className="text-xs font-semibold text-nowrap">
                         {i.id}
                       </span>

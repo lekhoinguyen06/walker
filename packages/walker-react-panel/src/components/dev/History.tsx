@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { GalleryHorizontalEnd, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
@@ -10,7 +10,8 @@ import type { HistoryItemType } from "walker-shared";
 
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();
-  const history = useHistory();
+  const { history } = useHistory();
+  console.log("history", history);
   const [selectedHistory, setSelectedHistory] = useState<
     HistoryItemType | undefined
   >(undefined);
@@ -53,7 +54,6 @@ export function HistoryDialog() {
                       )}
                       onClick={() => setSelectedHistory(i)}
                     >
-                      <GalleryHorizontalEnd size={12} />
                       <span className="text-xs font-semibold text-nowrap">
                         {i.action.flowCommand}
                       </span>

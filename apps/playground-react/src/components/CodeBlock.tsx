@@ -23,7 +23,7 @@ export function CodeContent({ raw }: CodeContentProps) {
   const source = ["```" + raw.lang.trim(), raw.content.trim(), "```"].join(
     "\n",
   );
-  const { push } = useAction();
+  const { pushActions } = useAction();
   const { pushToast } = usePanelToast();
 
   const handleCopy = (text: string) => () => {
@@ -79,7 +79,7 @@ export function CodeContent({ raw }: CodeContentProps) {
             )}
             onClick={() => {
               try {
-                push(raw.content.trim());
+                pushActions(JSON.parse(raw.content.trim()));
                 pushToast({
                   type: "info",
                   message: "Walk loaded. Enter to start the walk.",

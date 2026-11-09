@@ -23,6 +23,11 @@ export const $history = persistentJSON<HistoryItemType[]>(
 
 export const $walk = createMutatorStore<ContextType>(async ({ data }) => {
   const history = await walk(data);
-  $history.set([...$history.get(), history]);
+  const historyWindowSize = data.historyWindowSize ?? 3;
+  if ($history.get().length >= historyWindowSize) {
+    $history.set([...$history.get().slice(1), history]);
+  } else {
+    $history.set([...$history.get(), history]);
+  }
   return { data };
 });
