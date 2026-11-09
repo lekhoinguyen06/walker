@@ -19,6 +19,8 @@ export function Mouse({ children }: MouseProps) {
     return { x: 0, y: 0 };
   }, [targetX, targetY]);
 
+  console.log("Mouse target:", targetX, targetY);
+
   return (
     <Item
       id="walker-mouse-container"

@@ -1,5 +1,5 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
-import { $mouse } from "./store";
+import { $mouseX, $mouseY } from "./store";
 
 export async function mouse(
   action: ActionType,
@@ -12,10 +12,20 @@ export async function mouse(
   if (child instanceof HTMLElement) {
     const rect = child.getBoundingClientRect();
 
-    $mouse.set({
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
-    });
+    console.log(
+      "mouseX:",
+      rect.left + rect.width / 2,
+      "mouseY:",
+      rect.top + rect.height / 2,
+    );
+    $mouseX.set(rect.left + rect.width / 2);
+    $mouseY.set(rect.top + rect.height / 2);
+    console.log(
+      "mouseX:",
+      rect.left + rect.width / 2,
+      "mouseY:",
+      rect.top + rect.height / 2,
+    );
   } else {
     return (
       "ERROR: No Item found for click flow with action.itemId: " + action.itemId

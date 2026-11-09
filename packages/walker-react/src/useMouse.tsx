@@ -1,16 +1,17 @@
 import { useStore } from "@nanostores/react";
-import { $mouse } from "walker-dom";
+import { $mouseX, $mouseY } from "walker-dom";
 
 export function useMouse() {
-  const mouse = useStore($mouse);
+  const mouseX = useStore($mouseX);
+  const mouseY = useStore($mouseY);
   return {
-    x: mouse.x,
-    y: mouse.y,
+    x: mouseX,
+    y: mouseY,
     setX: (x: number) => {
-      $mouse.set({ ...mouse, x });
+      $mouseX.set(x);
     },
     setY: (y: number) => {
-      $mouse.set({ ...mouse, y });
+      $mouseY.set(y);
     },
   };
 }

@@ -184,6 +184,7 @@
         "@nanostores/query": "^0.3.4",
         "motion": "^14.10.1",
         "nanostores": "^1.5.5",
+        "walker-dom": "workspace:^",
         "walker-shared": "workspace:^",
         "zod": "^4.6.7",
       },

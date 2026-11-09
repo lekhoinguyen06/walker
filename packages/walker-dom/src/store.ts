@@ -10,10 +10,8 @@ export const [createFetcherStore, createMutatorStore] = nanoquery({
 
 export const $action = persistentJSON<ActionType[]>("walker-action-store", []);
 
-export const $mouse = atom<{
-  x: number;
-  y: number;
-}>({ x: 0, y: 0 });
+export const $mouseX = atom(0);
+export const $mouseY = atom(0);
 
 export const $history = persistentJSON<HistoryItemType[]>(
   "walker-history-store",
