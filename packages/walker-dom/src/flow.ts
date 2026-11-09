@@ -1,9 +1,10 @@
-import type { Action, Flow, Context } from "./type";
+import type { ActionType } from "walker-shared";
+import type { ContextType } from "./type";
 
 // Helpers
 export async function executeFlow(
-  action: Action,
-  ctx: Context,
+  action: ActionType,
+  ctx: ContextType,
   logs: string[],
 ): Promise<void> {
   const flow = ctx.flows.find((flow) => flow.command === action.flowCommand);

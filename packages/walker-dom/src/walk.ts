@@ -1,10 +1,11 @@
+import type { ActionType, HistoryItemType } from "walker-shared";
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
 import { $action } from "./store";
-import type { Action, Context, HistoryItem } from "./type";
+import type { ContextType } from "./type";
 import { actionItemIdExist, idsUnique } from "./validators";
 
-export async function walk(ctx: Context): Promise<HistoryItem> {
+export async function walk(ctx: ContextType): Promise<HistoryItemType> {
   let logs: string[] = [];
 
   const actionsInQueue = $action.get();
@@ -13,7 +14,7 @@ export async function walk(ctx: Context): Promise<HistoryItem> {
   const map = mapper();
 
   // Request
-  let action: Action;
+  let action: ActionType;
   const historyWindowSize = ctx.historyWindowSize ?? 3;
   if (actionsInQueue.length > historyWindowSize) {
     action = actionsInQueue.shift()!;
@@ -39,6 +40,6 @@ export async function walk(ctx: Context): Promise<HistoryItem> {
     action,
     map,
     logs,
-    timestamp: Date.now(),
+    timestamp: new Date(),
   };
 }

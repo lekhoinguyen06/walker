@@ -1,6 +1,7 @@
 import z from "zod";
 import { scrollHook } from "./scroll.hook";
-import type { Action, Context, Flow } from "./type";
+import type { ContextType } from "./type";
+import type { ActionType, FlowType } from "walker-shared";
 
 type InputProps = {
   input: string;
@@ -10,7 +11,7 @@ const InputPropsSchema = z.object({
   input: z.string(),
 });
 
-function validate(action: Action): action is Action & {
+function validate(action: ActionType): action is ActionType & {
   body: InputProps;
 } {
   const result = InputPropsSchema.safeParse(action.body);
@@ -18,8 +19,8 @@ function validate(action: Action): action is Action & {
 }
 
 export async function input(
-  action: Action,
-  ctx: Context,
+  action: ActionType,
+  ctx: ContextType,
 ): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
@@ -45,7 +46,7 @@ export async function input(
   }
 }
 
-export const inputFlow: Flow = {
+export const inputFlow: FlowType = {
   command: "input",
   description:
     "Input text into an Item. Schema: " + InputPropsSchema.toJSONSchema(),

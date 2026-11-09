@@ -1,8 +1,9 @@
-import type { Action, Context, Hook } from "./type";
+import type { ActionType } from "walker-shared";
+import type { ContextType, HookType } from "./type";
 
 export async function scroll(
-  action: Action,
-  ctx: Context,
+  action: ActionType,
+  ctx: ContextType,
 ): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
@@ -61,6 +62,6 @@ export async function scroll(
   }
 }
 
-export const scrollHook: Hook = {
+export const scrollHook: HookType = {
   handler: scroll,
 };

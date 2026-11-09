@@ -1,6 +1,6 @@
+import type { FlowType } from "walker-shared";
 import { clickFlow } from "./click.flow";
 import { inputFlow } from "./input.flow";
 import { noneFlow } from "./none.flow";
-import type { Flow } from "./type";
 
-export const webFlows: Flow[] = [clickFlow, inputFlow, noneFlow];
+export const webFlows: FlowType[] = [clickFlow, inputFlow, noneFlow];

@@ -1,9 +1,10 @@
+import type { ActionType, FlowType } from "walker-shared";
 import { scrollHook } from "./scroll.hook";
-import type { ActionType, Context, Flow } from "./type";
+import type { ContextType } from "./type";
 
 export async function click(
-  action: Action,
-  ctx: Context,
+  action: ActionType,
+  ctx: ContextType,
 ): Promise<string | void> {
   const el = document.getElementById("walker-" + action.itemId);
   const child = el?.firstElementChild;
@@ -17,7 +18,7 @@ export async function click(
   }
 }
 
-export const clickFlow: Flow = {
+export const clickFlow: FlowType = {
   command: "click",
   beforeHooks: [
     {
