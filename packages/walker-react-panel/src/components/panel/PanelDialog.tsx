@@ -6,6 +6,8 @@ import { ChatDialog } from "../dev/Chat";
 import { cn } from "@/lib/utils";
 import { PanelHelp } from "./PanelHelp";
 import { InputDialog } from "../dev/Input";
+import { usePanelDialog } from "@/hooks";
+import type { PanelDialogType } from "@/constants/panel.const";
 
 export function PanelDialogContainter() {
   const { dialog } = usePanelDialog();

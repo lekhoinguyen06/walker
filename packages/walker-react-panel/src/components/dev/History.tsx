@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
 import { usePanelDialog } from "@/hooks";
-import type { HistoryItem } from "walker-dom";
 import { useHistory } from "walker-react";
+import type { HistoryItemType } from "walker-shared";
 
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();
   const history = useHistory();
   const [selectedHistory, setSelectedHistory] = useState<
-    HistoryItem | undefined
+    HistoryItemType | undefined
   >(undefined);
   return (
     <PanelDialog dialog={"history"}>

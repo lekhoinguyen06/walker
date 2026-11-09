@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
 import { PanelDialogContainter } from "./PanelDialog";
+import { PanelDialogProvider, usePanel } from "@/hooks";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);
@@ -61,48 +62,46 @@ export function Panel({
   children,
 }: PanelProps): ReactNode {
   const {
+    setUrl,
     position: positionState,
     isHidden: isHiddenState,
     setIsHidden,
     setStore,
   } = usePanel();
-  const { updateConfig } = useConfig();
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    updateConfig({ url });
+    setUrl(url);
     setStore({ position, url, isHidden: hidden });
   }, []);
 
   return (
-    <WalkProvider>
-      <PanelDialogProvider>
-        <AnimatePresence>
-          <motion.div layout ref={ref}>
-            <motion.div
-              initial={{ y: 0 }}
-              animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
-              exit={{ y: 0 }}
-              transition={{
-                duration: 0.2,
-                ease: "anticipate",
-              }}
-              className={cn(
-                panelVariants({ position: positionState, className }),
-              )}
-            >
-              {/* Absolute componnents */}
-              <PanelTag />
+    <PanelDialogProvider>
+      <AnimatePresence>
+        <motion.div layout ref={ref}>
+          <motion.div
+            initial={{ y: 0 }}
+            animate={{ y: isHiddenState ? "calc(100% + 24px)" : 0 }}
+            exit={{ y: 0 }}
+            transition={{
+              duration: 0.2,
+              ease: "anticipate",
+            }}
+            className={cn(
+              panelVariants({ position: positionState, className }),
+            )}
+          >
+            {/* Absolute componnents */}
+            <PanelTag />
 
-              {/* Flex-col components */}
-              <PanelDialogContainter />
-              <PanelToast />
-              {children}
-            </motion.div>
+            {/* Flex-col components */}
+            <PanelDialogContainter />
+            <PanelToast />
+            {children}
           </motion.div>
-        </AnimatePresence>
-      </PanelDialogProvider>
-    </WalkProvider>
+        </motion.div>
+      </AnimatePresence>
+    </PanelDialogProvider>
   );
 }

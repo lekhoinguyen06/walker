@@ -8,7 +8,6 @@ export function InputBasic() {
     <Item
       id="input-field"
       description="This is example input for the Walker Playground, try the input flow!"
-      flows={["input"]}
     >
       <Input
         placeholder="Enter text"

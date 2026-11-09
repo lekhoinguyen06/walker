@@ -1,16 +1,15 @@
-import { createAction } from "walker-react/core";
+import { createAction } from "walker-dom";
 
 export const inputActionJSON: string = JSON.stringify(
   [
     createAction({
-      flow: "input",
-      targetId: "input-field",
-      message: "Let's type in 'Hello World!'",
+      flowCommand: "input",
+      itemId: "input-field",
+      agentMessage: "Let's type in 'Hello World!'",
+      userMessage: "No prompt. This is the Action from the demo section.",
       body: {
         input: "Hello World!",
       },
-      end: true,
-      prompt: "No prompt. This is the Action from the demo section.",
     }),
   ],
   null,

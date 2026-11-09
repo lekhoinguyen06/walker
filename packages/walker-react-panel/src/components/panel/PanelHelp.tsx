@@ -2,6 +2,7 @@ import { PanelDialog } from "./PanelDialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Kbd } from "@/components/ui/kbd";
+import { usePanelDialog } from "@/hooks";
 
 export function PanelHelp() {
   const { closeDialog } = usePanelDialog();

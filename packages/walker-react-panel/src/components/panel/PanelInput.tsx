@@ -1,21 +1,24 @@
 import { Textarea } from "@/components/ui/textarea";
+import { usePanel } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { webFlows } from "walker-dom";
+import { useWalk } from "walker-react";
 
 type PanelInputProps = {
   className?: string;
 };
 
 export function PanelInput({ className }: PanelInputProps) {
-  const { input, setInput } = useWalkerInput();
-  const { handleSubmit } = usePanelWalk();
+  const { context, setUserPrompt } = usePanel();
+  const { mutate } = useWalk();
   const [isExpanding, setIsExpanding] = useState(false);
-  const isTooLong = input.length > 50;
-  const isNewLine = input.includes("\n");
+  const isTooLong = context.userPrompt.length > 50;
+  const isNewLine = context.userPrompt.includes("\n");
 
   useEffect(() => {
     setIsExpanding(isTooLong || isNewLine);
-  }, [input]);
+  }, [context.userPrompt]);
 
   return (
     <Textarea
@@ -26,9 +29,9 @@ export function PanelInput({ className }: PanelInputProps) {
         isExpanding && "h-16 rounded-[16px]",
         className,
       )}
-      value={input}
+      value={context.userPrompt}
       onChange={(e) => {
-        setInput(e.target.value);
+        setUserPrompt(e.target.value);
       }}
       onKeyDown={(e) => {
         if (e.key !== "Enter") return;
@@ -38,7 +41,10 @@ export function PanelInput({ className }: PanelInputProps) {
         }
 
         e.preventDefault();
-        handleSubmit();
+        mutate({
+          userPrompt: context.userPrompt,
+          flows: webFlows,
+        });
       }}
     />
   );

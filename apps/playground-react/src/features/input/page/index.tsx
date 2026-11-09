@@ -1,4 +1,4 @@
-import { Page } from "walker-react";
+import { Item } from "walker-react";
 import { InputBasic } from "../components/InputBasic";
 import InputBasicRaw from "../components/InputBasic?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";

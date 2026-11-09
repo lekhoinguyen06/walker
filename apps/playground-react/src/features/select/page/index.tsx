@@ -1,4 +1,4 @@
-import { Page } from "walker-react";
+import { Item } from "walker-react";
 import { SelectDemo } from "../components/SelectDemo";
 import SelectDemoRaw from "../components/SelectDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
@@ -6,7 +6,7 @@ import { selectActionJSON } from "@/shared/actions/select.action";
 
 export function SelectPage() {
   return (
-    <Page
+    <Item
       id="select-page"
       description="The page to demonstrate Walker capability to select items"
     >
@@ -27,6 +27,6 @@ export function SelectPage() {
           />
         </CodeWrapper>
       </div>
-    </Page>
+    </Item>
   );
 }

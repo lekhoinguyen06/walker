@@ -7,6 +7,7 @@ const config: any = defineConfig({
     inferTypes: true,
   },
   sourcemap: true,
+  external: ["react", "react-dom"],
   clean: true,
 });
 

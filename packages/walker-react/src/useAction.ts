@@ -9,5 +9,8 @@ export function useAction() {
     push: (action: ActionType) => {
       $action.set([...$action.get(), action]);
     },
+    clear: () => {
+      $action.set([]);
+    },
   };
 }

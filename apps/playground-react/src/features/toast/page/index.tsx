@@ -1,4 +1,4 @@
-import { Page } from "walker-react";
+import { Item } from "walker-react";
 import { ToastDemo } from "../components/ToastDemo";
 import ToastDemoRaw from "../components/ToastDemo?raw";
 import AppLayout from "../../../AppLayout?raw";
@@ -7,7 +7,7 @@ import { toastActionJSON } from "@/shared/actions/toast.action";
 
 export function ToastPage() {
   return (
-    <Page
+    <Item
       id="toast-page"
       description="The page to demonstrate Walker with toast notifications"
     >
@@ -34,6 +34,6 @@ export function ToastPage() {
           />
         </CodeWrapper>
       </div>
-    </Page>
+    </Item>
   );
 }

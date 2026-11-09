@@ -1,20 +1,20 @@
-import { createAction } from "walker-react/core";
+import { createAction } from "walker-dom";
 
 export const selectActionJSON = JSON.stringify(
   [
     createAction({
-      flow: "click",
-      targetId: "select-trigger",
-      message: "Let's see what we have here...",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: false,
+      flowCommand: "click",
+      itemId: "select-trigger",
+      agentMessage: "Let's see what we have here...",
+      userMessage: "No prompt. This is the Action from the demo section.",
+      body: {},
     }),
     createAction({
-      flow: "click",
-      targetId: "select-item-banana",
-      message: "Banana na na na!",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: true,
+      flowCommand: "click",
+      itemId: "select-item-banana",
+      agentMessage: "Banana na na na!",
+      userMessage: "No prompt. This is the Action from the demo section.",
+      body: {},
     }),
   ],
   null,

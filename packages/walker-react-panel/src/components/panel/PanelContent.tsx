@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { cva } from "class-variance-authority";
+import { usePanel, usePanelHotkeys } from "@/hooks";
+import { Mouse, useWalk } from "walker-react";
+import { webFlows } from "walker-dom";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -26,10 +29,9 @@ type PanelContentProps = {
 };
 
 export function PanelContent({ className, children }: PanelContentProps) {
-  const { style, tab, setTab } = usePanel();
-
-  const { handleSubmit, isPending, isWalking } = usePanelWalk();
+  const { style, tab, setTab, context } = usePanel();
   const { isMenuHold } = usePanelHotkeys();
+  const { mutate, loading, data } = useWalk();
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
@@ -48,11 +50,16 @@ export function PanelContent({ className, children }: PanelContentProps) {
           variant="ghost"
           size="icon"
           className={"rounded-full relative"}
-          onClick={() => handleSubmit()}
+          onClick={() =>
+            mutate({
+              userPrompt: context.userPrompt,
+              flows: webFlows,
+            })
+          }
         >
           <div
             className={cn(
-              !(isWalking || isPending) ? "hidden" : "flex",
+              !loading ? "hidden" : "flex",
               "absolute inset-0 m-auto size-6 aspect-square rounded-full items-center justify-center",
             )}
           >
@@ -62,8 +69,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
             <div
               className={cn(
                 "relative size-6 aspect-square flex items-center justify-center rounded-full",
-                isPending && !isWalking && "bg-red-200 text-white",
-                isWalking && "bg-red-500 text-white",
+                loading && "bg-red-500 text-white",
               )}
             >
               <div className="font-brand text-lg">W</div>

@@ -12,11 +12,10 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Item, useScope } from "walker-react";
+import { Item } from "walker-react";
 import { useState } from "react";
 
 export function DialogDemo() {
-  const { state, setActiveId, resetActiveId } = useScope("dialog-demo");
   const [name, setName] = useState("Pedro Duarte");
   const [username, setUsername] = useState("@peduarte");
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +23,6 @@ export function DialogDemo() {
     <Item
       id="dialog-demo"
       description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
-      scope={state}
       state={
         isOpen
           ? "Dialog is open"
@@ -43,21 +41,13 @@ export function DialogDemo() {
         }}
       >
         <form>
-          <Item
-            id="dialog-trigger-open"
-            description="Click to open the dialog"
-            flows={["click"]}
-          >
+          <Item id="dialog-trigger-open" description="Click to open the dialog">
             <DialogTrigger
               render={<Button variant="outline">Open Dialog</Button>}
             />
           </Item>
           <DialogContent className="sm:max-w-sm">
-            <Item
-              id="dialog-content"
-              description="The content of the dialog"
-              refId="dialog-trigger-open"
-            >
+            <Item id="dialog-content" description="The content of the dialog">
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
@@ -72,7 +62,6 @@ export function DialogDemo() {
                     id="name-input-field"
                     description="The input for the name"
                     state={name}
-                    flows={["input"]}
                   >
                     <Input
                       id="name-1"
@@ -88,7 +77,6 @@ export function DialogDemo() {
                     id="username-input-field"
                     description="The input for the username"
                     state={username}
-                    flows={["input"]}
                   >
                     <Input
                       id="username-1"
@@ -103,7 +91,6 @@ export function DialogDemo() {
                 <Item
                   id="dialog-trigger-close"
                   description="Click to close the dialog"
-                  flows={["click"]}
                 >
                   <DialogClose
                     render={<Button variant="outline">Cancel</Button>}
@@ -112,7 +99,6 @@ export function DialogDemo() {
                 <Item
                   id="dialog-submit-button"
                   description="Click to save changes and close the dialog"
-                  flows={["click"]}
                 >
                   <Button type="submit" onClick={() => setIsOpen(false)}>
                     Save changes

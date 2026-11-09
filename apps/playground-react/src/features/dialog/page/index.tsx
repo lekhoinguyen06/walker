@@ -1,4 +1,4 @@
-import { Page } from "walker-react";
+import { Item } from "walker-react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
@@ -6,7 +6,7 @@ import { dialogActionJSON } from "@/shared/actions/dialog.action";
 
 export function DialogPage() {
   return (
-    <Page
+    <Item
       id="dialog-page"
       description="The page to demonstrate Walker capability to interact with dialogs"
     >
@@ -27,6 +27,6 @@ export function DialogPage() {
           />
         </CodeWrapper>
       </div>
-    </Page>
+    </Item>
   );
 }

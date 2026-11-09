@@ -29,7 +29,6 @@ export function ScrollAreaDemo() {
                 <Item
                   id={tag}
                   description={`Version: ${tag}, click to select this version.`}
-                  flows={["click"]}
                 >
                   <div
                     className="text-sm"

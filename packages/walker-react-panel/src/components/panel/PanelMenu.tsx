@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { usePanelDialog, usePanelToast } from "@/hooks";
 import { cn } from "@/lib/utils";
 import {
   CircleQuestionMark,
@@ -8,11 +9,12 @@ import {
   RefreshCcw,
   TextCursor,
 } from "lucide-react";
+import { useAction } from "walker-react";
 
 export function PanelMenu() {
   const { openDialog, closeDialog, dialog } = usePanelDialog();
   const { pushToast } = usePanelToast();
-  const { runtime } = useRuntime();
+  const { clear } = useAction();
   return (
     <>
       <Button
@@ -20,7 +22,7 @@ export function PanelMenu() {
         size="icon"
         className={cn("rounded-full")}
         onClick={() => {
-          runtime.clear();
+          clear();
           pushToast({
             type: "success",
             message: "Cleared walk history.",

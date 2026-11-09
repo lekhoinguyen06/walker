@@ -1,3 +1,4 @@
+import { usePanel, usePanelToast } from "@/hooks";
 import { useState } from "react";
 import { useInterval } from "usehooks-ts";
 
@@ -107,8 +108,8 @@ function render(node: WalkerUINodeType) {
 }
 
 function Suggest({ body, prompt }: SuggestType) {
-  const { setInput } = useWalkerInput();
-  return <div onClick={() => setInput(prompt)}>{render(body)}</div>;
+  const { setUserPrompt } = usePanel();
+  return <div onClick={() => setUserPrompt(prompt)}>{render(body)}</div>;
 }
 
 function SuggestThumbnail({ thumbnail }: SuggestType) {
