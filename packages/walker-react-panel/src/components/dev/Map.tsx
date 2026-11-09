@@ -1,13 +1,10 @@
-import type { ItemType, MapItemType, MapType } from "walker-core";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useRuntime } from "@/walker/hooks";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
-import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 
 type SelectedItemStoreType = {
   selectedItem: ItemType | null;

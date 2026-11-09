@@ -1,12 +1,10 @@
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
-import { usePanelDialog } from "@/walker/hooks/usePanelDialog";
 import { MapDialog } from "../dev/Map";
 import { HistoryDialog } from "../dev/History";
 import { ChatDialog } from "../dev/Chat";
 import { cn } from "@/lib/utils";
 import { PanelHelp } from "./PanelHelp";
-import type { PanelDialogType } from "@/walker/constants/panel.const";
 import { InputDialog } from "../dev/Input";
 
 export function PanelDialogContainter() {

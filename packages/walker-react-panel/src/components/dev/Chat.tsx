@@ -26,9 +26,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
-import { useWalkerChat } from "@/walker/hooks/useWalkerChat";
-import { usePanelDialog } from "@/walker/hooks";
-import { PanelDialog } from "../panel/PanelDialog";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 

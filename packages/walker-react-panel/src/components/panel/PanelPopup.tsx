@@ -1,7 +1,6 @@
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import { cn } from "@/lib/utils";
-import { usePanel } from "@/walker/hooks";
 
 type PanelPopupProps = {
   tabs: { [key in "default"]: React.ReactNode };

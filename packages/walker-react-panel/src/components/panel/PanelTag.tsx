@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { usePanel } from "@/walker/hooks";
 import { ChevronsDown } from "lucide-react";
 import * as motion from "motion/react-client";
 

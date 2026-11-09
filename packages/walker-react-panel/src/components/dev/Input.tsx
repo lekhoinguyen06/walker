@@ -3,12 +3,11 @@ import { useRef, type Dispatch, type SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { useDarkMode } from "usehooks-ts";
 import { RefreshCcw, X } from "lucide-react";
-import { useRuntime, usePanelToast, usePanelDialog } from "@/walker/hooks";
 import { PanelDialog } from "../panel/PanelDialog";
 import {
   FAILED_TO_LOAD_ACTION_MSG,
   SUCCESS_LOAD_ACTION_MSG,
-} from "@/walker/constants/toast.const";
+} from "../../constants/toast.const";
 
 const defaultValue = `[
   {
