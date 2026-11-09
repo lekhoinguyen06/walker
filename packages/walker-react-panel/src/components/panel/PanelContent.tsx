@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { cva } from "class-variance-authority";
-import { usePanel, usePanelHotkeys } from "@/hooks";
+import { usePanel, usePanelHotkeys, usePanelToast } from "@/hooks";
 import { Mouse, useWalk } from "walker-react";
 import { webFlows } from "walker-dom";
+import { panelFlowsFactory } from "@/lib/walker";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",
@@ -32,6 +33,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
   const { style, tab, setTab, context } = usePanel();
   const { isMenuHold } = usePanelHotkeys();
   const { mutate, loading, data } = useWalk();
+  const { pushToast } = usePanelToast();
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
@@ -53,7 +55,9 @@ export function PanelContent({ className, children }: PanelContentProps) {
           onClick={() =>
             mutate({
               userPrompt: context.userPrompt,
-              flows: webFlows,
+              flows: panelFlowsFactory({
+                pushToast,
+              }),
             })
           }
         >

@@ -14,7 +14,8 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
   // Request
   let action: ActionType;
   if (actionsInQueue.length > 0) {
-    action = actionsInQueue.shift()!;
+    action = actionsInQueue[0]!;
+    $action.set(actionsInQueue.slice(1));
   } else {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     action = {

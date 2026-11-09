@@ -1,6 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
-import { usePanel } from "@/hooks";
+import { usePanel, usePanelToast } from "@/hooks";
 import { cn } from "@/lib/utils";
+import { panelFlowsFactory } from "@/lib/walker";
 import { useEffect, useState } from "react";
 import { webFlows } from "walker-dom";
 import { useWalk } from "walker-react";
@@ -12,6 +13,7 @@ type PanelInputProps = {
 export function PanelInput({ className }: PanelInputProps) {
   const { context, setUserPrompt } = usePanel();
   const { mutate } = useWalk();
+  const { pushToast } = usePanelToast();
   const [isExpanding, setIsExpanding] = useState(false);
   const isTooLong = context.userPrompt.length > 50;
   const isNewLine = context.userPrompt.includes("\n");
@@ -43,7 +45,9 @@ export function PanelInput({ className }: PanelInputProps) {
         e.preventDefault();
         mutate({
           userPrompt: context.userPrompt,
-          flows: webFlows,
+          flows: panelFlowsFactory({
+            pushToast,
+          }),
         });
       }}
     />
