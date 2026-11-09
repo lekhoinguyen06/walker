@@ -25,6 +25,7 @@
     "zod": "^4.6.7"
   },
   "peerDependencies": {
-    "typescript": "^7"
+    "typescript": "^7",
+    "react": "^19.3.1"
   }
 }

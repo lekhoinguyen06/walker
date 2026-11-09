@@ -1,5 +1,5 @@
 import { scrollHook } from "./scroll.hook";
-import type { Action, Context, Flow } from "./type";
+import type { ActionType, Context, Flow } from "./type";
 
 export async function click(
   action: Action,

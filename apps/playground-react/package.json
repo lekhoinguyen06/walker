@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "walker-react": "workspace:^",
+    "walker-react-panel": "workspace:^",
     "@ai-sdk/react": "^4.0.34",
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/geist": "^5.2.8",

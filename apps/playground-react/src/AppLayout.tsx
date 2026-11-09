@@ -8,7 +8,7 @@ import {
   PanelInput,
   PanelMenu,
   PanelPopup,
-} from "walker-react/ui";
+} from "walker-react-panel";
 
 function AppLayout() {
   return (

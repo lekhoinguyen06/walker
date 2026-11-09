@@ -26,12 +26,15 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
+import { usePanelDialog } from "@/hooks";
+import { PanelDialog } from "../panel/PanelDialog";
+import { usePanelChat } from "@/hooks/usePanelChat";
 
 const streamingExtensions = [streamingMarkdownExtension()];
 
 export function ChatDialog() {
   const { closeDialog } = usePanelDialog();
-  const { messages, setMessages, sendMessage, status } = useWalkerChat();
+  const { messages, setMessages, sendMessage, status } = usePanelChat();
   const [input, setInput] = useState("");
   const isBusy = status === "submitted" || status === "streaming";
   return (

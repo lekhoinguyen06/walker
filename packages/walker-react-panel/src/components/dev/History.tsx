@@ -4,12 +4,15 @@ import { GalleryHorizontalEnd, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
+import { usePanelDialog } from "@/hooks";
+import type { HistoryItem } from "walker-dom";
+import { useHistory } from "walker-react";
 
 export function HistoryDialog() {
   const { closeDialog } = usePanelDialog();
-  const { runtime } = useRuntime();
+  const history = useHistory();
   const [selectedHistory, setSelectedHistory] = useState<
-    HistoryType | undefined
+    HistoryItem | undefined
   >(undefined);
   return (
     <PanelDialog dialog={"history"}>
@@ -43,19 +46,20 @@ export function HistoryDialog() {
                 </>
               ) : (
                 <div>
-                  {runtime.listHistory().map((i) => (
+                  {history.map((i) => (
                     <div
                       className={cn(
                         "w-full flex gap-3 items-center hover:bg-accent hover:cursor-pointer",
-                        // selectedHistory?. === f.command && "bg-accent",
                       )}
                       onClick={() => setSelectedHistory(i)}
                     >
                       <GalleryHorizontalEnd size={12} />
                       <span className="text-xs font-semibold text-nowrap">
-                        {i.action.flow}
+                        {i.action.flowCommand}
                       </span>
-                      <span className="text-xs text-nowrap">{i.prompt}</span>
+                      <span className="text-xs text-nowrap">
+                        {i.action.userMessage}
+                      </span>
                     </div>
                   ))}
                 </div>

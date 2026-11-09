@@ -1,32 +1,21 @@
-import {
-  type ActionType,
-  type FlowType,
-  type HistoryType,
-  type ItemType,
-  type MapType,
-} from "walker-shared";
-
-export type Action = ActionType;
-export type Flow = FlowType;
-export type Item = ItemType;
-export type Map = MapType;
-export type HistoryItem = HistoryType;
+import { type ActionType, type FlowType } from "walker-shared";
 
 export interface Hook {
-  handler?: (action: Action, ctx: Context) => Promise<string | void>;
+  handler?: (action: ActionType, ctx: Context) => Promise<string | void>;
 }
 
-export interface FlowWithHooksAndHandler extends Flow {
+export interface FlowWithHooksAndHandler extends FlowType {
   beforeHooks?: Hook[];
-  handler?: (action: Action, context: Context) => Promise<string | void>;
+  handler?: (action: ActionType, context: Context) => Promise<string | void>;
   afterHooks?: Hook[];
 }
 
 export interface Context {
   userPrompt: string;
-  flows: Flow[];
+  flows: FlowType[];
   globalHooks?: {
     beforeHooks?: Hook[];
     afterHooks?: Hook[];
   };
+  historyWindowSize?: number;
 }

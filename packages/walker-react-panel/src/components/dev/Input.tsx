@@ -8,6 +8,8 @@ import {
   FAILED_TO_LOAD_ACTION_MSG,
   SUCCESS_LOAD_ACTION_MSG,
 } from "../../constants/toast.const";
+import { usePanelDialog, usePanelToast } from "@/hooks";
+import { useAction } from "walker-react";
 
 const defaultValue = `[
   {
@@ -29,10 +31,10 @@ export type InputProps = {
 };
 
 export function InputEditor({ isOpen, setIsOpen }: InputProps) {
-  const { runtime } = useRuntime();
   const editorRef = useRef<any>(null);
   const { isDarkMode } = useDarkMode();
   const { pushToast } = usePanelToast();
+  const { push } = useAction();
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
@@ -40,7 +42,7 @@ export function InputEditor({ isOpen, setIsOpen }: InputProps) {
 
   function showValue() {
     try {
-      runtime.addRawActions(editorRef.current.getValue());
+      push(editorRef.current.getValue());
       pushToast({
         type: "success",
         message: SUCCESS_LOAD_ACTION_MSG,

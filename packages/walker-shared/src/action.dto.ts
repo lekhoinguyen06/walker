@@ -5,6 +5,7 @@ export const ActionSchema = z
     itemId: z.string(),
     flowCommand: z.string(),
     agentMessage: z.string(),
+    userMessage: z.string(),
     body: z.record(z.string(), z.unknown()),
   })
   .loose();

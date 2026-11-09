@@ -2,6 +2,10 @@ import { usePanelStore } from "../stores/usePanelStore";
 
 export function usePanel() {
   const url = usePanelStore((state) => state.url);
+  const setUrl = usePanelStore((state) => state.setUrl);
+  const context = usePanelStore((state) => state.context);
+  const setContext = usePanelStore((state) => state.setContext);
+  const setUserPrompt = usePanelStore((state) => state.setUserPrompt);
   const position = usePanelStore((state) => state.position);
   const setPosition = usePanelStore((state) => state.setPosition);
   const style = usePanelStore((state) => state.style);
@@ -15,6 +19,10 @@ export function usePanel() {
 
   return {
     url,
+    setUrl,
+    context,
+    setContext,
+    setUserPrompt,
     position,
     setPosition,
     style,

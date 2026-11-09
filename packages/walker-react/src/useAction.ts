@@ -1,7 +1,12 @@
 import { useStore } from "@nanostores/react";
-import { $action } from "walker-dom";
+import { $action, type Action } from "walker-dom";
 
 export function useAction() {
   const action = useStore($action);
-  return action;
+  return {
+    ...action,
+    push: (action: Action) => {
+      $action.set([...$action.get(), action]);
+    },
+  };
 }

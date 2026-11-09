@@ -14,7 +14,8 @@ export async function walk(ctx: Context): Promise<HistoryItem> {
 
   // Request
   let action: Action;
-  if (actionsInQueue.length > 0) {
+  const historyWindowSize = ctx.historyWindowSize ?? 3;
+  if (actionsInQueue.length > historyWindowSize) {
     action = actionsInQueue.shift()!;
   } else {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -22,6 +23,7 @@ export async function walk(ctx: Context): Promise<HistoryItem> {
       itemId: "app_item1",
       flowCommand: "click",
       agentMessage: "Hello from walker!",
+      userMessage: "Hello from user!",
       body: {},
     };
   }

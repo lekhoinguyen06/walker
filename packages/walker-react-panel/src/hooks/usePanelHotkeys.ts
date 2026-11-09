@@ -1,17 +1,15 @@
 import { useHotkey, useKeyHold } from "@tanstack/react-hotkeys";
 import { usePanel } from "./usePanel";
 import { usePanelDialog } from "./usePanelDialog";
-import { usePanelWalk } from "./useWalk";
-import { useRuntime } from "./useRuntime";
 import { usePanelToast } from "./usePanelToast";
 import { useMemo } from "react";
+import { useWalk } from "walker-react";
 
 export function usePanelHotkeys() {
-  const { isHidden, setIsHidden, tab, setTab } = usePanel();
+  const { isHidden, setIsHidden, tab, setTab, context } = usePanel();
   const { pushToast } = usePanelToast();
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { handleSubmit } = usePanelWalk();
-  const { runtime } = useRuntime();
+  const { mutate, loading, data } = useWalk();
 
   useHotkey("Control+W", () => {
     isHidden ? setIsHidden(false) : setIsHidden(true);
@@ -20,7 +18,7 @@ export function usePanelHotkeys() {
   useHotkey(
     "Control+Enter",
     () => {
-      handleSubmit();
+      mutate(context);
     },
     {
       enabled: !isHidden,
