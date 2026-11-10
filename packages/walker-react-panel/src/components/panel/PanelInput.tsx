@@ -10,7 +10,7 @@ type PanelInputProps = {
 };
 
 export function PanelInput({ className }: PanelInputProps) {
-  const { context, setUserPrompt } = usePanel();
+  const { context, setContext } = usePanel();
   const { mutate } = useWalk();
   const { pushToast } = usePanelToast();
   const [isExpanding, setIsExpanding] = useState(false);
@@ -32,7 +32,7 @@ export function PanelInput({ className }: PanelInputProps) {
       )}
       value={context.userPrompt}
       onChange={(e) => {
-        setUserPrompt(e.target.value);
+        setContext({ ...context, userPrompt: e.target.value });
       }}
       onKeyDown={(e) => {
         if (e.key !== "Enter") return;
@@ -42,12 +42,7 @@ export function PanelInput({ className }: PanelInputProps) {
         }
 
         e.preventDefault();
-        mutate(
-          panelContextFactory({
-            userPrompt: context?.userPrompt ?? "",
-            pushToast,
-          }),
-        );
+        mutate(context);
       }}
     />
   );

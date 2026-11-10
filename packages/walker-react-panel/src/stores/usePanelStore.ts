@@ -15,7 +15,7 @@ export type PanelStoreType = {
   // Walker
   context: ContextType;
   setContext: (context: ContextType) => void;
-  setUserPrompt: (userPrompt: string) => void;
+  mergeContext: (context: Partial<ContextType>) => void;
 
   // Variants
   position: VariantProps<typeof panelVariants>["position"];
@@ -48,8 +48,8 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
     flows: [],
   },
   setContext: (context: ContextType) => set({ context }),
-  setUserPrompt: (userPrompt: string) =>
-    set((state) => ({ context: { ...state.context, userPrompt } })),
+  mergeContext: (context: Partial<ContextType>) =>
+    set((state) => ({ context: { ...state.context, ...context } })),
 
   position: "bottom",
   setPosition: (position: VariantProps<typeof panelVariants>["position"]) =>

@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 import { PanelTag } from "./PanelTag";
 import { PanelToast } from "./PanelToast";
 import { PanelDialogContainter } from "./PanelDialog";
-import { PanelDialogProvider, usePanel } from "@/hooks";
+import { PanelDialogProvider, usePanel, usePanelToast } from "@/hooks";
+import type { ContextType } from "walker-shared";
+import { panelContextFactory } from "@/lib/walker";
 
 export function togglePanelPosition(position: PanelPosition): PanelPosition {
   const index = PANEL_POSITIONS.indexOf(position);
@@ -50,6 +52,7 @@ export const panelVariants = cva(
 export type PanelProps = VariantProps<typeof panelVariants> & {
   hidden?: boolean;
   url: string;
+  context: ContextType;
   className?: string;
   children?: ReactNode;
 };
@@ -57,23 +60,34 @@ export type PanelProps = VariantProps<typeof panelVariants> & {
 export function Panel({
   position = "bottom",
   url,
+  context,
   hidden,
   className,
   children,
 }: PanelProps): ReactNode {
   const {
     setUrl,
+    context: contextState,
+    setContext,
+    mergeContext,
     position: positionState,
     isHidden: isHiddenState,
-    setIsHidden,
     setStore,
   } = usePanel();
+  const { pushToast } = usePanelToast();
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setUrl(url);
     setStore({ position, url, isHidden: hidden });
+    setContext(
+      panelContextFactory({
+        userPrompt: contextState.userPrompt,
+        pushToast,
+      }),
+    );
+    mergeContext(context);
   }, []);
 
   return (

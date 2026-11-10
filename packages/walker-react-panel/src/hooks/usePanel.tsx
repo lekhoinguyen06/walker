@@ -5,7 +5,7 @@ export function usePanel() {
   const setUrl = usePanelStore((state) => state.setUrl);
   const context = usePanelStore((state) => state.context);
   const setContext = usePanelStore((state) => state.setContext);
-  const setUserPrompt = usePanelStore((state) => state.setUserPrompt);
+  const mergeContext = usePanelStore((state) => state.mergeContext);
   const position = usePanelStore((state) => state.position);
   const setPosition = usePanelStore((state) => state.setPosition);
   const style = usePanelStore((state) => state.style);
@@ -22,7 +22,7 @@ export function usePanel() {
     setUrl,
     context,
     setContext,
-    setUserPrompt,
+    mergeContext,
     position,
     setPosition,
     style,

@@ -31,8 +31,7 @@ type PanelContentProps = {
 export function PanelContent({ className, children }: PanelContentProps) {
   const { style, tab, setTab, context } = usePanel();
   const { isMenuHold } = usePanelHotkeys();
-  const { mutate, loading, data } = useWalk();
-  const { pushToast } = usePanelToast();
+  const { mutate, loading } = useWalk();
 
   return (
     <div className={cn(panelContentVariants({ style, className }))}>
@@ -51,14 +50,7 @@ export function PanelContent({ className, children }: PanelContentProps) {
           variant="ghost"
           size="icon"
           className={"rounded-full relative"}
-          onClick={() =>
-            mutate(
-              panelContextFactory({
-                userPrompt: context?.userPrompt ?? "",
-                pushToast,
-              }),
-            )
-          }
+          onClick={() => mutate(context)}
         >
           <div
             className={cn(
