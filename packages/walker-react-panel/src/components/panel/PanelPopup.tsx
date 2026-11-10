@@ -1,5 +1,4 @@
-import { AnimatePresence } from "motion/react";
-import * as motion from "motion/react-client";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { usePanel } from "@/hooks";
 
