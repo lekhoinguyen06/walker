@@ -38,13 +38,15 @@ export async function executeFlow(
       l && logs.push(String(l));
       await wait(gap);
     }
-    await wait(1000);
 
     const queue = $action.get();
     if (queue.length > 0) {
       const nextAction = queue.shift()!;
       $action.set(queue);
       await executeFlow(nextAction, ctx, logs);
+    } else {
+      // Await for mouse return animation so that styling does not end too soon
+      await wait(1000);
     }
   } else {
     logs.push(
