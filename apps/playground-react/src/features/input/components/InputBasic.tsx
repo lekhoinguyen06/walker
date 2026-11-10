@@ -6,7 +6,7 @@ export function InputBasic() {
   const [input, setInput] = useState("");
   return (
     <Item
-      id="input-field"
+      id="walker-input-field"
       description="This is example input for the Walker Playground, try the input flow!"
     >
       <Input

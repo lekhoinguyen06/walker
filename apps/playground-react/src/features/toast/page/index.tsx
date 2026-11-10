@@ -8,7 +8,7 @@ import { toastActionJSON } from "@/shared/actions/toast.action";
 export function ToastPage() {
   return (
     <Item
-      id="toast-page"
+      id="walker-toast-page"
       description="The page to demonstrate Walker with toast notifications"
     >
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">

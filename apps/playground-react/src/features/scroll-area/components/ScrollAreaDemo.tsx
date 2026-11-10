@@ -19,7 +19,7 @@ export function ScrollAreaDemo() {
       )}
       <ScrollArea className="h-72 w-48 rounded-md border">
         <Item
-          id="tags"
+          id="walker-tags"
           description="A list of tags. Please choose one of them."
         >
           <div className="p-4">
@@ -27,7 +27,7 @@ export function ScrollAreaDemo() {
             {tags.map((tag) => (
               <React.Fragment key={tag}>
                 <Item
-                  id={tag}
+                  id={`walker-${tag}`}
                   description={`Version: ${tag}, click to select this version.`}
                 >
                   <div

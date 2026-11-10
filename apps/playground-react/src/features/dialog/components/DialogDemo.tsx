@@ -21,7 +21,7 @@ export function DialogDemo() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Item
-      id="dialog-demo"
+      id="walker-dialog-demo"
       description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
       state={
         isOpen
@@ -33,21 +33,22 @@ export function DialogDemo() {
         open={isOpen}
         onOpenChange={(val) => {
           setIsOpen(val);
-          if (val) {
-            setActiveId("dialog-demo");
-          } else {
-            resetActiveId();
-          }
         }}
       >
         <form>
-          <Item id="dialog-trigger-open" description="Click to open the dialog">
+          <Item
+            id="walker-dialog-trigger-open"
+            description="Click to open the dialog"
+          >
             <DialogTrigger
               render={<Button variant="outline">Open Dialog</Button>}
             />
           </Item>
           <DialogContent className="sm:max-w-sm">
-            <Item id="dialog-content" description="The content of the dialog">
+            <Item
+              id="walker-dialog-content"
+              description="The content of the dialog"
+            >
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
@@ -59,7 +60,7 @@ export function DialogDemo() {
                 <Field>
                   <Label htmlFor="name-1">Name</Label>
                   <Item
-                    id="name-input-field"
+                    id="walker-name-input-field"
                     description="The input for the name"
                     state={name}
                   >
@@ -74,7 +75,7 @@ export function DialogDemo() {
                 <Field>
                   <Label htmlFor="username-1">Username</Label>
                   <Item
-                    id="username-input-field"
+                    id="walker-username-input-field"
                     description="The input for the username"
                     state={username}
                   >
@@ -89,7 +90,7 @@ export function DialogDemo() {
               </FieldGroup>
               <DialogFooter>
                 <Item
-                  id="dialog-trigger-close"
+                  id="walker-dialog-trigger-close"
                   description="Click to close the dialog"
                 >
                   <DialogClose
@@ -97,7 +98,7 @@ export function DialogDemo() {
                   />
                 </Item>
                 <Item
-                  id="dialog-submit-button"
+                  id="walker-dialog-submit-button"
                   description="Click to save changes and close the dialog"
                 >
                   <Button type="submit" onClick={() => setIsOpen(false)}>

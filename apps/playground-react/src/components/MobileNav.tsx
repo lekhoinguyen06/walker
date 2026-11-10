@@ -25,7 +25,7 @@ export function MobileNav() {
     >
       <SheetTrigger>
         <Item
-          id="mobile-nav-trigger"
+          id="walker-mobile-nav-trigger"
           description="This is the mobile navigation trigger, click it to open the mobile navigation menu."
         >
           <Button
@@ -44,7 +44,7 @@ export function MobileNav() {
         </SheetHeader>
         <div className="flex flex-col">
           <Item
-            id="mobile-nav-button-react"
+            id="walker-mobile-nav-button-react"
             description="This is the React logo, click it to go to the Walker Playground for React."
           >
             <a href="https://react.walker.vstaffs.com">
@@ -59,9 +59,9 @@ export function MobileNav() {
             </a>
           </Item>
           <Item
-            id="mobile-nav-button-vue"
+            id="walker-mobile-nav-button-vue"
             description="This is the Vue logo, click it to go to the Walker Playground for Vue."
-            refId="mobile-nav-trigger"
+            refId="walker-mobile-nav-trigger"
           >
             <a href="https://vue.walker.vstaffs.com">
               <Button
@@ -75,7 +75,7 @@ export function MobileNav() {
             </a>
           </Item>
           <Item
-            id="mobile-nav-button-svelte"
+            id="walker-mobile-nav-button-svelte"
             description="This is the Svelte logo, click it to go to the Walker Playground for Svelte."
           >
             <a href="https://svelte.walker.vstaffs.com">

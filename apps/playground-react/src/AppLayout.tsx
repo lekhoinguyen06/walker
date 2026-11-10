@@ -16,7 +16,7 @@ function AppLayout() {
       <Header />
       <Outlet />
       <Item
-        id="toast-container"
+        id="walker-toast-container"
         description="The container for toast notifications. It is recommended to place this at the root of your application."
       >
         <Toaster />

@@ -7,7 +7,7 @@ import { dialogActionJSON } from "@/shared/actions/dialog.action";
 export function DialogPage() {
   return (
     <Item
-      id="dialog-page"
+      id="walker-dialog-page"
       description="The page to demonstrate Walker capability to interact with dialogs"
     >
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">

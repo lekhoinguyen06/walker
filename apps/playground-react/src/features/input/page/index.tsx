@@ -7,7 +7,7 @@ import { inputActionJSON } from "@/shared/actions/input.action";
 export function InputPage() {
   return (
     <Item
-      id="input-page"
+      id="walker-input-page"
       description="The page to demonstrate Walker behavior to input text"
     >
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">

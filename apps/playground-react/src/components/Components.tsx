@@ -14,7 +14,7 @@ export function Components() {
     <div className="w-full grid grid-cols-3 max-w-2xl gap-6">
       {components.map((component) => (
         <Item
-          id={`nagivation-${component.href}-button`}
+          id={`walker-nagivation-${component.href}-button`}
           key={component.href}
           description={`Go to Walker demonstration for ShadcnUI ${component.label}`}
           flows={JSON.stringify(["click"])}

@@ -8,13 +8,13 @@ import { Item } from "walker-react";
 export default function Header() {
   return (
     <Item
-      id="navigation"
+      id="walker-navigation"
       description="This is the navigation header for the Walker Playground."
     >
       <header className="fixed z-50 top-0 left-1/2 transform -translate-x-1/2 flex w-full p-3 max-w-4xl rounded-[12px] justify-between items-center">
         <div className=" flex w-full p-3 max-w-4xl rounded-[12px] justify-between items-center backdrop-blur-sm bg-white/20 dark:bg-black/20">
           <Item
-            id="navigation-button-home"
+            id="walker-navigation-button-home"
             description="This is the Walker logo, click it to go back to the home page."
           >
             <a href="/">
@@ -33,7 +33,7 @@ export default function Header() {
           <div className="flex items-center">
             <div className="invisible md:visible flex gap-3">
               <Item
-                id="navigation-button-react"
+                id="walker-navigation-button-react"
                 description="This is the React logo, click it to go to the Walker Playground for React. Note: We are currently at the React playground."
               >
                 <a href="https://react.walker.vstaffs.com">
@@ -43,7 +43,7 @@ export default function Header() {
                 </a>
               </Item>
               <Item
-                id="navigation-button-vue"
+                id="walker-navigation-button-vue"
                 description="This is the Vue logo, click it to go to the Walker Playground for Vue. Note: Not implemented yet, but will be available soon."
               >
                 <a href="https://vue.walker.vstaffs.com">
@@ -53,7 +53,7 @@ export default function Header() {
                 </a>
               </Item>
               <Item
-                id="navigation-button-svelte"
+                id="walker-navigation-button-svelte"
                 description="This is the Svelte logo, click it to go to the Walker Playground for Svelte. Note: Not implemented yet, but will be available soon."
               >
                 <a href="https://svelte.walker.vstaffs.com">

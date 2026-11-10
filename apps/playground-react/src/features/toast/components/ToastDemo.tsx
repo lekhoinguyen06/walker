@@ -18,7 +18,7 @@ export function ToastDemo() {
 
   return (
     <Item
-      id="toast-trigger"
+      id="walker-toast-trigger"
       description="Click the button below to show a toast notification."
     >
       <Button variant="outline" onClick={showToast}>

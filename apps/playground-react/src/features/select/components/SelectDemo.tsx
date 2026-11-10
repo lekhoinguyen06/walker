@@ -23,12 +23,12 @@ export function SelectDemo() {
   const [value, setValue] = useState<string | null>(null);
   return (
     <Item
-      id="select"
+      id="walker-select"
       description="This is example select for the Walker Playground."
     >
       <Select items={items} value={value} onValueChange={(v) => setValue(v)}>
         <Item
-          id="select-trigger"
+          id="walker-select-trigger"
           description="This is the select trigger. Click to open the select dropdown."
         >
           <SelectTrigger className="w-full max-w-48">
@@ -40,7 +40,7 @@ export function SelectDemo() {
             <SelectLabel>Fruits</SelectLabel>
             {items.map((item) => (
               <Item
-                id={`select-item-${item.value}`}
+                id={`walker-select-item-${item.value}`}
                 description={`This is a select item. Click to select: ${item.label}.`}
               >
                 <SelectItem key={item.value} value={item.value}>

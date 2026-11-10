@@ -7,7 +7,7 @@ import { scrollAreaActionJSON } from "@/shared/actions/scroll-area.action";
 export function ScrollAreaPage() {
   return (
     <Item
-      id="scroll-area-page"
+      id="walker-scroll-area-page"
       description="The page to demonstrate Walker behavior to scroll into view before click an item"
     >
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
