@@ -4,6 +4,7 @@ import { input } from "./input.ade";
 import { nav } from "./nav.ade";
 import { scrollArea } from "./scroll-area.ade.";
 import { select } from "./select.ade";
+import { toast } from "./toast.ade";
 import type { ADEType } from "./type";
 
 export const ade = {
@@ -17,4 +18,5 @@ export const ade = {
   ...dialog,
   ...scrollArea,
   ...select,
+  ...toast,
 } as const satisfies ADEType;
