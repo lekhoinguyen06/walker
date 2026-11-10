@@ -1,17 +1,18 @@
+import { ade } from "@/walker/ade";
 import { createAction } from "walker-dom";
 
 export const dialogActionJSON = JSON.stringify(
   [
     createAction({
       flowCommand: "click",
-      itemId: "walker-dialog-trigger-open",
+      itemId: ade.pdt().id,
       agentMessage: "Let's see what we have here...",
       userMessage: "Demo example.",
       body: {},
     }),
     createAction({
       flowCommand: "input",
-      itemId: "walker-name-input-field",
+      itemId: ade.pdin().id,
       agentMessage: "Let's type in 'Walker Jr.'",
       userMessage: "Demo example.",
       body: {
@@ -20,7 +21,7 @@ export const dialogActionJSON = JSON.stringify(
     }),
     createAction({
       flowCommand: "input",
-      itemId: "walker-username-input-field",
+      itemId: ade.pdiu().id,
       agentMessage: "Let's type in '@walker'",
       userMessage: "Demo example.",
       body: {
@@ -29,7 +30,7 @@ export const dialogActionJSON = JSON.stringify(
     }),
     createAction({
       flowCommand: "click",
-      itemId: "walker-dialog-submit-button",
+      itemId: ade.pds().id,
       agentMessage: "Nice! Let's save it!",
       userMessage: "Demo example.",
       body: {},
