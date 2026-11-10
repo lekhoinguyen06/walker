@@ -27,17 +27,9 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
     };
     await executeFlow(action, ctx, logs);
   } else {
-    action = queue[0]!;
-    queue = queue.slice(1);
+    action = queue.shift()!;
     $action.set(queue);
-    await executeFlow(action, { ...ctx, isLooping: queue.length > 0 }, logs);
-
-    while (queue.length > 0) {
-      action = queue[0]!;
-      queue = queue.slice(1);
-      $action.set(queue);
-      await executeFlow(action, { ...ctx, isLooping: queue.length > 0 }, logs);
-    }
+    await executeFlow(action, ctx, logs);
   }
 
   return {

@@ -49,7 +49,25 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
   },
   setContext: (context: ContextType) => set({ context }),
   mergeContext: (context: Partial<ContextType>) =>
-    set((state) => ({ context: { ...state.context, ...context } })),
+    set((state) => ({
+      context: {
+        userPrompt: context.userPrompt ?? state.context.userPrompt,
+        flows: [...state.context.flows, ...(context.flows ?? [])],
+        gapTimeMs: context.gapTimeMs ?? state.context.gapTimeMs,
+        globalHooks: {
+          beforeHooks: [
+            ...(state.context.globalHooks?.beforeHooks ?? []),
+            ...(context.globalHooks?.beforeHooks ?? []),
+          ],
+          afterHooks: [
+            ...(state.context.globalHooks?.afterHooks ?? []),
+            ...(context.globalHooks?.afterHooks ?? []),
+          ],
+        },
+        historyWindowSize:
+          context.historyWindowSize ?? state.context.historyWindowSize,
+      },
+    })),
 
   position: "bottom",
   setPosition: (position: VariantProps<typeof panelVariants>["position"]) =>

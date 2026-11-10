@@ -1,12 +1,12 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
-import { $mouseX, $mouseY } from "./store";
+import { $action, $mouseX, $mouseY } from "./store";
 
 export async function mouseReturn(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
   console.log("[W][D]: Mouse Return Hook: ", action.itemId);
-  if (ctx.isLooping) {
+  if ($action.get().length > 0) {
     return;
   }
   const el = document.getElementById("walker-mouse-container");

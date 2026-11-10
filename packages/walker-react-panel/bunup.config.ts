@@ -11,7 +11,7 @@ const config: any = defineConfig({
   minify: true,
   sourcemap: true,
   clean: true,
-  external: ["react", "react-dom"],
+  external: ["react", "react-dom", "walker-dom", "walker-react"],
   env: { NODE_ENV: "production" },
 });
 

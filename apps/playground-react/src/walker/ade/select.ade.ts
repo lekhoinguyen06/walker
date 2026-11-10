@@ -14,4 +14,9 @@ export const select = {
       description: `To select, provide the \'select\' flow's body with the schema: ${selectDemoFlowBodyJSONSchemaStringify}`,
       flows: [`select-demo`],
     }) as const,
+  psso: (option: string) =>
+    ({
+      id: `walker-playground-react::select::select-field::${option}`,
+      description: `An option with value ${option}`,
+    }) as const,
 } as const satisfies ADEType;

@@ -52,7 +52,7 @@ export const panelVariants = cva(
 export type PanelProps = VariantProps<typeof panelVariants> & {
   hidden?: boolean;
   url: string;
-  context: ContextType;
+  context: Partial<ContextType>;
   className?: string;
   children?: ReactNode;
 };

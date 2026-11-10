@@ -32,9 +32,11 @@ export function SelectDemo() {
           <SelectGroup>
             <SelectLabel>Fruits</SelectLabel>
             {items.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
+              <Item key={item.value} {...ade.psso(item.value)}>
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              </Item>
             ))}
           </SelectGroup>
         </SelectContent>

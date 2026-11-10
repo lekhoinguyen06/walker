@@ -1,5 +1,6 @@
 import type { ActionType, ContextType } from "walker-shared";
 import { wait } from "./utils";
+import { $action } from "./store";
 
 export async function executeFlow(
   action: ActionType,
@@ -38,6 +39,13 @@ export async function executeFlow(
       await wait(gap);
     }
     await wait(1000);
+
+    const queue = $action.get();
+    if (queue.length > 0) {
+      const nextAction = queue.shift()!;
+      $action.set(queue);
+      await executeFlow(nextAction, ctx, logs);
+    }
   } else {
     logs.push(
       "ERROR: No flow found for action.flowCommand: " + action.flowCommand,
