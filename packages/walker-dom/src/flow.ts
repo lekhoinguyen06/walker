@@ -37,6 +37,7 @@ export async function executeFlow(
       l && logs.push(String(l));
       await wait(gap);
     }
+    await wait(1000);
   } else {
     logs.push(
       "ERROR: No flow found for action.flowCommand: " + action.flowCommand,

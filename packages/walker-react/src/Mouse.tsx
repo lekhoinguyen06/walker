@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import { Item } from "./Items";
-import * as motion from "motion/react-client";
+import { AnimatePresence, motion } from "motion/react";
 import { useMouse } from "./useMouse";
 
 export type MouseProps = {
@@ -31,21 +31,23 @@ export function Mouse({ children }: MouseProps) {
         className="size-8 flex justify-center items-center z-999999"
       >
         <div>
-          <motion.div
-            animate={{
-              x: targetX - offset.x,
-              y: targetY - offset.y,
-            }}
-            transition={{
-              duration: 0.2,
-              ease: "easeOut",
-              type: "spring",
-              stiffness: 200,
-              damping: 30,
-            }}
-          >
-            {children}
-          </motion.div>
+          <AnimatePresence>
+            <motion.div
+              animate={{
+                x: targetX - offset.x,
+                y: targetY - offset.y,
+              }}
+              transition={{
+                duration: 0.2,
+                ease: "easeOut",
+                type: "spring",
+                stiffness: 200,
+                damping: 30,
+              }}
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </Item>
