@@ -3,13 +3,11 @@ import { SelectDemo } from "../components/SelectDemo";
 import SelectDemoRaw from "../components/SelectDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
 import { selectActionJSON } from "@/shared/actions/select.action";
+import { ade } from "@/walker/ade";
 
 export function SelectPage() {
   return (
-    <Item
-      id="walker-select-page"
-      description="The page to demonstrate Walker capability to select items"
-    >
+    <Item {...ade.ps()}>
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
         <CodeWrapper>
           <CodeDemo component={<SelectDemo />} />
