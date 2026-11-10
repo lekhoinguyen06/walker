@@ -1,5 +1,4 @@
-import { AnimatePresence } from "motion/react";
-import * as motion from "motion/react-client";
+import { AnimatePresence, motion } from "motion/react";
 import { MapDialog } from "../dev/Map";
 import { HistoryDialog } from "../dev/History";
 import { ChatDialog } from "../dev/Chat";

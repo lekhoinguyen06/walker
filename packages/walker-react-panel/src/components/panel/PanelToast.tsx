@@ -1,7 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, type ReactNode } from "react";
-import * as motion from "motion/react-client";
 import { cn } from "@/lib/utils";
 import { usePanel, usePanelToast } from "@/hooks";
 
