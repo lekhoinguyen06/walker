@@ -14,102 +14,69 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Item } from "walker-react";
 import { useState } from "react";
+import { ade } from "@/walker/ade";
 
 export function DialogDemo() {
   const [name, setName] = useState("Pedro Duarte");
   const [username, setUsername] = useState("@peduarte");
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <Item
-      id="walker-dialog-demo"
-      description="This is example dialog for the Walker Playground, try open it, fill in the details, and save it!"
-      state={
-        isOpen
-          ? "Dialog is open"
-          : "Dialog is closed, click the dialog-trigger to open it"
-      }
+    <Dialog
+      open={isOpen}
+      onOpenChange={(val) => {
+        setIsOpen(val);
+      }}
     >
-      <Dialog
-        open={isOpen}
-        onOpenChange={(val) => {
-          setIsOpen(val);
-        }}
-      >
-        <form>
-          <Item
-            id="walker-dialog-trigger-open"
-            description="Click to open the dialog"
-          >
-            <DialogTrigger
-              render={<Button variant="outline">Open Dialog</Button>}
-            />
-          </Item>
-          <DialogContent className="sm:max-w-sm">
-            <Item
-              id="walker-dialog-content"
-              description="The content of the dialog"
-            >
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Make changes to your profile here. Click save when you&apos;re
-                  done.
-                </DialogDescription>
-              </DialogHeader>
-              <FieldGroup>
-                <Field>
-                  <Label htmlFor="name-1">Name</Label>
-                  <Item
-                    id="walker-name-input-field"
-                    description="The input for the name"
-                    state={name}
-                  >
-                    <Input
-                      id="name-1"
-                      name="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Item>
-                </Field>
-                <Field>
-                  <Label htmlFor="username-1">Username</Label>
-                  <Item
-                    id="walker-username-input-field"
-                    description="The input for the username"
-                    state={username}
-                  >
-                    <Input
-                      id="username-1"
-                      name="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </Item>
-                </Field>
-              </FieldGroup>
-              <DialogFooter>
-                <Item
-                  id="walker-dialog-trigger-close"
-                  description="Click to close the dialog"
-                >
-                  <DialogClose
-                    render={<Button variant="outline">Cancel</Button>}
-                  />
-                </Item>
-                <Item
-                  id="walker-dialog-submit-button"
-                  description="Click to save changes and close the dialog"
-                >
-                  <Button type="submit" onClick={() => setIsOpen(false)}>
-                    Save changes
-                  </Button>
-                </Item>
-              </DialogFooter>
+      <form>
+        <Item {...ade.pdt}>
+          <DialogTrigger
+            render={<Button variant="outline">Open Dialog</Button>}
+          />
+        </Item>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Make changes to your profile here. Click save when you&apos;re
+              done.
+            </DialogDescription>
+          </DialogHeader>
+          <FieldGroup>
+            <Field>
+              <Label htmlFor="name-1">Name</Label>
+              <Item {...ade.pdin}>
+                <Input
+                  id="name-1"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Item>
+            </Field>
+            <Field>
+              <Label htmlFor="username-1">Username</Label>
+              <Item {...ade.pdiu}>
+                <Input
+                  id="username-1"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Item>
+            </Field>
+          </FieldGroup>
+          <DialogFooter>
+            <Item {...ade.pdc}>
+              <DialogClose render={<Button variant="outline">Cancel</Button>} />
             </Item>
-          </DialogContent>
-        </form>
-      </Dialog>
-    </Item>
+            <Item {...ade.pds}>
+              <Button type="submit" onClick={() => setIsOpen(false)}>
+                Save changes
+              </Button>
+            </Item>
+          </DialogFooter>
+        </DialogContent>
+      </form>
+    </Dialog>
   );
 }

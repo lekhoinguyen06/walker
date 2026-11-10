@@ -1,4 +1,6 @@
+import { dialog } from "./dialog.ade";
 import { home } from "./home.ade";
+import { input } from "./input.ade";
 import { nav } from "./nav.ade";
 import type { ADEType } from "./type";
 
@@ -9,4 +11,6 @@ export const ade = {
   },
   ...nav,
   ...home,
+  ...input,
+  ...dialog,
 } as const satisfies ADEType;
