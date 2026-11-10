@@ -23,4 +23,5 @@ export interface ContextType {
   };
   historyWindowSize?: number;
   gapTimeMs?: number;
+  isLooping?: boolean;
 }

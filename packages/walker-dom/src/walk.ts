@@ -2,6 +2,7 @@ import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
 import { $action } from "./store";
+import { wait } from "./utils";
 
 export async function walk(ctx: ContextType): Promise<HistoryItemType> {
   let logs: string[] = [];
@@ -12,12 +13,11 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
   const map = mapper();
 
   // Request
+  let queue = $action.get();
   let action: ActionType;
-  if (actionsInQueue.length > 0) {
-    action = actionsInQueue[0]!;
-    $action.set(actionsInQueue.slice(1));
-  } else {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  if (queue.length === 0) {
+    await wait(1000);
     action = {
       itemId: "",
       flowCommand: "none",
@@ -25,16 +25,20 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
       userMessage: "Hello from user!",
       body: {},
     };
+    await executeFlow(action, ctx, logs);
+  } else {
+    action = queue[0]!;
+    queue = queue.slice(1);
+    $action.set(queue);
+    await executeFlow(action, { ...ctx, isLooping: queue.length > 0 }, logs);
+
+    while (queue.length > 0) {
+      action = queue[0]!;
+      queue = queue.slice(1);
+      $action.set(queue);
+      await executeFlow(action, { ...ctx, isLooping: queue.length > 0 }, logs);
+    }
   }
-
-  console.log("[W][D]: Next Action: ", action);
-
-  // Validate
-  // idsUnique(map);
-  // actionItemIdExist(action, map);
-
-  // Execute
-  await executeFlow(action, ctx, logs);
 
   return {
     action,

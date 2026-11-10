@@ -6,6 +6,9 @@ export async function mouseReturn(
   ctx: ContextType,
 ): Promise<string | void> {
   console.log("[W][D]: Mouse Return Hook: ", action.itemId);
+  if (ctx.isLooping) {
+    return;
+  }
   const el = document.getElementById("walker-mouse-container");
   const child = el?.firstElementChild;
 
