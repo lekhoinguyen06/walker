@@ -119,8 +119,8 @@ export function InputDialog() {
   const { closeDialog } = usePanelDialog();
   return (
     <PanelDialog dialog={"input"}>
-      <div className="size-full p-1.5">
-        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
+      <div className="size-full">
+        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px] overflow-hidden">
           <div className="w-full p-3">
             <div className="font-brand">Input</div>
             <div className="text-xs">

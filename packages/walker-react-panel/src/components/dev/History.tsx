@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
@@ -17,8 +17,8 @@ export function HistoryDialog() {
   >(undefined);
   return (
     <PanelDialog dialog={"history"}>
-      <div className="size-full p-1.5">
-        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
+      <div className="size-full">
+        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px] overflow-hidden">
           <div className="w-full p-3">
             <div className="font-brand">History</div>
             <div className="text-xs">View your walks' history.</div>
@@ -41,7 +41,7 @@ export function HistoryDialog() {
                     className="absolute top-1.5 right-1.5"
                     onClick={() => setSelectedHistory(undefined)}
                   >
-                    <X />
+                    <ChevronLeft />
                   </Button>
                   <Details item={selectedHistory} />
                 </>

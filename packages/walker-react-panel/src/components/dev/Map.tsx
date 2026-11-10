@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Details } from "./Details";
 import { PanelDialog } from "../panel/PanelDialog";
@@ -24,8 +24,8 @@ export function MapDialog() {
   }, []);
   return (
     <PanelDialog dialog={"map"}>
-      <div className="size-full p-1.5">
-        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px] overflow-hidden">
+      <div className="size-full">
+        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px] overflow-hidden">
           <div className="w-full p-3">
             <div className="font-brand">Map</div>
             <div className="text-xs">View your application Items.</div>
@@ -48,7 +48,7 @@ export function MapDialog() {
                     className="absolute top-1.5 right-1.5"
                     onClick={() => setSelectedItem(undefined)}
                   >
-                    <X />
+                    <ChevronLeft />
                   </Button>
                   <Details item={selectedItem} />
                 </>

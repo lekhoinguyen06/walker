@@ -39,8 +39,8 @@ export function ChatDialog() {
   const isBusy = status === "submitted" || status === "streaming";
   return (
     <PanelDialog dialog={"chat"}>
-      <div className="size-full p-1.5">
-        <div className="flex flex-col w-full h-120 bg-white dark:bg-black rounded-[16px]">
+      <div className="size-full">
+        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px]">
           <div className="relative w-full p-3">
             <div className="font-brand">Chat</div>
             <div className="text-xs">

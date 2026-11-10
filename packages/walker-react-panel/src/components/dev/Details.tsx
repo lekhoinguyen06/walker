@@ -8,7 +8,7 @@ type DetailsProps = {
 export function Details({ item }: DetailsProps) {
   return (
     <>
-      <div className="font-brand">Details</div>
+      <div className="font-semibold">Details</div>
       {Object.entries(item).map(([key, value]) => (
         <div key={key}>
           <div className="text-xs font-light">{key}</div>
