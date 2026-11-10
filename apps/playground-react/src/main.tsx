@@ -11,7 +11,9 @@ import { SelectPage } from "./features/select/page";
 import { DialogPage } from "./features/dialog/page";
 import { ScrollAreaPage } from "./features/scroll-area/page";
 import { ToastPage } from "./features/toast/page";
-import { PanelToastProvider, usePanelToast } from "walker-react-panel";
+import { PanelToastProvider } from "walker-react-panel";
+import { Item } from "walker-react";
+import { ade } from "./walker/ade";
 
 const router = createBrowserRouter([
   {
@@ -59,18 +61,11 @@ function Provider({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  // const { pushToast } = usePanelToast();
-  //
-  // const messageHook = async function message(
-  //   props: HookPropsType,
-  // ): Promise<void> {
-  //   pushToast({
-  //     type: "walking",
-  //     message: props.action.message,
-  //   });
-  // };
-
-  return <RouterProvider router={router} />;
+  return (
+    <Item {...ade.p}>
+      <RouterProvider router={router} />
+    </Item>
+  );
 }
 
 createRoot(document.getElementById("root")!).render(

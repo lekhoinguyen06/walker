@@ -4,12 +4,19 @@ export function Item({
   id,
   description,
   state,
+  flows,
   children,
-}: ItemType & {
+}: Omit<ItemType, "flows"> & {
+  flows?: readonly string[];
   children?: React.ReactNode;
 }) {
   return (
-    <div id={id} data-description={description} data-state={state}>
+    <div
+      id={id}
+      data-description={description}
+      data-state={state}
+      data-flows={flows}
+    >
       {children}
     </div>
   );

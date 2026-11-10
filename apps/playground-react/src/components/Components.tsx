@@ -17,7 +17,6 @@ export function Components() {
           id={`walker-nagivation-${component.href}-button`}
           key={component.href}
           description={`Go to Walker demonstration for ShadcnUI ${component.label}`}
-          flows={JSON.stringify(["click"])}
         >
           <a href={component.href}>
             <Button

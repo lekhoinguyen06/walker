@@ -1,52 +1,73 @@
 export const ade = {
-  description: "This is the Walker React playground.",
-  nav: {
-    react: {
-      description:
-        "Go to Walker React playground. You are already here, click to go to home.",
-    },
-    vue: {
-      description:
-        "Go to Vue playground. This page is under construction, do not use it yet.",
-    },
-    svelte: {
-      description:
-        "Go to Svelte playground. This page is under construction, do not use it yet.",
-    },
+  p: {
+    id: "walker-playground-react",
+    description: "The is the Walker React playground.",
   },
-  components: {
-    description: "There are many components for you to explore.",
-    input: {
-      description: "This is an input component. Input some text.",
-    },
-    toast: {
-      description: "This is a toast component. Click to the toast.",
-    },
-    dialog: {
-      description:
-        "This is a dialog component. You demonstrate creating a user here, start by click the trigger button to open the dialog.",
-      trigger: {
-        description: 'Use the "click" flow to open a the dialog.',
-      },
-      close: {
-        description: 'Use the "click" flow to close the dialog.',
-      },
-      save: {
-        description: 'Use the "click" flow to save the dialog.',
-      },
-      usernameInput: {
-        description:
-          "If the user does not specify any name, find a fun username & name.",
-      },
-      nameInput: {
-        description: "Relate to the usernameInput field above.",
-      },
-    },
-    scrollArea: {
-      description: "This is a scroll area component.",
-    },
-    select: {
-      description: "This is a select component. There are fruits inside.",
-    },
+  ph: {
+    id: "walker-playground-react::home",
+    description: "Home page",
   },
-} as const;
+  pn: {
+    id: "walker-playground-react::nav",
+    description: "Navigation bar",
+  },
+  pnh: {
+    id: "walker-playground-react::nav::home",
+    description: "Navigation button to go to home page",
+    flows: ["click"],
+  },
+  pnr: {
+    id: "walker-playground-react::nav::react",
+    description:
+      "Navigation button to go to Walker React Playround (which also goes back to home page)",
+    flows: ["click"],
+  },
+  pnv: {
+    id: "walker-playground-react::nav::vue",
+    description:
+      "Navigation button to go to Walker Vue Playround (not implemented yet)",
+  },
+  pns: {
+    id: "walker-playground-react::nav::svelte",
+    description:
+      "Navigation button to go to Walker Vue Playround (not implemented yet)",
+  },
+  pnm: {
+    id: "walker-playground-react::nav-mobile",
+    description: "Navigation sidebar",
+  },
+  pnmt: {
+    id: "walker-playground-react::nav-mobile::trigger",
+    description:
+      "Button to open the navigation sidebar. Note: This is only visible on mobile screens. There is no close button, click the walker-playground-react::nav-mobile::react to navigate back.",
+    flows: ["click"],
+  },
+  pnmh: {
+    id: "walker-playground-react::nav-mobile::home",
+    description: "Navigation button to go to home page",
+    flows: ["click"],
+  },
+  pnmr: {
+    id: "walker-playground-react::nav-mobile::react",
+    description:
+      "Navigation button to go to Walker React Playround (which also goes back to home page)",
+    flows: ["click"],
+  },
+  pnmv: {
+    id: "walker-playground-react::nav-mobile::vue",
+    description:
+      "Navigation button to go to Walker Vue Playround (not implemented yet)",
+  },
+  pnms: {
+    id: "walker-playground-react::nav-mobile::svelte",
+    description:
+      "Navigation button to go to Walker Vue Playround (not implemented yet)",
+  },
+} as const satisfies Record<
+  string,
+  {
+    id: string;
+    description: string;
+    flows?: readonly string[];
+  }
+>;

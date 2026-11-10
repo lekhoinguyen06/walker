@@ -13,6 +13,7 @@ import VueLogo from "../assets/vuedotjs.svg?react";
 import SvelteLogo from "../assets/svelte.svg?react";
 import { Item } from "walker-react";
 import { useState } from "react";
+import { ade } from "@/walker/ade";
 
 export function MobileNav() {
   const [isOpen, setisOpen] = useState<boolean>(false);
@@ -24,10 +25,7 @@ export function MobileNav() {
       }}
     >
       <SheetTrigger>
-        <Item
-          id="walker-mobile-nav-trigger"
-          description="This is the mobile navigation trigger, click it to open the mobile navigation menu."
-        >
+        <Item {...ade.pnmt}>
           <Button
             variant="ghost"
             size="icon-lg"
@@ -43,10 +41,7 @@ export function MobileNav() {
           <SheetDescription>Let's take a walk!</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col">
-          <Item
-            id="walker-mobile-nav-button-react"
-            description="This is the React logo, click it to go to the Walker Playground for React."
-          >
+          <Item {...ade.pnmr}>
             <a href="https://react.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -58,11 +53,7 @@ export function MobileNav() {
               </Button>
             </a>
           </Item>
-          <Item
-            id="walker-mobile-nav-button-vue"
-            description="This is the Vue logo, click it to go to the Walker Playground for Vue."
-            refId="walker-mobile-nav-trigger"
-          >
+          <Item {...ade.pnmv}>
             <a href="https://vue.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -74,10 +65,7 @@ export function MobileNav() {
               </Button>
             </a>
           </Item>
-          <Item
-            id="walker-mobile-nav-button-svelte"
-            description="This is the Svelte logo, click it to go to the Walker Playground for Svelte."
-          >
+          <Item {...ade.pnms}>
             <a href="https://svelte.walker.vstaffs.com">
               <Button
                 variant="ghost"

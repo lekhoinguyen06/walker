@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { Item } from "./Items";
+import { Item } from "./Item";
 import { AnimatePresence, motion } from "motion/react";
 import { useMouse } from "./useMouse";
 

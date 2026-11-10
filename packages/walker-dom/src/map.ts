@@ -5,5 +5,6 @@ export function mapper(): MapType {
     id: el.id,
     description: el.getAttribute("data-description") ?? undefined,
     state: el.getAttribute("data-state") ?? undefined,
+    flows: el.getAttribute("data-flows"),
   }));
 }
