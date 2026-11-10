@@ -28,7 +28,7 @@ export function DialogDemo() {
       }}
     >
       <form>
-        <Item {...ade.pdt}>
+        <Item {...ade.pdt()}>
           <DialogTrigger
             render={<Button variant="outline">Open Dialog</Button>}
           />
@@ -44,7 +44,7 @@ export function DialogDemo() {
           <FieldGroup>
             <Field>
               <Label htmlFor="name-1">Name</Label>
-              <Item {...ade.pdin}>
+              <Item {...ade.pdin()}>
                 <Input
                   id="name-1"
                   name="name"
@@ -55,7 +55,7 @@ export function DialogDemo() {
             </Field>
             <Field>
               <Label htmlFor="username-1">Username</Label>
-              <Item {...ade.pdiu}>
+              <Item {...ade.pdiu()}>
                 <Input
                   id="username-1"
                   name="username"
@@ -66,10 +66,10 @@ export function DialogDemo() {
             </Field>
           </FieldGroup>
           <DialogFooter>
-            <Item {...ade.pdc}>
+            <Item {...ade.pdc()}>
               <DialogClose render={<Button variant="outline">Cancel</Button>} />
             </Item>
-            <Item {...ade.pds}>
+            <Item {...ade.pds()}>
               <Button type="submit" onClick={() => setIsOpen(false)}>
                 Save changes
               </Button>

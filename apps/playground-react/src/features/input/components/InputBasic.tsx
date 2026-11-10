@@ -6,7 +6,7 @@ import { ade } from "@/walker/ade";
 export function InputBasic() {
   const [input, setInput] = useState("");
   return (
-    <Item {...ade.pii}>
+    <Item {...ade.pii()}>
       <Input
         placeholder="Enter text"
         value={input}

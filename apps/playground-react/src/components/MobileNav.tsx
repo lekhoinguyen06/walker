@@ -25,7 +25,7 @@ export function MobileNav() {
       }}
     >
       <SheetTrigger>
-        <Item {...ade.pnmt}>
+        <Item {...ade.pnmt()}>
           <Button
             variant="ghost"
             size="icon-lg"
@@ -41,7 +41,7 @@ export function MobileNav() {
           <SheetDescription>Let's take a walk!</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col">
-          <Item {...ade.pnmr}>
+          <Item {...ade.pnmr()}>
             <a href="https://react.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -53,7 +53,7 @@ export function MobileNav() {
               </Button>
             </a>
           </Item>
-          <Item {...ade.pnmv}>
+          <Item {...ade.pnmv()}>
             <a href="https://vue.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -65,7 +65,7 @@ export function MobileNav() {
               </Button>
             </a>
           </Item>
-          <Item {...ade.pnms}>
+          <Item {...ade.pnms()}>
             <a href="https://svelte.walker.vstaffs.com">
               <Button
                 variant="ghost"

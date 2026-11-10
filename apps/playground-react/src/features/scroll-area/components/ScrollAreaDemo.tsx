@@ -3,6 +3,7 @@ import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Item } from "walker-react";
+import { ade } from "@/walker/ade";
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
@@ -18,30 +19,22 @@ export function ScrollAreaDemo() {
         <div className="px-3 text-sm font-brand">{selectedVersion}</div>
       )}
       <ScrollArea className="h-72 w-48 rounded-md border">
-        <Item
-          id="walker-tags"
-          description="A list of tags. Please choose one of them."
-        >
-          <div className="p-4">
-            <h4 className="mb-4 text-sm leading-none font-medium">Tags</h4>
-            {tags.map((tag) => (
-              <React.Fragment key={tag}>
-                <Item
-                  id={`walker-${tag}`}
-                  description={`Version: ${tag}, click to select this version.`}
+        <div className="p-4">
+          <h4 className="mb-4 text-sm leading-none font-medium">Tags</h4>
+          {tags.map((tag) => (
+            <React.Fragment key={tag}>
+              <Item {...ade.psao(tag)}>
+                <div
+                  className="text-sm"
+                  onClick={() => setselectedVersion(tag)}
                 >
-                  <div
-                    className="text-sm"
-                    onClick={() => setselectedVersion(tag)}
-                  >
-                    {tag}
-                  </div>
-                </Item>
-                <Separator className="my-2" />
-              </React.Fragment>
-            ))}
-          </div>
-        </Item>
+                  {tag}
+                </div>
+              </Item>
+              <Separator className="my-2" />
+            </React.Fragment>
+          ))}
+        </div>
       </ScrollArea>
     </div>
   );

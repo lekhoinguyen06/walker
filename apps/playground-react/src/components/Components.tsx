@@ -3,11 +3,11 @@ import { Button } from "./ui/button";
 import { ade } from "@/walker/ade";
 
 const components = [
-  { label: "Input", href: "/input", ade: ade.phci },
-  { label: "Select", href: "/select", ade: ade.phcs },
-  { label: "Dialog", href: "/dialog", ade: ade.phcd },
-  { label: "Scroll Area", href: "/scroll-area", ade: ade.phcsa },
-  { label: "Toast", href: "/toast", ade: ade.phct },
+  { label: "Input", href: "/input", ade: ade.phc("input") },
+  { label: "Select", href: "/select", ade: ade.phc("select") },
+  { label: "Dialog", href: "/dialog", ade: ade.phc("dialog") },
+  { label: "Scroll Area", href: "/scroll-area", ade: ade.phc("scroll-area") },
+  { label: "Toast", href: "/toast", ade: ade.phc("toast") },
 ];
 
 export function Components() {

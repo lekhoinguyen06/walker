@@ -7,7 +7,7 @@ import { ade } from "@/walker/ade";
 
 export function DialogPage() {
   return (
-    <Item {...ade.pd}>
+    <Item {...ade.pd()}>
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
         <CodeWrapper>
           <CodeDemo component={<DialogDemo />} />

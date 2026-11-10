@@ -3,13 +3,11 @@ import { ScrollAreaDemo } from "../components/ScrollAreaDemo";
 import ScrollAreaDemoRaw from "../components/ScrollAreaDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
 import { scrollAreaActionJSON } from "@/shared/actions/scroll-area.action";
+import { ade } from "@/walker/ade";
 
 export function ScrollAreaPage() {
   return (
-    <Item
-      id="walker-scroll-area-page"
-      description="The page to demonstrate Walker behavior to scroll into view before click an item"
-    >
+    <Item {...ade.psa()}>
       <div className="w-full max-w-2xl flex flex-col gap-24 py-24 items-center">
         <CodeWrapper>
           <CodeDemo component={<ScrollAreaDemo />} />

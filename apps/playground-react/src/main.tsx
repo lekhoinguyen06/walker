@@ -62,7 +62,7 @@ function Provider({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <Item {...ade.p}>
+    <Item {...ade.p()}>
       <RouterProvider router={router} />
     </Item>
   );
