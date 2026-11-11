@@ -1,6 +1,6 @@
 import type { ActionType, ContextType } from "walker-shared";
 import { wait } from "./utils";
-import { $action } from "./store";
+import { $action } from "./stores";
 
 export async function executeFlow(
   action: ActionType,

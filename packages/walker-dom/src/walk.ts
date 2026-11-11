@@ -1,13 +1,11 @@
 import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
-import { $action } from "./store";
+import { $action } from "./stores";
 import { wait } from "./utils";
 
 export async function walk(ctx: ContextType): Promise<HistoryItemType> {
   let logs: string[] = [];
-
-  const actionsInQueue = $action.get();
 
   // Map
   const map = mapper();

@@ -1,5 +1,5 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
-import { $mouseX, $mouseY } from "./store";
+import { $mouseX, $mouseY } from "../stores";
 
 export async function mouse(
   action: ActionType,
