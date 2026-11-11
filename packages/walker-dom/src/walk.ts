@@ -1,8 +1,9 @@
 import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
-import { $action } from "./stores";
+import { $action, $history, recordHistory } from "./stores";
 import { wait } from "./utils";
+import { WalkerError } from "./error";
 
 export async function walk(ctx: ContextType): Promise<void> {
   let logs: string[] = [];
@@ -14,36 +15,80 @@ export async function walk(ctx: ContextType): Promise<void> {
   let queue = $action.get();
   let action: ActionType;
 
-  if (queue.length === 0) {
-    await wait(1000);
-    action = {
-      itemId: "",
-      flowCommand: "none",
-      agentMessage: "Hello from walker! What would you like to do?",
-      userMessage: "Hello from user!",
-      body: {},
-    };
-
-    // try {
-    //   await executeFlow(action, ctx, logs);
-    // } catch (error) {
-    //   await walk(ctx)
-    // }
-
-    await executeFlow({
-      action,
-      ctx,
-      logs,
-      map,
-    });
-  } else {
-    action = queue.shift()!;
-    $action.set(queue);
-    await executeFlow({
-      action,
-      ctx,
-      logs,
-      map,
-    });
+  try {
+    if (queue.length === 0) {
+      await wait(1000);
+      action = {
+        itemId: "",
+        flowCommand: "none",
+        agentMessage: "Hello from walker! What would you like to do?",
+        userMessage: "Hello from user!",
+        systemMessage: "Hello from system!",
+        body: {},
+      };
+      await executeFlow({
+        action,
+        ctx,
+        logs,
+        map,
+      });
+    } else {
+      action = queue.shift()!;
+      $action.set(queue);
+      await executeFlow({
+        action,
+        ctx,
+        logs,
+        map,
+      });
+    }
+  } catch (error) {
+    if (error instanceof WalkerError) {
+      console.error("[W][D] WalkerError:", error.message);
+      logs.push(error.message);
+      recordHistory({
+        action,
+        map,
+        logs,
+        windowSize: ctx.historyWindowSize,
+      });
+      const maxRetryCount = ctx.maxRetryCount ?? 3;
+      if (maxRetryCount <= 0) {
+        await executeFlow({
+          action: {
+            flowCommand: "error",
+            agentMessage: "",
+            userMessage: "",
+            systemMessage: "Max retry count reached. Stopping execution.",
+            itemId: "",
+            body: {},
+          },
+          ctx,
+          logs,
+          map,
+        });
+      }
+      console.log("[W][D] Toast an error message");
+      await executeFlow({
+        action: {
+          flowCommand: "error",
+          agentMessage: "",
+          userMessage: "",
+          systemMessage: "Something went wrong. Retrying...",
+          itemId: "",
+          body: {},
+        },
+        ctx,
+        logs,
+        map,
+      });
+      await wait(1000);
+      await walk({
+        ...ctx,
+        maxRetryCount,
+      });
+    } else {
+      throw error;
+    }
   }
 }

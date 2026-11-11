@@ -14,8 +14,8 @@ export function Item({
     <div
       id={id}
       data-description={description}
-      data-state={state}
-      data-flows={flows}
+      data-state={JSON.stringify(state)}
+      data-flows={JSON.stringify(flows)}
     >
       {children}
     </div>

@@ -5,7 +5,7 @@ import type {
   MapType,
 } from "walker-shared";
 import { wait } from "./utils";
-import { $action, $history } from "./stores";
+import { $action, $history, recordHistory } from "./stores";
 
 export async function executeFlow({
   action,
@@ -34,9 +34,8 @@ export async function executeFlow({
       await wait(gap);
     }
     await wait(1000);
-    await flow.handler?.(action, ctx).then((l) => {
-      l && logs.push(String(l));
-    });
+    const l = await flow.handler?.(action, ctx);
+    l && logs.push(String(l));
     await wait(gap);
     for (const hook of flow.afterHooks ?? []) {
       const l = await hook.handler?.(action, ctx);
@@ -50,18 +49,12 @@ export async function executeFlow({
       await wait(gap);
     }
 
-    const history: HistoryItemType = {
+    recordHistory({
       action,
       map,
       logs,
-      timestamp: new Date(),
-    };
-    const historyWindowSize = ctx.historyWindowSize ?? 3;
-    if ($history.get().length >= historyWindowSize) {
-      $history.set([...$history.get().slice(1), history]);
-    } else {
-      $history.set([...$history.get(), history]);
-    }
+      windowSize: ctx.historyWindowSize,
+    });
 
     const queue = $action.get();
     if (queue.length > 0) {

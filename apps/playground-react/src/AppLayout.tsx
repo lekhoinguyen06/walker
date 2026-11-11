@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
-import { Item, useAction, useWalk } from "walker-react";
+import { Item, useAction } from "walker-react";
 import {
   Panel,
   PanelContent,
@@ -9,7 +9,11 @@ import {
   PanelMenu,
   PanelPopup,
 } from "walker-react-panel";
-import { SelectDemoFlowBodySchema } from "./walker/flows/selectDemo.flow";
+import {
+  selectDemoFlowBodyJSONSchemaStringify,
+  SelectDemoFlowBodySchema,
+} from "./walker/flows/selectDemo.flow";
+import { WalkerError } from "walker-dom";
 
 function AppLayout() {
   const { pushAction } = useAction();
@@ -33,9 +37,8 @@ function AppLayout() {
               handler: async (action) => {
                 const valid = SelectDemoFlowBodySchema.safeParse(action.body);
                 if (!valid.success) {
-                  return (
-                    "ERROR: Invalid action body for select-demo flow. Expected { option: string }, got: " +
-                    JSON.stringify(action.body)
+                  throw new WalkerError(
+                    `Invalid flow body for select-demo flow, expected ${selectDemoFlowBodyJSONSchemaStringify}, received: ${JSON.stringify(action.body)}`,
                   );
                 }
                 pushAction({
@@ -43,6 +46,8 @@ function AppLayout() {
                   itemId: action.itemId,
                   agentMessage: "Open select",
                   userMessage: action.userMessage,
+                  systemMessage:
+                    "Opening select using click flow as part of select-demo flow",
                   body: {},
                 });
                 pushAction({
@@ -50,6 +55,8 @@ function AppLayout() {
                   itemId: action.itemId + `::${valid.data.option}`,
                   agentMessage: "Select option: " + valid.data.option,
                   userMessage: action.userMessage,
+                  systemMessage:
+                    "Selecting option using click flow as part of select-demo flow",
                   body: {},
                 });
               },

@@ -1,10 +1,15 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
+import { WalkerError } from "../error";
 
 export async function scroll(
   action: ActionType,
   ctx: ContextType,
 ): Promise<string | void> {
   console.log("[W][D]: Scroll Hook: ", action.itemId);
+  if (action.itemId === "") {
+    return;
+  }
+
   const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
 
@@ -58,8 +63,8 @@ export async function scroll(
       requestAnimationFrame(check);
     });
   } else {
-    return (
-      "ERROR: No Item found for click flow with action.itemId: " + action.itemId
+    throw new WalkerError(
+      `Scroll hook failed: No DOM element found for action.itemId: ${action.itemId}`,
     );
   }
 }

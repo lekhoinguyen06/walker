@@ -30,6 +30,7 @@ export function PanelToastProvider({ children }: { children: ReactNode }) {
   const toastId = useId();
 
   const pushToast = (toast: PanelToastItemType) => {
+    console.log("Panel pushing toast: ", toast);
     setDuration(toast?.duration ?? 3);
     setToast(toast);
   };

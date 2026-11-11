@@ -4,6 +4,7 @@ import type {
   FlowWithHooksAndHandlerType,
   ActionType,
 } from "walker-shared";
+import { WalkerError } from "../error";
 
 type InputProps = {
   input: string;
@@ -27,15 +28,15 @@ export async function input(
   console.log("[W][D]: Input Flow: ", action.itemId);
   const el = document.getElementById(action.itemId);
   const child = el?.firstElementChild;
-  const parsedAction = validate(action) ? action : null;
-  if (!parsedAction) {
-    return (
-      "ERROR: Invalid action body for input flow. Expected { input: string }, got: " +
-      JSON.stringify(action.body)
-    );
-  }
 
   if (child instanceof HTMLElement) {
+    const parsedAction = validate(action) ? action : null;
+    if (!parsedAction) {
+      throw new WalkerError(
+        `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected { input: string }, got: ${JSON.stringify(action.body)}`,
+      );
+    }
+
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
       "value",
@@ -43,8 +44,8 @@ export async function input(
     nativeInputValueSetter?.call(child, parsedAction.body.input);
     child.dispatchEvent(new Event("input", { bubbles: true }));
   } else {
-    return (
-      "ERROR: No Item found for input flow with action.itemId: " + action.itemId
+    throw new WalkerError(
+      `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
     );
   }
 }

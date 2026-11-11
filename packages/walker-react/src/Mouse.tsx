@@ -9,7 +9,6 @@ export type MouseProps = {
 
 export function Mouse({ children }: MouseProps) {
   const { x: targetX, y: targetY } = useMouse();
-  console.log("[W][R]: Mouse target:", targetX, targetY);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const offset = useMemo(() => {
