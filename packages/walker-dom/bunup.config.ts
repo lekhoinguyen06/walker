@@ -6,6 +6,7 @@ const config: any = defineConfig({
   dts: {
     inferTypes: true,
   },
+  external: ["walker-shared"],
   sourcemap: true,
   clean: true,
 });

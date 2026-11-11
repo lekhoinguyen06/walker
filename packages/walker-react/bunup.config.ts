@@ -7,7 +7,7 @@ const config: any = defineConfig({
     inferTypes: true,
   },
   sourcemap: true,
-  external: ["react", "react-dom", "walker-dom"],
+  external: ["react", "react-dom", "walker-dom", "walker-shared"],
   clean: true,
 });
 

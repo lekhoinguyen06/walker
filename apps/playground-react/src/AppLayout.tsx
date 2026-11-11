@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
 import { Toaster } from "./components/ui/toast";
-import { Item, useAction } from "walker-react";
+import { Item } from "walker-react";
 import {
   Panel,
   PanelContent,
@@ -9,15 +9,9 @@ import {
   PanelMenu,
   PanelPopup,
 } from "walker-react-panel";
-import {
-  selectDemoFlow,
-  selectDemoFlowBodyJSONSchemaStringify,
-  SelectDemoFlowBodySchema,
-} from "./walker/flows/selectDemo.flow";
-import { WalkerError } from "walker-dom";
+import { selectDemoFlow } from "./walker/flows/selectDemo.flow";
 
 function AppLayout() {
-  const { pushAction } = useAction();
   return (
     <div className="w-full min-h-dvh justify-center flex flex-col lg:gap-24 md:gap-12 gap-6 lg:p-24 md:p-12 p-6 items-center overflow-y-scroll scrollbar-none">
       <Header />

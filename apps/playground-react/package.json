@@ -37,6 +37,7 @@
     "usehooks-ts": "^3.1.1",
     "vite-plugin-svgr": "^5.2.0",
     "walker-react": "workspace:^",
+    "walker-shared": "workspace:^",
     "walker-react-panel": "workspace:^",
     "zod": "^4.6.7"
   },
