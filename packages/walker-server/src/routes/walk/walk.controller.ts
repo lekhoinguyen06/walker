@@ -7,7 +7,7 @@ import {
 import { generateText, Output, type LanguageModel } from "ai";
 import { ActionSchema } from "walker-shared";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
-import { walker_skill_all$4814 } from "walker-skill";
+import { walker_skill_all$4535 } from "walker-skill";
 
 type WalkRequestType = {
   content: WalkRequestBodyDTO | undefined;
@@ -34,8 +34,8 @@ export const walkController = async (req: WalkRequestType) => {
       }),
       prompt: JSON.stringify({
         ...body.data,
-        skill: [walker_skill_all$4814],
-      }),
+        skills: [walker_skill_all$4535, ...body.data.skills],
+      } as WalkRequestBodyDTO),
       maxOutputTokens: 10000,
       reasoning: "low",
       toolChoice: "none",
