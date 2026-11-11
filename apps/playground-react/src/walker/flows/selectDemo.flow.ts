@@ -18,6 +18,7 @@ export const selectDemoFlowBodyJSONSchemaStringified = JSON.stringify(
 export const selectDemoFlow: FlowWithHooksAndHandlerType = {
   command: "select-demo",
   description: "Interact with select component.",
+  Schema: selectDemoFlowBodyJSONSchemaStringified,
   handler: async (action) => {
     const valid = SelectDemoFlowBodySchema.safeParse(action.body);
     if (!valid.success) {

@@ -20,6 +20,7 @@ export const dialogDemoFlowBodyJSONSchemaStringified = JSON.stringify(
 export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
   command: "dialog-demo",
   description: "Interact with dialog component.",
+  schema: dialogDemoFlowBodyJSONSchemaStringified,
   handler: async (action) => {
     const valid = DialogDemoFlowBodySchema.safeParse(action.body);
     console.log("Dialog demo flow");
