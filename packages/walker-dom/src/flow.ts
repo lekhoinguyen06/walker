@@ -1,12 +1,23 @@
-import type { ActionType, ContextType } from "walker-shared";
+import type {
+  ActionType,
+  ContextType,
+  HistoryItemType,
+  MapType,
+} from "walker-shared";
 import { wait } from "./utils";
-import { $action } from "./stores";
+import { $action, $history } from "./stores";
 
-export async function executeFlow(
-  action: ActionType,
-  ctx: ContextType,
-  logs: string[],
-): Promise<void> {
+export async function executeFlow({
+  action,
+  ctx,
+  logs,
+  map,
+}: {
+  action: ActionType;
+  ctx: ContextType;
+  logs: string[];
+  map: MapType;
+}): Promise<void> {
   const flow = ctx.flows.find((flow) => flow.command === action.flowCommand);
   console.log("[W][D]: Flow found for action.flowCommand: ", flow);
   if (flow) {
@@ -39,11 +50,29 @@ export async function executeFlow(
       await wait(gap);
     }
 
+    const history: HistoryItemType = {
+      action,
+      map,
+      logs,
+      timestamp: new Date(),
+    };
+    const historyWindowSize = ctx.historyWindowSize ?? 3;
+    if ($history.get().length >= historyWindowSize) {
+      $history.set([...$history.get().slice(1), history]);
+    } else {
+      $history.set([...$history.get(), history]);
+    }
+
     const queue = $action.get();
     if (queue.length > 0) {
       const nextAction = queue.shift()!;
       $action.set(queue);
-      await executeFlow(nextAction, ctx, logs);
+      await executeFlow({
+        action: nextAction,
+        ctx,
+        logs,
+        map,
+      });
     } else {
       // Await for mouse return animation so that styling does not end too soon
       await wait(1000);

@@ -8,12 +8,6 @@ export const [createFetcherStore, createMutatorStore] = nanoquery({
 });
 
 export const $walk = createMutatorStore<ContextType>(async ({ data }) => {
-  const history = await walk(data);
-  const historyWindowSize = data.historyWindowSize ?? 3;
-  if ($history.get().length >= historyWindowSize) {
-    $history.set([...$history.get().slice(1), history]);
-  } else {
-    $history.set([...$history.get(), history]);
-  }
+  await walk(data);
   return { data };
 });

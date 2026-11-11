@@ -4,7 +4,7 @@ import { mapper } from "./map";
 import { $action } from "./stores";
 import { wait } from "./utils";
 
-export async function walk(ctx: ContextType): Promise<HistoryItemType> {
+export async function walk(ctx: ContextType): Promise<void> {
   let logs: string[] = [];
 
   // Map
@@ -23,17 +23,27 @@ export async function walk(ctx: ContextType): Promise<HistoryItemType> {
       userMessage: "Hello from user!",
       body: {},
     };
-    await executeFlow(action, ctx, logs);
+
+    // try {
+    //   await executeFlow(action, ctx, logs);
+    // } catch (error) {
+    //   await walk(ctx)
+    // }
+
+    await executeFlow({
+      action,
+      ctx,
+      logs,
+      map,
+    });
   } else {
     action = queue.shift()!;
     $action.set(queue);
-    await executeFlow(action, ctx, logs);
+    await executeFlow({
+      action,
+      ctx,
+      logs,
+      map,
+    });
   }
-
-  return {
-    action,
-    map,
-    logs,
-    timestamp: new Date(),
-  };
 }
