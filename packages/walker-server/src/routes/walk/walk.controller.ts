@@ -35,7 +35,6 @@ export const walkController = async (req: WalkRequestType) => {
       prompt: JSON.stringify({
         ...body.data,
         skill: [walker_skill_all$4814],
-        role: "Action Generator",
       }),
       maxOutputTokens: 10000,
       reasoning: "low",
