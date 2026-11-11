@@ -5,6 +5,7 @@ export const dialog = {
     ({
       id: "walker-playground-react::dialog",
       description: "Dialog page for the ShadcnUI Input component demonstration",
+      flows: ["dialog-demo"],
     }) as const,
   pdt: () =>
     ({

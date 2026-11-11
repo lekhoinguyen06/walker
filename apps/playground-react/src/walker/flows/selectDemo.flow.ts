@@ -9,7 +9,7 @@ export const SelectDemoFlowBodySchema = z.object({
 export const selectDemoFlowBodyJSONSchema =
   SelectDemoFlowBodySchema.toJSONSchema();
 
-export const selectDemoFlowBodyJSONSchemaStringify = JSON.stringify(
+export const selectDemoFlowBodyJSONSchemaStringified = JSON.stringify(
   selectDemoFlowBodyJSONSchema,
   null,
   2,
@@ -22,7 +22,7 @@ export const selectDemoFlow: FlowWithHooksAndHandlerType = {
     const valid = SelectDemoFlowBodySchema.safeParse(action.body);
     if (!valid.success) {
       throw new WalkerError(
-        `Invalid flow body for select-demo flow, expected ${selectDemoFlowBodyJSONSchemaStringify}, received: ${JSON.stringify(action.body)}`,
+        `Invalid flow body for select-demo flow, expected ${selectDemoFlowBodyJSONSchemaStringified}, received: ${JSON.stringify(action.body)}`,
       );
     }
     pushAction({

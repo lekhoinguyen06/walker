@@ -1,4 +1,4 @@
-import { selectDemoFlowBodyJSONSchemaStringify } from "../flows/selectDemo.flow";
+import { selectDemoFlowBodyJSONSchemaStringified } from "../flows/selectDemo.flow";
 import type { ADEType } from "./type";
 
 export const select = {
@@ -11,7 +11,7 @@ export const select = {
   pss: () =>
     ({
       id: `walker-playground-react::select::select-field`,
-      description: `To select, provide the \'select\' flow's body with the schema: ${selectDemoFlowBodyJSONSchemaStringify}`,
+      description: `To select, provide the \'select\' flow's body with the schema: ${selectDemoFlowBodyJSONSchemaStringified}`,
       flows: [`select-demo`],
     }) as const,
   psso: (option: string) =>

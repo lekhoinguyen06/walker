@@ -2,7 +2,10 @@ import { Item } from "walker-react";
 import { DialogDemo } from "../components/DialogDemo";
 import DialogDemoRaw from "../components/DialogDemo?raw";
 import { CodeContent, CodeDemo, CodeWrapper } from "@/components/CodeBlock";
-import { dialogActionJSON } from "@/shared/actions/dialog.action";
+import {
+  dialogDemoFlowJSON,
+  dialogActionStepJSON,
+} from "@/shared/actions/dialog.action";
 import { ade } from "@/walker/ade";
 
 export function DialogPage() {
@@ -20,9 +23,15 @@ export function DialogPage() {
           <CodeContent
             raw={{
               lang: "json",
-              content: dialogActionJSON,
+              content: dialogDemoFlowJSON,
             }}
           />
+          {/*<CodeContent
+            raw={{
+              lang: "json",
+              content: dialogActionStepJSON,
+            }}
+          />*/}
         </CodeWrapper>
       </div>
     </Item>

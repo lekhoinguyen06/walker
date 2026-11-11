@@ -1,7 +1,26 @@
 import { ade } from "@/walker/ade";
 import { createAction } from "walker-dom";
 
-export const dialogActionJSON = JSON.stringify(
+export const dialogDemoFlowJSON = JSON.stringify(
+  [
+    createAction({
+      flowCommand: "dialog-demo",
+      itemId: ade.pd().id,
+      agentMessage: "Let's see what we have here...",
+      userMessage: "",
+      systemMessage: "Demo example.",
+      body: {
+        username: "walker",
+        name: "Walker Jr.",
+        save: true,
+      },
+    }),
+  ],
+  null,
+  2,
+);
+
+export const dialogActionStepJSON = JSON.stringify(
   [
     createAction({
       flowCommand: "click",

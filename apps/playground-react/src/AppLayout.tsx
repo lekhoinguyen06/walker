@@ -10,6 +10,7 @@ import {
   PanelPopup,
 } from "walker-react-panel";
 import { selectDemoFlow } from "./walker/flows/selectDemo.flow";
+import { dialogDemoFlow } from "./walker/flows/dialogDemo.flow";
 
 function AppLayout() {
   return (
@@ -25,7 +26,7 @@ function AppLayout() {
       <Panel
         url={process.env.VITE_WALK_API_URL}
         context={{
-          flows: [selectDemoFlow],
+          flows: [selectDemoFlow, dialogDemoFlow],
         }}
       >
         <PanelContent>
