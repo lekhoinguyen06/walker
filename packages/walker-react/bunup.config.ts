@@ -6,9 +6,10 @@ const config: any = defineConfig({
   dts: {
     inferTypes: true,
   },
-  sourcemap: true,
-  external: ["react", "react-dom", "walker-dom", "walker-shared"],
   clean: true,
+  sourcemap: true,
+  // external: ["react", "react-dom", "walker-dom", "walker-shared"],
+  env: { NODE_ENV: "production" },
 });
 
 export default config;

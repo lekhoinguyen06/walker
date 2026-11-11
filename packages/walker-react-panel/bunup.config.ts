@@ -8,16 +8,15 @@ const config: any = defineConfig({
   dts: {
     inferTypes: true,
   },
-  minify: true,
-  sourcemap: true,
   clean: true,
-  external: [
-    "react",
-    "react-dom",
-    "walker-dom",
-    "walker-react",
-    "walker-shared",
-  ],
+  sourcemap: true,
+  // external: [
+  //   "react",
+  //   "react-dom",
+  //   "walker-dom",
+  //   "walker-react",
+  //   "walker-shared",
+  // ],
   env: { NODE_ENV: "production" },
 });
 
