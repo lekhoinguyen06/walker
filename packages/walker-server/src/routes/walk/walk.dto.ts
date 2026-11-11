@@ -4,7 +4,7 @@ import {
   FlowItemSchema,
   MapSchema,
   ActionSchema,
-} from "walker-core";
+} from "walker-shared";
 
 export const WalkRequestBodySchema = z.object({
   history: z.array(HistorySchema),

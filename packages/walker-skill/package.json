@@ -4,7 +4,7 @@
   "description": "Walker Skill library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
-  "module": "index.ts",
+  "module": "dist/index.js",
   "type": "module",
   "main": "dist/index.js",
   "exports": {

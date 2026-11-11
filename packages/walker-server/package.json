@@ -31,20 +31,19 @@
     "itty-fetcher": "^1.0.10",
     "supertest": "^7.3.1",
     "vite": "^8.3.2",
+    "@types/supertest": "^7.2.1",
     "vitest": "^5.0.3"
   },
   "peerDependencies": {
     "typescript": "^7"
   },
   "dependencies": {
-    "walker-core": "workspace:^",
     "walker-skill": "workspace:^",
+    "walker-shared": "workspace:^",
     "@openrouter/ai-sdk-provider": "^3.1.0",
-    "@types/supertest": "^7.2.1",
     "ai": "^7.0.127",
-    "axios": "^1.20.0",
     "itty-router": "^5.0.24",
-    "zod": "^4.6.5",
+    "zod": "^4.6.7",
     "zod-openapi": "^6.0.2"
   }
 }

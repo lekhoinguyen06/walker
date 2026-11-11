@@ -6,7 +6,7 @@
   "author": "Lê Khôi Nguyên",
   "type": "module",
   "main": "dist/index.js",
-  "module": "src/index.ts",
+  "module": "dist/index.js",
   "scripts": {
     "dev": "bunup --watch",
     "build": "bunup"
@@ -23,7 +23,7 @@
   ],
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.3.0",
     "bunup": "^0.16.32"
   },
   "dependencies": {

@@ -4,7 +4,7 @@
   "description": "Walker shared library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
-  "module": "index.ts",
+  "module": "dist/index.js",
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -27,6 +27,6 @@
   },
   "peerDependencies": {
     "typescript": "^7",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   }
 }

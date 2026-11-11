@@ -5,7 +5,7 @@ import {
   type WalkResponseBodyDTO,
 } from "./walk.dto";
 import { generateText, Output, type LanguageModel } from "ai";
-import { ActionSchema } from "walker-core";
+import { ActionSchema } from "walker-shared";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
 import z from "zod";
 import { walker_skill_all$4814 } from "walker-skill";
