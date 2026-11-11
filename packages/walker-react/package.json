@@ -27,15 +27,13 @@
     "bunup": "^0.16.32"
   },
   "dependencies": {
-    "@nanostores/persistent": "^1.3.5",
-    "@nanostores/query": "^0.3.4",
-    "motion": "^14.10.1",
-    "nanostores": "^1.5.5",
-    "walker-shared": "workspace:^",
+    "@nanostores/react": "^2.0.1",
     "walker-dom": "workspace:^",
-    "zod": "^4.6.7"
+    "walker-shared": "workspace:^",
+    "nanostores": "^1.5.5"
   },
   "peerDependencies": {
+    "motion": "^14.10.1",
     "typescript": "^7",
     "react": "^19.2.8"
   }

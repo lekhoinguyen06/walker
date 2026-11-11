@@ -1,11 +1,10 @@
-import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { Menu, Pause } from "lucide-react";
 import { PanelSuggest } from "./PanelSuggest";
 import { cva } from "class-variance-authority";
-import { usePanel, usePanelHotkeys, usePanelToast } from "@/hooks";
+import { usePanel, usePanelHotkeys } from "@/hooks";
 import { Mouse, useWalk } from "walker-react";
-import { panelContextFactory } from "@/lib/walker";
+import { cn } from "@/lib/utils";
 
 export const panelContentVariants = cva(
   "relative flex flex-col w-full p-1.5 gap-1.5 rounded-[24px] shadow-2xl",

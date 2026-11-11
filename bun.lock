@@ -143,16 +143,18 @@
     "packages/walker-dom": {
       "name": "walker-dom",
       "version": "0.1.0",
+      "dependencies": {
+        "@nanostores/persistent": "^1.3.5",
+        "@nanostores/query": "^0.3.4",
+        "nanostores": "^1.5.5",
+        "walker-shared": "workspace:^",
+      },
       "devDependencies": {
         "@types/bun": "latest",
         "bunup": "^0.16.32",
       },
       "peerDependencies": {
-        "@nanostores/persistent": "^1.3.5",
-        "@nanostores/query": "^0.3.4",
-        "nanostores": "^1.5.5",
         "typescript": "^7",
-        "walker-shared": "workspace:^",
         "zod": "^4.6.7",
       },
     },
@@ -160,13 +162,10 @@
       "name": "walker-react",
       "version": "0.1.0",
       "dependencies": {
-        "@nanostores/persistent": "^1.3.5",
-        "@nanostores/query": "^0.3.4",
-        "motion": "^14.10.1",
+        "@nanostores/react": "^2.0.1",
         "nanostores": "^1.5.5",
         "walker-dom": "workspace:^",
         "walker-shared": "workspace:^",
-        "zod": "^4.6.7",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -174,6 +173,7 @@
         "bunup": "^0.16.32",
       },
       "peerDependencies": {
+        "motion": "^14.10.1",
         "react": "^19.2.8",
         "typescript": "^7",
       },
@@ -190,17 +190,13 @@
         "@tanstack/react-hotkeys": "^0.10.0",
         "ai": "^7.0.66",
         "class-variance-authority": "^0.7.1",
-        "clsx": "^2.1.1",
         "cn": "^0.2.6",
         "lucide-react": "^0.575.0",
-        "motion": "^13.0.0",
         "shadcn": "^4.18.0",
-        "slugify": "^1.6.9",
-        "tw-animate-css": "^1.4.0",
         "usehooks-ts": "^3.1.1",
+        "walker-dom": "workspace:^",
         "walker-react": "workspace:^",
         "walker-shared": "workspace:^",
-        "zod": "^4.6.7",
         "zustand": "^5.0.0",
       },
       "devDependencies": {
@@ -210,13 +206,16 @@
         "@types/node": "^24.13.2",
         "@types/react": "^19.3.0",
         "bunup": "^0.16.32",
+        "clsx": "^2.1.1",
         "postcss": "^8.5.26",
         "tailwind-merge": "^3.5.0",
         "tailwindcss": "^4.2.0",
+        "tw-animate-css": "^1.4.0",
         "typedoc": "^0.28.20",
         "typescript": "~7.0.2",
       },
       "peerDependencies": {
+        "motion": "^13.0.0",
         "react": "^19.2.8",
         "react-dom": "^19.2.8",
       },
@@ -225,27 +224,28 @@
       "name": "walker-server",
       "version": "0.1.2",
       "dependencies": {
-        "@openrouter/ai-sdk-provider": "^3.1.0",
-        "ai": "^7.0.127",
         "itty-router": "^5.0.24",
         "walker-shared": "workspace:^",
         "walker-skill": "workspace:^",
-        "zod": "^4.6.7",
         "zod-openapi": "^6.0.2",
       },
       "devDependencies": {
         "@hono/node-server": "^2.1.3",
         "@types/bun": "latest",
         "@types/supertest": "^7.2.1",
+        "ai": "^7.0.127",
         "bunup": "^0.16.32",
         "hono": "^4.13.13",
         "itty-fetcher": "^1.0.10",
         "supertest": "^7.3.1",
         "vite": "^8.3.2",
         "vitest": "^5.0.3",
+        "zod": "^4.6.7",
       },
       "peerDependencies": {
+        "ai": "^7.0.127",
         "typescript": "^7",
+        "zod": "^4.6.7",
       },
     },
     "packages/walker-shared": {
@@ -263,11 +263,9 @@
     "packages/walker-skill": {
       "name": "walker-skill",
       "version": "0.1.1",
-      "dependencies": {
-        "banhmi": "^0.1.5",
-      },
       "devDependencies": {
         "@types/bun": "latest",
+        "banhmi": "^0.1.5",
         "bunup": "^0.16.32",
       },
       "peerDependencies": {
@@ -287,6 +285,7 @@
         "@opentui/core": "^0.5.12",
         "@opentui/react": "^0.5.12",
         "commander": "^15.0.0",
+        "hono": "^4.13.18",
         "react": "^19.2.8",
         "walker-server": "workspace:^",
         "zod": "^4.6.7",
@@ -654,6 +653,8 @@
     "@nanostores/persistent": ["@nanostores/persistent@1.3.5", "", { "peerDependencies": { "nanostores": "^0.9.0 || ^0.10.0 || ^0.11.0 || ^1.0.0" } }, "sha512-CNdhro3jEzNdPpPImIltnPpDKp5vxYmomHlZI7EMNoAxddImx97djxXDdPd2HIC4UczzUUMk7AMWCfMpFJHUsw=="],
 
     "@nanostores/query": ["@nanostores/query@0.3.4", "", { "dependencies": { "nanoevents": "^9.0.0" }, "peerDependencies": { "nanostores": ">=0.10" } }, "sha512-Gw5HsKflUDefhcZpVwVoIfw2Hz2+8FsInpVQOQ45EWz2FijaJll5aQWSE5JbYUsU/uAnYuKm5NM5ZgBH9HhniQ=="],
+
+    "@nanostores/react": ["@nanostores/react@2.0.1", "", { "peerDependencies": { "nanostores": "^1.2.0", "react": ">=18.0.0" } }, "sha512-txbZTd+7/hnO7FhtF8Pmr+cu0ThdCuCnOyEEh0DsEM2Hp9PfOa5EY4uj3wpZpypSzp5BuqDgf2AxVAKoUIWOFQ=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.2.4", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.4", "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.4" } }, "sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g=="],
 
@@ -1979,8 +1980,6 @@
 
     "sisteransi": ["sisteransi@1.0.5", "", {}, "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg=="],
 
-    "slugify": ["slugify@1.6.9", "", {}, "sha512-vZ7rfeehZui7wQs438JXBckYLkIIdfHOXsaVEUMyS5fHo1483l1bMdo0EDSWYclY0yZKFOipDy4KHuKs6ssvdg=="],
-
     "smart-buffer": ["smart-buffer@4.2.0", "", {}, "sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg=="],
 
     "snake-case": ["snake-case@3.0.4", "", { "dependencies": { "dot-case": "^3.0.4", "tslib": "^2.0.3" } }, "sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg=="],
@@ -2400,6 +2399,8 @@
     "walker-skill/@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
 
     "walker-terminal/@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
+
+    "walker-terminal/hono": ["hono@4.13.18", "", {}, "sha512-H9q/E1XizaWstJxUW881dmLxEj+t/TrGGnyxINkm4+sK0qUwsMtFdo2BWI9Vs3cIS19MU6b6iCijoUoEf4f3DA=="],
 
     "wrap-ansi/string-width": ["string-width@4.2.3", "", { "dependencies": { "emoji-regex": "^8.0.0", "is-fullwidth-code-point": "^3.0.0", "strip-ansi": "^6.0.1" } }, "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g=="],
 
