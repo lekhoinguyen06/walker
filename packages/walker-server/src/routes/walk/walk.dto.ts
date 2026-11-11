@@ -1,14 +1,14 @@
 import z from "zod";
 import {
-  HistorySchema,
-  FlowItemSchema,
   MapSchema,
   ActionSchema,
+  FlowSchema,
+  HistoryItemSchema,
 } from "walker-shared";
 
 export const WalkRequestBodySchema = z.object({
-  history: z.array(HistorySchema),
-  flows: z.array(FlowItemSchema),
+  history: z.array(HistoryItemSchema),
+  flows: z.array(FlowSchema),
   map: MapSchema,
   skills: z.array(z.string()),
   prompt: z.string(),
