@@ -4,9 +4,9 @@ PAGE("concept_server", {});
 
 TEXT(
   `
-# Server
+# Walker Server
 
-Server is the backend application that hosts Walker.
+Walker Server is the backend application that hosts Walker.
   `,
   {
     viewRefs: ["all"],

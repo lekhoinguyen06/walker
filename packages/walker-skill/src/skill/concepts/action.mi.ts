@@ -19,9 +19,7 @@ export const ActionSchema = z
   .object({
     itemId: z.string(),
     flowCommand: z.string(),
-    agentMessage: z.string(),
-    userMessage: z.string(),
-    systemMessage: z.string(),
+    message: z.string(),
     body: z.record(z.string(), z.unknown()),
   })
   .loose();
@@ -37,11 +35,14 @@ TEXT(
 .message:
   - A message that will be shown to the user on the Walker Client.
   - You must provide a message, if you don't know what to say, use \"I don't know\" or \"I need more information\".
-.targetId:
+.itemId:
   - The id of the target Item that the Walker Client will perform the operation on.
   - The none Flow can accept an empty string.
-.next:
-  - The information you want to pass on for the next Agent. As you can only return one Action, you can use this field to pass on information for the next Agent to use.
+.body:
+  - Some flow might require additional information to perform the operation, you can provide that information in the body.
+  - If there is no Flow Schema provided (eg. flow.schema attribute), return an empty object.
+  - Note: your body attribute response are not validated on the Walker Server but on the Walker Client. Failed validation will retry and you can see the error message details included in History logs (eg. history.logs attribute).
+
 `,
   {
     viewRefs: ["all"],

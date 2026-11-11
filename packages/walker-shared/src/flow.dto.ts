@@ -4,6 +4,7 @@ export const FlowSchema = z
   .object({
     command: z.string(),
     description: z.string().optional(),
+    schema: z.string().optional(),
   })
   .loose();
 

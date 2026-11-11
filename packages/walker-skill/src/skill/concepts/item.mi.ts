@@ -15,34 +15,27 @@ An object that represent an interactable entity on Walker Client.
 
 CODE(
   `
-export const ScopeSchema = z.literal(["active", "hidden", "inherit"]);
-
 export const ItemSchema = z.object({
   id: z.string(),
-  type: z.string(),
-  description: z.string(),
-  state: z.string().nullable(),
-  scope: ScopeSchema,
-  flows: z.string(),
-  refId: z.string().nullable(),
-  content: z.boolean(),
-  raw: z.boolean(),
-});
-
-export const MapItemSchema: z.ZodType<MapItemType> = ItemSchema.extend({
-  children: z
-    .record(
-      z.string(),
-      z.lazy(() => MapItemSchema),
-    )
-    .optional(),
-  isInActiveScope: z.boolean().optional(),
-  contentValue: z.string().optional(),
-  rawValue: z.string().optional(),
+  description: z.string().optional(),
+  state: z.string().optional(),
+  flows: z.array(z.string()).optional(),
 });
   `,
   {
     language: "ts",
+    viewRefs: ["all"],
+  },
+);
+
+TEXT(
+  `
+.id: The coresponding id that Action object can use in action.itemId attribute.
+.description: A description.
+.state: The state of the Item. This can be anything, for example (eg. { isOpen: false }).
+.flows: A list of flow.command that the Walker Client can accept for this Item. If not provided, the Walker Client will not accept any flows.
+  `,
+  {
     viewRefs: ["all"],
   },
 );

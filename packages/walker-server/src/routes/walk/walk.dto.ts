@@ -7,11 +7,11 @@ import {
 } from "walker-shared";
 
 export const WalkRequestBodySchema = z.object({
-  history: z.array(HistoryItemSchema),
+  histories: z.array(HistoryItemSchema),
   flows: z.array(FlowSchema),
   map: MapSchema,
   skills: z.array(z.string()),
-  prompt: z.string(),
+  userPrompt: z.string(),
 });
 
 export const WalkResponseBodySchema = z.object({
