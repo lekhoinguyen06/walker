@@ -3,13 +3,15 @@ import { usePanel } from "./usePanel";
 import { usePanelDialog } from "./usePanelDialog";
 import { usePanelToast } from "./usePanelToast";
 import { useMemo } from "react";
-import { useWalk } from "walker-react";
+import { useAction, useHistory, useWalk } from "walker-react";
 
 export function usePanelHotkeys() {
   const { isHidden, setIsHidden, tab, setTab, context } = usePanel();
   const { pushToast } = usePanelToast();
   const { dialog, openDialog, closeDialog } = usePanelDialog();
-  const { mutate, loading, data } = useWalk();
+  const { mutate } = useWalk();
+  const { clear: clearAction } = useAction();
+  const { clear: clearHistory } = useHistory();
 
   useHotkey("Control+W", () => {
     isHidden ? setIsHidden(false) : setIsHidden(true);
@@ -87,12 +89,13 @@ export function usePanelHotkeys() {
   );
 
   useHotkey(
-    "Alt+H",
+    "Control+D",
     () => {
-      runtime.clear();
+      clearAction();
+      clearHistory();
       pushToast({
         type: "success",
-        message: "Cleared walk history.",
+        message: "Cleared walk actions and history.",
         duration: 1,
       });
     },

@@ -5,5 +5,8 @@ export function useHistory() {
   const history = useStore($history);
   return {
     history,
+    clear: () => {
+      $history.set([]);
+    },
   };
 }

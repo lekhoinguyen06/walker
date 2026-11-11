@@ -9,12 +9,13 @@ import {
   RefreshCcw,
   TextCursor,
 } from "lucide-react";
-import { useAction } from "walker-react";
+import { useAction, useHistory } from "walker-react";
 
 export function PanelMenu() {
   const { openDialog, closeDialog, dialog } = usePanelDialog();
   const { pushToast } = usePanelToast();
-  const { clear } = useAction();
+  const { clear: clearAction } = useAction();
+  const { clear: clearHistory } = useHistory();
   return (
     <>
       <Button
@@ -22,10 +23,11 @@ export function PanelMenu() {
         size="icon"
         className={cn("rounded-full")}
         onClick={() => {
-          clear();
+          clearAction();
+          clearHistory();
           pushToast({
             type: "success",
-            message: "Cleared walk history.",
+            message: "Cleared walk actions and history.",
             duration: 1,
           });
         }}
