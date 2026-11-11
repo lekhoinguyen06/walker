@@ -13,7 +13,7 @@ export async function walk(ctx: ContextType): Promise<void> {
 
   // Request
   let queue = $action.get();
-  let action: ActionType;
+  let action: ActionType | null = null;
 
   try {
     if (queue.length === 0) {
@@ -46,12 +46,14 @@ export async function walk(ctx: ContextType): Promise<void> {
     if (error instanceof WalkerError) {
       console.error("[W][D] WalkerError:", error.message);
       logs.push(error.message);
-      recordHistory({
-        action,
-        map,
-        logs,
-        windowSize: ctx.historyWindowSize,
-      });
+      if (action) {
+        recordHistory({
+          action,
+          map,
+          logs,
+          windowSize: ctx.historyWindowSize,
+        });
+      }
       const maxRetryCount = ctx.maxRetryCount ?? 3;
       if (maxRetryCount <= 0) {
         await executeFlow({
