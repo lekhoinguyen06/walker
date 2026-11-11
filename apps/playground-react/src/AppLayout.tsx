@@ -10,6 +10,7 @@ import {
   PanelPopup,
 } from "walker-react-panel";
 import {
+  selectDemoFlow,
   selectDemoFlowBodyJSONSchemaStringify,
   SelectDemoFlowBodySchema,
 } from "./walker/flows/selectDemo.flow";
@@ -30,38 +31,7 @@ function AppLayout() {
       <Panel
         url={process.env.VITE_WALK_API_URL}
         context={{
-          flows: [
-            {
-              command: "select-demo",
-              description: "Interact with select component.",
-              handler: async (action) => {
-                const valid = SelectDemoFlowBodySchema.safeParse(action.body);
-                if (!valid.success) {
-                  throw new WalkerError(
-                    `Invalid flow body for select-demo flow, expected ${selectDemoFlowBodyJSONSchemaStringify}, received: ${JSON.stringify(action.body)}`,
-                  );
-                }
-                pushAction({
-                  flowCommand: "click",
-                  itemId: action.itemId,
-                  agentMessage: "Open select",
-                  userMessage: action.userMessage,
-                  systemMessage:
-                    "Opening select using click flow as part of select-demo flow",
-                  body: {},
-                });
-                pushAction({
-                  flowCommand: "click",
-                  itemId: action.itemId + `::${valid.data.option}`,
-                  agentMessage: "Select option: " + valid.data.option,
-                  userMessage: action.userMessage,
-                  systemMessage:
-                    "Selecting option using click flow as part of select-demo flow",
-                  body: {},
-                });
-              },
-            },
-          ],
+          flows: [selectDemoFlow],
         }}
       >
         <PanelContent>
