@@ -6,9 +6,7 @@ export const selectActionJSON = JSON.stringify(
     createAction({
       flowCommand: "select-demo",
       itemId: ade.pss().id,
-      agentMessage: "Banana na na",
-      userMessage: "",
-      systemMessage: "Demo example",
+      message: "Banana na na",
       body: {
         option: "banana",
       },

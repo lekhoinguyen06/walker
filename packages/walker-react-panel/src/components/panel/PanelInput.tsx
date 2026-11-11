@@ -12,7 +12,6 @@ type PanelInputProps = {
 export function PanelInput({ className }: PanelInputProps) {
   const { context, setContext } = usePanel();
   const { mutate } = useWalk();
-  const { pushToast } = usePanelToast();
   const [isExpanding, setIsExpanding] = useState(false);
   const isTooLong = context.userPrompt.length > 50;
   const isNewLine = context.userPrompt.includes("\n");

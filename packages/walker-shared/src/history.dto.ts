@@ -4,6 +4,7 @@ import { MapSchema } from "./map.dto";
 
 export const HistoryItemSchema = z.object({
   action: ActionSchema,
+  userPrompt: z.string(),
   map: MapSchema,
   logs: z.array(z.string()),
   timestamp: z.date(),

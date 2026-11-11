@@ -6,9 +6,7 @@ export const inputActionJSON: string = JSON.stringify(
     createAction({
       flowCommand: "input",
       itemId: ade.pii().id,
-      agentMessage: "Let's type in 'Hello World!'",
-      userMessage: "",
-      systemMessage: "Demo example",
+      message: "Let's type in 'Hello World!'",
       body: {
         input: "Hello World!",
       },

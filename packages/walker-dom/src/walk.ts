@@ -6,6 +6,8 @@ import { wait } from "./utils";
 import { WalkerError } from "./error";
 
 export async function walk(ctx: ContextType): Promise<void> {
+  console.log("[W][D] Starting walk with context: ", ctx);
+
   let logs: string[] = [];
 
   // Map
@@ -21,9 +23,7 @@ export async function walk(ctx: ContextType): Promise<void> {
       action = {
         itemId: "",
         flowCommand: "none",
-        agentMessage: "Hello from walker! What would you like to do?",
-        userMessage: "Hello from user!",
-        systemMessage: "Hello from system!",
+        message: "Hello from walker! What would you like to do?",
         body: {},
       };
       await executeFlow({
@@ -51,7 +51,7 @@ export async function walk(ctx: ContextType): Promise<void> {
           action,
           map,
           logs,
-          windowSize: ctx.historyWindowSize,
+          ctx,
         });
       }
       const maxRetryCount = ctx.maxRetryCount ?? 3;
@@ -59,9 +59,7 @@ export async function walk(ctx: ContextType): Promise<void> {
         await executeFlow({
           action: {
             flowCommand: "error",
-            agentMessage: "",
-            userMessage: "",
-            systemMessage: "Max retry count reached. Stopping execution.",
+            message: "Max retry count reached. Stopping execution.",
             itemId: "",
             body: {},
           },
@@ -74,9 +72,7 @@ export async function walk(ctx: ContextType): Promise<void> {
       await executeFlow({
         action: {
           flowCommand: "error",
-          agentMessage: "",
-          userMessage: "",
-          systemMessage: "Something went wrong. Retrying...",
+          message: "Something went wrong. Retrying...",
           itemId: "",
           body: {},
         },

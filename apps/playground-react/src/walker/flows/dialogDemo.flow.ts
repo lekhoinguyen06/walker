@@ -31,18 +31,13 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     pushAction({
       flowCommand: "click",
       itemId: action.itemId + `::trigger`,
-      agentMessage: "Open dialog",
-      userMessage: action.userMessage,
-      systemMessage:
-        "Opening dialog using click flow as part of dialog-demo flow",
+      message: "Open dialog",
       body: {},
     });
     pushAction({
       flowCommand: "input",
       itemId: action.itemId + `::input-name`,
-      agentMessage: "Input name: " + valid.data.name,
-      userMessage: action.userMessage,
-      systemMessage: "Input name using input flow as part of dialog-demo flow",
+      message: "Input name: " + valid.data.name,
       body: {
         input: valid.data.name,
       },
@@ -50,10 +45,7 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     pushAction({
       flowCommand: "input",
       itemId: action.itemId + `::input-username`,
-      agentMessage: "Input name: " + valid.data.username,
-      userMessage: action.userMessage,
-      systemMessage:
-        "Input username using input flow as part of dialog-demo flow",
+      message: "Input name: " + valid.data.username,
       body: {
         input: valid.data.username,
       },
@@ -62,19 +54,14 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
       pushAction({
         flowCommand: "click",
         itemId: action.itemId + `::save`,
-        agentMessage: "Save dialog",
-        userMessage: action.userMessage,
-        systemMessage: "Save using click flow as part of dialog-demo flow",
+        message: "Save dialog",
         body: {},
       });
     } else {
       pushAction({
         flowCommand: "none",
         itemId: "",
-        agentMessage: "Please check the information before saving the dialog.",
-        userMessage: action.userMessage,
-        systemMessage:
-          "Toast confirmation message using none flow as part of dialog-demo flow",
+        message: "Please check the information before saving the dialog.",
         body: {},
       });
     }

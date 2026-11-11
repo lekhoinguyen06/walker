@@ -6,9 +6,7 @@ export const dialogDemoFlowJSON = JSON.stringify(
     createAction({
       flowCommand: "dialog-demo",
       itemId: ade.pd().id,
-      agentMessage: "Let's see what we have here...",
-      userMessage: "",
-      systemMessage: "Demo example.",
+      message: "Let's see what we have here...",
       body: {
         username: "walker",
         name: "Walker Jr.",
@@ -25,17 +23,13 @@ export const dialogActionStepJSON = JSON.stringify(
     createAction({
       flowCommand: "click",
       itemId: ade.pdt().id,
-      agentMessage: "Let's see what we have here...",
-      userMessage: "",
-      systemMessage: "Demo example.",
+      message: "Let's see what we have here...",
       body: {},
     }),
     createAction({
       flowCommand: "input",
       itemId: ade.pdin().id,
-      agentMessage: "Let's type in 'Walker Jr.'",
-      userMessage: "",
-      systemMessage: "Demo example.",
+      message: "Let's type in 'Walker Jr.'",
       body: {
         input: "Walker Jr.",
       },
@@ -43,9 +37,7 @@ export const dialogActionStepJSON = JSON.stringify(
     createAction({
       flowCommand: "input",
       itemId: ade.pdiu().id,
-      agentMessage: "Let's type in '@walker'",
-      userMessage: "",
-      systemMessage: "Demo example.",
+      message: "Let's type in '@walker'",
       body: {
         input: "@walker",
       },
@@ -53,9 +45,7 @@ export const dialogActionStepJSON = JSON.stringify(
     createAction({
       flowCommand: "click",
       itemId: ade.pds().id,
-      agentMessage: "Nice! Let's save it!",
-      userMessage: "",
-      systemMessage: "Demo example.",
+      message: "Nice! Let's save it!",
       body: {},
     }),
   ],

@@ -24,7 +24,7 @@ export function panelContextFactory({
         handler: async (action) => {
           pushToast({
             type: "error",
-            message: action.systemMessage,
+            message: action.message,
           });
         },
       },
@@ -33,7 +33,7 @@ export function panelContextFactory({
         handler: async (action) => {
           pushToast({
             type: "success",
-            message: action.systemMessage,
+            message: action.message,
           });
         },
       },
@@ -45,12 +45,12 @@ export function panelContextFactory({
       beforeHooks: [
         {
           handler: async (action) => {
-            if (action.agentMessage === "") {
+            if (action.message === "") {
               return;
             }
             pushToast({
               type: "info",
-              message: action.agentMessage,
+              message: action.message,
             });
           },
         },

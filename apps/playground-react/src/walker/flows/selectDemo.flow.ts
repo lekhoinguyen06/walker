@@ -28,19 +28,13 @@ export const selectDemoFlow: FlowWithHooksAndHandlerType = {
     pushAction({
       flowCommand: "click",
       itemId: action.itemId,
-      agentMessage: "Open select",
-      userMessage: action.userMessage,
-      systemMessage:
-        "Opening select using click flow as part of select-demo flow",
+      message: "Open select",
       body: {},
     });
     pushAction({
       flowCommand: "click",
       itemId: action.itemId + `::${valid.data.option}`,
-      agentMessage: "Select option: " + valid.data.option,
-      userMessage: action.userMessage,
-      systemMessage:
-        "Selecting option using click flow as part of select-demo flow",
+      message: "Select option: " + valid.data.option,
       body: {},
     });
   },

@@ -58,7 +58,7 @@ export function HistoryDialog() {
                         {i.action.flowCommand}
                       </span>
                       <span className="text-xs text-nowrap">
-                        {i.action.userMessage}
+                        {i.userPrompt}
                       </span>
                     </div>
                   ))}

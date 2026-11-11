@@ -1,5 +1,10 @@
 import { persistentJSON } from "@nanostores/persistent";
-import type { ActionType, HistoryItemType, MapType } from "walker-shared";
+import type {
+  ActionType,
+  ContextType,
+  HistoryItemType,
+  MapType,
+} from "walker-shared";
 
 export const $history = persistentJSON<HistoryItemType[]>(
   "walker-history-store",
@@ -14,19 +19,22 @@ export function recordHistory({
   action,
   map,
   logs,
-  windowSize = 5,
+  ctx,
 }: {
   action: ActionType;
   map: MapType;
   logs: string[];
-  windowSize?: number;
+  ctx: ContextType;
 }) {
+  const windowSize = ctx.historyWindowSize ?? 10;
+
   // Ignore informative flows when recording history
   if (action.flowCommand === "error" || action.flowCommand === "success") {
     return;
   }
 
   const history: HistoryItemType = {
+    userPrompt: ctx.userPrompt,
     action,
     map,
     logs,

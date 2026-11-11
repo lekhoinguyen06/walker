@@ -5,7 +5,7 @@ import type {
   MapType,
 } from "walker-shared";
 import { wait } from "./utils";
-import { $action, $history, recordHistory } from "./stores";
+import { $action, recordHistory } from "./stores";
 
 export async function executeFlow({
   action,
@@ -53,7 +53,7 @@ export async function executeFlow({
       action,
       map,
       logs,
-      windowSize: ctx.historyWindowSize,
+      ctx,
     });
 
     const queue = $action.get();

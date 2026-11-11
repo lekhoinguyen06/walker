@@ -17,25 +17,21 @@ CODE(
   `
 export const ActionSchema = z
   .object({
-    flow: z.string(),
-    message: z.string(),
-    targetId: z.string(),
-    next: z.string(),
+    itemId: z.string(),
+    flowCommand: z.string(),
+    agentMessage: z.string(),
+    userMessage: z.string(),
+    systemMessage: z.string(),
+    body: z.record(z.string(), z.unknown()),
   })
   .loose();
-
-export const ActionListSchema = z.array(ActionSchema);
-
-export type ActionType<T = any> = z.infer<typeof ActionSchema> & {
-  body?: T;
-};
   `,
   { language: "ts", viewRefs: ["all"] },
 );
 
 TEXT(
   `
-.flow:
+.flowCommand:
   - From the Flow list, the command that the Walker Client will execute.
   - You must pick one of the flow.command provided, if you don't know which one to pick, use the none Flow.
 .message:

@@ -6,9 +6,7 @@ export const toastActionJSON: string = JSON.stringify(
     createAction({
       flowCommand: "click",
       itemId: ade.ptt().id,
-      agentMessage: "Let's see what we have here...",
-      userMessage: "",
-      systemMessage: "Demo example",
+      message: "Let's see what we have here...",
       body: {},
     }),
   ],

@@ -4,9 +4,7 @@ export const ActionSchema = z
   .object({
     itemId: z.string(),
     flowCommand: z.string(),
-    agentMessage: z.string(),
-    userMessage: z.string(),
-    systemMessage: z.string(),
+    message: z.string(),
     body: z.record(z.string(), z.unknown()),
   })
   .loose();
