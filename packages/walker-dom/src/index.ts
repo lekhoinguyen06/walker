@@ -1,5 +1,5 @@
 export * from "./walk";
-export * from "./store";
+export * from "./stores";
 export * from "./map";
 export * from "./helper";
 

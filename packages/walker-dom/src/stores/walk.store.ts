@@ -1,22 +1,11 @@
-import { persistentJSON } from "@nanostores/persistent";
 import { nanoquery } from "@nanostores/query";
-import { walk } from "./walk";
-import { atom } from "nanostores";
-import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
+import type { ContextType } from "walker-shared";
+import { walk } from "../walk";
+import { $history } from "./history.store";
 
 export const [createFetcherStore, createMutatorStore] = nanoquery({
   fetcher: (...keys) => fetch(keys.join("")).then((r) => r.json()),
 });
-
-export const $action = persistentJSON<ActionType[]>("walker-action-store", []);
-
-export const $mouseX = atom(0);
-export const $mouseY = atom(0);
-
-export const $history = persistentJSON<HistoryItemType[]>(
-  "walker-history-store",
-  [],
-);
 
 export const $walk = createMutatorStore<ContextType>(async ({ data }) => {
   const history = await walk(data);
