@@ -6,20 +6,17 @@ import type {
 } from "walker-shared";
 import { WalkerError } from "../error";
 
-type InputProps = {
-  input: string;
-};
-
-const InputPropsSchema = z.object({
-  input: z.string(),
+const InputFlowBodySchema = z.object({
+  text: z.string(),
 });
 
-function validate(action: ActionType): action is ActionType & {
-  body: InputProps;
-} {
-  const result = InputPropsSchema.safeParse(action.body);
-  return result.success;
-}
+const InputFlowBodyJSONSchema = InputFlowBodySchema.toJSONSchema();
+
+const InputFlowBodyJSONSchemaStringified = JSON.stringify(
+  InputFlowBodyJSONSchema,
+  null,
+  2,
+);
 
 export async function input(
   action: ActionType,
@@ -30,10 +27,10 @@ export async function input(
   const child = el?.firstElementChild;
 
   if (child instanceof HTMLElement) {
-    const parsedAction = validate(action) ? action : null;
-    if (!parsedAction) {
+    const parsedAction = InputFlowBodySchema.safeParse(action.body);
+    if (!parsedAction.success) {
       throw new WalkerError(
-        `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected { input: string }, got: ${JSON.stringify(action.body)}`,
+        `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected action's body to be of schema: ${InputFlowBodyJSONSchemaStringified}, got: ${JSON.stringify(action.body)}`,
       );
     }
 
@@ -41,7 +38,7 @@ export async function input(
       window.HTMLInputElement.prototype,
       "value",
     )?.set;
-    nativeInputValueSetter?.call(child, parsedAction.body.input);
+    nativeInputValueSetter?.call(child, parsedAction.data.text);
     child.dispatchEvent(new Event("input", { bubbles: true }));
   } else {
     throw new WalkerError(
@@ -52,7 +49,7 @@ export async function input(
 
 export const inputFlow: FlowWithHooksAndHandlerType = {
   command: "input",
-  description:
-    "Input text into an Item. Schema: " + InputPropsSchema.toJSONSchema(),
+  description: "Input text into an Item.",
+  schema: InputFlowBodyJSONSchemaStringified,
   handler: input,
 };

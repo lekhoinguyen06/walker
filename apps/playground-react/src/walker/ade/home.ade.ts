@@ -10,5 +10,6 @@ export const home = {
     ({
       id: `walker-playground-react::home::components::${component}`,
       description: `Go to Walker demonstration for ShadcnUI ${component} component`,
+      flows: ["click"],
     }) as const,
 } as const satisfies ADEType;
