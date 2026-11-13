@@ -5,12 +5,13 @@ export const dialog = {
     ({
       id: "walker-playground-react::dialog",
       description:
-        "Dialog page for the ShadcnUI Input component demonstration. To fill in the dialog, use the dialog-demo flow. If the user explicitly prefered, you can still click or input step by step.",
+        "Dialog page for the ShadcnUI Input component demonstration.",
     }) as const,
   pdt: () =>
     ({
       id: "walker-playground-react::dialog::trigger",
-      description: "Click the button to open the dialog",
+      description:
+        "To fill in the dialog, use the dialog-demo flow on this Item. If the user explicitly prefered, you can still click this Item and input step by step.",
       flows: ["click", "dialog-demo"],
     }) as const,
   pds: () =>
