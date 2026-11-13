@@ -5,7 +5,8 @@ import { useState } from "react";
 import { Markdown } from "@tanstack/markdown/react";
 import { highlightMarkdownCode, themeCss } from "@/lib/markdown-highlighter";
 import { cn } from "@/lib/utils";
-import { usePanelToast, useRuntime } from "walker-react";
+import { usePanelToast } from "walker-react-panel";
+import { useAction } from "walker-react";
 
 export type RawCode = {
   lang: "tsx" | "json";
@@ -22,7 +23,7 @@ export function CodeContent({ raw }: CodeContentProps) {
   const source = ["```" + raw.lang.trim(), raw.content.trim(), "```"].join(
     "\n",
   );
-  const { runtime } = useRuntime();
+  const { pushActions } = useAction();
   const { pushToast } = usePanelToast();
 
   const handleCopy = (text: string) => () => {
@@ -78,7 +79,7 @@ export function CodeContent({ raw }: CodeContentProps) {
             )}
             onClick={() => {
               try {
-                runtime.addRawActions(raw.content.trim());
+                pushActions(JSON.parse(raw.content.trim()));
                 pushToast({
                   type: "info",
                   message: "Walk loaded. Enter to start the walk.",

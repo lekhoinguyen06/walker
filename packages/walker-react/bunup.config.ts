@@ -1,17 +1,14 @@
 import { defineConfig } from "bunup";
-import { tailwindcss } from "@bunup/plugin-tailwindcss";
 
 const config: any = defineConfig({
-  entry: ["src/index.ts", "src/core/index.ts", "src/walker/ui/index.ts"],
-  plugins: [tailwindcss()],
+  entry: ["src/index.ts"],
   format: ["esm", "cjs"],
   dts: {
     inferTypes: true,
   },
-  minify: true,
-  sourcemap: true,
   clean: true,
-  external: ["react", "react-dom"],
+  sourcemap: true,
+  // external: ["react", "react-dom", "walker-dom", "walker-shared"],
   env: { NODE_ENV: "production" },
 });
 

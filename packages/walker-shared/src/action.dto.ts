@@ -2,15 +2,15 @@ import z from "zod";
 
 export const ActionSchema = z
   .object({
-    flow: z.string(),
+    itemId: z.string(),
+    flowCommand: z.string(),
     message: z.string(),
-    targetId: z.string(),
-    next: z.string(),
+    body: z.record(z.string(), z.unknown()),
   })
   .loose();
 
-export const ActionListSchema = z.array(ActionSchema);
-
-export type ActionType<T = any> = z.infer<typeof ActionSchema> & {
-  body?: T;
+export type ActionType<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = z.infer<typeof ActionSchema> & {
+  body: T;
 };

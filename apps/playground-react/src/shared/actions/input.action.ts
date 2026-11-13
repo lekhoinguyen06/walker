@@ -1,16 +1,15 @@
-import { createAction } from "walker-react/core";
+import { ade } from "@/walker/ade";
+import { createAction } from "walker-dom";
 
 export const inputActionJSON: string = JSON.stringify(
   [
     createAction({
-      flow: "input",
-      targetId: "input-field",
+      flowCommand: "input",
+      itemId: ade.pii().id,
       message: "Let's type in 'Hello World!'",
       body: {
         input: "Hello World!",
       },
-      end: true,
-      prompt: "No prompt. This is the Action from the demo section.",
     }),
   ],
   null,

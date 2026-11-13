@@ -1,56 +1,6 @@
 import z from "zod";
+import { ItemSchema } from "./item.dto";
 
-export const ScopeSchema = z.literal(["active", "hidden", "inherit"]);
+export const MapSchema = z.array(ItemSchema);
 
-export const ItemSchema = z.object({
-  id: z.string(),
-  type: z.string(),
-  description: z.string(),
-  state: z.string().nullable(),
-  scope: ScopeSchema,
-  flows: z.string(),
-  refId: z.string().nullable(),
-  content: z.boolean(),
-  raw: z.boolean(),
-});
-
-export const ItemListSchema = z.array(ItemSchema);
-
-export interface MapItemType extends ItemType {
-  children?: Record<string, MapItemType>;
-  isInActiveScope?: boolean;
-  contentValue?: string;
-  rawValue?: string;
-}
-
-export const MapItemSchema: z.ZodType<MapItemType> = ItemSchema.extend({
-  children: z
-    .record(
-      z.string(),
-      z.lazy(() => MapItemSchema),
-    )
-    .optional(),
-  isInActiveScope: z.boolean().optional(),
-  contentValue: z.string().optional(),
-  rawValue: z.string().optional(),
-});
-
-export const MapSchema = z.record(z.string(), MapItemSchema);
-
-export type ItemType = z.infer<typeof ItemSchema>;
 export type MapType = z.infer<typeof MapSchema>;
-export type ScopeType = z.infer<typeof ScopeSchema>;
-
-export const ObservedAttributes = [
-  "id",
-  "type",
-  "description",
-  "flows",
-  "scope",
-  "state",
-  "refId",
-  "content",
-  "raw",
-] as const;
-
-export type ObservedAttributesType = (typeof ObservedAttributes)[number];

@@ -1,13 +1,13 @@
-import { createAction } from "walker-react/core";
+import { ade } from "@/walker/ade";
+import { createAction } from "walker-dom";
 
 export const toastActionJSON: string = JSON.stringify(
   [
     createAction({
-      flow: "click",
-      targetId: "toast-trigger",
+      flowCommand: "click",
+      itemId: ade.ptt().id,
       message: "Let's see what we have here...",
-      end: true,
-      prompt: "No prompt. This is the Action from the demo section.",
+      body: {},
     }),
   ],
   null,

@@ -7,6 +7,7 @@ TEXT(
 # History
 
 What you will be provided in a walk request.
+You can use the previous history items to see what has changed in the map and user prompt.
   `,
   {
     viewRefs: ["all"],
@@ -15,15 +16,13 @@ What you will be provided in a walk request.
 
 CODE(
   `
-export const HistorySchema = z.object({
-  prompt: z.string(),
-  flow: FlowItemSchema,
+export const HistoryItemSchema = z.object({
   action: ActionSchema,
+  userPrompt: z.string(),
   map: MapSchema,
-  logs: z.array(LogItemSchema),
+  logs: z.array(z.string()),
+  timestamp: z.date(),
 });
-
-export type HistoryType = z.infer<typeof HistorySchema>;
   `,
   {
     language: "ts",
@@ -33,11 +32,13 @@ export type HistoryType = z.infer<typeof HistorySchema>;
 
 TEXT(
   `
-.flow: the flow executed.
-.action: the action executed.
-.map: the map of the time the action was executed.
-- History map will be the old map, if the user prompt requires stateful walks, you can refer to this history items maps to see what changes.
-.logs: the logs of between the time the action was executed and the next walk, attached by Walker Client.
+.action: the Action executed.
+.userPrompt:
+- The user prompt at the time of the Action.
+- Note: the user prompt in newer histories can be an increment of the older user prompt or a completely new topic/request.
+.map: the Map of the time the Action was executed.
+.logs: the logs of between the time an action was executed and the next walk, attached by Walker Client.
+.timestamp: the timestamp of when the Action was executed
 .
 `,
   {

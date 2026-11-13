@@ -6,7 +6,7 @@ TEXT(
   `
 # Walk Request
 
-What you be provided to you.
+What will be provided to you.
   `,
   {
     viewRefs: ["all"],
@@ -16,11 +16,11 @@ What you be provided to you.
 CODE(
   `
 export const WalkRequestBodySchema = z.object({
-  history: z.array(HistorySchema),
-  flows: z.array(FlowItemSchema),
+  histories: z.array(HistoryItemSchema),
+  flows: z.array(FlowSchema),
   map: MapSchema,
   skills: z.array(z.string()),
-  prompt: z.string(),
+  userPrompt: z.string(),
 });
   `,
   {
@@ -31,12 +31,11 @@ export const WalkRequestBodySchema = z.object({
 
 TEXT(
   `
-.prompt: the user's prompt
-- A user prompt may be the same over multiple history items. If the user adds something more to the prompt than previous history items, it might mean they are providing more information for you.
-.history: a list of history items.
-.flows: the flows the Walker Client accepts.
-.map: the map current of the Walker Client.
-.skills: the context provided for you.
+.userPrompt: the user's prompt
+.histories: a list of History Item.
+.flows: the Flows the Walker Client accepts.
+.map: the Map current of the Walker Client.
+.skills: the context provided for you, including this document.
 `,
   {
     viewRefs: ["all"],

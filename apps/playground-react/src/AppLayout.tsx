@@ -8,7 +8,9 @@ import {
   PanelInput,
   PanelMenu,
   PanelPopup,
-} from "walker-react/ui";
+} from "walker-react-panel";
+import { selectDemoFlow } from "./walker/flows/selectDemo.flow";
+import { dialogDemoFlow } from "./walker/flows/dialogDemo.flow";
 
 function AppLayout() {
   return (
@@ -16,12 +18,17 @@ function AppLayout() {
       <Header />
       <Outlet />
       <Item
-        id="toast-container"
+        id="walker-toast-container"
         description="The container for toast notifications. It is recommended to place this at the root of your application."
       >
         <Toaster />
       </Item>
-      <Panel url={process.env.VITE_WALK_API_URL}>
+      <Panel
+        context={{
+          flows: [selectDemoFlow, dialogDemoFlow],
+          baseUrl: process.env.VITE_WALK_API_URL,
+        }}
+      >
         <PanelContent>
           <PanelInput />
           <PanelPopup

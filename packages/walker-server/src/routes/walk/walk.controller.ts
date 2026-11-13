@@ -5,10 +5,9 @@ import {
   type WalkResponseBodyDTO,
 } from "./walk.dto";
 import { generateText, Output, type LanguageModel } from "ai";
-import { ActionSchema } from "walker-core";
+import { ActionSchema } from "walker-shared";
 import type { ErrorResponseDTO } from "../../shared/dto/res.dto";
-import z from "zod";
-import { walker_skill_all$4814 } from "walker-skill";
+import { walker_skill_all$4535 } from "walker-skill";
 
 type WalkRequestType = {
   content: WalkRequestBodyDTO | undefined;
@@ -28,68 +27,26 @@ export const walkController = async (req: WalkRequestType) => {
       } satisfies ErrorResponseDTO);
     }
 
-    const flowAgent = await generateText({
+    const walker = await generateText({
       model: ai,
       output: Output.object({
-        schema: z.object({
-          selectedFlowCommand: z.string(),
-        }),
+        schema: ActionSchema,
       }),
       prompt: JSON.stringify({
         ...body.data,
-        skill: [walker_skill_all$4814],
-        role: "Flow Picker",
-      }),
+        skills: [walker_skill_all$4535, ...body.data.skills],
+      } as WalkRequestBodyDTO),
       maxOutputTokens: 10000,
       reasoning: "low",
       toolChoice: "none",
       temperature: 0.2,
     });
-
-    const flowSchema = body.data.flows.find(
-      (f) => f.command == flowAgent.output.selectedFlowCommand,
-    )?.schema as string | undefined;
-
-    if (!flowSchema) {
-      throw new StatusError(
-        400,
-        `No flow schema found for the given command: ${flowAgent.output}`,
-      );
-    }
-
-    const walkAgent = await generateText({
-      model: ai,
-      output: Output.object({
-        schema: z.fromJSONSchema(flowSchema),
-      }),
-      prompt: JSON.stringify({
-        ...body.data,
-        skill: [walker_skill_all$4814],
-        role: "Action Generator",
-      }),
-      maxOutputTokens: 10000,
-      reasoning: "low",
-      toolChoice: "none",
-      temperature: 0.2,
-    });
-
-    const action = ActionSchema.parse(walkAgent.output);
 
     return {
-      action,
+      action: walker.output,
       metadata: {
         timestamp: new Date(),
-        usage: {
-          inputTokens:
-            flowAgent.usage.inputTokens && walkAgent.usage.inputTokens
-              ? flowAgent.usage.inputTokens + walkAgent.usage.inputTokens
-              : undefined,
-          outputTokens:
-            flowAgent.usage.outputTokens && walkAgent.usage.outputTokens
-              ? flowAgent.usage.outputTokens + walkAgent.usage.outputTokens
-              : undefined,
-        },
-        // requestBody: body.data,
+        usage: walker.usage,
       },
     } satisfies WalkResponseBodyDTO;
   } catch (error) {

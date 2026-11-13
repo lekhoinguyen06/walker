@@ -1,20 +1,13 @@
 import z from "zod";
-import { FlowItemSchema } from "./flow.dto";
 import { ActionSchema } from "./action.dto";
 import { MapSchema } from "./map.dto";
 
-export const LogItemSchema = z.object({
-  type: z.literal(["user", "system"]),
-  message: z.string(),
-  timestamp: z.number(),
-});
-
-export const HistorySchema = z.object({
-  flow: FlowItemSchema,
+export const HistoryItemSchema = z.object({
   action: ActionSchema,
+  userPrompt: z.string(),
   map: MapSchema,
-  logs: z.array(LogItemSchema),
+  logs: z.array(z.string()),
+  timestamp: z.string(),
 });
 
-export type HistoryType = z.infer<typeof HistorySchema>;
-export type LogItemType = z.infer<typeof LogItemSchema>;
+export type HistoryItemType = z.infer<typeof HistoryItemSchema>;

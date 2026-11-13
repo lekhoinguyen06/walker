@@ -4,7 +4,7 @@
   "description": "Walker Skill library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
-  "module": "index.ts",
+  "module": "dist/index.js",
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -19,6 +19,7 @@
   ],
   "devDependencies": {
     "@types/bun": "latest",
+    "banhmi": "^0.1.5",
     "bunup": "^0.16.32"
   },
   "scripts": {
@@ -26,8 +27,5 @@
   },
   "peerDependencies": {
     "typescript": "^7"
-  },
-  "dependencies": {
-    "banhmi": "^0.1.5"
   }
 }

@@ -3,7 +3,7 @@ import { CODE, PAGE, TEXT } from "../../banhmi";
 PAGE("concept_client", {});
 
 TEXT(`
-# Client
+# Walker Client
 
-Client can be a frontend application.
+Walker Client can be a frontend application.
   `);

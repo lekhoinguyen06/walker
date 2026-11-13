@@ -31,7 +31,7 @@ app.get("/", (c) => {
 
 app.all("/api/walker/*", (c) => {
   const workersai = createAI({ binding: env.AI });
-  const ai = workersai("@cf/openai/gpt-oss-120b");
+  const ai = workersai("anthropic/claude-haiku-5.5");
   const walker = createWalker({ ai });
 
   return walker.handler(c.req.raw);

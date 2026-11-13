@@ -6,7 +6,7 @@ TEXT(
   `
 # Map
 
-A record consist of Items to show the map of the Walker Client
+A list of Items to show the map of the Walker Client
   `,
   {
     viewRefs: ["all"],
@@ -15,8 +15,7 @@ A record consist of Items to show the map of the Walker Client
 
 CODE(
   `
-export const MapSchema = z.record(z.string(), MapItemSchema);
-export type MapType = z.infer<typeof MapSchema>;
+export const MapSchema = z.array(ItemSchema);
   `,
   {
     language: "ts",

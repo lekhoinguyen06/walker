@@ -44,73 +44,83 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "history": {
+                  "histories": {
                     "type": "array",
                     "items": {
                       "type": "object",
                       "properties": {
-                        "flow": {
-                          "type": "object",
-                          "properties": {
-                            "command": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            },
-                            "schema": {}
-                          },
-                          "required": ["command", "description", "schema"]
-                        },
                         "action": {
                           "type": "object",
                           "properties": {
-                            "flow": {
+                            "itemId": {
+                              "type": "string"
+                            },
+                            "flowCommand": {
                               "type": "string"
                             },
                             "message": {
                               "type": "string"
                             },
-                            "targetId": {
-                              "type": "string"
-                            },
-                            "next": {
-                              "type": "string"
+                            "body": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string"
+                              },
+                              "additionalProperties": {}
                             }
                           },
-                          "required": ["flow", "message", "targetId", "next"],
+                          "required": [
+                            "itemId",
+                            "flowCommand",
+                            "message",
+                            "body"
+                          ],
                           "additionalProperties": {}
                         },
+                        "userPrompt": {
+                          "type": "string"
+                        },
                         "map": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "$ref": "#/components/schemas/__schema0"
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              },
+                              "flows": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "required": ["id"]
                           }
                         },
                         "logs": {
                           "type": "array",
                           "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "enum": ["user", "system"]
-                              },
-                              "message": {
-                                "type": "string"
-                              },
-                              "timestamp": {
-                                "type": "number"
-                              }
-                            },
-                            "required": ["type", "message", "timestamp"]
+                            "type": "string"
                           }
+                        },
+                        "timestamp": {
+                          "type": "string"
                         }
                       },
-                      "required": ["flow", "action", "map", "logs"]
+                      "required": [
+                        "action",
+                        "userPrompt",
+                        "map",
+                        "logs",
+                        "timestamp"
+                      ]
                     }
                   },
                   "flows": {
@@ -124,18 +134,36 @@
                         "description": {
                           "type": "string"
                         },
-                        "schema": {}
+                        "schema": {
+                          "type": "string"
+                        }
                       },
-                      "required": ["command", "description", "schema"]
+                      "required": ["command"],
+                      "additionalProperties": {}
                     }
                   },
                   "map": {
-                    "type": "object",
-                    "propertyNames": {
-                      "type": "string"
-                    },
-                    "additionalProperties": {
-                      "$ref": "#/components/schemas/__schema0"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "flows": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": ["id"]
                     }
                   },
                   "skills": {
@@ -144,11 +172,17 @@
                       "type": "string"
                     }
                   },
-                  "prompt": {
+                  "userPrompt": {
                     "type": "string"
                   }
                 },
-                "required": ["history", "flows", "map", "skills", "prompt"]
+                "required": [
+                  "histories",
+                  "flows",
+                  "map",
+                  "skills",
+                  "userPrompt"
+                ]
               }
             }
           }
@@ -160,14 +194,13 @@
               "application/json": {
                 "example": {
                   "action": {
-                    "flow": "click",
+                    "flowCommand": "click",
                     "message": "Clicking the start button to begin the tour.",
-                    "targetId": "button-1",
-                    "prompt": "Let's go, I am new here. Show me around.",
-                    "end": false
+                    "itemId": "app::button",
+                    "body": {}
                   },
                   "metadata": {
-                    "timestamp": "2026-11-05T07:51:18.108Z",
+                    "timestamp": "2026-11-13T05:45:14.667Z",
                     "usage": {
                       "inputTokens": 1005,
                       "inputTokenDetails": {
@@ -190,20 +223,24 @@
                     "action": {
                       "type": "object",
                       "properties": {
-                        "flow": {
+                        "itemId": {
+                          "type": "string"
+                        },
+                        "flowCommand": {
                           "type": "string"
                         },
                         "message": {
                           "type": "string"
                         },
-                        "targetId": {
-                          "type": "string"
-                        },
-                        "next": {
-                          "type": "string"
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
                         }
                       },
-                      "required": ["flow", "message", "targetId", "next"],
+                      "required": ["itemId", "flowCommand", "message", "body"],
                       "additionalProperties": {}
                     },
                     "metadata": {
@@ -272,72 +309,6 @@
           }
         },
         "responses": {}
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "__schema0": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "state": {
-            "type": ["string", "null"]
-          },
-          "scope": {
-            "type": "string",
-            "enum": ["active", "hidden", "inherit"]
-          },
-          "flows": {
-            "type": "string"
-          },
-          "refId": {
-            "type": ["string", "null"]
-          },
-          "content": {
-            "type": "boolean"
-          },
-          "raw": {
-            "type": "boolean"
-          },
-          "children": {
-            "type": "object",
-            "propertyNames": {
-              "type": "string"
-            },
-            "additionalProperties": {
-              "$ref": "#/components/schemas/__schema0"
-            }
-          },
-          "isInActiveScope": {
-            "type": "boolean"
-          },
-          "contentValue": {
-            "type": "string"
-          },
-          "rawValue": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "type",
-          "description",
-          "state",
-          "scope",
-          "flows",
-          "refId",
-          "content",
-          "raw"
-        ]
       }
     }
   }

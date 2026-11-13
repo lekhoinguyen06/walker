@@ -4,24 +4,6 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
-export type Schema0 = {
-  id: string;
-  type: string;
-  description: string;
-  state: string | null;
-  scope: "active" | "hidden" | "inherit";
-  flows: string;
-  refId: string | null;
-  content: boolean;
-  raw: boolean;
-  children?: {
-    [key: string]: Schema0;
-  };
-  isInActiveScope?: boolean;
-  contentValue?: string;
-  rawValue?: string;
-};
-
 export type GetApiWalkerHealthData = {
   body?: never;
   path?: never;
@@ -44,38 +26,40 @@ export type GetApiWalkerHealthResponse =
 
 export type PostApiWalkerWalkData = {
   body?: {
-    history: Array<{
-      flow: {
-        command: string;
-        description: string;
-        schema: unknown;
-      };
+    histories: Array<{
       action: {
-        flow: string;
+        itemId: string;
+        flowCommand: string;
         message: string;
-        targetId: string;
-        next: string;
+        body: {
+          [key: string]: unknown;
+        };
         [key: string]: unknown;
       };
-      map: {
-        [key: string]: Schema0;
-      };
-      logs: Array<{
-        type: "user" | "system";
-        message: string;
-        timestamp: number;
+      userPrompt: string;
+      map: Array<{
+        id: string;
+        description?: string;
+        state?: string;
+        flows?: Array<string>;
       }>;
+      logs: Array<string>;
+      timestamp: string;
     }>;
     flows: Array<{
       command: string;
-      description: string;
-      schema: unknown;
+      description?: string;
+      schema?: string;
+      [key: string]: unknown;
     }>;
-    map: {
-      [key: string]: Schema0;
-    };
+    map: Array<{
+      id: string;
+      description?: string;
+      state?: string;
+      flows?: Array<string>;
+    }>;
     skills: Array<string>;
-    prompt: string;
+    userPrompt: string;
   };
   path?: never;
   query?: never;
@@ -88,10 +72,12 @@ export type PostApiWalkerWalkResponses = {
    */
   200: {
     action: {
-      flow: string;
+      itemId: string;
+      flowCommand: string;
       message: string;
-      targetId: string;
-      next: string;
+      body: {
+        [key: string]: unknown;
+      };
       [key: string]: unknown;
     };
     metadata: {

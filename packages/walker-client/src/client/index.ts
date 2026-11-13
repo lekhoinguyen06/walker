@@ -15,5 +15,4 @@ export type {
   PostApiWalkerWalkData,
   PostApiWalkerWalkResponse,
   PostApiWalkerWalkResponses,
-  Schema0,
 } from "./types.gen";

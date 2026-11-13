@@ -1,0 +1,63 @@
+{
+  "name": "walker-react-panel",
+  "version": "0.1.0",
+  "description": "Walker Panel component for React",
+  "license": "MIT",
+  "author": "Lê Khôi Nguyên",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bunup",
+    "dev": "bunup --watch",
+    "gen-doc": "bun exec typedoc --json typedoc.json src/index.ts src/dev/index.ts && bash ./scripts/ship-doc.sh"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "motion": "^14.0.1"
+  },
+  "dependencies": {
+    "walker-dom": "workspace:^",
+    "walker-shared": "workspace:^",
+    "walker-react": "workspace:^",
+    "@ai-sdk/react": "^4.0.34",
+    "@base-ui/react": "^1.6.0",
+    "@monaco-editor/react": "^4.7.0",
+    "@tanstack/highlight": "^0.0.10",
+    "@tanstack/markdown": "^0.0.13",
+    "@tanstack/react-hotkeys": "^0.10.0",
+    "ai": "^7.0.66",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.2.6",
+    "lucide-react": "^0.575.0",
+    "shadcn": "^4.18.0",
+    "usehooks-ts": "^3.1.1",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@shadcn/react": "^0.2.1",
+    "tailwind-merge": "^3.5.0",
+    "tw-animate-css": "^1.4.0",
+    "clsx": "^2.1.1",
+    "@bunup/plugin-tailwindcss": "^0.16.32",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.3.0",
+    "bunup": "^0.16.32",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.2.0",
+    "typedoc": "^0.28.20",
+    "typescript": "~7.0.2"
+  }
+}

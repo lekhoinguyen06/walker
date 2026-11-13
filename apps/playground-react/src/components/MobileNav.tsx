@@ -11,27 +11,21 @@ import { PanelRight } from "lucide-react";
 import ReactLogo from "../assets/react.svg?react";
 import VueLogo from "../assets/vuedotjs.svg?react";
 import SvelteLogo from "../assets/svelte.svg?react";
-import { Item, Link, useScope } from "walker-react";
+import { Item } from "walker-react";
 import { useState } from "react";
+import { ade } from "@/walker/ade";
 
 export function MobileNav() {
-  const { state, setActiveId, resetActiveId } = useScope("mobile-nav-trigger");
   const [isOpen, setisOpen] = useState<boolean>(false);
   return (
     <Sheet
       open={isOpen}
       onOpenChange={(open) => {
         setisOpen(open);
-        open ? setActiveId("mobile-nav-trigger") : resetActiveId();
       }}
     >
       <SheetTrigger>
-        <Item
-          id="mobile-nav-trigger"
-          description="This is the mobile navigation trigger, click it to open the mobile navigation menu."
-          scope={state}
-          flows={["click"]}
-        >
+        <Item {...ade.pnmt()}>
           <Button
             variant="ghost"
             size="icon-lg"
@@ -47,11 +41,7 @@ export function MobileNav() {
           <SheetDescription>Let's take a walk!</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col">
-          <Link
-            id="mobile-nav-button-react"
-            description="This is the React logo, click it to go to the Walker Playground for React."
-            refId="mobile-nav-trigger"
-          >
+          <Item {...ade.pnmr()}>
             <a href="https://react.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -62,12 +52,8 @@ export function MobileNav() {
                 <span className="text-[#61DAFB] font-semibold">React</span>
               </Button>
             </a>
-          </Link>
-          <Link
-            id="mobile-nav-button-vue"
-            description="This is the Vue logo, click it to go to the Walker Playground for Vue."
-            refId="mobile-nav-trigger"
-          >
+          </Item>
+          <Item {...ade.pnmv()}>
             <a href="https://vue.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -78,12 +64,8 @@ export function MobileNav() {
                 <span className="text-[#4FC08D] font-semibold">Vue</span>
               </Button>
             </a>
-          </Link>
-          <Link
-            id="mobile-nav-button-svelte"
-            description="This is the Svelte logo, click it to go to the Walker Playground for Svelte."
-            refId="mobile-nav-trigger"
-          >
+          </Item>
+          <Item {...ade.pnms()}>
             <a href="https://svelte.walker.vstaffs.com">
               <Button
                 variant="ghost"
@@ -94,7 +76,7 @@ export function MobileNav() {
                 <span className="text-[#FF3E00] font-semibold">Svelte</span>
               </Button>
             </a>
-          </Link>
+          </Item>
         </div>
       </SheetContent>
     </Sheet>

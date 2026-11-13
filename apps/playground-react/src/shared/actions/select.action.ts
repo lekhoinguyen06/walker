@@ -1,20 +1,15 @@
-import { createAction } from "walker-react/core";
+import { ade } from "@/walker/ade";
+import { createAction } from "walker-dom";
 
 export const selectActionJSON = JSON.stringify(
   [
     createAction({
-      flow: "click",
-      targetId: "select-trigger",
-      message: "Let's see what we have here...",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: false,
-    }),
-    createAction({
-      flow: "click",
-      targetId: "select-item-banana",
-      message: "Banana na na na!",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: true,
+      flowCommand: "select-demo",
+      itemId: ade.pss().id,
+      message: "Banana na na",
+      body: {
+        option: "banana",
+      },
     }),
   ],
   null,

@@ -6,7 +6,7 @@ TEXT(
   `
 # Flow
 
-Flows are what type of Action the client accepts and executes.
+Flows are what type of Action the Walker Client accepts and executes.
 `,
   {
     viewRefs: ["all"],
@@ -15,13 +15,13 @@ Flows are what type of Action the client accepts and executes.
 
 CODE(
   `
-export const FlowItemSchema = z.object({
-  command: z.string(),
-  description: z.string(),
-  schema: z.unknown(),
-});
-
-export type FlowItemType = z.infer<typeof FlowItemSchema>;
+export const FlowSchema = z
+  .object({
+    command: z.string(),
+    description: z.string().optional(),
+    schema: z.string().optional(),
+  })
+  .loose();
   `,
   {
     language: "ts",
@@ -33,7 +33,9 @@ TEXT(
   `
 .command: the type of flow that Walker Client accept
 .description: a description of what the flow does
-.schema: the JSON Schema of the Action object that Walker Client accept for this flow. If you are the Walk Agent, you must generate an Action object that match the schema of the flow that the Flow Agent picked for you.
+.schema:
+- The JSON Schema of the Action object's body (eg. action.body attribute) that Walker Client accept for this flow.
+- Note: the action.body attribute is not validated on the Walker Server. If it fails validation on the Walker CLient, the error message will be included in the history logs (eg. history.logs attribute).
 `,
   {
     viewRefs: ["all"],

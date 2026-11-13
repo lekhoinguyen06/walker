@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import { ade } from "@/walker/ade";
 import { Item } from "walker-react";
 
 export function ToastDemo() {
@@ -17,11 +18,7 @@ export function ToastDemo() {
   }
 
   return (
-    <Item
-      id="toast-trigger"
-      description="Click the button below to show a toast notification."
-      flows={["click"]}
-    >
+    <Item {...ade.ptt()}>
       <Button variant="outline" onClick={showToast}>
         Show Toast
       </Button>

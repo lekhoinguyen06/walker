@@ -1,20 +1,19 @@
-import { createAction } from "walker-react/core";
+import { ade } from "@/walker/ade";
+import { createAction } from "walker-dom";
 
 export const scrollAreaActionJSON = JSON.stringify(
   [
     createAction({
-      flow: "click",
-      targetId: "v1.2.0-beta.1",
+      flowCommand: "click",
+      itemId: ade.psao("v1.2.0-beta.1").id,
       message: "I am gonna pick the earliest version.",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: false,
+      body: {},
     }),
     createAction({
-      flow: "click",
-      targetId: "v1.2.0-beta.50",
+      flowCommand: "click",
+      itemId: ade.psao("v1.2.0-beta.50").id,
       message: "You know what, I am gonna pick the latest version.",
-      prompt: "No prompt. This is the Action from the demo section.",
-      end: true,
+      body: {},
     }),
   ],
   null,

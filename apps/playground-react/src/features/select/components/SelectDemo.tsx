@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Item } from "walker-react";
 import { useState } from "react";
+import { ade } from "@/walker/ade";
 
 const items = [
   { label: "Select a fruit", value: null },
@@ -22,28 +23,16 @@ const items = [
 export function SelectDemo() {
   const [value, setValue] = useState<string | null>(null);
   return (
-    <Item
-      id="select"
-      description="This is example select for the Walker Playground."
-    >
+    <Item {...ade.pss()}>
       <Select items={items} value={value} onValueChange={(v) => setValue(v)}>
-        <Item
-          id="select-trigger"
-          description="This is the select trigger. Click to open the select dropdown."
-        >
-          <SelectTrigger className="w-full max-w-48">
-            <SelectValue />
-          </SelectTrigger>
-        </Item>
+        <SelectTrigger className="w-full max-w-48">
+          <SelectValue />
+        </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Fruits</SelectLabel>
             {items.map((item) => (
-              <Item
-                id={`select-item-${item.value}`}
-                description={`This is a select item. Click to select: ${item.label}.`}
-                flows={["click"]}
-              >
+              <Item key={item.value} {...ade.psso(item.value)}>
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
                 </SelectItem>
