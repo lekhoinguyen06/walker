@@ -5,6 +5,7 @@ import type {
   HistoryItemType,
   MapType,
 } from "walker-shared";
+import { getUserPrompt } from "./user.store";
 
 export const $history = persistentJSON<HistoryItemType[]>(
   "walker-history-store",
@@ -34,11 +35,11 @@ export function recordHistory({
   }
 
   const history: HistoryItemType = {
-    userPrompt: ctx.userPrompt,
+    userPrompt: getUserPrompt(),
     action,
     map,
     logs,
-    timestamp: new Date(),
+    timestamp: String(new Date()),
   };
 
   if ($history.get().length >= windowSize) {
