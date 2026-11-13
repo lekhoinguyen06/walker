@@ -39,7 +39,7 @@ export const walkController = async (req: WalkRequestType) => {
       maxOutputTokens: 10000,
       reasoning: "low",
       toolChoice: "none",
-      temperature: 0.2,
+      // temperature: 0.2,
     });
 
     return {

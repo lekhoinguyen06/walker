@@ -44,7 +44,7 @@ export function createWalker(props: WalkerServerProps): WalkerServerType {
           maxOutputTokens: 1000,
           reasoning: "low",
           toolChoice: "none",
-          temperature: 0.8,
+          // temperature: 0.8,
         });
 
         return {
