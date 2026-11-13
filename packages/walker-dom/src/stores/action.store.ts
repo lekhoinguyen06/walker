@@ -4,7 +4,9 @@ import z from "zod";
 
 export const $action = persistentJSON<ActionType[]>("walker-action-store", []);
 
-export function pushAction(action: ActionType) {
+export function pushAction<T extends Record<string, unknown>>(
+  action: ActionType<T>,
+) {
   const parsedAction = ActionSchema.safeParse(action);
   if (!parsedAction.success) {
     throw new Error(

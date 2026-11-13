@@ -15,6 +15,8 @@ export const selectDemoFlowBodyJSONSchemaStringified = JSON.stringify(
   2,
 );
 
+export type SelectDemoFlow = z.infer<typeof SelectDemoFlowBodySchema>;
+
 export const selectDemoFlow: FlowWithHooksAndHandlerType = {
   command: "select-demo",
   description: "Interact with select component.",

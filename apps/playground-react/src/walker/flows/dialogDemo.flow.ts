@@ -1,4 +1,4 @@
-import { pushAction, WalkerError } from "walker-dom";
+import { type InputFlow, pushAction, WalkerError } from "walker-dom";
 import type { FlowWithHooksAndHandlerType } from "walker-shared";
 import { z } from "zod";
 
@@ -16,6 +16,8 @@ export const dialogDemoFlowBodyJSONSchemaStringified = JSON.stringify(
   null,
   2,
 );
+
+export type DialogDemoFlow = z.infer<typeof DialogDemoFlowBodySchema>;
 
 export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
   command: "dialog-demo",
@@ -35,20 +37,20 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
       message: "Open dialog",
       body: {},
     });
-    pushAction({
+    pushAction<InputFlow>({
       flowCommand: "input",
       itemId: action.itemId + `::input-name`,
       message: "Input name: " + valid.data.name,
       body: {
-        input: valid.data.name,
+        text: valid.data.name,
       },
     });
-    pushAction({
+    pushAction<InputFlow>({
       flowCommand: "input",
       itemId: action.itemId + `::input-username`,
       message: "Input name: " + valid.data.username,
       body: {
-        input: valid.data.username,
+        text: valid.data.username,
       },
     });
     if (valid.data.save) {

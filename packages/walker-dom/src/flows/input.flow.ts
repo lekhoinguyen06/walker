@@ -18,6 +18,8 @@ const InputFlowBodyJSONSchemaStringified = JSON.stringify(
   2,
 );
 
+export type InputFlow = z.infer<typeof InputFlowBodySchema>;
+
 export async function input(
   action: ActionType,
   ctx: ContextType,

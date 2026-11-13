@@ -8,7 +8,7 @@ export const inputActionJSON: string = JSON.stringify(
       itemId: ade.pii().id,
       message: "Let's type in 'Hello World!'",
       body: {
-        input: "Hello World!",
+        text: "Hello World!",
       },
     }),
   ],
