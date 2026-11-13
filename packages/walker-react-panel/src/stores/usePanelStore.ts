@@ -9,9 +9,6 @@ import type { ContextType } from "walker-shared";
 import { create } from "zustand";
 
 export type PanelStoreType = {
-  url: string;
-  setUrl: (url: string) => void;
-
   // Walker
   context: ContextType;
   setContext: (context: ContextType) => void;
@@ -40,8 +37,6 @@ export type PanelStoreType = {
 
 export const usePanelStore = create<PanelStoreType>((set) => ({
   setStore: (state: Partial<PanelStoreType>) => set(state),
-  url: "",
-  setUrl: (url: string) => set({ url }),
 
   context: {
     userPrompt: "",
@@ -52,7 +47,6 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
   mergeContext: (context: Partial<ContextType>) =>
     set((state) => ({
       context: {
-        userPrompt: context.userPrompt ?? state.context.userPrompt,
         baseUrl: context.baseUrl ?? state.context.baseUrl,
         flows: [...state.context.flows, ...(context.flows ?? [])],
         gapTimeMs: context.gapTimeMs ?? state.context.gapTimeMs,

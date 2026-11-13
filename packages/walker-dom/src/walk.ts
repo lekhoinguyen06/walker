@@ -1,7 +1,7 @@
 import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
 import { executeFlow } from "./flow";
 import { mapper } from "./map";
-import { $action, $history, recordHistory } from "./stores";
+import { $action, $history, getUserPrompt, recordHistory } from "./stores";
 import { wait } from "./utils";
 import { WalkerError } from "./error";
 import { postApiWalkerWalk } from "walker-client";
@@ -35,7 +35,7 @@ export async function walk(ctx: ContextType): Promise<void> {
           flows: ctx.flows,
           map,
           skills: [],
-          userPrompt: ctx.userPrompt,
+          userPrompt: getUserPrompt(),
         },
       });
 

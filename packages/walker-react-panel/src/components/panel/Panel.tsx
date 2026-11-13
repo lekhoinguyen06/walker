@@ -64,13 +64,10 @@ export function Panel({
   children,
 }: PanelProps): ReactNode {
   const {
-    setUrl,
-    context: contextState,
     setContext,
     mergeContext,
     position: positionState,
     isHidden: isHiddenState,
-    setStore,
   } = usePanel();
   const { pushToast } = usePanelToast();
 
@@ -79,7 +76,7 @@ export function Panel({
   useEffect(() => {
     setContext(
       panelContextFactory({
-        userPrompt: contextState.userPrompt,
+        baseUrl: context.baseUrl,
         pushToast,
       }),
     );

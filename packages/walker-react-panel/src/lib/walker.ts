@@ -10,14 +10,14 @@ import type { ContextType } from "walker-shared";
 import type { PanelToastItemType } from "@/components/panel/PanelToast";
 
 export function panelContextFactory({
-  userPrompt,
+  baseUrl,
   pushToast,
 }: {
-  userPrompt: string;
+  baseUrl: string;
   pushToast: (toast: PanelToastItemType) => void;
 }): ContextType {
   return {
-    userPrompt,
+    baseUrl,
     flows: [
       {
         command: "error",

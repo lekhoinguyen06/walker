@@ -3,7 +3,7 @@ import { usePanel, usePanelToast } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { panelContextFactory } from "@/lib/walker";
 import { useEffect, useState } from "react";
-import { useWalk } from "walker-react";
+import { useUser, useWalk } from "walker-react";
 
 type PanelInputProps = {
   className?: string;
@@ -12,13 +12,14 @@ type PanelInputProps = {
 export function PanelInput({ className }: PanelInputProps) {
   const { context, setContext } = usePanel();
   const { mutate } = useWalk();
+  const { user, setUserPrompt } = useUser();
   const [isExpanding, setIsExpanding] = useState(false);
-  const isTooLong = context.userPrompt.length > 50;
-  const isNewLine = context.userPrompt.includes("\n");
+  const isTooLong = user.prompt.length > 20;
+  const isNewLine = user.prompt.includes("\n");
 
   useEffect(() => {
     setIsExpanding(isTooLong || isNewLine);
-  }, [context.userPrompt]);
+  }, [user.prompt]);
 
   return (
     <Textarea
@@ -29,9 +30,9 @@ export function PanelInput({ className }: PanelInputProps) {
         isExpanding && "h-16 rounded-[16px]",
         className,
       )}
-      value={context.userPrompt}
+      value={user.prompt}
       onChange={(e) => {
-        setContext({ ...context, userPrompt: e.target.value });
+        setUserPrompt(e.target.value);
       }}
       onKeyDown={(e) => {
         if (e.key !== "Enter") return;
