@@ -1,4 +1,5 @@
-import type { MapType } from "walker-shared";
+import { FlowSchema, type FlowType, type MapType } from "walker-shared";
+import z from "zod";
 
 export function mapper(): MapType {
   return Array.from(document.querySelectorAll('[id^="walker-"]')).map((el) => ({

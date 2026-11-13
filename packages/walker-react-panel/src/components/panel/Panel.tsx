@@ -51,15 +51,13 @@ export const panelVariants = cva(
 
 export type PanelProps = VariantProps<typeof panelVariants> & {
   hidden?: boolean;
-  url: string;
-  context: Partial<ContextType>;
+  context: Partial<ContextType> & Required<Pick<ContextType, "baseUrl">>;
   className?: string;
   children?: ReactNode;
 };
 
 export function Panel({
   position = "bottom",
-  url,
   context,
   hidden,
   className,
@@ -79,8 +77,6 @@ export function Panel({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setUrl(url);
-    setStore({ position, url, isHidden: hidden });
     setContext(
       panelContextFactory({
         userPrompt: contextState.userPrompt,

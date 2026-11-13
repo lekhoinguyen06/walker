@@ -24,9 +24,9 @@ function AppLayout() {
         <Toaster />
       </Item>
       <Panel
-        url={process.env.VITE_WALK_API_URL}
         context={{
           flows: [selectDemoFlow, dialogDemoFlow],
+          baseUrl: process.env.VITE_WALK_API_URL,
         }}
       >
         <PanelContent>

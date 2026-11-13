@@ -7,7 +7,7 @@ export const HistoryItemSchema = z.object({
   userPrompt: z.string(),
   map: MapSchema,
   logs: z.array(z.string()),
-  timestamp: z.date(),
+  timestamp: z.string(),
 });
 
 export type HistoryItemType = z.infer<typeof HistoryItemSchema>;

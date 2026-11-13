@@ -4,6 +4,8 @@ import { mapper } from "./map";
 import { $action, $history, recordHistory } from "./stores";
 import { wait } from "./utils";
 import { WalkerError } from "./error";
+import { postApiWalkerWalk } from "walker-client";
+import { createClient } from "walker-client/client";
 
 export async function walk(ctx: ContextType): Promise<void> {
   console.log("[W][D] Starting walk with context: ", ctx);
@@ -16,18 +18,40 @@ export async function walk(ctx: ContextType): Promise<void> {
   // Request
   let queue = $action.get();
   let action: ActionType | null = null;
+  let histories = $history.get();
 
   try {
     if (queue.length === 0) {
-      await wait(1000);
-      action = {
-        itemId: "",
-        flowCommand: "none",
-        message: "Hello from walker! What would you like to do?",
-        body: {},
-      };
+      console.log(
+        `[W][D] Queue is empty, requesting action from server at ${ctx.baseUrl}`,
+      );
+      const client = createClient({
+        baseUrl: ctx.baseUrl,
+      });
+      const result = await postApiWalkerWalk({
+        client,
+        body: {
+          histories,
+          flows: ctx.flows,
+          map,
+          skills: [],
+          userPrompt: ctx.userPrompt,
+        },
+      });
+
+      if (result.error) {
+        throw new WalkerError(
+          `Failed to get action from server: ${result.error.message}`,
+        );
+      }
+      if (!result.data?.action) {
+        throw new WalkerError("Failed to get action from server, retrying...");
+      }
+
+      console.log("[W][D] Received action from server: ", result.data.action);
+
       await executeFlow({
-        action,
+        action: result.data.action,
         ctx,
         logs,
         map,
@@ -67,6 +91,8 @@ export async function walk(ctx: ContextType): Promise<void> {
           logs,
           map,
         });
+
+        return;
       }
       console.log("[W][D] Toast an error message");
       await executeFlow({
@@ -83,7 +109,7 @@ export async function walk(ctx: ContextType): Promise<void> {
       await wait(1000);
       await walk({
         ...ctx,
-        maxRetryCount,
+        maxRetryCount: maxRetryCount - 1,
       });
     } else {
       throw error;

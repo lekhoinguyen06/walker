@@ -45,7 +45,11 @@ export function panelContextFactory({
       beforeHooks: [
         {
           handler: async (action) => {
-            if (action.message === "") {
+            if (
+              action.flowCommand === "error" ||
+              action.flowCommand === "success" ||
+              action.message === ""
+            ) {
               return;
             }
             pushToast({

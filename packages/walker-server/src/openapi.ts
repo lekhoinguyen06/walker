@@ -55,11 +55,10 @@ export const openapiDocument = createDocument({
                 schema: WalkResponseBodySchema,
                 example: {
                   action: {
-                    flow: "click",
+                    flowCommand: "click",
                     message: "Clicking the start button to begin the tour.",
-                    targetId: "button-1",
-                    prompt: "Let's go, I am new here. Show me around.",
-                    end: false,
+                    itemId: "app::button",
+                    body: {},
                   },
                   metadata: {
                     timestamp: new Date(),

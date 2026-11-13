@@ -15,6 +15,7 @@ export interface FlowWithHooksAndHandlerType extends FlowType {
 }
 
 export interface ContextType {
+  baseUrl: string;
   userPrompt: string;
   flows: FlowWithHooksAndHandlerType[];
   globalHooks?: {

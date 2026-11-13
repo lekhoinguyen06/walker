@@ -46,12 +46,14 @@ export const usePanelStore = create<PanelStoreType>((set) => ({
   context: {
     userPrompt: "",
     flows: [],
+    baseUrl: "",
   },
   setContext: (context: ContextType) => set({ context }),
   mergeContext: (context: Partial<ContextType>) =>
     set((state) => ({
       context: {
         userPrompt: context.userPrompt ?? state.context.userPrompt,
+        baseUrl: context.baseUrl ?? state.context.baseUrl,
         flows: [...state.context.flows, ...(context.flows ?? [])],
         gapTimeMs: context.gapTimeMs ?? state.context.gapTimeMs,
         globalHooks: {
