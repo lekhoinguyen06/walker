@@ -1,6 +1,7 @@
 import { type InputFlow, pushAction, WalkerError } from "walker-dom";
 import type { FlowWithHooksAndHandlerType } from "walker-shared";
 import { z } from "zod";
+import { ade } from "../ade";
 
 export const DialogDemoFlowBodySchema = z.object({
   name: z.string(),
@@ -33,13 +34,13 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     }
     pushAction({
       flowCommand: "click",
-      itemId: action.itemId + `::trigger`,
+      itemId: ade.pdt().id,
       message: "Open dialog",
       body: {},
     });
     pushAction<InputFlow>({
       flowCommand: "input",
-      itemId: action.itemId + `::input-name`,
+      itemId: ade.pdin().id,
       message: "Input name: " + valid.data.name,
       body: {
         text: valid.data.name,
@@ -47,7 +48,7 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     });
     pushAction<InputFlow>({
       flowCommand: "input",
-      itemId: action.itemId + `::input-username`,
+      itemId: ade.pdiu().id,
       message: "Input name: " + valid.data.username,
       body: {
         text: valid.data.username,
@@ -56,7 +57,7 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     if (valid.data.save) {
       pushAction({
         flowCommand: "click",
-        itemId: action.itemId + `::save`,
+        itemId: ade.pds().id,
         message: "Save dialog",
         body: {},
       });

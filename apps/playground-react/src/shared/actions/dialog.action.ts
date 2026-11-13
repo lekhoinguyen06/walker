@@ -5,7 +5,7 @@ export const dialogDemoFlowJSON = JSON.stringify(
   [
     createAction({
       flowCommand: "dialog-demo",
-      itemId: ade.pd().id,
+      itemId: ade.pdt().id,
       message: "Let's see what we have here...",
       body: {
         username: "walker",

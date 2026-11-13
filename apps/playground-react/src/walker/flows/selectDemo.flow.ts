@@ -1,6 +1,7 @@
 import { pushAction, WalkerError } from "walker-dom";
 import type { FlowWithHooksAndHandlerType } from "walker-shared";
 import { z } from "zod";
+import { ade } from "../ade";
 
 export const SelectDemoFlowBodySchema = z.object({
   option: z.literal(["apple", "banana", "blueberry", "grapes", "pineapple"]),
@@ -20,7 +21,7 @@ export type SelectDemoFlow = z.infer<typeof SelectDemoFlowBodySchema>;
 export const selectDemoFlow: FlowWithHooksAndHandlerType = {
   command: "select-demo",
   description: "Interact with select component.",
-  Schema: selectDemoFlowBodyJSONSchemaStringified,
+  schema: selectDemoFlowBodyJSONSchemaStringified,
   handler: async (action) => {
     const valid = SelectDemoFlowBodySchema.safeParse(action.body);
     if (!valid.success) {
@@ -30,13 +31,13 @@ export const selectDemoFlow: FlowWithHooksAndHandlerType = {
     }
     pushAction({
       flowCommand: "click",
-      itemId: action.itemId,
+      itemId: ade.pss().id,
       message: "Open select",
       body: {},
     });
     pushAction({
       flowCommand: "click",
-      itemId: action.itemId + `::${valid.data.option}`,
+      itemId: ade.psso(valid.data.option).id,
       message: "Select option: " + valid.data.option,
       body: {},
     });
