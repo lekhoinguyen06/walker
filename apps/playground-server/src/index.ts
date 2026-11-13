@@ -5,6 +5,8 @@ import { createAI } from "agents/models/ai-sdk";
 import { cors } from "hono/cors";
 import { rateLimiter } from "hono-rate-limiter";
 
+const AI_MODEL = "openai/gpt-6-luna";
+
 type Env = {
   PLAYGROUND_SERVER_RATE_LIMITER: RateLimit;
 };
@@ -26,12 +28,12 @@ app.use(
 );
 
 app.get("/", (c) => {
-  return c.text("Hello Hono!");
+  return c.text(`Hello Walkers! This is ${AI_MODEL} serving.`);
 });
 
 app.all("/api/walker/*", (c) => {
   const workersai = createAI({ binding: env.AI });
-  const ai = workersai("anthropic/claude-haiku-5.5");
+  const ai = workersai(AI_MODEL);
   const walker = createWalker({ ai });
 
   return walker.handler(c.req.raw);

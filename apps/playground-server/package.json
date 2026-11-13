@@ -16,6 +16,6 @@
     "workers-ai-provider": "^4.0.1"
   },
   "devDependencies": {
-    "wrangler": "^4.110.0"
+    "wrangler": "^4.161.0"
   }
 }
