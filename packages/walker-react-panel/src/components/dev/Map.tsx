@@ -25,7 +25,7 @@ export function MapDialog() {
   return (
     <PanelDialog dialog={"map"}>
       <div className="size-full">
-        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px] overflow-hidden">
+        <div className="flex flex-col w-full h-120">
           <div className="w-full p-3">
             <div className="font-brand">Map</div>
             <div className="text-xs">View your application Items.</div>

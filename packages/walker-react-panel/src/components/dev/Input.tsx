@@ -11,16 +11,15 @@ import {
 import { usePanelDialog, usePanelToast } from "@/hooks";
 import { useAction } from "walker-react";
 
-const defaultValue = `[
+const defaultValue = `
+[
   {
-    "flow": "input",
-    "targetId": "input-field",
+    "flowCommand": "input",
+    "itemId": "walker-playground-react::input::input-field",
     "message": "Let's type in 'Hello World!'",
     "body": {
-      "input": "Hello World!"
-    },
-    "end": true,
-    "prompt": "No prompt. This is the Action from the demo section."
+      "text": "Hello World!"
+    }
   }
 ]
 `;
@@ -120,7 +119,7 @@ export function InputDialog() {
   return (
     <PanelDialog dialog={"input"}>
       <div className="size-full">
-        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px] overflow-hidden">
+        <div className="flex flex-col w-full h-120">
           <div className="w-full p-3">
             <div className="font-brand">Input</div>
             <div className="text-xs">

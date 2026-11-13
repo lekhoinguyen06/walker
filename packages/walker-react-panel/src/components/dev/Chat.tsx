@@ -40,7 +40,7 @@ export function ChatDialog() {
   return (
     <PanelDialog dialog={"chat"}>
       <div className="size-full">
-        <div className="flex flex-col w-full h-120 bg-black border border-white rounded-[24px]">
+        <div className="flex flex-col w-full h-120">
           <div className="relative w-full p-3">
             <div className="font-brand">Chat</div>
             <div className="text-xs">

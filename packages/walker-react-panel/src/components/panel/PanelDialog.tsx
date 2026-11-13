@@ -40,7 +40,9 @@ export function PanelDialog({
       }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.2, type: "keyframes" }}
-      className={"flex flex-col bg-primary rounded-[24px] overflow-hidden"}
+      className={
+        "flex flex-col bg-white dark:bg-black border border-black dark:border-white rounded-[24px] overflow-hidden"
+      }
     >
       {children}
     </motion.div>
