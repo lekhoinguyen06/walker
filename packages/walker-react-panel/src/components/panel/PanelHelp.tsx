@@ -29,6 +29,7 @@ export function PanelHelp() {
             </div>
             <div className="flex items-center gap-3">
               <Kbd>Control</Kbd>+<Kbd>Enter</Kbd>
+              (or if you are focused on the input <Kbd>Enter</Kbd>)
               <span>Walk</span>
             </div>
             <div className="flex items-center gap-3">
@@ -38,10 +39,6 @@ export function PanelHelp() {
             <div className="flex items-center gap-3">
               <Kbd>Tab</Kbd>
               <span>Open menu</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Kbd>Control</Kbd>+<Kbd>C</Kbd>
-              <span>Stop the current looping walk</span>
             </div>
             <div className="flex items-center gap-3">
               <Kbd>Control</Kbd>+<Kbd>H</Kbd>
@@ -60,7 +57,7 @@ export function PanelHelp() {
               <span>Open input dialog</span>
             </div>
             <div className="flex items-center gap-3">
-              <Kbd>Alt</Kbd>+<Kbd>H</Kbd>
+              <Kbd>Control</Kbd>+<Kbd>D</Kbd>
               <span>Clear walk history</span>
             </div>
             <div className="flex items-center gap-3">
