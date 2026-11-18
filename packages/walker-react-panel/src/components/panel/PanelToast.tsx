@@ -35,7 +35,7 @@ export function PanelToast() {
   const { isHidden, setIsHidden } = usePanel();
   const { toast } = usePanelToast();
   useEffect(() => {
-    if (isHidden) {
+    if (toast && isHidden) {
       setIsHidden(false);
     }
   }, [toast]);
