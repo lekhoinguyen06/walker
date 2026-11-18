@@ -1,6 +1,6 @@
 {
   "name": "walker-skill",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Walker Skill library.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
@@ -23,7 +23,8 @@
     "bunup": "^0.16.32"
   },
   "scripts": {
-    "bake": "bun run ./src/index.ts && bunup"
+    "bake": "bun run ./src/index.ts && bunup",
+    "build": "bunup"
   },
   "peerDependencies": {
     "typescript": "^7"
