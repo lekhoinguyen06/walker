@@ -18,9 +18,10 @@ export async function mouse(
     $mouseX.set(rect.left + rect.width / 2);
     $mouseY.set(rect.top + rect.height / 2);
   } else {
-    throw new WalkerError(
-      `Mouse hook failed: No DOM element found for action.itemId: ${itemId}`,
-    );
+    throw new WalkerError({
+      retry: true,
+      message: `Mouse hook failed: No DOM element found for action.itemId: ${itemId}`,
+    });
   }
 }
 

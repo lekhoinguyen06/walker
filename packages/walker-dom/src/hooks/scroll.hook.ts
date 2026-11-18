@@ -63,9 +63,10 @@ export async function scroll(
       requestAnimationFrame(check);
     });
   } else {
-    throw new WalkerError(
-      `Scroll hook failed: No DOM element found for action.itemId: ${action.itemId}`,
-    );
+    throw new WalkerError({
+      retry: true,
+      message: `Scroll hook failed: No DOM element found for action.itemId: ${action.itemId}`,
+    });
   }
 }
 

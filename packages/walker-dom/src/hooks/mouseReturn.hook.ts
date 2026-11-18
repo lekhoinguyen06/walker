@@ -21,9 +21,10 @@ export async function mouseReturn(
     $mouseX.set(rect.left + rect.width / 2);
     $mouseY.set(rect.top + rect.height / 2);
   } else {
-    throw new WalkerError(
-      `Mouse return hook failed: No DOM element found for walker-mouse-container. Please ensure that the element with id 'walker-mouse-container' exists in the DOM.`,
-    );
+    throw new WalkerError({
+      retry: false,
+      message: `Mouse return hook failed: No DOM element found for walker-mouse-container. Please ensure that the element with id 'walker-mouse-container' exists in the DOM.`,
+    });
   }
 }
 

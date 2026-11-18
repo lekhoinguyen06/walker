@@ -20,9 +20,10 @@ export async function click(
     );
     child.click();
   } else {
-    throw new WalkerError(
-      `Click flow failed: No DOM element found for action.itemId: ${action.itemId}`,
-    );
+    throw new WalkerError({
+      retry: true,
+      message: `Click flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+    });
   }
 }
 

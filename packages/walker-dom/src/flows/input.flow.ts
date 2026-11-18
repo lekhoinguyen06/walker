@@ -5,6 +5,7 @@ import type {
   ActionType,
 } from "walker-shared";
 import { WalkerError } from "../error";
+import { tr } from "zod/v4/locales";
 
 const InputFlowBodySchema = z.object({
   text: z.string(),
@@ -31,9 +32,10 @@ export async function input(
   if (child instanceof HTMLElement) {
     const parsedAction = InputFlowBodySchema.safeParse(action.body);
     if (!parsedAction.success) {
-      throw new WalkerError(
-        `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected action's body to be of schema: ${InputFlowBodyJSONSchemaStringified}, got: ${JSON.stringify(action.body)}`,
-      );
+      throw new WalkerError({
+        retry: true,
+        message: `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected action's body to be of schema: ${InputFlowBodyJSONSchemaStringified}, got: ${JSON.stringify(action.body)}`,
+      });
     }
 
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
@@ -43,9 +45,10 @@ export async function input(
     nativeInputValueSetter?.call(child, parsedAction.data.text);
     child.dispatchEvent(new Event("input", { bubbles: true }));
   } else {
-    throw new WalkerError(
-      `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
-    );
+    throw new WalkerError({
+      retry: true,
+      message: `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+    });
   }
 }
 
