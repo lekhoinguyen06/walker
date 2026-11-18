@@ -5,7 +5,7 @@ import { createAI } from "agents/models/ai-sdk";
 import { cors } from "hono/cors";
 import { rateLimiter } from "hono-rate-limiter";
 
-const AI_MODEL = "openai/gpt-6-luna";
+const AI_MODEL = "anthropic/claude-haiku-5.5";
 
 type Env = {
   PLAYGROUND_SERVER_RATE_LIMITER: RateLimit;
