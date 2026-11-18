@@ -1,6 +1,6 @@
 {
   "name": "walker-client",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Walker Client library. It includes generated SDK and HTTP client.",
   "license": "MIT",
   "author": "Lê Khôi Nguyên",
