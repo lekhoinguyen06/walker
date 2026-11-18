@@ -11,7 +11,7 @@ export function LandingPanel() {
     <Panel
       context={{
         flows: [],
-        baseUrl: process.env.VITE_WALK_API_URL,
+        baseUrl: process.env.VITE_WALK_API_URL!,
       }}
     >
       <PanelContent>
