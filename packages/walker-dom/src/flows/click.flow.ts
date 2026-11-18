@@ -3,7 +3,7 @@ import type {
   ContextType,
   FlowWithHooksAndHandlerType,
 } from "walker-shared";
-import { WalkerError } from "../error";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
 
 export async function click(
   action: ActionType,
@@ -22,7 +22,8 @@ export async function click(
   } else {
     throw new WalkerError({
       retry: true,
-      message: `Click flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+      message: WALKER_MISTAKE_MSG,
+      log: `Click flow failed: No DOM element found for action.itemId: ${action.itemId}`,
     });
   }
 }

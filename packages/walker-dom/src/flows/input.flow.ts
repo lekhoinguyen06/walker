@@ -4,8 +4,7 @@ import type {
   FlowWithHooksAndHandlerType,
   ActionType,
 } from "walker-shared";
-import { WalkerError } from "../error";
-import { tr } from "zod/v4/locales";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
 
 const InputFlowBodySchema = z.object({
   text: z.string(),
@@ -47,7 +46,8 @@ export async function input(
   } else {
     throw new WalkerError({
       retry: true,
-      message: `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+      message: WALKER_MISTAKE_MSG,
+      log: `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
     });
   }
 }

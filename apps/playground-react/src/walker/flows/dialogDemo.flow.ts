@@ -1,4 +1,9 @@
-import { type InputFlow, pushAction, WalkerError } from "walker-dom";
+import {
+  type InputFlow,
+  pushAction,
+  WALKER_MISTAKE_MSG,
+  WalkerError,
+} from "walker-dom";
 import type { FlowWithHooksAndHandlerType } from "walker-shared";
 import { z } from "zod";
 import { ade } from "../ade";
@@ -28,9 +33,11 @@ export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
     const valid = DialogDemoFlowBodySchema.safeParse(action.body);
     console.log("Dialog demo flow");
     if (!valid.success) {
-      throw new WalkerError(
-        `Invalid flow body for dialog-demo flow, expected ${dialogDemoFlowBodyJSONSchemaStringified}, received: ${JSON.stringify(action.body)}`,
-      );
+      throw new WalkerError({
+        retry: true,
+        message: WALKER_MISTAKE_MSG,
+        log: `Invalid flow body for dialog-demo flow, expected ${dialogDemoFlowBodyJSONSchemaStringified}, received: ${JSON.stringify(action.body)}`,
+      });
     }
     pushAction({
       flowCommand: "click",

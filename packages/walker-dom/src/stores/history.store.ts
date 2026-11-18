@@ -19,12 +19,10 @@ export function clearHistory() {
 export function recordHistory({
   action,
   map,
-  logs,
   ctx,
 }: {
   action: ActionType;
   map: MapType;
-  logs: string[];
   ctx: ContextType;
 }) {
   const windowSize = ctx.historyWindowSize ?? 10;
@@ -38,13 +36,25 @@ export function recordHistory({
     userPrompt: getUserPrompt(),
     action,
     map,
-    logs,
+    logs: [],
     timestamp: String(new Date()),
   };
+
+  console.log("[W][D] Recording history: ", history);
 
   if ($history.get().length >= windowSize) {
     $history.set([...$history.get().slice(1), history]);
   } else {
     $history.set([...$history.get(), history]);
   }
+}
+
+/**
+ * Push log to the last history item's logs in the history store
+ * @param log
+ */
+export function pushLog(log: string) {
+  const histories = $history.get();
+  histories[histories.length - 1]?.logs.push(log);
+  $history.set(histories);
 }

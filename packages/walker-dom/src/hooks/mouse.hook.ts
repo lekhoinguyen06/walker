@@ -1,6 +1,6 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
 import { $mouseX, $mouseY } from "../stores";
-import { WalkerError } from "../error";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
 
 export async function mouse(
   action: ActionType,
@@ -20,7 +20,8 @@ export async function mouse(
   } else {
     throw new WalkerError({
       retry: true,
-      message: `Mouse hook failed: No DOM element found for action.itemId: ${itemId}`,
+      message: WALKER_MISTAKE_MSG,
+      log: `Mouse hook failed: No DOM element found for action.itemId: ${itemId}`,
     });
   }
 }

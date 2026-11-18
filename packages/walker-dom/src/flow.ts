@@ -5,7 +5,9 @@ import type {
   MapType,
 } from "walker-shared";
 import { wait } from "./utils";
-import { $action, recordHistory } from "./stores";
+import { $action, pushLog, recordHistory } from "./stores";
+import { walk } from "./walk";
+import { WALKER_MISTAKE_MSG, WalkerError } from "./error";
 
 export async function executeFlow({
   action,
@@ -49,30 +51,15 @@ export async function executeFlow({
       await wait(gap);
     }
 
-    recordHistory({
-      action,
-      map,
-      logs,
-      ctx,
-    });
-
     const queue = $action.get();
     if (queue.length > 0) {
-      const nextAction = queue.shift()!;
-      $action.set(queue);
-      await executeFlow({
-        action: nextAction,
-        ctx,
-        logs,
-        map,
-      });
-    } else {
-      // Await for mouse return animation so that styling does not end too soon
-      await wait(1000);
+      await walk(ctx);
     }
   } else {
-    logs.push(
-      "ERROR: No flow found for action.flowCommand: " + action.flowCommand,
-    );
+    throw new WalkerError({
+      message: WALKER_MISTAKE_MSG,
+      log: "Flow not found for action.flowCommand: " + action.flowCommand,
+      retry: true,
+    });
   }
 }

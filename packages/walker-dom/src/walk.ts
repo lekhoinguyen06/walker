@@ -6,6 +6,7 @@ import {
   $history,
   $user,
   getUserPrompt,
+  pushLog,
   recordHistory,
 } from "./stores";
 import { wait } from "./utils";
@@ -28,22 +29,24 @@ export async function walk(ctx: ContextType): Promise<void> {
 
   try {
     if (queue.length === 0) {
+      // No actions in queue, request action from server
       if (!ctx.baseUrl) {
         throw new WalkerError({
-          message:
-            "Base URL is not set. Please set the base URL in the context.",
+          message: "Walker baseUrl is not set. Please contact the developer.",
           retry: false,
         });
       }
       if (!$user.get()?.prompt) {
         throw new WalkerError({
           retry: false,
-          message: "Input is not set.",
+          message: "Please provide input.",
         });
       }
+
       console.log(
         `[W][D] Queue is empty, requesting action from server at ${ctx.baseUrl}`,
       );
+
       const client = createClient({
         baseUrl: ctx.baseUrl,
       });
@@ -61,7 +64,7 @@ export async function walk(ctx: ContextType): Promise<void> {
       if (result.error instanceof Error) {
         throw new WalkerError({
           retry: true,
-          message: `Error connecting from server`,
+          message: `Something went wrong.`,
         });
       }
 
@@ -74,6 +77,12 @@ export async function walk(ctx: ContextType): Promise<void> {
 
       console.log("[W][D] Received action from server: ", result.data.action);
 
+      recordHistory({
+        action: result.data.action,
+        map,
+        ctx,
+      });
+
       await executeFlow({
         action: result.data.action,
         ctx,
@@ -81,8 +90,16 @@ export async function walk(ctx: ContextType): Promise<void> {
         map,
       });
     } else {
+      // Actions in queue
       action = queue.shift()!;
       $action.set(queue);
+
+      recordHistory({
+        action,
+        map,
+        ctx,
+      });
+
       await executeFlow({
         action,
         ctx,
@@ -93,46 +110,30 @@ export async function walk(ctx: ContextType): Promise<void> {
   } catch (error) {
     if (error instanceof WalkerError) {
       console.error("[W][D] WalkerError:", error.message);
-      logs.push(error.message);
-      if (action) {
-        recordHistory({
-          action,
-          map,
-          logs,
-          ctx,
-        });
-      }
+      error.log && pushLog(error.log);
 
       const maxRetryCount = ctx.maxRetryCount ?? 3;
-      if (maxRetryCount <= 0) {
-        await executeFlow({
+
+      // Toast error message to user
+      maxRetryCount > 0 &&
+        (await executeFlow({
           action: {
             flowCommand: "error",
-            message: "Max retry count reached. Stopping execution.",
+            message:
+              error.message +
+              (error.retry
+                ? ` Retrying (${maxRetryCount} attempts left).`
+                : ""),
             itemId: "",
             body: {},
           },
           ctx,
           logs,
           map,
-        });
+        }));
 
-        return;
-      }
-
-      await executeFlow({
-        action: {
-          flowCommand: "error",
-          message: error.message + (error.retry ? " Retrying..." : ""),
-          itemId: "",
-          body: {},
-        },
-        ctx,
-        logs,
-        map,
-      });
-
-      if (error.retry) {
+      if (error.retry && maxRetryCount > 0) {
+        // Retry
         await wait(1000);
         await walk({
           ...ctx,

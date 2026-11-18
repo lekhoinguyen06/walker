@@ -1,6 +1,10 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
 import { $action, $mouseX, $mouseY } from "../stores";
-import { WalkerError } from "../error";
+import {
+  DEVELOPER_MISTAKE_MSG,
+  WALKER_MISTAKE_MSG,
+  WalkerError,
+} from "../error";
 
 export async function mouseReturn(
   action: ActionType,
@@ -23,7 +27,8 @@ export async function mouseReturn(
   } else {
     throw new WalkerError({
       retry: false,
-      message: `Mouse return hook failed: No DOM element found for walker-mouse-container. Please ensure that the element with id 'walker-mouse-container' exists in the DOM.`,
+      message: DEVELOPER_MISTAKE_MSG,
+      log: `Mouse return hook failed: No DOM element found for walker-mouse-container. Please ensure that the element with id 'walker-mouse-container' exists in the DOM.`,
     });
   }
 }

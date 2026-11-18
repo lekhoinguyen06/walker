@@ -1,5 +1,5 @@
 import type { ActionType, ContextType, HookType } from "walker-shared";
-import { WalkerError } from "../error";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
 
 export async function scroll(
   action: ActionType,
@@ -65,7 +65,8 @@ export async function scroll(
   } else {
     throw new WalkerError({
       retry: true,
-      message: `Scroll hook failed: No DOM element found for action.itemId: ${action.itemId}`,
+      message: WALKER_MISTAKE_MSG,
+      log: `Scroll hook failed: No DOM element found for action.itemId: ${action.itemId}`,
     });
   }
 }
