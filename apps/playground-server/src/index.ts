@@ -16,7 +16,7 @@ const app = new Hono<{ Bindings: Env }>();
 app.use(
   "/api/walker/*",
   cors({
-    origin: ["https://react.walker.vstaffs.com"],
+    origin: ["https://react.walker.vstaffs.com", "https://walker.vstaffs.com"],
   }),
 );
 
