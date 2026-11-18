@@ -1,6 +1,6 @@
-import type { ActionType, ContextType, HistoryItemType } from "walker-shared";
+import type { ActionType, ContextType } from "walker-shared";
 import { executeFlow } from "./flow";
-import { mapper } from "./map";
+import { getUniqueFlowsFromMap, mapper } from "./map";
 import {
   $action,
   $history,
@@ -21,6 +21,7 @@ export async function walk(ctx: ContextType): Promise<void> {
 
   // Map
   const map = mapper();
+  const uniqueFlowKeys = getUniqueFlowsFromMap(map);
 
   // Request
   let queue = $action.get();
@@ -54,7 +55,7 @@ export async function walk(ctx: ContextType): Promise<void> {
         client,
         body: {
           histories,
-          flows: ctx.flows,
+          flows: ctx.flows.filter((f) => uniqueFlowKeys.has(f.command)),
           map,
           skills: [],
           userPrompt: getUserPrompt(),
