@@ -4,7 +4,7 @@ import "walker-react-panel/index.css";
 import "./index.css";
 import App from "./App.tsx";
 import { PanelToastProvider } from "walker-react-panel";
-import { LandingPanel } from "./Panel.tsx";
+import { LandingPanel } from "./LandingPanel.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
