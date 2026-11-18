@@ -4,11 +4,11 @@ import { DefaultChatTransport } from "ai";
 import { usePanel } from "./usePanel";
 
 export function usePanelChat() {
-  const { url } = usePanel();
+  const { context } = usePanel();
   const { pushToast } = usePanelToast();
   return useChat({
     transport: new DefaultChatTransport({
-      api: `${url}/api/walker/chat`,
+      api: `${context.baseUrl}/api/walker/chat`,
       prepareSendMessagesRequest: ({ messages }) => {
         const msgs = messages.map((message) => ({
           role: message.role,

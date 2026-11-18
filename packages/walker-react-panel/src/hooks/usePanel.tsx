@@ -1,8 +1,6 @@
 import { usePanelStore } from "../stores/usePanelStore";
 
 export function usePanel() {
-  const url = usePanelStore((state) => state.url);
-  const setUrl = usePanelStore((state) => state.setUrl);
   const context = usePanelStore((state) => state.context);
   const setContext = usePanelStore((state) => state.setContext);
   const mergeContext = usePanelStore((state) => state.mergeContext);
@@ -18,8 +16,6 @@ export function usePanel() {
   const setTab = usePanelStore((state) => state.setTab);
 
   return {
-    url,
-    setUrl,
     context,
     setContext,
     mergeContext,
