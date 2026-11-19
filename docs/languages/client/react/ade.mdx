@@ -1,0 +1,82 @@
+---
+title: "ADE"
+description: "Learn how to setup your app context"
+---
+
+# Introduction
+
+We use the term ADE (App - Domain - Event) to shortly describe how to organize your Item key and its description. It is recommended for you to use ADE, however, it is not mandatory. We also are building [🍞 Bánh Mì](https://github.com/lekhoinguyen06/banhmi) and Editor to help developers manage their context.
+
+## Example
+
+This is how we organize for the Walker React Playground application.
+
+```ts /walker/ade/index.ts
+import { dialog } from "./dialog.ade";
+import { home } from "./home.ade";
+import { input } from "./input.ade";
+import { nav } from "./nav.ade";
+import { scrollArea } from "./scroll-area.ade.";
+import { select } from "./select.ade";
+import { toast } from "./toast.ade";
+import type { ADEType } from "./type";
+
+export const ade = {
+  p: () =>
+    ({
+      id: "walker-playground-react",
+      description: "The is the Walker React playground.",
+    }) as const,
+  ...nav,
+  ...home,
+  ...input,
+  ...dialog,
+  ...scrollArea,
+  ...select,
+  ...toast,
+} as const satisfies ADEType;
+```
+
+```ts /walker/ade/dialog.ade.ts
+import type { ADEType } from "./type";
+
+export const dialog = {
+  pd: () =>
+    ({
+      id: "walker-playground-react_dialog",
+      description:
+        "Dialog page for the ShadcnUI Input component demonstration.",
+    }) as const,
+  pdt: () =>
+    ({
+      id: "walker-playground-react_dialog_trigger",
+      description:
+        "To fill in the dialog, use the dialog-demo flow on this Item. If the user explicitly prefered, you can still click this Item and input step by step.",
+      flows: ["click", "dialog-demo"],
+    }) as const,
+  pds: () =>
+    ({
+      id: "walker-playground-react_dialog_save",
+      description: "Click the button to save the dialog",
+      flows: ["click"],
+    }) as const,
+  pdc: () =>
+    ({
+      id: "walker-playground-react_dialog_close",
+      description: "Click the button to close the dialog",
+      flows: ["click"],
+    }) as const,
+  pdin: () =>
+    ({
+      id: "walker-playground-react_dialog_input-name",
+      description: "Input field for name",
+      flows: ["input"],
+    }) as const,
+  pdiu: () =>
+    ({
+      id: "walker-playground-react_dialog_input-username",
+      description: "Input field for username",
+      flows: ["input"],
+    }) as const,
+} as const satisfies ADEType;
+```

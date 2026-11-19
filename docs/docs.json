@@ -4,7 +4,7 @@
   "name": "docs",
   "colors": {
     "primary": "#000000",
-    "light": "#FFFF00",
+    "light": "#fff085",
     "dark": "#000000"
   },
   "favicon": "logo/walker-icon.svg",
@@ -15,17 +15,11 @@
         "groups": [
           {
             "group": "Getting started",
-            "pages": [
-              "index",
-              "guides/vision",
-              "guides/setup"
-            ]
+            "pages": ["index", "guides/vision", "guides/setup"]
           },
           {
             "group": "Concepts",
-            "pages": [
-              "guides/fundamentals"
-            ]
+            "pages": ["guides/fundamentals"]
           }
         ]
       },
@@ -43,7 +37,12 @@
         "groups": [
           {
             "group": "React",
-            "pages": ["languages/client/react/getting-started"]
+            "pages": [
+              "languages/client/react/setup",
+              "languages/client/react/item",
+              "languages/client/react/ade",
+              "languages/client/react/flow"
+            ]
           }
         ]
       },

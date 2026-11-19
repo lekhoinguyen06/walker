@@ -1,0 +1,219 @@
+---
+title: "Flow"
+description: "Add your first custom Flow"
+---
+
+# Flow
+
+Create your custom flow when the walk has multiple predictable steps, such as filling in a form, select, or navigate using navigation bar.
+
+## Built-in Flows
+
+First, let's look at the built-in flows to see how they are implemented:
+
+### Click Flow
+
+```ts click.flow.ts
+import type {
+  ActionType,
+  ContextType,
+  FlowWithHooksAndHandlerType,
+} from "walker-shared";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
+
+export async function click(
+  action: ActionType,
+  ctx: ContextType,
+): Promise<string | void> {
+  console.log("[W][D]: Click Flow: ", action.itemId);
+  const el = document.getElementById(action.itemId);
+  const child = el?.firstElementChild;
+
+  if (child instanceof HTMLElement) {
+    console.log(
+      "[W][D]: Click flow executed for action.itemId: ",
+      action.itemId,
+    );
+
+    // The convention is the element to be interacted on is the first child of the Item
+    child.click();
+  } else {
+    throw new WalkerError({
+      retry: true,
+      message: WALKER_MISTAKE_MSG,
+      log: `Click flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+    });
+  }
+}
+
+export const clickFlow: FlowWithHooksAndHandlerType = {
+  command: "click",
+  handler: click,
+};
+```
+
+### Input Flow
+
+The Input Flow is a bit more complex than the Click Flow because it needs more data than a traditional Action object.
+
+The Flow type accepts a `schema` field:
+
+- It is the schema for the `action.body`.
+- It accepts a string, please stringify your JSONSchema.
+- It is not validated on the Server. The reasons are that:
+  - Union schemas are too complex for small models
+  - There are still more validations that needs to be done on the Client, such as checking if the DOM element exists because there is no guarantee that the Item is still there at execution time.
+
+The error is handled by throwing a `WalkerError` with the `retry` field set to `true`. This will call the walk request recursively until retry there are no more retry attempts (default is 3). The library will push the log to the last Action's `logs` array, and the `message` will be displayed to the user by the Walker Panel Toast.
+
+```ts input.flow.ts
+import z from "zod";
+import type {
+  ContextType,
+  FlowWithHooksAndHandlerType,
+  ActionType,
+} from "walker-shared";
+import { WALKER_MISTAKE_MSG, WalkerError } from "../error";
+
+const InputFlowBodySchema = z.object({
+  text: z.string(),
+});
+
+const InputFlowBodyJSONSchema = InputFlowBodySchema.toJSONSchema();
+
+const InputFlowBodyJSONSchemaStringified = JSON.stringify(
+  InputFlowBodyJSONSchema,
+  null,
+  2,
+);
+
+export type InputFlow = z.infer<typeof InputFlowBodySchema>;
+
+export async function input(
+  action: ActionType,
+  ctx: ContextType,
+): Promise<string | void> {
+  console.log("[W][D]: Input Flow: ", action.itemId);
+  const el = document.getElementById(action.itemId);
+  const child = el?.firstElementChild;
+
+  if (child instanceof HTMLElement) {
+    const parsedAction = InputFlowBodySchema.safeParse(action.body);
+    if (!parsedAction.success) {
+      throw new WalkerError({
+        retry: true,
+        message: `Input flow failed: Invalid action body for action.itemId: ${action.itemId}. Expected action's body to be of schema: ${InputFlowBodyJSONSchemaStringified}, got: ${JSON.stringify(action.body)}`,
+      });
+    }
+
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value",
+    )?.set;
+    nativeInputValueSetter?.call(child, parsedAction.data.text);
+    child.dispatchEvent(new Event("input", { bubbles: true }));
+  } else {
+    throw new WalkerError({
+      retry: true,
+      message: WALKER_MISTAKE_MSG,
+      log: `Input flow failed: No DOM element found for action.itemId: ${action.itemId}`,
+    });
+  }
+}
+
+export const inputFlow: FlowWithHooksAndHandlerType = {
+  command: "input",
+  description: "Input text into an Item.",
+  schema: InputFlowBodyJSONSchemaStringified,
+  handler: input,
+};
+```
+
+## Custom Flow
+
+The common thing you can do to prevent repetitive actions is to create a custom flow that pushes more Actions. The Client will keep executing the Actions until there are no more Actions to execute.
+
+### Example
+
+```ts /walker/flows/dialog.flow.ts
+import {
+  type InputFlow,
+  pushAction,
+  WALKER_MISTAKE_MSG,
+  WalkerError,
+} from "walker-dom";
+import type { FlowWithHooksAndHandlerType } from "walker-shared";
+import { z } from "zod";
+import { ade } from "../ade";
+
+export const DialogDemoFlowBodySchema = z.object({
+  name: z.string(),
+  username: z.string(),
+  save: z.boolean(),
+});
+
+export const dialogDemoFlowBodyJSONSchema =
+  DialogDemoFlowBodySchema.toJSONSchema();
+
+export const dialogDemoFlowBodyJSONSchemaStringified = JSON.stringify(
+  dialogDemoFlowBodyJSONSchema,
+  null,
+  2,
+);
+
+export type DialogDemoFlow = z.infer<typeof DialogDemoFlowBodySchema>;
+
+export const dialogDemoFlow: FlowWithHooksAndHandlerType = {
+  command: "dialog-demo",
+  description: "Interact with dialog component.",
+  schema: dialogDemoFlowBodyJSONSchemaStringified,
+  handler: async (action) => {
+    const valid = DialogDemoFlowBodySchema.safeParse(action.body);
+    console.log("Dialog demo flow");
+    if (!valid.success) {
+      throw new WalkerError({
+        retry: true,
+        message: WALKER_MISTAKE_MSG,
+        log: `Invalid flow body for dialog-demo flow, expected ${dialogDemoFlowBodyJSONSchemaStringified}, received: ${JSON.stringify(action.body)}`,
+      });
+    }
+    pushAction({
+      flowCommand: "click",
+      itemId: ade.pdt().id,
+      message: "Open dialog",
+      body: {},
+    });
+    pushAction<InputFlow>({
+      flowCommand: "input",
+      itemId: ade.pdin().id,
+      message: "Input name: " + valid.data.name,
+      body: {
+        text: valid.data.name,
+      },
+    });
+    pushAction<InputFlow>({
+      flowCommand: "input",
+      itemId: ade.pdiu().id,
+      message: "Input name: " + valid.data.username,
+      body: {
+        text: valid.data.username,
+      },
+    });
+    if (valid.data.save) {
+      pushAction({
+        flowCommand: "click",
+        itemId: ade.pds().id,
+        message: "Save dialog",
+        body: {},
+      });
+    } else {
+      pushAction({
+        flowCommand: "none",
+        itemId: "",
+        message: "Please check the information before saving the dialog.",
+        body: {},
+      });
+    }
+  },
+};
+```

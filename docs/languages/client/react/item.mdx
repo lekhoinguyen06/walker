@@ -1,0 +1,23 @@
+---
+title: "Item"
+description: "Add the first Item"
+---
+
+# Item
+
+Rules:
+
+- Item id must be unique across the entire app.
+- The component inside the Item must be a single child.
+- Walker will use the `description` field to understand the context of the Item.
+- Walker can only use a Flow among the `flows` you specified on the Item.
+
+```tsx
+<Item
+  id="my-app_page_button"
+  description="Some description for the Item"
+  flows={["click"]}
+>
+  <button>Click me</button>
+</Item>
+```

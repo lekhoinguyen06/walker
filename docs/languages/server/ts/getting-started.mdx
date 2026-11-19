@@ -1,12 +1,12 @@
 ---
-title: 'Getting Started'
-description: 'These are the TypeScript libraries built by the community to help you build your walker application.'
+title: "Getting Started"
+description: "Create a Walker Server with TypeScript"
 ---
 
 ## Installation
 
 ```bash
-npm install walker-ts
+npm install walker-server
 ```
 
 ### Create Server instance
@@ -15,7 +15,7 @@ The `createWalker` method accept any AI-SDK-compatible model, with type `Languag
 
 ```typescript
 import { anthropic } from "@ai-sdk/anthropic";
-import { createWalker } from "walker-ts"
+import { createWalker } from "walker-ts";
 
 const ai = anthropic("claude-sonnet-5-5");
 const walker = createWalker({ ai });

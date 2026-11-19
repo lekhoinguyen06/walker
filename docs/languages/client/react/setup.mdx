@@ -1,0 +1,69 @@
+---
+title: "Setup"
+description: "Setup a Walker Client with React"
+---
+
+# Installation
+
+```bash
+npm install walker-dom walker-react walker-react-panel
+```
+
+# Setup
+
+## Walker Panel
+
+```tsx AppPanel.tsx
+import {
+  Panel,
+  PanelContent,
+  PanelInput,
+  PanelMenu,
+  PanelPopup,
+} from "walker-react-panel";
+
+export function AppPanel() {
+  return (
+    <Panel
+      context={{
+        flows: [],
+        baseUrl: process.env.VITE_WALK_API_URL!,
+      }}
+    >
+      <PanelContent>
+        <PanelInput />
+        <PanelPopup
+          tabs={{
+            default: <PanelMenu />,
+          }}
+        />
+      </PanelContent>
+    </Panel>
+  );
+}
+```
+
+## React App
+
+```tsx App.tsx
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+// Import the Walker Panel CSS before your own CSS
+import "walker-react-panel/index.css";
+import "./index.css";
+import App from "./App.tsx";
+import { PanelToastProvider } from "walker-react-panel";
+import { AppPanel } from "./AppPanel.tsx";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <PanelToastProvider>
+      <App />
+
+      {/* Import Walker Panel */}
+      <AppPanel />
+    </PanelToastProvider>
+  </StrictMode>,
+);
+```
