@@ -1,15 +1,7 @@
 # walker-dom
 
-To install dependencies:
+The main package for Walker Client on the web.
 
-```bash
-bun install
-```
+## More on Walker
 
-To run:
-
-```bash
-bun run src/index.ts
-```
-
-This project was created using `bun init` in bun v1.4.2. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+To start using Walker, check out our document [here](https://docs.walker.vstaffs.com).

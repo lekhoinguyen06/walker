@@ -1,15 +1,7 @@
-# walker-types
+# walker-shared
 
-To install dependencies:
+This package is used internally to share types and schemas between Walker packages.
 
-```bash
-bun install
-```
+## More on Walker
 
-To run:
-
-```bash
-bun run src/index.ts
-```
-
-This project was created using `bun init` in bun v1.4.2. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+To start using Walker, check out our document [here](https://docs.walker.vstaffs.com).

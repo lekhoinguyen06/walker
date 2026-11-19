@@ -1,3 +1,33 @@
 # walker-terminal
 
-Walker Terminal CLI.
+You can use the Walker Terminal to run a local development Walker Server.
+
+## Installation
+
+```shellscript
+npm i -g walker-terminal
+```
+
+## Usage
+
+You can use the terminal UI to perform any operation:
+
+```shellscript
+walker
+```
+
+Start local Walker Server:
+
+```shellscript
+walker local
+```
+
+Config Walker Server:
+
+```shellscript
+walker config
+```
+
+## More on Walker
+
+To start using Walker, check out our document [here](https://docs.walker.vstaffs.com).
