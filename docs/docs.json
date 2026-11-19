@@ -2,6 +2,9 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "docs",
+  "icons": {
+    "library": "lucide"
+  },
   "colors": {
     "primary": "#000000",
     "light": "#fff085",
@@ -28,7 +31,7 @@
         "groups": [
           {
             "group": "Typescript",
-            "pages": ["languages/server/ts/getting-started"]
+            "pages": ["server/ts/getting-started"]
           }
         ]
       },
@@ -38,12 +41,25 @@
           {
             "group": "React",
             "pages": [
-              "languages/client/react/setup",
-              "languages/client/react/item",
-              "languages/client/react/ade",
-              "languages/client/react/flow",
-              "languages/client/react/hooks"
+              "client/react/setup",
+              "client/react/item",
+              "client/react/ade",
+              "client/react/flow",
+              "client/react/hooks"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Roadmap",
+        "pages": ["roadmap"]
+      },
+      {
+        "tab": "Contributing",
+        "groups": [
+          {
+            "group": "Policies",
+            "pages": ["contributing/policies/ai"]
           }
         ]
       },
@@ -57,15 +73,6 @@
             }
           }
         ]
-      },
-      {
-        "tab": "Contributing",
-        "groups": [
-          {
-            "group": "Policies",
-            "pages": ["contributing/policies/ai"]
-          }
-        ]
       }
     ],
     "global": {
@@ -77,16 +84,10 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Walker",
+      "href": "https://walker.vstaffs.com"
     }
   },
   "contextual": {
@@ -103,9 +104,8 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/lekhoinguyen06/walker",
+      "website": "https://walker.vstaffs.com"
     }
   }
 }
