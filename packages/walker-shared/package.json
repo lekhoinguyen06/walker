@@ -19,11 +19,13 @@
   ],
   "scripts": {
     "build": "bunup",
-    "dev": "bunup --watch"
+    "dev": "bunup --watch",
+    "gen-doc": "bun exec typedoc --json typedoc.json src/index.ts && bash ./scripts/ship-doc.sh"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "bunup": "^0.16.32"
+    "bunup": "^0.16.32",
+    "typedoc": "^0.28.20"
   },
   "peerDependencies": {
     "typescript": "^7",

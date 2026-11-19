@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Script to move typedoc.json to ../../docs/sdk-artifacts/walker-react
+# Script to move typedoc.json to ../../docs/sdk-artifacts/walker-react-panel
 
 set -e  # Exit on error
 
 # Define source and destination
 SOURCE_FILE="typedoc.json"
-DEST_DIR="../../docs/sdk-artifacts/walker-react"
+DEST_DIR="../../docs/sdk-artifacts/walker-react-panel"
 
 # Check if source file exists
 if [ ! -f "$SOURCE_FILE" ]; then

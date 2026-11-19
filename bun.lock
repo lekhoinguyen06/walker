@@ -126,6 +126,7 @@
         "@hey-api/openapi-ts": "^0.0.0-next-20260930190945",
         "@types/bun": "latest",
         "bunup": "^0.16.32",
+        "typedoc": "^0.28.20",
         "walker-server": "workspace:^",
       },
       "peerDependencies": {
@@ -145,6 +146,7 @@
       "devDependencies": {
         "@types/bun": "latest",
         "bunup": "^0.16.32",
+        "typedoc": "^0.28.20",
       },
       "peerDependencies": {
         "typescript": "^7",
@@ -164,6 +166,7 @@
         "@types/bun": "latest",
         "@types/react": "^19.3.0",
         "bunup": "^0.16.32",
+        "typedoc": "^0.28.20",
       },
       "peerDependencies": {
         "motion": "^14.10.1",
@@ -231,6 +234,7 @@
         "hono": "^4.13.13",
         "itty-fetcher": "^1.0.10",
         "supertest": "^7.3.1",
+        "typedoc": "^0.28.20",
         "vite": "^8.3.2",
         "vitest": "^5.0.3",
         "zod": "^4.6.7",
@@ -247,6 +251,7 @@
       "devDependencies": {
         "@types/bun": "latest",
         "bunup": "^0.16.32",
+        "typedoc": "^0.28.20",
       },
       "peerDependencies": {
         "typescript": "^7",

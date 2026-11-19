@@ -23,12 +23,14 @@
   ],
   "scripts": {
     "gen-api": "openapi-ts && bunup",
-    "build": "bunup"
+    "build": "bunup",
+    "gen-doc": "bun exec typedoc --json typedoc.json src/client/index.ts src/client/client/index.ts && bash ./scripts/ship-doc.sh"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.0.0-next-20260930190945",
     "@types/bun": "latest",
     "bunup": "^0.16.32",
+    "typedoc": "^0.28.20",
     "walker-server": "workspace:^"
   },
   "peerDependencies": {

@@ -9,7 +9,8 @@
   "module": "src/index.ts",
   "scripts": {
     "dev": "bunup --watch",
-    "build": "bunup"
+    "build": "bunup",
+    "gen-doc": "bun exec typedoc --json typedoc.json src/index.ts && bash ./scripts/ship-doc.sh"
   },
   "exports": {
     ".": {
@@ -23,7 +24,8 @@
   ],
   "devDependencies": {
     "@types/bun": "latest",
-    "bunup": "^0.16.32"
+    "bunup": "^0.16.32",
+    "typedoc": "^0.28.20"
   },
   "peerDependencies": {
     "typescript": "^7",
