@@ -1,0 +1,320 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Walker Server API",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://playground-server.khoinguyenbenz.workers.dev"
+    }
+  ],
+  "paths": {
+    "/api/walker/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 200,
+                  "message": "Hello, Walkers!"
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "message"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/walker/walk": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {},
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "action": {
+                          "type": "object",
+                          "properties": {
+                            "itemId": {
+                              "type": "string"
+                            },
+                            "flowCommand": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "body": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string"
+                              },
+                              "additionalProperties": {}
+                            }
+                          },
+                          "required": [
+                            "itemId",
+                            "flowCommand",
+                            "message",
+                            "body"
+                          ],
+                          "additionalProperties": {}
+                        },
+                        "userPrompt": {
+                          "type": "string"
+                        },
+                        "map": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              },
+                              "flows": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "required": ["id"]
+                          }
+                        },
+                        "logs": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "timestamp": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "action",
+                        "userPrompt",
+                        "map",
+                        "logs",
+                        "timestamp"
+                      ]
+                    }
+                  },
+                  "flows": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "command": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["command"],
+                      "additionalProperties": {}
+                    }
+                  },
+                  "map": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "flows": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": ["id"]
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "userPrompt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "histories",
+                  "flows",
+                  "map",
+                  "skills",
+                  "userPrompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "action": {
+                    "flowCommand": "click",
+                    "message": "Clicking the start button to begin the tour.",
+                    "itemId": "app::button",
+                    "body": {}
+                  },
+                  "metadata": {
+                    "timestamp": "2026-11-13T05:45:14.667Z",
+                    "usage": {
+                      "inputTokens": 1005,
+                      "inputTokenDetails": {
+                        "noCacheTokens": 1005,
+                        "cacheReadTokens": 0,
+                        "cacheWriteTokens": 0
+                      },
+                      "outputTokens": 293,
+                      "outputTokenDetails": {
+                        "textTokens": 54,
+                        "reasoningTokens": 239
+                      },
+                      "totalTokens": 1298
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "type": "string"
+                        },
+                        "flowCommand": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["itemId", "flowCommand", "message", "body"],
+                      "additionalProperties": {}
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "timestamp": {
+                          "type": "string"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["timestamp", "usage"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["action", "metadata"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/walker/chat": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "Hello, Walker! Give me a random positive quote."
+                  }
+                ]
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": ["user", "assistant", "system"]
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["role", "content"]
+                    }
+                  }
+                },
+                "required": ["messages"]
+              }
+            }
+          }
+        },
+        "responses": {}
+      }
+    }
+  }
+}

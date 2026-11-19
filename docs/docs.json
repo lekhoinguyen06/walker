@@ -50,22 +50,10 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Core SDK",
-            "sdk": {
-              "format": "typedoc",
-              "source": "sdk-artifacts/walker-core/typedoc.json",
-              "directory": "sdk/walker-core"
-            },
-            "pages": ["sdk/core/overview"]
-          },
-          {
-            "group": "React SDK",
-            "sdk": {
-              "format": "typedoc",
-              "source": "sdk-artifacts/walker-react/typedoc.json",
-              "directory": "sdk/walker-react"
-            },
-            "pages": ["sdk/react/overview"]
+            "group": "Walker Server",
+            "openapi": {
+              "source": "./walker-server.openapi.json"
+            }
           }
         ]
       }
