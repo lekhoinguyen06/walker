@@ -41,7 +41,8 @@
               "languages/client/react/setup",
               "languages/client/react/item",
               "languages/client/react/ade",
-              "languages/client/react/flow"
+              "languages/client/react/flow",
+              "languages/client/react/hooks"
             ]
           }
         ]
@@ -54,6 +55,15 @@
             "openapi": {
               "source": "./walker-server.openapi.json"
             }
+          }
+        ]
+      },
+      {
+        "tab": "Contributing",
+        "groups": [
+          {
+            "group": "Policies",
+            "pages": ["contributing/policies/ai"]
           }
         ]
       }

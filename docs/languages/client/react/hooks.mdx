@@ -1,0 +1,14 @@
+---
+title: "Hooks & Stores"
+description: "React Hooks provided Walker."
+---
+
+The usage of hooks from `walker-react` is fairly straightforward. You can refer to their types.
+
+There are 5 hooks provided by `walker-react`:
+
+- `useWalk`: To access the current `walk` async function. This is the main function of Walker Client used to send request to the Walker Server and receive an Action response.
+- `useMouse`: To access the current mouse position and mutate it.
+- `useAction`: To access the current `Action` queue and mutate it. It is persistant in localStorage.
+- `useHistory`: To access the current `History` queue and mutate it. It is persistant in localStorage.
+- `useUser`: to access the current user and mutate it. User's prompt is stored here. In the future, Walker Provider information will be stored here as well. It is persistant in localStorage.
